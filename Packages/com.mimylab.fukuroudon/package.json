@@ -11,7 +11,14 @@
   "vpmDependencies": {
     "com.vrchat.udonsharp": "1.1.1"
   },
+  "url": "https://github.com/MimyQuality/FukuroUdon/releases/download/0.1.0/com.mimylab.fukuroudon-0.1.0.zip",
   "legacyFolders": {
-    "Assets\\MimyLab": ""
+    "Assets\\MimyLab/GameObjectCeller": "",
+    "Assets\\MimyLab/GrabSlideDoor": "",
+    "Assets\\MimyLab/InputFlyingSystem": "",
+    "Assets\\MimyLab/ManualObjectSync": "",
+    "Assets\\MimyLab/SmartSlideshow": "",
+    "Assets\\MimyLab/SwivelChair": "",
+    "Assets\\MimyLab/VRFollowHUD": ""
   }
 }
