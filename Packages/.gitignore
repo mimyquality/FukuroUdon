@@ -2,4 +2,6 @@
 !com.vrchat.core.*
 
 # Change this to match your new package name
-!com.vrchat.demo-template 
+!com.mimylab.fukuroudon
+com.vrchat.*/
+!com.vrchat.core.*/

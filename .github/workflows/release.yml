@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches: main
-    paths: Packages/com.vrchat.demo-template/**
+    paths: Packages/com.mimylab.fukuroudon/**
 
 env:
-  packageName: "com.vrchat.demo-template"
+  packageName: "com.mimylab.fukuroudon"
 
 jobs:
   build:

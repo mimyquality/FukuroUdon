@@ -1,9 +1,13 @@
 {
-    "name": "VRChatPackageTemplate.Editor",
-    "references": [],
-    "includePlatforms": [
-        "Editor"
+    "name": "com.mimylab.fukuroudon.Editor",
+    "references": [
+        "VRC.SDK3",
+        "VRC.SDK3.Editor",
+        "VRC.SDKBase",
+        "VRC.SDKBase.Editor",
+        "com.mimylab.fukuroudon"
     ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
