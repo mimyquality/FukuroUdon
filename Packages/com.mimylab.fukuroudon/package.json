@@ -1,7 +1,7 @@
 {
   "name": "com.mimylab.fukuroudon",
   "displayName": "Fukuro Udon",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "unity": "2019.4",
   "description": "MimyLab's U# utilitiy pack for VPM.",
   "auther": {
@@ -11,7 +11,7 @@
   "vpmDependencies": {
     "com.vrchat.udonsharp": "1.1.1"
   },
-  "url": "https://github.com/MimyQuality/FukuroUdon/releases/download/0.1.0/com.mimylab.fukuroudon-0.1.0.zip",
+  "url": "https://github.com/MimyQuality/FukuroUdon/releases/download/0.1.1/com.mimylab.fukuroudon-0.1.1.zip",
   "legacyFolders": {
     "Assets\\MimyLab/GameObjectCeller": "",
     "Assets\\MimyLab/GrabSlideDoor": "",
