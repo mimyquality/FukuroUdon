@@ -1,1 +1,1 @@
-# mimylab.fukuroudon by Mimy Quality
+# com.mimylab.fukuroudon by Mimy Quality
