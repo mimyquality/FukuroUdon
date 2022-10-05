@@ -1,6 +1,6 @@
 # Fukuro Udon
 ## 概要
-[BOOTHで展開](mimyquality.booth.pm/item_lists/rdaT1p1m)しているU#アセット達のおまとめVPMパッケージです。  
+[BOOTHで展開](https://mimyquality.booth.pm/item_lists/rdaT1p1m)しているU#アセット達のおまとめVPMパッケージです。  
 個別の内容はこちらを参照してください。
 
 ## 導入手順
@@ -10,7 +10,7 @@
 パッケージ一覧にFukuroUdonパッケージが追加されていれば成功です。  
 ![VCC Add User Packages](Website/image/vcc_userpackagelist.png)
 
-**注意：** VPM版Fukuro Udonパッケージをインポートする前に、[BOOTH版アセット](mimyquality.booth.pm/item_lists/rdaT1p1m)からインポートしたものは予め削除しておいてください。
+**注意：** VPM版Fukuro Udonパッケージをインポートする前に、[BOOTH版アセット](https://mimyquality.booth.pm/item_lists/rdaT1p1m)からインポートしたものは予め削除しておいてください。
 
 VCCから任意のプロジェクトを選択し、パッケージリストの *Multiple Repos Serected* から *Local User Packages* にチェックしてください。  
 読み込んだユーザーパッケージが一覧に出てくるので、 **Fukuro Udon** の「Add」ボタンを押してプロジェクトにインポートします。  
