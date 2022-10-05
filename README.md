@@ -1,10 +1,10 @@
 # Fukuro Udon
 ## 概要
 [BOOTHで展開](https://mimyquality.booth.pm/item_lists/rdaT1p1m)しているU#アセット達のおまとめVPMパッケージです。  
-個別の内容はこちらを参照してください。
+個別の内容は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)を参照してください。
 
 ## 導入手順
-[Release](https://github.com/mimyquality/FukuroUdon/releases)または[こちら](https://mimyquality.github.io/FukuroUdon/)からzipファイル( *com.mimylab.fukuroudon-\*.\*.\*.zip* )をダウンロードしてください。  
+[Release](https://github.com/mimyquality/FukuroUdon/releases)からzipファイル( *com.mimylab.fukuroudon-\*.\*.\*.zip* )をダウンロードしてください。  
 
 ダウンロードしたzipファイルを適当なフォルダーに解凍し、VCC(VRChat Creator Companion)のSettingsにある *User Packages* の「Add」ボタンから、解凍したパッケージフォルダーを含むフォルダーを指定します。  
 パッケージ一覧にFukuroUdonパッケージが追加されていれば成功です。  
