@@ -1,17 +1,18 @@
 {
   "name": "com.mimylab.fukuroudon",
+  "version": "0.1.3",
   "displayName": "Fukuro Udon",
-  "version": "0.1.2",
-  "unity": "2019.4",
   "description": "MimyLab's U# utilitiy pack for VPM.",
+  "unity": "2019.4",
   "auther": {
-    "name": "Mimy Quality"
+    "name": "Mimy Quality",
+    "url": "https://github.com/mimyquality"
   },
+  "documentationUrl": "https://github.com/mimyquality/FukuroUdon/wiki",
   "gitDependencies": {},
   "vpmDependencies": {
     "com.vrchat.udonsharp": "1.1.1"
   },
-  "url": "https://github.com/MimyQuality/FukuroUdon/releases/download/0.1.2/com.mimylab.fukuroudon-0.1.2.zip",
   "legacyFolders": {
     "Assets\\MimyLab/GameObjectCeller": "",
     "Assets\\MimyLab/GrabSlideDoor": "",
@@ -20,5 +21,42 @@
     "Assets\\MimyLab/SmartSlideshow": "",
     "Assets\\MimyLab/SwivelChair": "",
     "Assets\\MimyLab/VRFollowHUD": ""
-  }
+  },
+  "samples": [
+    {
+      "displayName": "GameObject Celler",
+      "description": "VRC Object Poolのラッパースクリプトとその操作スイッチ",
+      "path": "Samples/GameObjectCeller"
+    },
+    {
+      "displayName": "Grab SlideDoor",
+      "description": "掴んで開け閉めするスライドドア・スイングドアのギミック",
+      "path": "Samples/GrabSlideDoor"
+    },
+    {
+      "displayName": "Input Flying System",
+      "description": "UIを必要としない、直感操作で飛べる飛行システム",
+      "path": "Samples/InputFlyingSystem"
+    },
+    {
+      "displayName": "Manual ObjectSync",
+      "description": "VRC ObjectSyncの置き換えを目指した、ManualSyncモードで動作するTransform同期用コンポーネント",
+      "path": "Samples/ManualObjectSync"
+    },
+    {
+      "displayName": "Smart Slideshow",
+      "description": "多機能なスライドショーギミック",
+      "path": "Samples/SmartSlideshow"
+    },
+    {
+      "displayName": "Swivel Chair",
+      "description": "UIを必要としない、座高調節とスイベル回転が可能な椅子ギミック",
+      "path": "Samples/SwivelChair"
+    },
+    {
+      "displayName": "VR Follow HUD",
+      "description": "酔いにくいオーバーレイUIのための、ローカルプレイヤーに遅延追従するギミック",
+      "path": "Samples/VRFollowHUD"
+    }
+  ]
 }

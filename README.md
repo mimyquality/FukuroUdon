@@ -1,9 +1,12 @@
 # Fukuro Udon
+
 ## 概要
+
 [BOOTHで展開](https://mimyquality.booth.pm/item_lists/rdaT1p1m)しているU#アセット達のおまとめVPMパッケージです。  
 個別の内容は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)を参照してください。
 
 ## 導入手順
+
 [Release](https://github.com/mimyquality/FukuroUdon/releases)からzipファイル( *com.mimylab.fukuroudon-\*.\*.\*.zip* )をダウンロードしてください。  
 
 ダウンロードしたzipファイルを適当なフォルダーに解凍し、VCC(VRChat Creator Companion)のSettingsにある *User Packages* の「Add」ボタンから、解凍したパッケージフォルダーを含むフォルダーを指定します。  
@@ -17,14 +20,15 @@ VCCから任意のプロジェクトを選択し、パッケージリストの *
 ![VCC Repos List](Website/image/vcc_localuserpackages_add.png)
 
 ## 利用方法
+
 パッケージは *Assets* フォルダーではなく *Packages* フォルダーに展開されるようになります。サンプルPrefabもここに含まれています。  
 また、特定のU#スクリプトを決め打ちで使いたい場合は、付けたいオブジェクトの「Add Component」ボタンからスクリプト名で検索してアタッチするのでもOKです。  
 ![FukuroUdon location](Website/image/fukuroudon_location.png)
 
 ## 更新履歴
 
+[CHANGELOG](Packages/com.mimylab.fukuroudon/CHANGELOG.md)
 
 ## ライセンス
-Copyright (c) 2022 Mimy Quality  
-Released under the MIT license  
-https://opensource.org/licenses/mit-license.php
+
+[LICENSE](Packages/com.mimylab.fukuroudon/LICENSE.md)
