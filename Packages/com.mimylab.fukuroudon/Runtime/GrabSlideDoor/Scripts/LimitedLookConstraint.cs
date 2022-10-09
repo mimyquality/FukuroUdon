@@ -6,8 +6,8 @@ https://opensource.org/licenses/mit-license.php
 
 using UdonSharp;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+//using VRC.SDKBase;
+//using VRC.Udon;
 
 namespace MimyLab
 {

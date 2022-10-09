@@ -7,14 +7,14 @@ https://opensource.org/licenses/mit-license.php
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon;
+//using VRC.Udon;
 
 namespace MimyLab
 {
     public class PickupHandle : UdonSharpBehaviour
     {
         [SerializeField]
-        Transform returnPoint;
+        Transform returnPoint = null;
 
         Vector3 returnPosition;
         Quaternion returnRotation;
@@ -23,7 +23,7 @@ namespace MimyLab
         {
             returnPosition = this.transform.position;
             returnRotation = this.transform.rotation;
-            if (returnPoint != null)
+            if (returnPoint)
             {
                 returnPoint.SetPositionAndRotation(this.transform.position, this.transform.rotation);
             }
@@ -37,7 +37,7 @@ namespace MimyLab
 
         public override void OnDrop()
         {
-            if (returnPoint != null)
+            if (returnPoint)
             {
                 this.transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
             }
