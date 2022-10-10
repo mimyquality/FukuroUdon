@@ -5,9 +5,9 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
-## [1.0.0] - 20\*\*-\*\*-\*\*
+## [0.2.2] - 2022-10-10
 
-正式リリース
+βリリース
 
 ### Added
 
@@ -19,4 +19,4 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
-[1.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.0.0
+[0.2.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.2

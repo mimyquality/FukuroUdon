@@ -15,8 +15,7 @@ namespace MimyLab
     public class VRFollowHUD : UdonSharpBehaviour
     {
         [Header("General Settings")]
-        [SerializeField]
-        VRCPlayerApi.TrackingDataType trackingPoint = VRCPlayerApi.TrackingDataType.Head;    // 追跡箇所
+        public VRCPlayerApi.TrackingDataType trackingPoint = VRCPlayerApi.TrackingDataType.Head;    // 追跡箇所
         [SerializeField]
         bool vROnly = true; // VRモードでのみ有効
 
