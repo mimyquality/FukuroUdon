@@ -19,7 +19,7 @@ namespace MimyLab
         [SerializeField]
         Sprite[] slide;    // 表示するスライドのリスト
 
-        Image image = null; // スライドを表示するuGUI
+        Image _image = null; // スライドを表示するuGUI
 
         public int EndPage
         {
@@ -37,10 +37,10 @@ namespace MimyLab
         {
             _page = Mathf.Clamp(v, 0, EndPage);
 
-            if (!image) image = GetComponent<Image>();
-            if (image)
+            if (!_image) _image = GetComponent<Image>();
+            if (_image)
             {
-                image.sprite = slide[_page];
+                _image.sprite = slide[_page];
             }
         }
 

@@ -41,12 +41,12 @@ namespace MimyLab
         public bool lockRoll = true, lockPitch = false, lockYaw = false;   // 遅延せず回転同期(軸毎)
 
         // Updateで使う変数キャッシュ用
-        Transform selfTf;
-        Vector3 selfPos, targetPos;
-        Quaternion selfRot, targetRot;
-        float distance, angle;
-        VRCPlayerApi lPlayer;
-        bool isVR, isPause, isRest;
+        Transform _selfTf;
+        Vector3 _selfPos, _targetPos;
+        Quaternion _selfRot, _targetRot;
+        float _distance, _angle;
+        VRCPlayerApi _lPlayer;
+        bool _isVR, _isPause, _isRest;
 
         public void TrackingHead() { trackingPoint = VRCPlayerApi.TrackingDataType.Head; }
         public void TrackingLeftHand() { trackingPoint = VRCPlayerApi.TrackingDataType.LeftHand; }
@@ -55,28 +55,28 @@ namespace MimyLab
 
         void OnEnable()
         {
-            selfTf = transform;
-            if (Utilities.IsValid(Networking.LocalPlayer))
+            _selfTf = transform;
+            if (Networking.LocalPlayer.IsValid())
             {
-                lPlayer = Networking.LocalPlayer;
+                _lPlayer = Networking.LocalPlayer;
 
                 // 初期位置にリセット
-                selfTf.position = lPlayer.GetTrackingData(trackingPoint).position;
-                selfTf.rotation = lPlayer.GetTrackingData(trackingPoint).rotation;
+                _selfTf.position = _lPlayer.GetTrackingData(trackingPoint).position;
+                _selfTf.rotation = _lPlayer.GetTrackingData(trackingPoint).rotation;
 
                 // VRか判定
-                isVR = lPlayer.IsUserInVR();
+                _isVR = _lPlayer.IsUserInVR();
             }
         }
 
         public override void PostLateUpdate()
         {
-            if (!Utilities.IsValid(lPlayer)) { return; }
+            if (!_lPlayer.IsValid()) { return; }
 
-            targetPos = lPlayer.GetTrackingData(trackingPoint).position;
-            targetRot = lPlayer.GetTrackingData(trackingPoint).rotation;
+            _targetPos = _lPlayer.GetTrackingData(trackingPoint).position;
+            _targetRot = _lPlayer.GetTrackingData(trackingPoint).rotation;
 
-            if (vROnly && !isVR)
+            if (vROnly && !_isVR)
             {
                 // VR時のみ有効かつDTモードなら
                 SyncPosition();
@@ -102,19 +102,19 @@ namespace MimyLab
                     FollowRotation();
                 }
             }
-            selfTf.SetPositionAndRotation(selfPos, selfRot);
+            _selfTf.SetPositionAndRotation(_selfPos, _selfRot);
         }
 
         // 位置同期
         void SyncPosition()
         {
-            selfPos = targetPos;
+            _selfPos = _targetPos;
         }
 
         // 回転同期
         void SyncRotation()
         {
-            selfRot = targetRot;
+            _selfRot = _targetRot;
         }
 
         // 位置の遅延追従
@@ -124,27 +124,27 @@ namespace MimyLab
             pauseThreshold = moveThreshold * 0.05f;
 
             // 相対距離を算出
-            distance = (selfPos - targetPos).sqrMagnitude;
+            _distance = (_selfPos - _targetPos).sqrMagnitude;
 
             // 閾値判定
-            if (distance >= moveThreshold * moveThreshold)
+            if (_distance >= moveThreshold * moveThreshold)
             {
-                isPause = false;
+                _isPause = false;
             }
-            else if (distance < pauseThreshold * pauseThreshold)
+            else if (_distance < pauseThreshold * pauseThreshold)
             {
-                isPause = true;
+                _isPause = true;
             }
 
-            if (distance > distanceRange * distanceRange)
+            if (_distance > distanceRange * distanceRange)
             {
                 // 離散距離の制限
-                selfPos = Vector3.MoveTowards(targetPos, selfPos, Mathf.Abs(distanceRange));
+                _selfPos = Vector3.MoveTowards(_targetPos, _selfPos, Mathf.Abs(distanceRange));
             }
-            else if (!isPause)
+            else if (!_isPause)
             {
                 // 位置を遅延追従
-                selfPos = Vector3.Lerp(selfPos, targetPos, followMoveSpeed);
+                _selfPos = Vector3.Lerp(_selfPos, _targetPos, followMoveSpeed);
             }
         }
 
@@ -156,34 +156,34 @@ namespace MimyLab
             restThreshold = RotateThreshold * 0.05f; // angleThresholdの5%を閾値に使う
 
             // 相対角度を算出
-            angle = Quaternion.Angle(selfRot, targetRot);
+            _angle = Quaternion.Angle(_selfRot, _targetRot);
 
             // 閾値判定
-            if (angle >= RotateThreshold)
+            if (_angle >= RotateThreshold)
             {
-                isRest = false;
+                _isRest = false;
             }
-            else if (angle < restThreshold)
+            else if (_angle < restThreshold)
             {
-                isRest = true;
+                _isRest = true;
             }
 
             // 軸毎に遅延しない追従を追加処理
-            if (lockRoll) { selfRot = Quaternion.LookRotation(selfRot * Vector3.forward, targetRot * Vector3.up); }
-            if (lockPitch) { selfRot = Quaternion.LookRotation(Vector3.ProjectOnPlane(selfRot * Vector3.forward, targetRot * Vector3.up), selfRot * Vector3.up); }
-            if (lockYaw) { selfRot = Quaternion.LookRotation(Vector3.ProjectOnPlane(selfRot * Vector3.forward, targetRot * Vector3.right), selfRot * Vector3.up); }
+            if (lockRoll) { _selfRot = Quaternion.LookRotation(_selfRot * Vector3.forward, _targetRot * Vector3.up); }
+            if (lockPitch) { _selfRot = Quaternion.LookRotation(Vector3.ProjectOnPlane(_selfRot * Vector3.forward, _targetRot * Vector3.up), _selfRot * Vector3.up); }
+            if (lockYaw) { _selfRot = Quaternion.LookRotation(Vector3.ProjectOnPlane(_selfRot * Vector3.forward, _targetRot * Vector3.right), _selfRot * Vector3.up); }
 
-            if (!isRest)
+            if (!_isRest)
             {
-                if (angle > angleRange)
+                if (_angle > angleRange)
                 {
                     // 距離が遠いので加速して回転を遅延追従
-                    selfRot = Quaternion.Lerp(selfRot, targetRot, followRotateSpeed * 4);
+                    _selfRot = Quaternion.Lerp(_selfRot, _targetRot, followRotateSpeed * 4);
                 }
                 else
                 {
                     // 回転を遅延追従
-                    selfRot = Quaternion.Lerp(selfRot, targetRot, followRotateSpeed);
+                    _selfRot = Quaternion.Lerp(_selfRot, _targetRot, followRotateSpeed);
                 }
             }
         }

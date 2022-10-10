@@ -48,7 +48,7 @@ namespace MimyLab
             _pageLink = v;
             // PageSelectでFeedbackするので省略
             // FeedbackController();
-            PageSelect(selectedPage[selectedIndex]);
+            PageSelect(_selectedPage[_selectedIndex]);
         }
         [Tooltip("When Auto Slide is enabled, this is forced to be enabled")]
         [SerializeField]
@@ -81,9 +81,9 @@ namespace MimyLab
             {
                 PageLoop = true;
 
-                if (!activeAutoSlide)
+                if (!_activeAutoSlide)
                 {
-                    activeAutoSlide = true;
+                    _activeAutoSlide = true;
                     SendCustomEventDelayedSeconds(nameof(PageAutoIncrement), v);
                 }
                 // PageSelectでFeedbackするので省略
@@ -94,15 +94,15 @@ namespace MimyLab
 
         // 同期用変数
         [UdonSynced(UdonSyncMode.None)]
-        int gSelectedIndex = 0;
+        int g_SelectedIndex = 0;
         [UdonSynced(UdonSyncMode.None)]
-        int[] gSelectedPage;
+        int[] g_SelectedPage;
 
         // ローカル用変数
-        int selectedIndex = 0;
-        int[] selectedPage;
-        int[] endPage;
-        bool activeAutoSlide = false;
+        int _selectedIndex = 0;
+        int[] _selectedPage;
+        int[] _endPage;
+        bool _activeAutoSlide = false;
 
         void OnValidate()
         {
@@ -111,12 +111,12 @@ namespace MimyLab
 
         void Start()
         {
-            selectedPage = new int[literatures.Length];
-            gSelectedPage = new int[literatures.Length];
-            endPage = new int[literatures.Length];
-            for (int i = 0; i < endPage.Length; i++)
+            _selectedPage = new int[literatures.Length];
+            g_SelectedPage = new int[literatures.Length];
+            _endPage = new int[literatures.Length];
+            for (int i = 0; i < _endPage.Length; i++)
             {
-                endPage[i] = literatures[i].EndPage;
+                _endPage[i] = literatures[i].EndPage;
             }
 
             RefreshView();
@@ -125,7 +125,7 @@ namespace MimyLab
             // 自動ページ送り開始
             if (AutoSlide > 0.0f)
             {
-                activeAutoSlide = true;
+                _activeAutoSlide = true;
                 SendCustomEventDelayedSeconds(nameof(PageAutoIncrement), AutoSlide);
             }
         }
@@ -135,10 +135,10 @@ namespace MimyLab
         ******************************/
         public override void OnPreSerialization()
         {
-            gSelectedIndex = selectedIndex;
+            g_SelectedIndex = _selectedIndex;
             for (int i = 0; i < literatures.Length; i++)
             {
-                gSelectedPage[i] = selectedPage[i];
+                g_SelectedPage[i] = _selectedPage[i];
             }
         }
 
@@ -146,10 +146,10 @@ namespace MimyLab
         {
             if (!IsGlobal) { return; }
 
-            selectedIndex = gSelectedIndex;
+            _selectedIndex = g_SelectedIndex;
             for (int i = 0; i < literatures.Length; i++)
             {
-                selectedPage[i] = gSelectedPage[i];
+                _selectedPage[i] = g_SelectedPage[i];
             }
 
             RefreshView();
@@ -165,14 +165,14 @@ namespace MimyLab
 
             if (PageLink)
             {
-                for (int i = 0; i < selectedPage.Length; i++)
+                for (int i = 0; i < _selectedPage.Length; i++)
                 {
-                    selectedPage[i] = Mathf.Clamp(num, 0, endPage[i]);
+                    _selectedPage[i] = Mathf.Clamp(num, 0, _endPage[i]);
                 }
             }
             else
             {
-                selectedPage[selectedIndex] = Mathf.Clamp(num, 0, endPage[selectedIndex]);
+                _selectedPage[_selectedIndex] = Mathf.Clamp(num, 0, _endPage[_selectedIndex]);
             }
             if (IsGlobal) { RequestSerialization(); }
             RefreshView();
@@ -180,9 +180,9 @@ namespace MimyLab
         }
         public void PageIncrement()
         {
-            if (selectedPage[selectedIndex] < endPage[selectedIndex])
+            if (_selectedPage[_selectedIndex] < _endPage[_selectedIndex])
             {
-                PageSelect(selectedPage[selectedIndex] + 1);
+                PageSelect(_selectedPage[_selectedIndex] + 1);
             }
             else if (PageLoop)
             {
@@ -191,13 +191,13 @@ namespace MimyLab
         }
         public void PageDecrement()
         {
-            if (selectedPage[selectedIndex] > 0)
+            if (_selectedPage[_selectedIndex] > 0)
             {
-                PageSelect(selectedPage[selectedIndex] - 1);
+                PageSelect(_selectedPage[_selectedIndex] - 1);
             }
             else if (PageLoop)
             {
-                PageSelect(endPage[selectedIndex]);
+                PageSelect(_endPage[_selectedIndex]);
             }
         }
 
@@ -205,7 +205,7 @@ namespace MimyLab
         {
             if (IsGlobal && !Networking.IsOwner(this.gameObject)) { Networking.SetOwner(Networking.LocalPlayer, this.gameObject); }
 
-            selectedIndex = Mathf.Clamp(num, 0, literatures.Length - 1);
+            _selectedIndex = Mathf.Clamp(num, 0, literatures.Length - 1);
 
             if (IsGlobal) { RequestSerialization(); }
             RefreshView();
@@ -213,12 +213,12 @@ namespace MimyLab
         }
         public void IndexIncrement()
         {
-            IndexSelect((selectedIndex < literatures.Length - 1) ? selectedIndex + 1 : 0);
+            IndexSelect((_selectedIndex < literatures.Length - 1) ? _selectedIndex + 1 : 0);
 
         }
         public void IndexDecrement()
         {
-            IndexSelect((selectedIndex > 0) ? selectedIndex - 1 : literatures.Length - 1);
+            IndexSelect((_selectedIndex > 0) ? _selectedIndex - 1 : literatures.Length - 1);
         }
 
         public void PageAutoIncrement()
@@ -226,13 +226,13 @@ namespace MimyLab
             if (AutoSlide > 0.0f)
             {
                 // 自動ページ送り継続
-                activeAutoSlide = true;
+                _activeAutoSlide = true;
                 SendCustomEventDelayedSeconds(nameof(PageAutoIncrement), AutoSlide);
             }
             else
             {
                 // AutoSlide無効中なら停止
-                activeAutoSlide = false;
+                _activeAutoSlide = false;
                 return;
             }
 
@@ -251,23 +251,23 @@ namespace MimyLab
             {
                 if (literatures[i])
                 {
-                    literatures[i].gameObject.SetActive(i == selectedIndex);
-                    literatures[i].Page = selectedPage[i];
+                    literatures[i].gameObject.SetActive(i == _selectedIndex);
+                    literatures[i].Page = _selectedPage[i];
                 }
             }
         }
 
         void FeedbackController()
         {
-            bool next = (PageLoop) ? true : (selectedPage[selectedIndex] < endPage[selectedIndex]);
-            bool prev = (PageLoop) ? true : (selectedPage[selectedIndex] > 0);
+            bool next = (PageLoop) ? true : (_selectedPage[_selectedIndex] < _endPage[_selectedIndex]);
+            bool prev = (PageLoop) ? true : (_selectedPage[_selectedIndex] > 0);
             for (int i = 0; i < controllers.Length; i++)
             {
                 if (controllers[i])
                 {
                     controllers[i].SetPageInteractable(next, prev);
-                    controllers[i].SetPageSlider(selectedPage[selectedIndex], 0, endPage[selectedIndex]);
-                    controllers[i].SetIndexSlider(selectedIndex, 0, literatures.Length - 1);
+                    controllers[i].SetPageSlider(_selectedPage[_selectedIndex], 0, _endPage[_selectedIndex]);
+                    controllers[i].SetIndexSlider(_selectedIndex, 0, literatures.Length - 1);
                     controllers[i].SetSettingsToggle(IsGlobal, PageLink, PageLoop);
                     controllers[i].SetSettingsInteractable(true, true, !(AutoSlide > 0.0f));
                     controllers[i].SetAutoSlider(AutoSlide);
