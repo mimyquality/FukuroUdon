@@ -5,19 +5,15 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
-## [0.3.0] - 2022-\*\*-\*\*
-
-βリリース
+## [0.2.3] - 2022-10-18
 
 ### Added
 
-- Oneshot FX Playerを追加
+- Active Relayを追加
 
 ### Fixed
 
 - 全体的に軽微なリファクタリング
-
-[0.3.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.3.0
 
 ## [0.2.2] - 2022-10-10
 
@@ -33,4 +29,5 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
+[0.2.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.3
 [0.2.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.2
