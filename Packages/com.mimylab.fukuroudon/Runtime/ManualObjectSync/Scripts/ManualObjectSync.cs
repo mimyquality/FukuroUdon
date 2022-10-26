@@ -346,14 +346,19 @@ namespace MimyLab
         // _isHeldならVRCPickupとRigidbodyが付いている
         void PickupOffsetCheck()
         {
-            _pickupHand = (byte)_pickup.currentHand;
+            var currentHand = (byte)_pickup.currentHand;
+            if (_pickupHand != currentHand)
+            {
+                _pickupHand = currentHand;
+                RequestSerialization();
+            }
 
-            var pickupHandBone = (_pickup.currentHand == VRCPickup.PickupHand.Left) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
+            var pickupHandBone = (currentHand == (byte)VRCPickup.PickupHand.Left) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
             var handPosition = _localPlayer.GetBonePosition(pickupHandBone);
             var handRotation = _localPlayer.GetBoneRotation(pickupHandBone);
 
-            var offsetPosition = (handPosition == Vector3.zero) ? Vector3.zero : Quaternion.Inverse(handRotation) * (_rigidbody.position - handPosition);
-            var offsetRotation = (handRotation == Quaternion.identity) ? Quaternion.identity : (Quaternion.Inverse(handRotation) * _rigidbody.rotation);
+            var offsetPosition = (handPosition.Equals(Vector3.zero)) ? Vector3.zero : Quaternion.Inverse(handRotation) * (_rigidbody.position - handPosition);
+            var offsetRotation = (handRotation.Equals(Quaternion.identity)) ? Quaternion.identity : (Quaternion.Inverse(handRotation) * _rigidbody.rotation);
 
             if (offsetPosition != _syncPosition
              || offsetRotation != _syncRotation)
@@ -371,15 +376,15 @@ namespace MimyLab
             _ownerPlayer = Networking.GetOwner(this.gameObject);
             if (!Utilities.IsValid(_ownerPlayer)) { return; }
 
-            var pickupHandBone = ((VRCPickup.PickupHand)_pickupHand == VRCPickup.PickupHand.Left) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
+            var pickupHandBone = (_pickupHand == (byte)VRCPickup.PickupHand.Left) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
             var handPosition = _ownerPlayer.GetBonePosition(pickupHandBone);
             var handRotation = _ownerPlayer.GetBoneRotation(pickupHandBone);
 
-            if (handPosition == Vector3.zero
-             || handRotation == Quaternion.identity)
+            if (handPosition.Equals(Vector3.zero)
+             || handRotation.Equals(Quaternion.identity))
             {
                 // ボーン情報の代わりにプレイヤー原点からの固定値
-                handPosition = new Vector3(((VRCPickup.PickupHand)_pickupHand == VRCPickup.PickupHand.Left) ? -0.2f : 0.2f, 1.0f, 0.3f);
+                handPosition = new Vector3((_pickupHand == (byte)VRCPickup.PickupHand.Left) ? -0.2f : 0.2f, 1.0f, 0.3f);
                 _rigidbody.MovePosition(_ownerPlayer.GetPosition() + (_ownerPlayer.GetRotation() * handPosition));
                 _rigidbody.MoveRotation(_ownerPlayer.GetRotation());
             }
