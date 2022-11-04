@@ -5,6 +5,13 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [0.2.5] - 2022-11-04
+
+### Fixed
+
+- Manual ObjectSync
+  - 11/3のアップデートにて、VRCPickupと併用した場合で、ピックアップしたまま退室されると他の人が掴み直せなくなる不具合に対応しました。
+
 ## [0.2.4] - 2022-10-26
 
 ### Fixed
@@ -36,6 +43,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
+[0.2.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.5
 [0.2.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.4
 [0.2.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.3
 [0.2.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.2

@@ -234,6 +234,28 @@ namespace MimyLab
             }
         }
 
+        public override void OnPlayerLeft(VRCPlayerApi player)
+        {
+            Initialize();
+
+            if (_pickup)
+            {
+                if (Networking.IsOwner(this.gameObject))
+                {
+                    // Pickup抱えたまま落ちたかもしれないのでピックアップ状況更新
+                    _isHeld = _pickup.IsHeld;
+                    _pickup.pickupable = Pickupable;
+                    RequestSerialization();
+                }
+            }
+
+            // Ownerが落ちたかもしれないので改めて物理演算更新
+            if (_rigidbody)
+            {
+                _rigidbody.isKinematic = (Networking.IsOwner(this.gameObject)) ? IsKinematic : true;
+            }
+        }
+
         // VRCPickupとRigidbodyがある
         public override void OnPickup()
         {
