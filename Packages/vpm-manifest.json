@@ -9,7 +9,7 @@
   },
   "locked": {
     "com.vrchat.udonsharp": {
-      "version": "1.1.4",
+      "version": "1.1.6",
       "dependencies": {
         "com.vrchat.worlds": "3.1.x"
       }
@@ -21,7 +21,7 @@
       }
     },
     "com.vrchat.base": {
-      "version": "3.1.10"
+      "version": "3.1.10"      
     },
     "com.vrchat.core.vpm-resolver": {
       "version": "0.1.17"

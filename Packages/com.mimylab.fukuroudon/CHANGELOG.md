@@ -5,6 +5,13 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [0.2.6] - 2022-12-28
+
+### Fixed
+
+- Manual ObjectSync
+  - Rotationの変動チェックがMove Check Spaceを無視していたのを修正しました。
+
 ## [0.2.5] - 2022-11-04
 
 ### Fixed
@@ -43,6 +50,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
+[0.2.6]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.6
 [0.2.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.5
 [0.2.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.4
 [0.2.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.3

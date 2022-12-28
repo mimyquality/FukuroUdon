@@ -330,14 +330,14 @@ namespace MimyLab
         void TransformMoveCheck()
         {
             if (moveCheckSpace == Space.Self
-            && _transform.localPosition != _localPosition
-            || _transform.localRotation != _localRotation)
+            && (_transform.localPosition != _localPosition
+             || _transform.localRotation != _localRotation))
             {
                 SyncLocation();
             }
             else if (moveCheckSpace == Space.World
-            && _transform.position != _syncPosition
-            || _transform.rotation != _syncRotation)
+            && (_transform.position != _syncPosition
+             || _transform.rotation != _syncRotation))
             {
                 SyncLocation();
             }
