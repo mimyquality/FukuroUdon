@@ -11,7 +11,7 @@
   "documentationUrl": "https://github.com/mimyquality/FukuroUdon/wiki",
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.udonsharp": "1.1.x"
+    "com.vrchat.udonsharp": "^1.1.1"
   },
   "legacyFolders": {
     "Assets\\MimyLab/ActiveRelay": "",
