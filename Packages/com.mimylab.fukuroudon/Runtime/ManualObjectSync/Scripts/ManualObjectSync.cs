@@ -209,6 +209,14 @@ namespace MimyLab
             }
         }
 
+        public override void OnPreSerialization()
+        {
+            if (_syncScale != _transform.localScale)
+            {
+                _syncScale = transform.localScale;
+            }
+        }
+
         public override void OnDeserialization()
         {
             Initialize();
