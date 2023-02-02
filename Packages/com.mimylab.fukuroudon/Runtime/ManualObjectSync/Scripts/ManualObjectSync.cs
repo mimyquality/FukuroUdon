@@ -63,7 +63,7 @@ namespace MimyLab
 
         [UdonSynced] Vector3 _syncPosition; // 位置同期用、ピックアップ時はオフセット用
         [UdonSynced] Quaternion _syncRotation; // 回転同期用、ピックアップ時はオフセット用
-        [UdonSynced] Vector3 _syncScale;    // 拡縮同期用
+        [UdonSynced] Vector3 _syncScale = Vector3.one;    // 拡縮同期用
 
         [FieldChangeCallback(nameof(UseGravity))]
         [UdonSynced] bool _useGravity = false;
@@ -77,7 +77,7 @@ namespace MimyLab
         // 初期値保存用
         Vector3 _startPosition, _localPosition;
         Quaternion _startRotation, _localRotation;
-        Vector3 _startScale, _localScale;
+        Vector3 _startScale = Vector3.one, _localScale = Vector3.one;
 
         // 計算用
         Transform _transform;
@@ -125,7 +125,7 @@ namespace MimyLab
 
             _moveCheckTiming = GetInstanceID() % moveCheckTickRate;
 
-            if (Networking.IsOwner(this.gameObject))
+            //if (Networking.IsOwner(this.gameObject))
             {
                 _syncPosition = _startPosition;
                 _syncRotation = _startRotation;
@@ -213,9 +213,10 @@ namespace MimyLab
         {
             Initialize();
 
-            if (_syncScale != _transform.localScale)
+            if (_transform.localScale != _syncScale)
             {
                 _transform.localScale = _syncScale;
+                _localScale = _syncScale;
             }
 
             if (_pickup) { _pickup.pickupable = (_pickup.DisallowTheft && _isHeld) ? false : Pickupable; }
@@ -232,6 +233,8 @@ namespace MimyLab
             {
                 _transform.SetPositionAndRotation(_syncPosition, _syncRotation);
             }
+            _localPosition = _syncPosition;
+            _localRotation = _syncRotation;
         }
 
         public override void OnPlayerLeft(VRCPlayerApi player)
@@ -275,8 +278,12 @@ namespace MimyLab
 
             _syncPosition = _transform.position;
             _syncRotation = _transform.rotation;
+            _localPosition = _transform.localPosition;
+            _localRotation = _transform.localRotation;
 
             RequestSerialization();
+
+            _transform.hasChanged = false;
         }
 
         public void Respawn()
