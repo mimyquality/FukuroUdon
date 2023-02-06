@@ -8,7 +8,7 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.SDK3.Components;
-//using VRC.Udon;
+//using VRC.Udon;w
 
 namespace MimyLab
 {
@@ -61,8 +61,8 @@ namespace MimyLab
             }
         }
 
-        [UdonSynced] Vector3 _syncPosition; // 位置同期用、ピックアップ時はオフセット用
-        [UdonSynced] Quaternion _syncRotation; // 回転同期用、ピックアップ時はオフセット用
+        [UdonSynced] Vector3 _syncPosition = Vector3.zero; // 位置同期用、ピックアップ時はオフセット用
+        [UdonSynced] Quaternion _syncRotation = Quaternion.identity; // 回転同期用、ピックアップ時はオフセット用
         [UdonSynced] Vector3 _syncScale = Vector3.one;    // 拡縮同期用
 
         [FieldChangeCallback(nameof(UseGravity))]
@@ -125,21 +125,29 @@ namespace MimyLab
 
             _moveCheckTiming = GetInstanceID() % moveCheckTickRate;
 
-            //if (Networking.IsOwner(this.gameObject))
+            if (_rigidbody)
             {
+                _useGravity = _rigidbody.useGravity;
+                _isKinematic = _rigidbody.isKinematic;
+            }
+            if (_pickup)
+            {
+                _pickupable = _pickup.pickupable;
+            }
+
+            if (_syncPosition.Equals(Vector3.zero)
+             && _syncRotation.Equals(Quaternion.identity)
+             && _syncScale.Equals(Vector3.one))
+            {
+                // _sync系が全部初期値ならInitialize時点では同期されてきてないと見なす
                 _syncPosition = _startPosition;
                 _syncRotation = _startRotation;
                 _syncScale = _startScale;
-
-                if (_rigidbody)
-                {
-                    _useGravity = _rigidbody.useGravity;
-                    _isKinematic = _rigidbody.isKinematic;
-                }
-                if (_pickup)
-                {
-                    _pickupable = _pickup.pickupable;
-                }
+            }
+            else
+            {
+                // OnDeserialization()が発火しない事がある対策
+                LoadSyncTransform();
             }
 
             _initialized = true;
@@ -147,7 +155,6 @@ namespace MimyLab
         void Start()
         {
             Initialize();
-            RequestSerialization();
         }
 
         public override void PostLateUpdate()
@@ -213,28 +220,7 @@ namespace MimyLab
         {
             Initialize();
 
-            if (_transform.localScale != _syncScale)
-            {
-                _transform.localScale = _syncScale;
-                _localScale = _syncScale;
-            }
-
-            if (_pickup) { _pickup.pickupable = (_pickup.DisallowTheft && _isHeld) ? false : Pickupable; }
-
-            // ピックアップ中はPostLateUpdate内で位置制御
-            if (_isHeld) { return; }
-
-            if (_rigidbody)
-            {
-                _rigidbody.MovePosition(_syncPosition);
-                _rigidbody.MoveRotation(_syncRotation);
-            }
-            else
-            {
-                _transform.SetPositionAndRotation(_syncPosition, _syncRotation);
-            }
-            _localPosition = _syncPosition;
-            _localRotation = _syncRotation;
+            LoadSyncTransform();
         }
 
         public override void OnPlayerLeft(VRCPlayerApi player)
@@ -331,6 +317,32 @@ namespace MimyLab
                 RequestSerialization();
 
                 _transform.hasChanged = false;
+            }
+        }
+
+        void LoadSyncTransform()
+        {
+            if (_pickup) { _pickup.pickupable = (_pickup.DisallowTheft && _isHeld) ? false : Pickupable; }
+
+            // ピックアップ中はPostLateUpdate内で位置制御
+            if (_isHeld) { return; }
+
+            if (_rigidbody)
+            {
+                _rigidbody.MovePosition(_syncPosition);
+                _rigidbody.MoveRotation(_syncRotation);
+            }
+            else
+            {
+                _transform.SetPositionAndRotation(_syncPosition, _syncRotation);
+            }
+            _localPosition = _syncPosition;
+            _localRotation = _syncRotation;
+
+            if (_transform.localScale != _syncScale)
+            {
+                _transform.localScale = _syncScale;
+                _localScale = _syncScale;
             }
         }
 
