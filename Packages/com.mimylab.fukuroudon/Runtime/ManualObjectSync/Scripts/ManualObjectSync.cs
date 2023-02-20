@@ -8,7 +8,7 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.SDK3.Components;
-//using VRC.Udon;w
+//using VRC.Udon;
 
 namespace MimyLab
 {
@@ -85,6 +85,7 @@ namespace MimyLab
         VRCPickup _pickup = null;
         VRCPlayerApi _localPlayer, _ownerPlayer;
         int _moveCheckTiming;
+        bool _syncHasChanged = false;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         void Reset()
@@ -139,15 +140,16 @@ namespace MimyLab
              && _syncRotation.Equals(Quaternion.identity)
              && _syncScale.Equals(Vector3.one))
             {
-                // _sync系が全部初期値ならInitialize時点では同期されてきてないと見なす
+                // _sync系が全部初期値ならInitialize時点では同期されてきてないと見なして初期化
                 _syncPosition = _startPosition;
                 _syncRotation = _startRotation;
                 _syncScale = _startScale;
             }
             else
             {
-                // OnDeserialization()が発火しない事がある対策
-                LoadSyncTransform();
+                // 既に同期されているがOnDeserialization()が発火しないことがあるので、同じ内容を実行
+                if (_pickup) { _pickup.pickupable = (_pickup.DisallowTheft && _isHeld) ? false : Pickupable; }
+                _syncHasChanged = true;
             }
 
             _initialized = true;
@@ -180,9 +182,16 @@ namespace MimyLab
                     }
                 }
             }
-            else if (_isHeld)
+            else
             {
-                HoldingOther();
+                if (_isHeld)
+                {
+                    HoldingOther();
+                }
+                else if (_syncHasChanged)
+                {
+                    ApplySyncTransform();
+                }
             }
         }
 
@@ -220,7 +229,10 @@ namespace MimyLab
         {
             Initialize();
 
-            LoadSyncTransform();
+            if (_pickup) { _pickup.pickupable = (_pickup.DisallowTheft && _isHeld) ? false : Pickupable; }
+
+            // 本当に_syncPosition/Rotation/Scaleに変化があったかは見ない
+            _syncHasChanged = true;
         }
 
         public override void OnPlayerLeft(VRCPlayerApi player)
@@ -253,6 +265,7 @@ namespace MimyLab
             _rigidbody.isKinematic = IsKinematic;
 
             _isHeld = true;
+            PickupOffsetCheck();
 
             RequestSerialization();
         }
@@ -320,32 +333,6 @@ namespace MimyLab
             }
         }
 
-        void LoadSyncTransform()
-        {
-            if (_pickup) { _pickup.pickupable = (_pickup.DisallowTheft && _isHeld) ? false : Pickupable; }
-
-            // ピックアップ中はPostLateUpdate内で位置制御
-            if (_isHeld) { return; }
-
-            if (_rigidbody)
-            {
-                _rigidbody.MovePosition(_syncPosition);
-                _rigidbody.MoveRotation(_syncRotation);
-            }
-            else
-            {
-                _transform.SetPositionAndRotation(_syncPosition, _syncRotation);
-            }
-            _localPosition = _syncPosition;
-            _localRotation = _syncRotation;
-
-            if (_transform.localScale != _syncScale)
-            {
-                _transform.localScale = _syncScale;
-                _localScale = _syncScale;
-            }
-        }
-
         void TransformMoveCheck()
         {
             if (moveCheckSpace == Space.Self
@@ -382,6 +369,32 @@ namespace MimyLab
             _localScale = _transform.localScale;
 
             RequestSerialization();
+        }
+
+        void ApplySyncTransform()
+        {
+            // ピックアップ中はPostLateUpdate内で位置制御
+            if (_isHeld) { return; }
+
+            if (_rigidbody)
+            {
+                _rigidbody.MovePosition(_syncPosition);
+                _rigidbody.MoveRotation(_syncRotation);
+            }
+            else
+            {
+                _transform.SetPositionAndRotation(_syncPosition, _syncRotation);
+            }
+            _localPosition = _syncPosition;
+            _localRotation = _syncRotation;
+
+            if (_transform.localScale != _syncScale)
+            {
+                _transform.localScale = _syncScale;
+                _localScale = _syncScale;
+            }
+
+            _syncHasChanged = false;
         }
 
         // _isHeldならVRCPickupとRigidbodyが付いている
