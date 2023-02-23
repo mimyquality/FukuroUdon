@@ -17,23 +17,23 @@ namespace MimyLab
     {
         [Header("Reference")]
         [SerializeField]
-        Sprite[] slide;    // 表示するスライドのリスト
+        private Sprite[] slide;    // 表示するスライドのリスト
 
-        Image _image = null; // スライドを表示するuGUI
+        protected Image _image = null; // スライドを表示するuGUI
 
-        public int EndPage
+        public virtual int EndPage
         {
             get => slide.Length - 1;
         }
 
         [FieldChangeCallback(nameof(Page))]
-        private int _page = 0;
+        protected int _page = 0;
         public int Page
         {
             get => _page;
             set => SetPage(value);
         }
-        private void SetPage(int v)
+        protected virtual void SetPage(int v)
         {
             _page = Mathf.Clamp(v, 0, EndPage);
 
@@ -44,7 +44,7 @@ namespace MimyLab
             }
         }
 
-        void Start()
+        protected void Start()
         {
             Page = Page;
         }

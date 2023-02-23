@@ -5,6 +5,14 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [0.3.0] - 2023/2/24
+
+### Add
+
+- Smart Slideshow
+  - ImageDownloaderに対応しました。初回表示時にインターネットから画像を読み込んで表示できるようになります。
+  - 読み込める画像はImageDownloaderの制限に準拠します。詳細は公式ドキュメント( https://docs.vrchat.com/docs/image-loading )を見てください。
+
 ## [0.2.10] - 2023-2-20
 
 ### Fixed
@@ -70,7 +78,8 @@
 - Smart Slideshowを追加
 - Swivel Chairを追加
 - VR Follow HUDを追加
-
+- 
+[0.3.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.3.0
 [0.2.10]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.10
 [0.2.8]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.8
 [0.2.7]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.7
