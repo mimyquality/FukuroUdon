@@ -12,6 +12,7 @@ using VRC.SDK3.Components;
 
 namespace MimyLab
 {
+    [AddComponentMenu("Fukuro Udon/ObjectPool Manager")]
     [RequireComponent(typeof(VRCObjectPool))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class ObjectPoolManager : UdonSharpBehaviour

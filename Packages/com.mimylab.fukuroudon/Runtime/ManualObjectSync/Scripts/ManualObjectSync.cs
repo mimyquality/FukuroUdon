@@ -12,6 +12,7 @@ using VRC.SDK3.Components;
 
 namespace MimyLab
 {
+    [AddComponentMenu("Fukuro Udon/Manual ObjectSync")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class ManualObjectSync : UdonSharpBehaviour
     {

@@ -11,6 +11,7 @@ using UnityEngine;
 
 namespace MimyLab
 {
+    [AddComponentMenu("Fukuro Udon/Limited Constraint/Position")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class LimitedPositionConstraint : UdonSharpBehaviour
     {

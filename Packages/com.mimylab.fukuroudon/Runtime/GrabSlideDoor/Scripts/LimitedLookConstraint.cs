@@ -11,6 +11,7 @@ using UnityEngine;
 
 namespace MimyLab
 {
+    [AddComponentMenu("Fukuro Udon/Limited Constraint/LookAt")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class LimitedLookConstraint : UdonSharpBehaviour
     {

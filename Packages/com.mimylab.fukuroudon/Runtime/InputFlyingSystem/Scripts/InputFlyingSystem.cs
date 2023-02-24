@@ -12,6 +12,7 @@ using VRC.Udon.Common;
 
 namespace MimyLab
 {
+    [AddComponentMenu("Fukuro Udon/Input Flying System")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class InputFlyingSystem : UdonSharpBehaviour
     {

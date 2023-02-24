@@ -11,6 +11,7 @@ using VRC.Udon;
 
 namespace MimyLab
 {
+    [AddComponentMenu("Fukuro Udon/VR Follow HUD")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class VRFollowHUD : UdonSharpBehaviour
     {

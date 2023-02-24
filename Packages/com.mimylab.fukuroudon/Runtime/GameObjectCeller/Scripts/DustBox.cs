@@ -12,6 +12,7 @@ using VRC.Udon;
 
 namespace MimyLab
 {
+    [AddComponentMenu("Fukuro Udon/Dust Box")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class DustBox : UdonSharpBehaviour
     {

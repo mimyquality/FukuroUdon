@@ -18,6 +18,7 @@ namespace MimyLab
         ActiveAndInactive,
     }
 
+    [AddComponentMenu("Fukuro Udon/Active Relay/To Animator")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class ActiveRelayToAnimator : UdonSharpBehaviour
     {
@@ -29,6 +30,8 @@ namespace MimyLab
         [Header("Set Animator parameters by event")]
         [SerializeField]
         string _triggerName = "";
+        [SerializeField]
+        bool _resetTrigger = false;
 
         [Space]
         [SerializeField]
@@ -88,7 +91,11 @@ namespace MimyLab
         {
             if (_animator)
             {
-                if (_triggerName != "") { _animator.SetTrigger(_triggerNameHash); }
+                if (_triggerName != "")
+                {
+                    if (_resetTrigger) { _animator.ResetTrigger(_triggerNameHash);}
+                    else { _animator.SetTrigger(_triggerNameHash); }
+                }
                 if (_boolName != "") { _animator.SetBool(_boolNameHash, _boolValue); }
                 if (_intName != "") { _animator.SetInteger(_intNameHash, _intValue); }
                 if (_floatName != "") { _animator.SetFloat(_floatNameHash, _floatValue); }

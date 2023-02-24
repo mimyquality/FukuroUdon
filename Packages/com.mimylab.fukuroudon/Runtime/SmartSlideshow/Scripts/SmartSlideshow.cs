@@ -11,6 +11,7 @@ using VRC.Udon;
 
 namespace MimyLab
 {
+    [AddComponentMenu("Fukuro Udon/Smart Slideshow/Smart Slideshow")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class SmartSlideshow : UdonSharpBehaviour
     {

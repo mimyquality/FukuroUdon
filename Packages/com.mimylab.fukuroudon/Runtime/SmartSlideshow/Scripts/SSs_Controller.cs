@@ -13,6 +13,7 @@ using TMPro;
 
 namespace MimyLab
 {
+    [AddComponentMenu("Fukuro Udon/Smart Slideshow/Controller")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class SSs_Controller : UdonSharpBehaviour
     {

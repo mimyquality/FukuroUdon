@@ -13,6 +13,7 @@ using VRC.SDK3.Image;
 
 namespace MimyLab
 {
+    [AddComponentMenu("Fukuro Udon/Smart Slideshow/Web Literature")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class WebLiterature : Literature
     {

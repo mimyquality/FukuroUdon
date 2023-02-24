@@ -12,6 +12,7 @@ using UnityEngine.UI;
 
 namespace MimyLab
 {
+    [AddComponentMenu("Fukuro Udon/Smart Slideshow/Literature")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class Literature : UdonSharpBehaviour
     {

@@ -15,6 +15,7 @@ using UnityEngine.Animations;
 
 namespace MimyLab
 {
+    [AddComponentMenu("Fukuro Udon/Active Relay/To Component")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class ActiveRelayToComponent : UdonSharpBehaviour
     {
