@@ -25,10 +25,6 @@ namespace MimyLab
         [SerializeField]
         private Texture2D textureLoading, textureLoadError; // 読み込むまでの表示用画像
 
-        [Header("Don't touch")]
-        [SerializeField]
-        private Material _tmpMaterial;
-
         private VRCImageDownloader _imageDownloader;
         private Texture2D[] _dlTextures;
 
@@ -48,7 +44,7 @@ namespace MimyLab
             _dlTextures = new Texture2D[imageUrl.Length];
             for (int i = 0; i < imageUrl.Length; i++)
             {
-                _imageDownloader.DownloadImage(imageUrl[i], _tmpMaterial, (IUdonEventReceiver)this, textureInfo);
+                _imageDownloader.DownloadImage(imageUrl[i], null, (IUdonEventReceiver)this, textureInfo);
                 _dlTextures[i] = textureLoading;
             }
 
