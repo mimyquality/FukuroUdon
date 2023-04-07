@@ -6,6 +6,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.mimylab.playeraudiomanager": {
+      "version": "file:com.mimylab.playeraudiomanager",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.burst": {
       "version": "1.4.11",
       "depth": 1,
@@ -52,6 +58,15 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.inputsystem": {
+      "version": "1.2.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.mathematics": {
@@ -142,6 +157,15 @@
         "com.unity.nuget.newtonsoft-json": "2.0.2"
       }
     },
+    "com.vrchat.clientsim": {
+      "version": "file:com.vrchat.clientsim",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.xr.oculus.standalone": "2.38.4",
+        "com.unity.inputsystem": "1.2.0"
+      }
+    },
     "com.vrchat.core.bootstrap": {
       "version": "file:com.vrchat.core.bootstrap",
       "depth": 0,
@@ -172,6 +196,14 @@
         "com.unity.cinemachine": "2.8.0",
         "com.unity.postprocessing": "3.1.1",
         "com.unity.textmeshpro": "2.1.6"
+      }
+    },
+    "dev.onevr.vrworldtoolkit": {
+      "version": "file:dev.onevr.vrworldtoolkit",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.postprocessing": "3.1.1"
       }
     },
     "com.unity.modules.ai": {

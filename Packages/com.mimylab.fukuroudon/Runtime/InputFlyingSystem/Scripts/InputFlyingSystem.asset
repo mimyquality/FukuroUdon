@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: InputFlyingSystem
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 7b64b3f79289de54ba9e0e31d17e299a,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 45b9f75b3cb26b1418e85ef04e41b91a,
     type: 2}
   udonAssembly: 
   assemblyError: 

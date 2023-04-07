@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: ActiveRelayToAnimator
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: f01a49ca61d036245bd22c8ef201c7de,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 41d0a1a1ee0b80945afc7e1cb4fb63d7,
     type: 2}
   udonAssembly: 
   assemblyError: 

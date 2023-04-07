@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: SmartSlideshow
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: d583f0362e763f4479cb87545b5d7993,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: fba94aff6d915494288ba89b87172651,
     type: 2}
   udonAssembly: 
   assemblyError: 

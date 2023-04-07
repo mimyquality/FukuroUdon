@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: LimitedLookConstraint
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 96e0a3b389b28cb40ac382605e7f44f2,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: a65f5381acf477943aafbaaa74892842,
     type: 2}
   udonAssembly: 
   assemblyError: 
