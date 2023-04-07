@@ -6,12 +6,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "com.mimylab.playeraudiomanager": {
-      "version": "file:com.mimylab.playeraudiomanager",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.unity.burst": {
       "version": "1.4.11",
       "depth": 1,

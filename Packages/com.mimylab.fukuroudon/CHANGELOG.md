@@ -7,7 +7,7 @@
 ## [1.0.0] - 2023/4/8
 ### Changed
 - VCC 2.1.0からコミュニティーリポジトリーに対応したのに合わせて、[MimyLabリポジトリー](https://vpm.mimylab.com/)を公開しました。VCCからFukuro Udonのバージョン管理ができるようになります。
-- 上記に合わせて[導入手順](Packages/com.mimylab.fukuroudon/README.md)を書き直しました。
+- 上記に合わせて[導入手順](https://github.com/mimyquality/FukuroUdon)を書き直しました。
 
 ## [0.3.2] - 2023/2/25
 ### Delete
@@ -73,6 +73,7 @@
 - VR Follow HUDを追加
 
 [1.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.0.0
+[0.3.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.3.2
 [0.3.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.3.1
 [0.3.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.3.0
 [0.2.10]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.10
