@@ -1,6 +1,6 @@
 {
   "name": "com.mimylab.fukuroudon",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "displayName": "Fukuro Udon",
   "description": "MimyLab's U# utilitiy pack for VPM.",
   "unity": "2019.4",
@@ -63,6 +63,11 @@
       "displayName": "VR Follow HUD",
       "description": "酔いにくいオーバーレイUIのための、ローカルプレイヤーに遅延追従するギミック",
       "path": "Samples/VRFollowHUD"
+    },
+    {
+      "displayName": "PlayerAudio Master",
+      "description": "様々な条件でプレイヤー同士の声量やアバター音量を制御できるギミック",
+      "path": "Samples/PlayerAudioMaster"
     }
   ]
 }
