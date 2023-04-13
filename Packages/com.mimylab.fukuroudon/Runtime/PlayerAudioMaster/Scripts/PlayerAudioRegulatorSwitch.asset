@@ -1004,7 +1004,7 @@ MonoBehaviour:
       Data: 54|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.PlayerAudioRegulatorSwitchMode, Assembly-CSharp
+      Data: MimyLab.PlayerAudioRegulatorSwitchMode, com.mimylab.fukuroudon
     - Name: 
       Entry: 8
       Data: 
