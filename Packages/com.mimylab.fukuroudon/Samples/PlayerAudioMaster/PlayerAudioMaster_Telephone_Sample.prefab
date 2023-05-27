@@ -336,6 +336,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e338c89470957ef49a309fc7288b2c78, type: 2}
+    - target: {fileID: 2146031054, guid: bec8d4194ab331d478e4234cfbf19d00, type: 3}
+      propertyPath: m_Name
+      value: Telephone
+      objectReference: {fileID: 0}
     - target: {fileID: 2146031055, guid: bec8d4194ab331d478e4234cfbf19d00, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -455,6 +459,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: eb6e212c19aa9224682c1d5b2b8fcaac, type: 2}
+    - target: {fileID: 2146031054, guid: bec8d4194ab331d478e4234cfbf19d00, type: 3}
+      propertyPath: m_Name
+      value: Telephone
+      objectReference: {fileID: 0}
     - target: {fileID: 2146031055, guid: bec8d4194ab331d478e4234cfbf19d00, type: 3}
       propertyPath: serializationData.Prefab
       value: 
