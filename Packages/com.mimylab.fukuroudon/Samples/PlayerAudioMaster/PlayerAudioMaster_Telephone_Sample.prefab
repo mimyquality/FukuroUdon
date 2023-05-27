@@ -194,6 +194,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1312518185864736161, guid: 35c1dbe5e3d92cc4cb30e0f62a4101c6,
         type: 3}
+    - target: {fileID: 1312518185864736161, guid: 35c1dbe5e3d92cc4cb30e0f62a4101c6,
+        type: 3}
+      propertyPath: enablePlayerVoiceOverride
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6835479019125235076, guid: 35c1dbe5e3d92cc4cb30e0f62a4101c6,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -306,6 +311,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1312518185864736161, guid: 35c1dbe5e3d92cc4cb30e0f62a4101c6,
         type: 3}
+    - target: {fileID: 1312518185864736161, guid: 35c1dbe5e3d92cc4cb30e0f62a4101c6,
+        type: 3}
+      propertyPath: enablePlayerVoiceOverride
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6835479020338553855, guid: 35c1dbe5e3d92cc4cb30e0f62a4101c6,
         type: 3}
       propertyPath: m_text
