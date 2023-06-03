@@ -14,6 +14,9 @@
     },
     "net.ureishi.qvpen": {
       "version": "3.2.6"
+    },
+    "com.mmmaellon.smartobjectsync": {
+      "version": "3.2.0"
     }
   },
   "locked": {
@@ -53,6 +56,12 @@
       "version": "3.2.7",
       "dependencies": {
         "com.vrchat.udonsharp": "^1.1.8"
+      }
+    },
+    "com.mmmaellon.smartobjectsync": {
+      "version": "3.2.0",
+      "dependencies": {
+        "com.vrchat.udonsharp": "1.1.X"
       }
     }
   }

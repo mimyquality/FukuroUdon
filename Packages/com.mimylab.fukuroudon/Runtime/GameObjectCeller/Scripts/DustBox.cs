@@ -12,14 +12,14 @@ using VRC.Udon;
 
 namespace MimyLab
 {
-    [AddComponentMenu("Fukuro Udon/Dust Box")]
+    [AddComponentMenu("Fukuro Udon/GameObject Celler/Dust Box")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class DustBox : UdonSharpBehaviour
     {
         [SerializeField]
         ObjectPoolManager target = null;
 
-        [Tooltip("Set a value lower than world Respawn Hight Y.")]
+        [Tooltip("Set a value upper than world Respawn Hight Y.")]
         public Vector3 respawnPoint = new Vector3(0f, -99f, 0f);
 
         void OnTriggerEnter(Collider other)
@@ -43,6 +43,8 @@ namespace MimyLab
 
                     incommingObject.transform.position = respawnPoint;
                     target.Return(incommingObject);
+
+                    break;
                 }
             }
         }

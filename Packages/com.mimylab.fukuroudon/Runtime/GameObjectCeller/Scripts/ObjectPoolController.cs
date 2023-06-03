@@ -20,7 +20,7 @@ namespace MimyLab
         ReturnAll
     }
 
-    [AddComponentMenu("Fukuro Udon/ObjectPool Controller")]
+    [AddComponentMenu("Fukuro Udon/GameObject Celler/ObjectPool Controller")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ObjectPoolController : UdonSharpBehaviour
     {

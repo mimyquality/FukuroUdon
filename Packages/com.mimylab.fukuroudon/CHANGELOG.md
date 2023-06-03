@@ -4,6 +4,16 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.2.0] - 2023/6/4
+### Add
+- Manual ObjectSync
+  - 同期オブジェクト(VRC ObjectSyncまたはManual ObjectSync、SmartObjectSync等の、Respawn()メソッドの存在するUdonスクリプトが付いたオブジェクト)の一括位置リセットができるスイッチを追加しました。
+
+### Changed
+- Manual ObjectSync
+- GameObject Celler
+  - Add Componentメニューの階層を整理しました。
+
 ## [1.1.2] - 2023/5/27
 ### Add
 - PlayerAudio Master
@@ -89,6 +99,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
+[1.2.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.2.0
 [1.1.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.1.2
 [1.1.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.1.1
 [1.1.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.1.0

@@ -158,7 +158,7 @@ MonoBehaviour:
       Data: 10|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: Set a value lower than world Respawn Hight Y.
+      Data: Set a value upper than world Respawn Hight Y.
     - Name: 
       Entry: 8
       Data: 

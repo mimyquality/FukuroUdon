@@ -12,7 +12,7 @@ using VRC.SDK3.Components;
 
 namespace MimyLab
 {
-    [AddComponentMenu("Fukuro Udon/Manual ObjectSync")]
+    [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Manual ObjectSync")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class ManualObjectSync : UdonSharpBehaviour
     {
@@ -236,7 +236,8 @@ namespace MimyLab
             _syncHasChanged = true;
         }
 
-        public override void OnPlayerLeft(VRCPlayerApi player)
+        // OnOwnershipTransferred()が発火しないバグが修正されたため、この処理は不要になった
+        /* public override void OnPlayerLeft(VRCPlayerApi player)
         {
             Initialize();
 
@@ -256,7 +257,7 @@ namespace MimyLab
             {
                 _rigidbody.isKinematic = (Networking.IsOwner(this.gameObject)) ? IsKinematic : true;
             }
-        }
+        } */
 
         // VRCPickupとRigidbodyがある
         public override void OnPickup()
