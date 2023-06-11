@@ -104,6 +104,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
+[1.2.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.2.1
 [1.2.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.2.0
 [1.1.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.1.2
 [1.1.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.1.1
