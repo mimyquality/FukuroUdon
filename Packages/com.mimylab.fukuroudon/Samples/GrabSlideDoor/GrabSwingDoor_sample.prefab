@@ -436,6 +436,28 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7796037692692908516, guid: 8fcab6e11f53c424780b7dd8da1c092c,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: -7796037692692908516, guid: 8fcab6e11f53c424780b7dd8da1c092c,
+        type: 3}
+    - target: {fileID: -4782653046923680115, guid: 8fcab6e11f53c424780b7dd8da1c092c,
+        type: 3}
+      propertyPath: yawLeft
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4782653046923680115, guid: 8fcab6e11f53c424780b7dd8da1c092c,
+        type: 3}
+      propertyPath: yawRight
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -4782653046923680115, guid: 8fcab6e11f53c424780b7dd8da1c092c,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: -4782653046923680115, guid: 8fcab6e11f53c424780b7dd8da1c092c,
+        type: 3}
     - target: {fileID: 8927012250615769136, guid: 8fcab6e11f53c424780b7dd8da1c092c,
         type: 3}
       propertyPath: programSource
@@ -446,7 +468,7 @@ PrefabInstance:
         type: 3}
       propertyPath: serializedProgramAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 0f371350ea3543a47848b6b4768eb4fc,
+      objectReference: {fileID: 11400000, guid: a65f5381acf477943aafbaaa74892842,
         type: 2}
     - target: {fileID: 8927012250615769136, guid: 8fcab6e11f53c424780b7dd8da1c092c,
         type: 3}
@@ -466,7 +488,7 @@ PrefabInstance:
     - target: {fileID: 8952000911617947697, guid: 8fcab6e11f53c424780b7dd8da1c092c,
         type: 3}
       propertyPath: m_Name
-      value: GrabSwingDoor Variant
+      value: GrabSwingDoor_sample
       objectReference: {fileID: 0}
     - target: {fileID: 8952000911617947698, guid: 8fcab6e11f53c424780b7dd8da1c092c,
         type: 3}
@@ -533,8 +555,7 @@ PrefabInstance:
         type: 3}
       propertyPath: serializedProgramAsset
       value: 
-      objectReference: {fileID: 11400000, guid: a7322853837f93045b3b0a4a7e9202a1,
-        type: 2}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fcab6e11f53c424780b7dd8da1c092c, type: 3}
 --- !u!4 &1645234910284987200 stripped

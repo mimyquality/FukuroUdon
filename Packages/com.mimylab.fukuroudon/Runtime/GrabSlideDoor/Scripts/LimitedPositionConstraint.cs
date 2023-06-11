@@ -16,106 +16,104 @@ namespace MimyLab
     public class LimitedPositionConstraint : UdonSharpBehaviour
     {
         [Header("Source")]
-        // 追従先オブジェクト
         [SerializeField]
-        Transform target;
+        private Transform target;   // 追従先オブジェクト
 
         [Header("Constraint")]
         // 追従させる軸の有効化(グローバル)    
         [SerializeField]
-        bool enableX = true;
+        private bool enableX = true;
         [SerializeField]
-        bool enableY = true;
+        private bool enableY = true;
         [SerializeField]
-        bool enableZ = true;
+        private bool enableZ = true;
 
         [Header("X Axis Limit Setting")]
-
         // X軸の制限範囲(ローカル)と末端到達時のアクション
         [SerializeField]
-        float minX = float.NegativeInfinity;
+        private float minX = float.NegativeInfinity;
         [SerializeField]
-        Transform[] activateWhenReachMinX;
+        private Transform[] activateWhenReachMinX;
         [SerializeField]
-        Transform[] inactivateWhenReachMinX;
+        private Transform[] inactivateWhenReachMinX;
         [SerializeField]
-        float maxX = float.PositiveInfinity;
+        private float maxX = float.PositiveInfinity;
         [SerializeField]
-        Transform[] activateWhenReachMaxX;
+        private Transform[] activateWhenReachMaxX;
         [SerializeField]
-        Transform[] inactivateWhenReachMaxX;
+        private Transform[] inactivateWhenReachMaxX;
 
         [Header("Y Axis Limit Setting")]
-
         // Y軸の制限範囲(ローカル)と末端到達時のアクション
         [SerializeField]
-        float minY = float.NegativeInfinity;
+        private float minY = float.NegativeInfinity;
         [SerializeField]
-        Transform[] activateWhenReachMinY;
+        private Transform[] activateWhenReachMinY;
         [SerializeField]
-        Transform[] inactivateWhenReachMinY;
+        private Transform[] inactivateWhenReachMinY;
         [SerializeField]
-        float maxY = float.PositiveInfinity;
+        private float maxY = float.PositiveInfinity;
         [SerializeField]
-        Transform[] activateWhenReachMaxY;
+        private Transform[] activateWhenReachMaxY;
         [SerializeField]
-        Transform[] inactivateWhenReachMaxY;
+        private Transform[] inactivateWhenReachMaxY;
 
         [Header("Z Axis Limit Setting")]
-
         // Z軸の制限範囲(ローカル)と末端到達時のアクション
         [SerializeField]
-        float minZ = float.NegativeInfinity;
+        private float minZ = float.NegativeInfinity;
         [SerializeField]
-        Transform[] activateWhenReachMinZ;
+        private Transform[] activateWhenReachMinZ;
         [SerializeField]
-        Transform[] inactivateWhenReachMinZ;
+        private Transform[] inactivateWhenReachMinZ;
         [SerializeField]
-        float maxZ = float.PositiveInfinity;
+        private float maxZ = float.PositiveInfinity;
         [SerializeField]
-        Transform[] activateWhenReachMaxZ;
+        private Transform[] activateWhenReachMaxZ;
         [SerializeField]
-        Transform[] inactivateWhenReachMaxZ;
+        private Transform[] inactivateWhenReachMaxZ;
 
         // 計算用
-        Vector3 offset;     // 追従先とのDistance詰め用
-        Vector3 fixPosition;
-        float localX, localY, localZ;
-        bool reachMinX = false, reachMaxX = false;
-        bool reachMinY = false, reachMaxY = false;
-        bool reachMinZ = false, reachMaxZ = false;
+        private Vector3 offset;     // 追従先とのDistance詰め用
+        private Vector3 fixPosition, targetPosition;
+        private float localX, localY, localZ;
+        private bool reachMinX = false, reachMaxX = false;
+        private bool reachMinY = false, reachMaxY = false;
+        private bool reachMinZ = false, reachMaxZ = false;
 
-        void Start()
+        private void Start()
         {
             offset = target.position - this.transform.position;
         }
 
-        void Update()
+        private void Update()
         {
             // 各軸ごとにtargetに追従させる
             fixPosition = this.transform.position;
+            targetPosition = target.position;
             if (enableX)
             {
-                fixPosition.x = target.position.x - offset.x;
+                fixPosition.x = targetPosition.x - offset.x;
             }
             if (enableY)
             {
-                fixPosition.y = target.position.y - offset.y;
+                fixPosition.y = targetPosition.y - offset.y;
             }
             if (enableZ)
             {
-                fixPosition.z = target.position.z - offset.z;
+                fixPosition.z = targetPosition.z - offset.z;
             }
-            this.transform.position = fixPosition;
 
-            // ローカル座標で可動域を超えていたらClampする
-            localX = Mathf.Clamp(this.transform.localPosition.x, minX, maxX);
-            localY = Mathf.Clamp(this.transform.localPosition.y, minY, maxY);
-            localZ = Mathf.Clamp(this.transform.localPosition.z, minZ, maxZ);
+            // ここからローカル座標で計算
+            fixPosition = this.transform.parent.InverseTransformPoint(fixPosition);
+            localX = Mathf.Clamp(fixPosition.x, minX, maxX);
+            localY = Mathf.Clamp(fixPosition.y, minY, maxY);
+            localZ = Mathf.Clamp(fixPosition.z, minZ, maxZ);
+
             this.transform.localPosition = new Vector3(localX, localY, localZ);
 
             // minX到達時の処理
-            if (this.transform.localPosition.x <= minX + 0.0001f)
+            if (localX <= minX + Vector3.kEpsilon)
             {
                 if (!reachMinX)
                 {
@@ -133,7 +131,7 @@ namespace MimyLab
             }
 
             // maxX到達時の処理
-            if (this.transform.localPosition.x >= maxX - 0.0001f)
+            if (localX >= maxX - Vector3.kEpsilon)
             {
                 if (!reachMaxX)
                 {
@@ -151,7 +149,7 @@ namespace MimyLab
             }
 
             // minY到達時の処理
-            if (this.transform.localPosition.y <= minY + 0.0001f)
+            if (localY <= minY + Vector3.kEpsilon)
             {
                 if (!reachMinY)
                 {
@@ -169,7 +167,7 @@ namespace MimyLab
             }
 
             // maxY到達時の処理
-            if (this.transform.localPosition.y >= maxY - 0.0001f)
+            if (localY >= maxY - Vector3.kEpsilon)
             {
                 if (!reachMaxY)
                 {
@@ -188,7 +186,7 @@ namespace MimyLab
 
 
             // minZ到達時の処理
-            if (this.transform.localPosition.z <= minZ + 0.0001f)
+            if (localZ <= minZ + Vector3.kEpsilon)
             {
                 if (!reachMinZ)
                 {
@@ -207,7 +205,7 @@ namespace MimyLab
             }
 
             // maxZ到達時の処理
-            if (this.transform.localPosition.z >= maxZ - 0.0001f)
+            if (localZ >= maxZ - Vector3.kEpsilon)
             {
                 if (!reachMaxZ)
                 {
@@ -225,182 +223,182 @@ namespace MimyLab
             }
         }
 
-        void ToggleActiveMinX(bool isReach)
+        private void ToggleActiveMinX(bool isReach)
         {
             for (int i = 0; i < activateWhenReachMinX.Length; i++)
             {
-                if (activateWhenReachMinX[i] == null) { continue; }
-                OcclusionPortal op = activateWhenReachMinX[i].gameObject.GetComponent<OcclusionPortal>();
-                if (op == null)
+                if (!activateWhenReachMinX[i]) { continue; }
+                OcclusionPortal op = activateWhenReachMinX[i].GetComponent<OcclusionPortal>();
+                if (op)
                 {
-                    activateWhenReachMinX[i].gameObject.SetActive(isReach);
+                    op.open = isReach;
                 }
                 else
                 {
-                    op.open = isReach;
+                    activateWhenReachMinX[i].gameObject.SetActive(isReach);
                 }
             }
             for (int j = 0; j < inactivateWhenReachMinX.Length; j++)
             {
-                if (inactivateWhenReachMinX[j] == null) { continue; }
-                OcclusionPortal op = inactivateWhenReachMinX[j].gameObject.GetComponent<OcclusionPortal>();
-                if (op == null)
+                if (!inactivateWhenReachMinX[j]) { continue; }
+                OcclusionPortal op = inactivateWhenReachMinX[j].GetComponent<OcclusionPortal>();
+                if (op)
                 {
-                    inactivateWhenReachMinX[j].gameObject.SetActive(!isReach);
+                    op.open = !isReach;
                 }
                 else
                 {
-                    op.open = !isReach;
+                    inactivateWhenReachMinX[j].gameObject.SetActive(!isReach);
                 }
             }
         }
 
-        void ToggleActiveMaxX(bool isReach)
+        private void ToggleActiveMaxX(bool isReach)
         {
             for (int i = 0; i < activateWhenReachMaxX.Length; i++)
             {
-                if (activateWhenReachMaxX[i] == null) { continue; }
-                OcclusionPortal op = activateWhenReachMaxX[i].gameObject.GetComponent<OcclusionPortal>();
-                if (op == null)
+                if (!activateWhenReachMaxX[i]) { continue; }
+                OcclusionPortal op = activateWhenReachMaxX[i].GetComponent<OcclusionPortal>();
+                if (op)
                 {
-                    activateWhenReachMaxX[i].gameObject.SetActive(isReach);
+                    op.open = isReach;
                 }
                 else
                 {
-                    op.open = isReach;
+                    activateWhenReachMaxX[i].gameObject.SetActive(isReach);
                 }
             }
             for (int j = 0; j < inactivateWhenReachMaxX.Length; j++)
             {
-                if (inactivateWhenReachMaxX[j] == null) { continue; }
-                OcclusionPortal op = inactivateWhenReachMaxX[j].gameObject.GetComponent<OcclusionPortal>();
-                if (op == null)
+                if (!inactivateWhenReachMaxX[j]) { continue; }
+                OcclusionPortal op = inactivateWhenReachMaxX[j].GetComponent<OcclusionPortal>();
+                if (op)
                 {
-                    inactivateWhenReachMaxX[j].gameObject.SetActive(!isReach);
+                    op.open = !isReach;
                 }
                 else
                 {
-                    op.open = !isReach;
+                    inactivateWhenReachMaxX[j].gameObject.SetActive(!isReach);
                 }
             }
         }
 
-        void ToggleActiveMinY(bool isReach)
+        private void ToggleActiveMinY(bool isReach)
         {
             for (int i = 0; i < activateWhenReachMinY.Length; i++)
             {
-                if (activateWhenReachMinY[i] == null) { continue; }
-                OcclusionPortal op = activateWhenReachMinY[i].gameObject.GetComponent<OcclusionPortal>();
-                if (op == null)
+                if (!activateWhenReachMinY[i]) { continue; }
+                OcclusionPortal op = activateWhenReachMinY[i].GetComponent<OcclusionPortal>();
+                if (op)
                 {
-                    activateWhenReachMinY[i].gameObject.SetActive(isReach);
+                    op.open = isReach;
                 }
                 else
                 {
-                    op.open = isReach;
+                    activateWhenReachMinY[i].gameObject.SetActive(isReach);
                 }
             }
             for (int j = 0; j < inactivateWhenReachMinY.Length; j++)
             {
-                if (inactivateWhenReachMinY[j] == null) { continue; }
-                OcclusionPortal op = inactivateWhenReachMinY[j].gameObject.GetComponent<OcclusionPortal>();
-                if (op == null)
+                if (!inactivateWhenReachMinY[j]) { continue; }
+                OcclusionPortal op = inactivateWhenReachMinY[j].GetComponent<OcclusionPortal>();
+                if (op)
                 {
-                    inactivateWhenReachMinY[j].gameObject.SetActive(!isReach);
+                    op.open = !isReach;
                 }
                 else
                 {
-                    op.open = !isReach;
+                    inactivateWhenReachMinY[j].gameObject.SetActive(!isReach);
                 }
             }
         }
 
-        void ToggleActiveMaxY(bool isReach)
+        private void ToggleActiveMaxY(bool isReach)
         {
             for (int i = 0; i < activateWhenReachMaxY.Length; i++)
             {
-                if (activateWhenReachMaxY[i] == null) { continue; }
-                OcclusionPortal op = activateWhenReachMaxY[i].gameObject.GetComponent<OcclusionPortal>();
-                if (op == null)
+                if (!activateWhenReachMaxY[i]) { continue; }
+                OcclusionPortal op = activateWhenReachMaxY[i].GetComponent<OcclusionPortal>();
+                if (op)
                 {
-                    activateWhenReachMaxY[i].gameObject.SetActive(isReach);
+                    op.open = isReach;
                 }
                 else
                 {
-                    op.open = isReach;
+                    activateWhenReachMaxY[i].gameObject.SetActive(isReach);
                 }
             }
             for (int j = 0; j < inactivateWhenReachMaxY.Length; j++)
             {
-                if (inactivateWhenReachMaxY[j] == null) { continue; }
-                OcclusionPortal op = inactivateWhenReachMaxY[j].gameObject.GetComponent<OcclusionPortal>();
-                if (op == null)
+                if (!inactivateWhenReachMaxY[j]) { continue; }
+                OcclusionPortal op = inactivateWhenReachMaxY[j].GetComponent<OcclusionPortal>();
+                if (op)
                 {
-                    inactivateWhenReachMaxY[j].gameObject.SetActive(!isReach);
+                    op.open = !isReach;
                 }
                 else
                 {
-                    op.open = !isReach;
+                    inactivateWhenReachMaxY[j].gameObject.SetActive(!isReach);
                 }
             }
         }
 
-        void ToggleActiveMinZ(bool isReach)
+        private void ToggleActiveMinZ(bool isReach)
         {
             for (int i = 0; i < activateWhenReachMinZ.Length; i++)
             {
-                if (activateWhenReachMinZ[i] == null) { continue; }
-                OcclusionPortal op = activateWhenReachMinZ[i].gameObject.GetComponent<OcclusionPortal>();
-                if (op == null)
+                if (!activateWhenReachMinZ[i]) { continue; }
+                OcclusionPortal op = activateWhenReachMinZ[i].GetComponent<OcclusionPortal>();
+                if (op)
                 {
-                    activateWhenReachMinZ[i].gameObject.SetActive(isReach);
+                    op.open = isReach;
                 }
                 else
                 {
-                    op.open = isReach;
+                    activateWhenReachMinZ[i].gameObject.SetActive(isReach);
                 }
             }
             for (int j = 0; j < inactivateWhenReachMinZ.Length; j++)
             {
-                if (inactivateWhenReachMinZ[j] == null) { continue; }
-                OcclusionPortal op = inactivateWhenReachMinZ[j].gameObject.GetComponent<OcclusionPortal>();
-                if (op == null)
+                if (!inactivateWhenReachMinZ[j]) { continue; }
+                OcclusionPortal op = inactivateWhenReachMinZ[j].GetComponent<OcclusionPortal>();
+                if (op)
                 {
-                    inactivateWhenReachMinZ[j].gameObject.SetActive(!isReach);
+                    op.open = !isReach;
                 }
                 else
                 {
-                    op.open = !isReach;
+                    inactivateWhenReachMinZ[j].gameObject.SetActive(!isReach);
                 }
             }
         }
 
-        void ToggleActiveMaxZ(bool isReach)
+        private void ToggleActiveMaxZ(bool isReach)
         {
             for (int i = 0; i < activateWhenReachMaxZ.Length; i++)
             {
-                if (activateWhenReachMaxZ[i] == null) { continue; }
-                OcclusionPortal op = activateWhenReachMaxZ[i].gameObject.GetComponent<OcclusionPortal>();
-                if (op == null)
+                if (!activateWhenReachMaxZ[i]) { continue; }
+                OcclusionPortal op = activateWhenReachMaxZ[i].GetComponent<OcclusionPortal>();
+                if (op)
                 {
-                    activateWhenReachMaxZ[i].gameObject.SetActive(isReach);
+                    op.open = isReach;
                 }
                 else
                 {
-                    op.open = isReach;
+                    activateWhenReachMaxZ[i].gameObject.SetActive(isReach);
                 }
             }
             for (int j = 0; j < inactivateWhenReachMaxZ.Length; j++)
             {
-                if (inactivateWhenReachMaxZ[j] == null) { continue; }
-                OcclusionPortal op = inactivateWhenReachMaxZ[j].gameObject.GetComponent<OcclusionPortal>();
-                if (op == null)
+                if (!inactivateWhenReachMaxZ[j]) { continue; }
+                OcclusionPortal op = inactivateWhenReachMaxZ[j].GetComponent<OcclusionPortal>();
+                if (op)
                 {
-                    inactivateWhenReachMaxZ[j].gameObject.SetActive(!isReach);
+                    op.open = !isReach;
                 }
                 else
                 {
-                    op.open = !isReach;
+                    inactivateWhenReachMaxZ[j].gameObject.SetActive(!isReach);
                 }
             }
         }

@@ -4,6 +4,11 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.2.1] - 2023/6/11
+### Fixed
+- Grab SlideDoor
+  - 内部処理を見直しました。
+
 ## [1.2.0] - 2023/6/4
 ### Add
 - Manual ObjectSync
