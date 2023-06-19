@@ -188,8 +188,16 @@ namespace MimyLab
             if (pageSlider)
             {
                 pageSlider.minValue = (float)min;
-                pageSlider.maxValue = (float)max;
-                pageSlider.SetValueWithoutNotify((float)num);
+                if (max < pageSlider.value)
+                {
+                    pageSlider.SetValueWithoutNotify((float)num);
+                    pageSlider.maxValue = (float)max;
+                }
+                else
+                {
+                    pageSlider.maxValue = (float)max;
+                    pageSlider.SetValueWithoutNotify((float)num);
+                }
             }
             if (pageNumber) { pageNumber.text = num.ToString(); }
             if (pageNumberTMP) { pageNumberTMP.text = num.ToString(); }
@@ -206,8 +214,17 @@ namespace MimyLab
             if (indexSlider)
             {
                 indexSlider.minValue = (float)min;
-                indexSlider.maxValue = (float)max;
-                indexSlider.SetValueWithoutNotify((float)num);
+                if (max < indexSlider.value)
+                {
+                    indexSlider.SetValueWithoutNotify((float)num);
+                    indexSlider.maxValue = (float)max;
+                }
+                else
+                {
+                    indexSlider.maxValue = (float)max;
+                    indexSlider.SetValueWithoutNotify((float)num);
+
+                }
             }
             if (indexNumber) { indexNumber.text = num.ToString(); }
             if (indexNumberTMP) { indexNumberTMP.text = num.ToString(); }

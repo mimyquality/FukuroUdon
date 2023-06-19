@@ -191,6 +191,4 @@ QualitySettings:
     customRenderPipeline: {fileID: 0}
     excludedTargetPlatforms:
     - Standalone
-  m_PerPlatformDefaultQuality:
-    Android: 4
-    Standalone: 3
+  m_PerPlatformDefaultQuality: {}

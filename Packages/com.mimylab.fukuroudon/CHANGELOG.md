@@ -4,6 +4,11 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.2.2] - 2023/6/19
+### Fixed
+- Smart Slideshow
+  - 次のスライドセットのページ数が現在のページ番号より少ない場合、エラー停止する不具合を修正しました。
+
 ## [1.2.1] - 2023/6/11
 ### Fixed
 - Grab SlideDoor
@@ -104,6 +109,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
+[1.2.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.2.2
 [1.2.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.2.1
 [1.2.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.2.0
 [1.1.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.1.2
@@ -111,13 +117,3 @@
 [1.1.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.1.0
 [1.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.0.0
 [0.3.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.3.2
-[0.3.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.3.1
-[0.3.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.3.0
-[0.2.10]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.10
-[0.2.8]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.8
-[0.2.7]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.7
-[0.2.6]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.6
-[0.2.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.5
-[0.2.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.4
-[0.2.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.3
-[0.2.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/0.2.2
