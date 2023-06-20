@@ -25,7 +25,7 @@ namespace MimyLab
         public float respawnHightY = -100.0f;   // ここより落下したらリスポーンする
 
         [Header("Option Settings")]
-        public Transform attachTarget = null;   // アタッチモード時の追従先
+        public Transform attachPoint = null;   // アタッチモード時の追従先
 
         public bool UseGravity  // Rigidbody.useGravity同期用
         {
@@ -82,7 +82,7 @@ namespace MimyLab
                 RequestSerialization();
             }
         }
-        public VRCPickup.PickupHand PickupHand { get => (VRCPickup.PickupHand)_equipTarget; }    // ピックアップしてる方の手
+        public VRCPickup.PickupHand PickupHand { get => (VRCPickup.PickupHand)_equipBone; }    // ピックアップしてる方の手
 
         public bool IsEquiped   // ボーンに装着モード
         {
@@ -129,7 +129,7 @@ namespace MimyLab
         [FieldChangeCallback(nameof(Pickupable))]
         [UdonSynced] bool _pickupable = true;
         [UdonSynced] bool _isHeld = false;
-        [UdonSynced] byte _equipTarget = (byte)VRCPickup.PickupHand.None;
+        [UdonSynced] byte _equipBone = (byte)VRCPickup.PickupHand.None;
 
         [FieldChangeCallback(nameof(IsEquiped))]
         [UdonSynced] bool _isEquiped = false;
@@ -226,7 +226,7 @@ namespace MimyLab
 
         public override void PostLateUpdate()
         {
-            if (_isAttached && attachTarget)
+            if (_isAttached && attachPoint)
             {
                 AttachToTransform();
                 return;
@@ -414,7 +414,7 @@ namespace MimyLab
 
             IsEquiped = true;
 
-            _equipTarget = (byte)targetBone;
+            _equipBone = (byte)targetBone;
             var bonePosition = _localPlayer.GetBonePosition(targetBone);
             var boneRotation = _localPlayer.GetBoneRotation(targetBone);
             _syncPosition = (bonePosition.Equals(Vector3.zero)) ? Vector3.zero : Quaternion.Inverse(boneRotation) * (_transform.position - bonePosition);
@@ -501,9 +501,9 @@ namespace MimyLab
         void PickupOffsetCheck()
         {
             var pickupHandBone = (_pickup.currentHand == VRCPickup.PickupHand.Left) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
-            if (_equipTarget != (byte)pickupHandBone)
+            if (_equipBone != (byte)pickupHandBone)
             {
-                _equipTarget = (byte)pickupHandBone;
+                _equipBone = (byte)pickupHandBone;
                 RequestSerialization();
             }
 
@@ -529,7 +529,7 @@ namespace MimyLab
             _ownerPlayer = Networking.GetOwner(this.gameObject);
             if (!Utilities.IsValid(_ownerPlayer)) { return; }
 
-            var pickupHandBone = (_equipTarget == (byte)HumanBodyBones.LeftHand) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
+            var pickupHandBone = (_equipBone == (byte)HumanBodyBones.LeftHand) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
             var handPosition = _ownerPlayer.GetBonePosition(pickupHandBone);
             var handRotation = _ownerPlayer.GetBoneRotation(pickupHandBone);
 
@@ -537,7 +537,7 @@ namespace MimyLab
              || handRotation.Equals(Quaternion.identity))
             {
                 // ボーン情報の代わりにプレイヤー原点からの固定値
-                handPosition = new Vector3((_equipTarget == (byte)HumanBodyBones.LeftHand) ? -0.2f : 0.2f, 1.0f, 0.3f);
+                handPosition = new Vector3((_equipBone == (byte)HumanBodyBones.LeftHand) ? -0.2f : 0.2f, 1.0f, 0.3f);
                 _rigidbody.MovePosition(_ownerPlayer.GetPosition() + (_ownerPlayer.GetRotation() * handPosition));
                 _rigidbody.MoveRotation(_ownerPlayer.GetRotation());
             }
@@ -553,8 +553,8 @@ namespace MimyLab
             _ownerPlayer = Networking.GetOwner(this.gameObject);
             if (!Utilities.IsValid(_ownerPlayer)) { return; }
 
-            var bonePosition = _ownerPlayer.GetBonePosition((HumanBodyBones)_equipTarget);
-            var boneRotation = _ownerPlayer.GetBoneRotation((HumanBodyBones)_equipTarget);
+            var bonePosition = _ownerPlayer.GetBonePosition((HumanBodyBones)_equipBone);
+            var boneRotation = _ownerPlayer.GetBoneRotation((HumanBodyBones)_equipBone);
             if (bonePosition.Equals(Vector3.zero) || boneRotation.Equals(Quaternion.identity)) { return; }
 
             var equipPosition = bonePosition + (boneRotation * _syncPosition);
@@ -566,7 +566,7 @@ namespace MimyLab
 
         void AttachToTransform()
         {
-            _transform.SetPositionAndRotation(attachTarget.position, attachTarget.rotation);
+            _transform.SetPositionAndRotation(attachPoint.position, attachPoint.rotation);
             _syncHasChanged = false;
         }
     }

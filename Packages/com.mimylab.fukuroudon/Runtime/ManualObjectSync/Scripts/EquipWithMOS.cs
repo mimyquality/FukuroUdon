@@ -7,13 +7,12 @@ https://opensource.org/licenses/mit-license.php
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon;
-using VRC.SDK3.Components;
+//using VRC.Udon;
+//using VRC.SDK3.Components;
 
 namespace MimyLab
 {
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Equip with MOS")]
-    [RequireComponent(typeof(VRCPickup))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class EquipWithMOS : UdonSharpBehaviour
     {
@@ -38,42 +37,45 @@ namespace MimyLab
 
         public override void OnPickup()
         {
+            if (!target) { return; }
+
             target.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, nameof(target.Unequip));
         }
 
         public override void OnPickupUseDown()
         {
+            if (!target) { return; }
             if (target.IsEquiped) { return; }
 
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(EquipWithTarget));
+            Networking.SetOwner(Networking.LocalPlayer, target.gameObject);
+            var mostNearBone = MostNearBone(Networking.LocalPlayer);
+            if (mostNearBone == HumanBodyBones.LastBone) { return; }
+
+            target.Equip(mostNearBone);
         }
 
-        public void EquipWithTarget()
+        private HumanBodyBones MostNearBone(VRCPlayerApi pl)
         {
-            if (!Networking.IsOwner(target.gameObject)) { return; }
-
+            var result = HumanBodyBones.LastBone;
             var snapPosition = snapPoint.position;
-            var localPlayer = Networking.LocalPlayer;
             var bonePosition = Vector3.zero;
             var sqrtDistance = 0.0f;
             var mostNearSqrtDistance = float.PositiveInfinity;
-            var mostNearBone = HumanBodyBones.LastBone;
             var lastBone = (int)HumanBodyBones.LastBone;
             for (int i = 0; i < lastBone; i++)
             {
-                bonePosition = localPlayer.GetBonePosition((HumanBodyBones)i);
+                bonePosition = pl.GetBonePosition((HumanBodyBones)i);
                 if (bonePosition.Equals(Vector3.zero)) { continue; }
 
                 sqrtDistance = (snapPosition - bonePosition).sqrMagnitude;
                 if (sqrtDistance < mostNearSqrtDistance)
                 {
                     mostNearSqrtDistance = sqrtDistance;
-                    mostNearBone = (HumanBodyBones)i;
+                    result = (HumanBodyBones)i;
                 }
             }
-            if (mostNearBone == HumanBodyBones.LastBone) { return; }
 
-            target.Equip(mostNearBone);
+            return result;
         }
     }
 }
