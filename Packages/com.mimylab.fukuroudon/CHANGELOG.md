@@ -4,6 +4,12 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.4.1] - 2023/6/23
+### Fixed
+- Manual ObjectSync
+  - PickupHandプロパティが正しくない値を返すのを修正しました。
+  - PickupEventTransferにInteract()を追加しました。これに合わせてVRCPickupを必須コンポーネントから外しました。
+
 ## [1.4.0] - 2023/6/20
 ### Add
 - Manual ObjectSync
@@ -123,6 +129,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
+[1.4.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.4.1
 [1.4.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.4.0
 [1.3.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.3.0
 [1.2.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.2.1

@@ -8,7 +8,7 @@ using VRC.SDK3.Components;
 namespace MimyLab
 {
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Pickup Event Transfer")]
-    [RequireComponent(typeof(VRCPickup))]
+    //[RequireComponent(typeof(VRCPickup))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class PickupEventTransfer : UdonSharpBehaviour
     {
