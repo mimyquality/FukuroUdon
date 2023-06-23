@@ -15,6 +15,13 @@ namespace MimyLab
         [SerializeField]
         UdonBehaviour target = null;
 
+        public override void Interact()
+        {
+            //if (target) { target.Interact(); }
+            //if (target) { target.SendCustomEvent(nameof(UdonBehaviour.Interact)); }
+            if (target) { target.SendCustomEvent("_interact"); }
+        }
+
         public override void OnPickup()
         {
             //if (target) { target.OnPickup(); }

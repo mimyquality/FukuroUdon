@@ -82,7 +82,18 @@ namespace MimyLab
                 RequestSerialization();
             }
         }
-        public VRCPickup.PickupHand PickupHand { get => (VRCPickup.PickupHand)_equipBone; }    // ピックアップしてる方の手
+        public VRCPickup.PickupHand PickupHand    // ピックアップしてる方の手
+        {
+            get
+            {
+                if (_isHeld)
+                {
+                    if (_equipBone == (byte)HumanBodyBones.LeftHand) { return VRCPickup.PickupHand.Left; }
+                    if (_equipBone == (byte)HumanBodyBones.RightHand) { return VRCPickup.PickupHand.Right; }
+                }
+                return VRCPickup.PickupHand.None;
+            }
+        }
 
         public bool IsEquiped   // ボーンに装着モード
         {

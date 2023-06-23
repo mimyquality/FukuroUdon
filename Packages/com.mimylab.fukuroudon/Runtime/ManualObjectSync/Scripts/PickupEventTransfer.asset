@@ -20,7 +20,7 @@ MonoBehaviour:
   scriptVersion: 2
   compiledVersion: 2
   behaviourSyncMode: 2
-  hasInteractEvent: 0
+  hasInteractEvent: 1
   scriptID: 517487579853171963
   serializationData:
     SerializedFormat: 2
