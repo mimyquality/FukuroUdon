@@ -139,6 +139,7 @@ namespace MimyLab
         [UdonSynced] bool _isKinematic = true;
         [FieldChangeCallback(nameof(Pickupable))]
         [UdonSynced] bool _pickupable = true;
+        [FieldChangeCallback(nameof(IsHeld))]
         [UdonSynced] bool _isHeld = false;
         [UdonSynced] byte _equipBone = (byte)VRCPickup.PickupHand.None;
 

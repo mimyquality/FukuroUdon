@@ -34,13 +34,13 @@ namespace MimyLab
         public bool enableAvatarAudioOverride = false;
         [Range(0f, 10f)]
         public float avatarAudioGain = 10f;
-        [Min(0f)]
+        [Range(0f, 40f)]
         public float avatarAudioDistanceNear = 40f;
-        [Min(0f)]
+        [Range(0f, 40f)]
         public float avatarAudioDistanceFar = 40f;
 
         [Header("Avatar Audio Advance Settings")]
-        [Min(0f)]
+        [Range(0f, 40f)]
         public float avatarAudioVolumetricRadius = 40f;
         public bool avatarAudioForceSpatial = false;
         public bool avatarAudioCustomCurve = false;
