@@ -4,6 +4,11 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.4.2] - 2023/6/30
+### Fixed
+- Manual ObjectSync
+  - VRCPickupと共に付けた場合に、Disallow Theftが機能していなかったのを修正しました。
+
 ## [1.4.1] - 2023/6/23
 ### Fixed
 - Manual ObjectSync
@@ -129,6 +134,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
+[1.4.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.4.2
 [1.4.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.4.1
 [1.4.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.4.0
 [1.3.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.3.0
