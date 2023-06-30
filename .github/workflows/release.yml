@@ -29,7 +29,7 @@ jobs:
       - name: Set Environment Variables
         run: |
           echo "zipFile=${{ env.packageName }}-${{ steps.version.outputs.prop }}".zip >> $GITHUB_ENV
-        # echo "unityPackage=${{ env.packageName }}-${{ steps.version.outputs.prop }}.unitypackage" >> $GITHUB_ENV
+          echo "unityPackage=${{ env.packageName }}-${{ steps.version.outputs.prop }}.unitypackage" >> $GITHUB_ENV
         
       - name: Create Zip
         uses: thedoctor0/zip-release@09336613be18a8208dfa66bd57efafd9e2685657
@@ -40,11 +40,11 @@ jobs:
           
       - run: find "Packages/${{env.packageName}}/" -name \*.meta >> metaList
           
-      # - name: Create UnityPackage
-      #   uses: pCYSl5EDgo/create-unitypackage@e28c7a4616b2754c564b0a959a03b3c89b756fdb
-      #   with:
-      #     package-path: ${{ env.unityPackage }}
-      #     include-files: metaList
+      - name: Create UnityPackage
+        uses: pCYSl5EDgo/create-unitypackage@265492316181b0f4bb517293bcda124eff5cd859
+        with:
+          package-path: ${{ env.unityPackage }}
+          include-files: metaList
         
         
       - name: Make Release
@@ -53,5 +53,5 @@ jobs:
           tag_name: ${{ steps.version.outputs.prop }}
           files: |
             ${{ env.zipFile }}
+            ${{ env.unityPackage }}
             Packages/${{ env.packageName }}/package.json
-          # ${{ env.unityPackage }}
