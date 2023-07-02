@@ -4,6 +4,11 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.4.3] - 2023/7/2
+### Fixed
+- Manual ObjectSync
+  - アタッチモード/装着モード切り替え時にisKinematicが切り替わらない事があるのを修正しました。
+
 ## [1.4.2] - 2023/6/30
 ### Fixed
 - Manual ObjectSync
@@ -134,6 +139,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
+[1.4.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.4.3
 [1.4.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.4.2
 [1.4.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.4.1
 [1.4.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.4.0

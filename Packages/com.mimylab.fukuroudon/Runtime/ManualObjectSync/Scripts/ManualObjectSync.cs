@@ -77,8 +77,8 @@ namespace MimyLab
                     _isEquiped = false;
                     _isAttached = false;
                 }
-                if (_rigidbody) { IsKinematic = IsKinematic; }
                 if (_pickup) { Pickupable = Pickupable; }
+                if (_rigidbody) { IsKinematic = IsKinematic; }
                 RequestSerialization();
             }
         }
@@ -108,6 +108,7 @@ namespace MimyLab
                     _isAttached = false;
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
                 }
+                if (_rigidbody) { IsKinematic = IsKinematic; }
                 RequestSerialization();
             }
         }
@@ -125,6 +126,7 @@ namespace MimyLab
                     _isEquiped = false;
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
                 }
+                if (_rigidbody) { IsKinematic = IsKinematic; }
                 RequestSerialization();
             }
         }
