@@ -70,10 +70,34 @@ namespace MimyLab
         public float deadZone = 0.05f;   // 不感帯、入力がこれ以下なら無効
 
         // 同期用
-        [UdonSynced(UdonSyncMode.None)]
+        [FieldChangeCallback(nameof(SeatPosition))]
+        [UdonSynced]
         Vector3 _seatPosition;
-        [UdonSynced(UdonSyncMode.None)]
+        Vector3 SeatPosition
+        {
+            get => _seatPosition;
+            set
+            {
+                Initialize();
+
+                _seatPosition = value;
+                _enterPoint.localPosition = value;
+            }
+        }
+        [FieldChangeCallback(nameof(SeatRotation))]
+        [UdonSynced]
         Quaternion _seatRotation;
+        Quaternion SeatRotation
+        {
+            get => _seatRotation;
+            set
+            {
+                Initialize();
+
+                _seatRotation = value;
+                this.transform.localRotation = value;
+            }
+        }
 
         // コンポーネントのキャッシュ用
         VRCStation _station;
@@ -91,8 +115,11 @@ namespace MimyLab
         float _moveVerticalValue = 0f, _moveHorizontalValue = 0f;   // インプット渡し用
         Vector3 _moveDirection;   //移動方向
 
-        void Start()
+        bool _initialized = false;
+        void Initialize()
         {
+            if (_initialized) { return; }
+
             // ローカルプレイヤー参照使い回し用
             _lPlayer = Networking.LocalPlayer;
 
@@ -106,6 +133,12 @@ namespace MimyLab
             // 初期化
             _savedSeatPosition = _enterPoint.localPosition;
             EnableCasterMove = EnableCasterMove;
+
+            _initialized = true;
+        }
+        void Start()
+        {
+            Initialize();
         }
 
         void Update()
@@ -115,10 +148,7 @@ namespace MimyLab
             {
                 InputKeyboard();
             }
-        }
 
-        void FixedUpdate()
-        {
             // 自分が座ってる時だけ入力受付処理
             if (!_isSit) { return; }
 
@@ -175,8 +205,7 @@ namespace MimyLab
                     _fixValue.z = Mathf.Clamp(_sagittal, maxBack, maxForward);
 
                     // 座点調節
-                    _enterPoint.localPosition = _fixValue;
-                    _seatPosition = _fixValue;
+                    SeatPosition = _fixValue;
 
                     RequestSerialization();
                 }
@@ -316,8 +345,7 @@ namespace MimyLab
             _isSit = true;
 
             // 座高の書き戻し処理
-            _enterPoint.localPosition = _savedSeatPosition;
-            _seatPosition = _savedSeatPosition;
+            SeatPosition = _savedSeatPosition;
             RequestSerialization();
         }
 
@@ -327,16 +355,7 @@ namespace MimyLab
             _isSit = false;
 
             // 調整した座高のローカル保持
-            _savedSeatPosition = _seatPosition;
-        }
-
-        /******************************
-         同期処理
-        ******************************/
-        public override void OnDeserialization()
-        {
-            _enterPoint.localPosition = _seatPosition;
-            this.transform.localRotation = _seatRotation;
+            _savedSeatPosition = SeatPosition;
         }
     }
 }
