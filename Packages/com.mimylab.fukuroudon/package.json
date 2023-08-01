@@ -1,6 +1,6 @@
 {
   "name": "com.mimylab.fukuroudon",
-  "version": "1.4.4",
+  "version": "1.5.0",
   "displayName": "Fukuro Udon",
   "description": "MimyLab's U# utilitiy pack for VPM.",
   "unity": "2019.4",
@@ -11,6 +11,7 @@
   "documentationUrl": "https://github.com/mimyquality/FukuroUdon/wiki",
   "gitDependencies": {},
   "vpmDependencies": {
+    "com.vrchat.worlds":"^3.2.2",
     "com.vrchat.udonsharp": "^1.1.7"
   },
   "legacyFolders": {
@@ -68,6 +69,11 @@
       "displayName": "PlayerAudio Master",
       "description": "様々な条件でプレイヤー同士の声量やアバター音量を制御できるギミック",
       "path": "Samples/PlayerAudioMaster"
+    },
+    {
+      "displayName": "Advanced World Settings",
+      "description": "Joinしたプレイヤーの各種初期化処理ができるギミック",
+      "path": "Samples/AdvancedWorldSettings"
     }
   ]
 }

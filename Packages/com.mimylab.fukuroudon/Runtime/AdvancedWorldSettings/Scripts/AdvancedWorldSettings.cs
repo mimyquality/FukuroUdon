@@ -1,4 +1,9 @@
-﻿
+﻿/*
+Copyright (c) 2023 Mimy Quality
+Released under the MIT license
+https://opensource.org/licenses/mit-license.php
+*/
+
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
@@ -7,10 +12,17 @@ using VRC.SDKBase;
 
 namespace MimyLab
 {
-    [AddComponentMenu("Fukuro Udon/Initial Player Settings")]
+    [System.Flags]
+    public enum AdvancedWorldSettingsInitializeEyeHeightType
+    {
+        Join = 1 << 0,
+        AvatarChange = 1 << 1
+    }
+
+    [AddComponentMenu("Fukuro Udon/Advanced World Settings")]
     [DefaultExecutionOrder(-100)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class InitialPlayerSettings : UdonSharpBehaviour
+    public class AdvancedWorldSettings : UdonSharpBehaviour
     {
         [Header("Movement")]
         [SerializeField] private bool _initializeMovement = true;
@@ -46,13 +58,14 @@ namespace MimyLab
         [SerializeField] private bool _avatarAudioCustomCurve = false;
 
         [Header("Avatar Scaling")]
-        //[SerializeField] private bool _manualAvatarScalingAllowed = true;
-        //[SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMinimum = 0.2f;
-        //[SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMaximum = 5f;
-        //[Space]
-        [SerializeField] private bool _initializeAvatarEyeHight = false;
-        //[SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeight = 1.3f;
-        //[SerializeField] private bool _appliesToAvatarChanges = false;
+        [SerializeField] private bool _initializeAvatarScaling = true;
+        [SerializeField] private bool _allowManualAvatarScaling = true;
+        [SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMinimum = 0.2f;
+        [SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMaximum = 5f;
+        [Space]
+        [Tooltip("When the button is checked, the Avatar Eye Height is initialized at that point.")]
+        [SerializeField][EnumFlag] private AdvancedWorldSettingsInitializeEyeHeightType _initializeAvatarEyeHight = 0;
+        [SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeight = 1.3f;
 
         public override void OnPlayerJoined(VRCPlayerApi player)
         {
@@ -73,9 +86,16 @@ namespace MimyLab
                     player.EnablePickups(_enablePickups);
                 }
 
-                if (_initializeAvatarEyeHight)
+                if (_initializeAvatarScaling)
                 {
-                    // Avatar Scaling
+                    player.SetManualAvatarScalingAllowed(_allowManualAvatarScaling);
+                    player.SetAvatarEyeHeightMinimumByMeters(_avatarEyeHeightMinimum);
+                    player.SetAvatarEyeHeightMaximumByMeters(_avatarEyeHeightMaximum);
+                }
+
+                if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightType.Join) > 0)
+                {
+                    player.SetAvatarEyeHeightByMeters(_avatarEyeHeight);
                 }
             }
 
@@ -98,13 +118,15 @@ namespace MimyLab
                 player.SetAvatarAudioCustomCurve(_avatarAudioCustomCurve);
             }
         }
-/* 
-        public override void OnAvatarChanged()
+
+        public void OnAvatarChanged(VRCPlayerApi player)
         {
-            たぶんこう            
-            if(_initializeAvatarEyeHight && _alsoAppliesToAvatarChanges){
-                
+            if (!player.isLocal) { return; }
+
+            if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightType.AvatarChange) > 0)
+            {
+                player.SetAvatarEyeHeightByMeters(_avatarEyeHeight);
             }
-        } */
+        }
     }
 }

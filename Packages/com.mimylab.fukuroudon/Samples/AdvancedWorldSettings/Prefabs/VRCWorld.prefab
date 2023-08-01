@@ -167,28 +167,34 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 4847006719195930141}
+  _initializeMovement: 1
   _walkSpeed: 2
   _strafeSpeed: 2
   _runSpeed: 4
   _jumpImpulse: 3
   _gravityStrength: 1
   _immobile: 0
+  _initializePickups: 1
   _enablePickups: 1
+  _initializePlayerVoice: 1
   _voiceGain: 15
   _voiceDistanceNear: 0
   _voiceDistanceFar: 25
   _voiceVolumetricRadius: 0
   _voiceLowpass: 1
+  _initializeAvatarAudio: 1
   _avatarAudioGain: 10
   _avatarAudioDistanceNear: 40
   _avatarAudioDistanceFar: 40
   _avatarAudioVolumetricRadius: 40
   _avatarAudioForceSpatial: 0
   _avatarAudioCustomCurve: 0
-  _manualAvatarScalingAllowed: 1
-  _avatarEyeHeightMinimumByMeters: 0.2
-  _avatarEyeHeightMaximumByMeters: 5
-  _avatarEyeHeightByMeters: 1.3
+  _initializeAvatarScaling: 1
+  _allowManualAvatarScaling: 1
+  _avatarEyeHeightMinimum: 0.2
+  _avatarEyeHeightMaximum: 5
+  _initializeAvatarEyeHight: 0
+  _avatarEyeHeight: 1.3
 --- !u!114 &4847006719195930141
 MonoBehaviour:
   m_ObjectHideFlags: 0
