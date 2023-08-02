@@ -4,7 +4,7 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
-## [1.5.1] - 2023/8/2
+## [1.5.2] - 2023/8/2
 ### Fixed
 - Advanced World Settings
   - U# 1.1.9に正式対応しました
@@ -154,7 +154,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 - 
-[1.5.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.5.1
+[1.5.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.5.2
 [1.5.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.5.0
 [1.4.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.4.4
 [1.4.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.4.3
