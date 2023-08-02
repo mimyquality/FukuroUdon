@@ -21,7 +21,7 @@
   },
   "locked": {
     "com.vrchat.udonsharp": {
-      "version": "1.1.8",
+      "version": "1.1.9",
       "dependencies": {
         "com.vrchat.worlds": "^3.1.x"
       }
