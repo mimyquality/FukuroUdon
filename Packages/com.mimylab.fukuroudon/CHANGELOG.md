@@ -8,6 +8,7 @@
 ### Fixed
 - Advanced World Settings
   - U# 1.1.9に正式対応しました
+  - Avatar Eye Hieghtの設定を固定値ではなく、上限と下限を設定する方式に変更しました
 
 ## [1.5.0] - 2023/8/1
 ### Add
