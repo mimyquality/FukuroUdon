@@ -172,6 +172,8 @@ namespace MimyLab
         Rigidbody _rigidbody = null;
         VRCPickup _pickup = null;
         VRCPlayerApi _localPlayer, _ownerPlayer;
+        int _firstCheckTiming;
+        bool _reservedInterval = false;
         bool _syncHasChanged = false;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
@@ -220,6 +222,8 @@ namespace MimyLab
             _localRotation = _transform.localRotation;
             _localScale = _transform.localScale;
 
+            _firstCheckTiming = moveCheckTickRate + GetInstanceID() % moveCheckTickRate;
+
             if (_rigidbody)
             {
                 _useGravity = _rigidbody.useGravity;
@@ -254,10 +258,10 @@ namespace MimyLab
             IsKinematic = IsKinematic;
             Pickupable = Pickupable;
 
-            if (Networking.IsOwner(this.gameObject))
+            if (Networking.IsOwner(this.gameObject) && !_reservedInterval)
             {
-                var firstCheckTiming = moveCheckTickRate + GetInstanceID() % moveCheckTickRate;
-                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), firstCheckTiming);
+                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), _firstCheckTiming);
+                _reservedInterval = true;
             }
         }
 
@@ -270,7 +274,6 @@ namespace MimyLab
             if (Networking.IsOwner(this.gameObject))
             {
                 updateManager.DisablePostLateUpdate(this);
-                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), moveCheckTickRate);
 
                 if (PickupOffsetCheck()) { return; }
 
@@ -290,15 +293,25 @@ namespace MimyLab
 
         public void _IntervalPostLateUpdate()
         {
+            _reservedInterval = false;
+
             if (Networking.IsOwner(this.gameObject))
             {
                 updateManager.EnablePostLateUpdate(this);
+                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), moveCheckTickRate);
+                _reservedInterval = true;
             }
         }
 
         public override void OnOwnershipTransferred(VRCPlayerApi player)
         {
             Initialize();
+
+            if (player.isLocal && !_reservedInterval)
+            {
+                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), _firstCheckTiming);
+                _reservedInterval = true;
+            }
 
             if (_pickup)
             {
