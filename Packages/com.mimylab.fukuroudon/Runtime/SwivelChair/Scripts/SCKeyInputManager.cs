@@ -12,12 +12,12 @@ using UnityEngine;
 namespace MimyLab
 {
     [DefaultExecutionOrder(10)]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class SCKeyInputManager : UdonSharpBehaviour
     {
         private SwivelChair _swivelChair;
 
-        void Start()
+        private void Start()
         {
             _swivelChair = GetComponent<SwivelChair>();
         }
