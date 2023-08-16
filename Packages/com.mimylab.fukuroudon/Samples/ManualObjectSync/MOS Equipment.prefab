@@ -126,7 +126,8 @@ MonoBehaviour:
   moveCheckTickRate: 30
   moveCheckSpace: 1
   respawnHightY: -100
-  attachTarget: {fileID: 0}
+  attachPoint: {fileID: 0}
+  _updateManager: {fileID: 0}
 --- !u!114 &4152555671604241447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,7 +177,7 @@ MonoBehaviour:
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 1182265849903677104}
   snapPoint: {fileID: 6518706257551007181}
-  target: {fileID: 2116936242646116060}
+  target: {fileID: 0}
 --- !u!114 &1182265849903677104
 MonoBehaviour:
   m_ObjectHideFlags: 0

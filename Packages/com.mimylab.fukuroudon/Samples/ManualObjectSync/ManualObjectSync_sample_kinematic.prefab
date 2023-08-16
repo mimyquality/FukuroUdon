@@ -201,7 +201,8 @@ MonoBehaviour:
   moveCheckTickRate: 30
   moveCheckSpace: 1
   respawnHightY: -100
-  attachTarget: {fileID: 0}
+  attachPoint: {fileID: 0}
+  _updateManager: {fileID: 0}
 --- !u!114 &3199393467277883618
 MonoBehaviour:
   m_ObjectHideFlags: 0

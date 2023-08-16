@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2022 Mimy Quality
+Copyright (c) 2023 Mimy Quality
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
@@ -10,6 +10,10 @@ using VRC.SDKBase;
 using VRC.SDK3.Components;
 //using VRC.Udon;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace MimyLab
 {
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Manual ObjectSync")]
@@ -18,11 +22,9 @@ namespace MimyLab
     {
         [Header("Settings")]
         [Tooltip("The tick rate depends on the fps of this game object owner's client.")]
-        [Min(1)]
+        [Min(2)]
         public int moveCheckTickRate = 30;  // 変動確認の周期(fps依存)
         public Space moveCheckSpace = Space.Self;    // 変動確認をローカル座標系でするか
-        [Space]
-        public float respawnHightY = -100.0f;   // ここより落下したらリスポーンする
 
         [Header("Option Settings")]
         public Transform attachPoint = null;   // アタッチモード時の追従先
@@ -76,6 +78,7 @@ namespace MimyLab
                 {
                     _isEquiped = false;
                     _isAttached = false;
+                    updateManager.EnablePostLateUpdate(this);
                 }
                 if (_pickup) { Pickupable = Pickupable; }
                 if (_rigidbody) { IsKinematic = IsKinematic; }
@@ -107,6 +110,7 @@ namespace MimyLab
                 {
                     _isAttached = false;
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
+                    updateManager.EnablePostLateUpdate(this);
                 }
                 if (_rigidbody) { IsKinematic = IsKinematic; }
                 RequestSerialization();
@@ -125,11 +129,18 @@ namespace MimyLab
                 {
                     _isEquiped = false;
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
+                    updateManager.EnablePostLateUpdate(this);
                 }
                 if (_rigidbody) { IsKinematic = IsKinematic; }
                 RequestSerialization();
             }
         }
+
+        private string _UpdateManagerPrefabGUID = "51374f5e01425074ca9cb544fa44007d";
+        [HideInInspector]
+        public MOSUpdateManager updateManager = null;
+        [HideInInspector]
+        public float respawnHightY = -100.0f;   // ここより落下したらリスポーンする
 
         [UdonSynced] Vector3 _syncPosition = Vector3.zero; // 位置同期用、ピックアップ時はオフセット用
         [UdonSynced] Quaternion _syncRotation = Quaternion.identity; // 回転同期用、ピックアップ時はオフセット用
@@ -161,31 +172,39 @@ namespace MimyLab
         Rigidbody _rigidbody = null;
         VRCPickup _pickup = null;
         VRCPlayerApi _localPlayer, _ownerPlayer;
-        int _moveCheckTiming;
         bool _syncHasChanged = false;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
-        void Reset()
+        private void OnValidate()
         {
-            var activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
-            if (activeScene.IsValid())
+            EditorApplication.delayCall += () => { if (this) this.SetUpdateManager(); };
+        }
+
+        private void SetUpdateManager()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode) { return; }
+            if (PrefabUtility.IsPartOfPrefabAsset(this.gameObject)) { return; }
+
+            if (updateManager) { return; }
+            if (updateManager = FindObjectOfType<MOSUpdateManager>()) { return; }
+
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(_UpdateManagerPrefabGUID));
+            if (!prefab)
             {
-                var rootGameObjects = activeScene.GetRootGameObjects();
-                foreach (var item in rootGameObjects)
-                {
-                    var sceneDesctiptor = item.GetComponentInChildren<VRC_SceneDescriptor>(true);
-                    if (sceneDesctiptor)
-                    {
-                        respawnHightY = sceneDesctiptor.RespawnHeightY;
-                        break;
-                    }
-                }
+                Debug.LogError("MOSUpdateManager prefab could not be loaded.");
+                return;
             }
+
+            var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+            Undo.RegisterCreatedObjectUndo(instance, "Created MOSUpdateManager prefab");
+            Debug.Log("Created MOSUpdateManager prefab");
+
+            instance.GetComponentInChildren<MOSUpdateManager>().SetupAllMOS();
         }
 #endif
 
         bool _initialized = false;
-        void Initialize()
+        private void Initialize()
         {
             if (_initialized) { return; }
 
@@ -200,8 +219,6 @@ namespace MimyLab
             _localPosition = _transform.localPosition;
             _localRotation = _transform.localRotation;
             _localScale = _transform.localScale;
-
-            _moveCheckTiming = GetInstanceID() % moveCheckTickRate;
 
             if (_rigidbody)
             {
@@ -229,60 +246,53 @@ namespace MimyLab
 
             _initialized = true;
         }
-        void Start()
+        private void Start()
         {
             Initialize();
 
             UseGravity = UseGravity;
             IsKinematic = IsKinematic;
             Pickupable = Pickupable;
-        }
-
-        public override void PostLateUpdate()
-        {
-            if (_isAttached && attachPoint)
-            {
-                AttachToTransform();
-                return;
-            }
-
-            if (_isEquiped)
-            {
-                EquipBone();
-                return;
-            }
 
             if (Networking.IsOwner(this.gameObject))
             {
-                if (_isHeld)
-                {
-                    if (Time.frameCount % moveCheckTickRate == _moveCheckTiming)
-                    {
-                        PickupOffsetCheck();
-                    }
-                }
-                else if (_transform.hasChanged)
-                {
-                    if (_transform.position.y <= respawnHightY)
-                    {
-                        Respawn();
-                    }
-                    else if (Time.frameCount % moveCheckTickRate == _moveCheckTiming)
-                    {
-                        TransformMoveCheck();
-                    }
-                }
+                var firstCheckTiming = moveCheckTickRate + GetInstanceID() % moveCheckTickRate;
+                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), firstCheckTiming);
+            }
+        }
+
+        public void _OnPostLateUpdate()
+        {
+            if (AttachToTransform()) { return; }
+
+            if (EquipBone()) { return; }
+
+            if (Networking.IsOwner(this.gameObject))
+            {
+                updateManager.DisablePostLateUpdate(this);
+                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), moveCheckTickRate);
+
+                if (PickupOffsetCheck()) { return; }
+
+                TransformMoveCheck();
+
+                return;
             }
             else
             {
-                if (_isHeld)
-                {
-                    HoldingOther();
-                }
-                else if (_syncHasChanged)
-                {
-                    ApplySyncTransform();
-                }
+                if (HoldingOther()) { return; }
+
+                ApplySyncTransform();
+            }
+
+            updateManager.DisablePostLateUpdate(this);
+        }
+
+        public void _IntervalPostLateUpdate()
+        {
+            if (Networking.IsOwner(this.gameObject))
+            {
+                updateManager.EnablePostLateUpdate(this);
             }
         }
 
@@ -321,6 +331,7 @@ namespace MimyLab
 
             // 本当に_syncPosition/Rotation/Scaleに変化があったかは見ない
             _syncHasChanged = true;
+            updateManager.EnablePostLateUpdate(this);
         }
 
         // OnOwnershipTransferred()が発火しないバグが修正されたため、この処理は不要になった
@@ -450,8 +461,16 @@ namespace MimyLab
             if (Networking.IsOwner(this.gameObject)) { IsAttached = false; }
         }
 
-        void TransformMoveCheck()
+        private bool TransformMoveCheck()
         {
+            if (!_transform.hasChanged) { return false; }
+
+            if (_transform.position.y <= respawnHightY)
+            {
+                Respawn();
+                return true;
+            }
+
             if (moveCheckSpace == Space.Self
             && (_transform.localPosition != _localPosition
              || _transform.localRotation != _localRotation))
@@ -464,14 +483,17 @@ namespace MimyLab
             {
                 SyncLocation();
             }
+
             if (_transform.localScale != _localScale)
             {
                 SyncScale();
             }
 
             _transform.hasChanged = false;
+
+            return true;
         }
-        void SyncLocation()
+        private void SyncLocation()
         {
             _syncPosition = _transform.position;
             _syncRotation = _transform.rotation;
@@ -480,7 +502,7 @@ namespace MimyLab
 
             RequestSerialization();
         }
-        void SyncScale()
+        private void SyncScale()
         {
             _syncScale = _transform.localScale;
             _localScale = _transform.localScale;
@@ -488,8 +510,10 @@ namespace MimyLab
             RequestSerialization();
         }
 
-        void ApplySyncTransform()
+        private bool ApplySyncTransform()
         {
+            if (!_syncHasChanged) { return _syncHasChanged; }
+
             if (_rigidbody)
             {
                 _rigidbody.MovePosition(_syncPosition);
@@ -509,11 +533,15 @@ namespace MimyLab
             }
 
             _syncHasChanged = false;
+
+            return true;
         }
 
         // _isHeldならVRCPickupとRigidbodyが付いている
-        void PickupOffsetCheck()
+        private bool PickupOffsetCheck()
         {
+            if (!_isHeld) { return _isHeld; }
+
             var pickupHandBone = (_pickup.currentHand == VRCPickup.PickupHand.Left) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
             if (_equipBone != (byte)pickupHandBone)
             {
@@ -535,13 +563,17 @@ namespace MimyLab
 
                 RequestSerialization();
             }
+
+            return _isHeld;
         }
 
         // _isHeldならVRCPickupとRigidbodyが付いている
-        void HoldingOther()
+        private bool HoldingOther()
         {
+            if (!_isHeld) { return _isHeld; }
+
             _ownerPlayer = Networking.GetOwner(this.gameObject);
-            if (!Utilities.IsValid(_ownerPlayer)) { return; }
+            if (!Utilities.IsValid(_ownerPlayer)) { return _isHeld; }
 
             var pickupHandBone = (_equipBone == (byte)HumanBodyBones.LeftHand) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
             var handPosition = _ownerPlayer.GetBonePosition(pickupHandBone);
@@ -560,28 +592,38 @@ namespace MimyLab
                 _rigidbody.MovePosition(handPosition + (handRotation * _syncPosition));
                 _rigidbody.MoveRotation(handRotation * _syncRotation);
             }
+
+            return _isHeld;
         }
 
-        void EquipBone()
+        private bool EquipBone()
         {
+            if (!_isEquiped) { return _isEquiped; }
+
             _ownerPlayer = Networking.GetOwner(this.gameObject);
-            if (!Utilities.IsValid(_ownerPlayer)) { return; }
+            if (!Utilities.IsValid(_ownerPlayer)) { return _isEquiped; }
 
             var bonePosition = _ownerPlayer.GetBonePosition((HumanBodyBones)_equipBone);
             var boneRotation = _ownerPlayer.GetBoneRotation((HumanBodyBones)_equipBone);
-            if (bonePosition.Equals(Vector3.zero) || boneRotation.Equals(Quaternion.identity)) { return; }
+            if (bonePosition.Equals(Vector3.zero) || boneRotation.Equals(Quaternion.identity)) { return _isEquiped; }
 
             var equipPosition = bonePosition + (boneRotation * _syncPosition);
             var equipRotation = boneRotation * _syncRotation;
 
             _transform.SetPositionAndRotation(equipPosition, equipRotation);
             _syncHasChanged = false;
+
+            return _isEquiped;
         }
 
-        void AttachToTransform()
+        private bool AttachToTransform()
         {
+            if (!_isAttached) { return _isAttached; }
+
             _transform.SetPositionAndRotation(attachPoint.position, attachPoint.rotation);
             _syncHasChanged = false;
+
+            return _isAttached;
         }
     }
 }

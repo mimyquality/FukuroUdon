@@ -1,12 +1,13 @@
 {
-    "name": "com.mimylab.fukuroudon",
+    "name": "com.mimylab.fukuroudon.editor",
     "references": [
-        "Unity.TextMeshPro",
-        "VRC.Udon",
-        "VRC.Udon.Serialization.OdinSerializer",
-        "UdonSharp.Runtime"
+        "UdonSharp.Editor",
+        "UdonSharp.Runtime",
+        "com.mimylab.fukuroudon"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

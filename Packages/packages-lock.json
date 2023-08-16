@@ -6,12 +6,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "com.mmmaellon.smartobjectsync": {
-      "version": "file:com.mmmaellon.smartobjectsync",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.unity.burst": {
       "version": "1.4.11",
       "depth": 1,
@@ -41,15 +35,6 @@
       "source": "registry",
       "dependencies": {
         "com.unity.test-framework": "1.1.1"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.ide.visualstudio": {
-      "version": "2.0.18",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.test-framework": "1.1.9"
       },
       "url": "https://packages.unity.com"
     },
@@ -205,6 +190,12 @@
       "dependencies": {
         "com.unity.postprocessing": "3.1.1"
       }
+    },
+    "net.kaikoga.pen": {
+      "version": "file:net.kaikoga.pen",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
     },
     "net.ureishi.qvpen": {
       "version": "file:net.ureishi.qvpen",

@@ -15,8 +15,8 @@
     "net.ureishi.qvpen": {
       "version": "3.2.6"
     },
-    "com.mmmaellon.smartobjectsync": {
-      "version": "3.2.0"
+    "net.kaikoga.pen": {
+      "version": "1.0.0"
     }
   },
   "locked": {
@@ -27,13 +27,13 @@
       }
     },
     "com.vrchat.worlds": {
-      "version": "3.2.2",
+      "version": "3.2.3",
       "dependencies": {
-        "com.vrchat.base": "3.2.2"
+        "com.vrchat.base": "3.2.3"
       }
     },
     "com.vrchat.base": {
-      "version": "3.2.2",
+      "version": "3.2.3",
       "dependencies": {}
     },
     "com.vrchat.core.vpm-resolver": {
@@ -53,15 +53,17 @@
       }
     },
     "net.ureishi.qvpen": {
-      "version": "3.2.7",
+      "version": "3.2.9",
       "dependencies": {
         "com.vrchat.udonsharp": "^1.1.8"
       }
     },
-    "com.mmmaellon.smartobjectsync": {
-      "version": "3.4.1",
+    "net.kaikoga.pen": {
+      "version": "1.0.0",
       "dependencies": {
-        "com.vrchat.udonsharp": "1.1.X"
+        "com.vrchat.base": "^3.0.0",
+        "com.vrchat.worlds": "^3.0.0",
+        "com.vrchat.udonsharp": "^1.0.0"
       }
     }
   }

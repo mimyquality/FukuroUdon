@@ -402,6 +402,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4142531565948247355, guid: e7bf922d34a97a548ab0720585e0ea67,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: -4142531565948247355, guid: e7bf922d34a97a548ab0720585e0ea67,
+        type: 3}
+    - target: {fileID: 2868195156399329074, guid: e7bf922d34a97a548ab0720585e0ea67,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 2868195156399329074, guid: e7bf922d34a97a548ab0720585e0ea67,
+        type: 3}
     - target: {fileID: 3903165552531156798, guid: e7bf922d34a97a548ab0720585e0ea67,
         type: 3}
       propertyPath: m_RootOrder
@@ -410,7 +422,7 @@ PrefabInstance:
     - target: {fileID: 3903165552531156798, guid: e7bf922d34a97a548ab0720585e0ea67,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3903165552531156798, guid: e7bf922d34a97a548ab0720585e0ea67,
         type: 3}
@@ -420,7 +432,7 @@ PrefabInstance:
     - target: {fileID: 3903165552531156798, guid: e7bf922d34a97a548ab0720585e0ea67,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 3903165552531156798, guid: e7bf922d34a97a548ab0720585e0ea67,
         type: 3}
@@ -462,7 +474,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwivelChair_example
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3981977721798024092, guid: e7bf922d34a97a548ab0720585e0ea67,
+        type: 3}
+      propertyPath: _syncMethod
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6583928515523647240, guid: e7bf922d34a97a548ab0720585e0ea67, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e7bf922d34a97a548ab0720585e0ea67, type: 3}
 --- !u!4 &3556047680413921522 stripped
 Transform:

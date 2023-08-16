@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 Mimy Quality
+Copyright (c) 2023 Mimy Quality
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
@@ -7,8 +7,12 @@ https://opensource.org/licenses/mit-license.php
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon;
+//using VRC.Udon;
 using VRC.Udon.Common;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace MimyLab
 {
@@ -21,7 +25,7 @@ namespace MimyLab
     }
 
     [AddComponentMenu("Fukuro Udon/Swivel Chair")]
-    [RequireComponent(typeof(VRCStation))]
+    [RequireComponent(typeof(SCKeyInputManager), typeof(VRCStation))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class SwivelChair : UdonSharpBehaviour
     {
@@ -100,6 +104,7 @@ namespace MimyLab
         }
 
         // コンポーネントのキャッシュ用
+        SCKeyInputManager _keyInputManager;
         VRCStation _station;
         Transform _enterPoint;
         Transform _parent;
@@ -110,10 +115,30 @@ namespace MimyLab
         bool _fixShift = false, _lUse = false, _rUse = false;   // インプット渡し用
         float _lookVerticalValue = 0f, _lookHorizontalValue = 0f;   // インプット渡し用
         float _vertical, _sagittal;    // 計算用
-        Vector3 _fixValue, _rotateValue;  // 計算用
+        Vector3 _fixValue;  // 計算用
+        float _rotateValue;  // 計算用
         Vector3 _savedSeatPosition;  // 座高のローカル保持用
         float _moveVerticalValue = 0f, _moveHorizontalValue = 0f;   // インプット渡し用
         Vector3 _moveDirection;   //移動方向
+
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
+        private void OnValidate()
+        {
+            EditorApplication.delayCall += () => { if (this) this.SetupKeyInputManager(); };
+        }
+
+        private void SetupKeyInputManager()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode) { return; }
+            if (PrefabUtility.IsPartOfPrefabAsset(this.gameObject)) { return; }
+
+            if (_keyInputManager) { return; }
+            if (_keyInputManager = GetComponent<SCKeyInputManager>()) { return; }
+
+            _keyInputManager = this.gameObject.AddComponent<SCKeyInputManager>();
+            EditorUtility.SetDirty(this);
+        }
+#endif
 
         bool _initialized = false;
         void Initialize()
@@ -123,7 +148,10 @@ namespace MimyLab
             // ローカルプレイヤー参照使い回し用
             _lPlayer = Networking.LocalPlayer;
 
-            // VRC StationにEnter Pointがあるか判定
+            // いきなり座ることは無いので無効
+            _keyInputManager = GetComponent<SCKeyInputManager>();
+            _keyInputManager.enabled = _isSit;
+
             _station = GetComponent<VRCStation>();
             _enterPoint = (_station.stationEnterPlayerLocation) ? _station.stationEnterPlayerLocation : this.transform;
 
@@ -141,31 +169,10 @@ namespace MimyLab
             Initialize();
         }
 
-        void Update()
+        public void _OnUpdate()
         {
-            // DTモードの時キーボード入力受付            
-            if (Utilities.IsValid(_lPlayer) && !_lPlayer.IsUserInVR())
-            {
-                InputKeyboard();
-            }
-
-            // 自分が座ってる時だけ入力受付処理
-            if (!_isSit) { return; }
-
-            // スイベル有効かつ移動無効なら回転操作
-            if (enableSwivel && !EnableCasterMove)
-            {
-                // 横視点インプットを元に椅子操作
-                if (_lookHorizontalValue != 0f)
-                {
-                    // スイベル回転
-                    _rotateValue = _lookHorizontalValue * rotateSpeed * Time.deltaTime * Vector3.up;
-                    this.transform.Rotate(_rotateValue, Space.Self);
-                    _seatRotation = this.transform.localRotation;
-
-                    RequestSerialization();
-                }
-            }
+            // DTモードの時キーボード入力受付
+            InputKeyboard();
 
             // 調節機能有効なら移動操作
             if (enableFix)
@@ -217,8 +224,8 @@ namespace MimyLab
                 // 椅子ごと回転
                 if (_lookHorizontalValue != 0f)
                 {
-                    _rotateValue = _lookHorizontalValue * moveRotateSpeed * Time.deltaTime * Vector3.up;
-                    _parent.Rotate(_rotateValue, Space.World);
+                    _rotateValue = _lookHorizontalValue * moveRotateSpeed * Time.deltaTime;
+                    _parent.Rotate(_rotateValue * Vector3.up, Space.World);
                 }
 
                 // 縦横移動インプットを元に移動量計算
@@ -230,6 +237,19 @@ namespace MimyLab
                     _parent.Translate(_moveDirection, Space.Self);
                 }
             }
+            // 移動無効かつスイベル有効なら回転操作
+            else if (enableSwivel)
+            {
+                // 横視点インプットを元に椅子操作
+                if (_lookHorizontalValue != 0f)
+                {
+                    // スイベル回転
+                    _rotateValue = _lookHorizontalValue * rotateSpeed * Time.deltaTime;
+                    SeatRotation = this.transform.localRotation * Quaternion.AngleAxis(_rotateValue, Vector3.up);
+
+                    RequestSerialization();
+                }
+            }
         }
 
         /******************************
@@ -237,6 +257,8 @@ namespace MimyLab
         ******************************/
         void InputKeyboard()
         {
+            if (_lPlayer.IsUserInVR()) { return; }
+
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 // ↑
@@ -280,7 +302,7 @@ namespace MimyLab
         ******************************/
         public override void InputLookVertical(float value, UdonInputEventArgs args)
         {
-            if (!_lPlayer.IsValid() || !_lPlayer.IsUserInVR()) { return; }
+            if (!_lPlayer.IsUserInVR()) { return; }
 
             // 上下
             _lookVerticalValue = (Mathf.Abs(value) > deadZone) ? value : 0f;
@@ -288,7 +310,7 @@ namespace MimyLab
 
         public override void InputLookHorizontal(float value, UdonInputEventArgs args)
         {
-            if (!_lPlayer.IsValid() || !_lPlayer.IsUserInVR()) { return; }
+            if (!_lPlayer.IsUserInVR()) { return; }
 
             // 左右
             _lookHorizontalValue = (Mathf.Abs(value) > deadZone) ? value : 0f;
@@ -296,7 +318,7 @@ namespace MimyLab
 
         public override void InputUse(bool value, UdonInputEventArgs args)
         {
-            if (!_lPlayer.IsValid() || !_lPlayer.IsUserInVR()) { return; }
+            if (!_lPlayer.IsUserInVR()) { return; }
 
             if (args.handType == HandType.RIGHT) { _rUse = value; }
             if (args.handType == HandType.LEFT) { _lUse = value; }
@@ -320,8 +342,6 @@ namespace MimyLab
 
         public override void InputJump(bool value, UdonInputEventArgs args)
         {
-            if (!_lPlayer.IsValid()) { return; }
-
             if (EnableCasterMove && _isSit && value)
             {
                 _station.ExitStation(_lPlayer);
@@ -333,7 +353,6 @@ namespace MimyLab
         ******************************/
         public override void Interact()
         {
-            if (!_lPlayer.IsValid()) { return; }
             Networking.SetOwner(_lPlayer, this.gameObject);
             Networking.SetOwner(_lPlayer, _parent.gameObject);
             _station.UseStation(_lPlayer);
@@ -341,8 +360,11 @@ namespace MimyLab
 
         public override void OnStationEntered(VRCPlayerApi player)
         {
-            if (!player.IsValid() || !player.isLocal) { return; }
+            if (!Utilities.IsValid(player)) { return; }
+            if (!player.isLocal) { return; }
+
             _isSit = true;
+            _keyInputManager.enabled = true;
 
             // 座高の書き戻し処理
             SeatPosition = _savedSeatPosition;
@@ -351,8 +373,11 @@ namespace MimyLab
 
         public override void OnStationExited(VRCPlayerApi player)
         {
-            if (!player.IsValid() || !player.isLocal) { return; }
+            if (!Utilities.IsValid(player)) { return; }
+            if (!player.isLocal) { return; }
+
             _isSit = false;
+            _keyInputManager.enabled = false;
 
             // 調整した座高のローカル保持
             _savedSeatPosition = SeatPosition;

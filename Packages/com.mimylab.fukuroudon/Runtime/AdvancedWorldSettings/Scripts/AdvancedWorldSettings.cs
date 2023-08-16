@@ -20,7 +20,7 @@ namespace MimyLab
     }
 
     [AddComponentMenu("Fukuro Udon/Advanced World Settings")]
-    [DefaultExecutionOrder(-100)]
+    [DefaultExecutionOrder(-1000)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class AdvancedWorldSettings : UdonSharpBehaviour
     {
