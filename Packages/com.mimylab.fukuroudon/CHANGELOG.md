@@ -4,6 +4,13 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.6.0] - 2023/8/16
+### Changed
+- Manual ObjectSync
+  - 大量に置いた場合の負荷軽減のため、更新処理を管理オブジェクトから配信する方式に変更しました。
+- Swivel Chair
+  - 大量に置いた場合の負荷軽減のため、更新処理をサブコンポーネントから配信する方式に変更しました。
+
 ## [1.5.2] - 2023/8/2
 ### Fixed
 - Advanced World Settings
@@ -38,7 +45,8 @@
 ## [1.4.0] - 2023/6/20
 ### Add
 - Manual ObjectSync
-  - 他のUdonスクリプトにピックアップ系イベントを横流しできる補助スクリプトを追加しました。VRCPickupコンポーネントが付いていなくてもピックアップ系イベントを実行できるようになります。
+  - 他のUdonスクリプトにピックアップ系イベントを横流しできる補助スクリプトを追加しました。  
+    VRCPickupコンポーネントが付いていなくてもピックアップ系イベントを実行できるようになります。
 
 ### Changed
 - Manual ObjectSync
@@ -153,7 +161,8 @@
 - Smart Slideshowを追加
 - Swivel Chairを追加
 - VR Follow HUDを追加
-- 
+
+[1.6.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.0
 [1.5.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.5.2
 [1.5.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.5.0
 [1.4.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.4.4
