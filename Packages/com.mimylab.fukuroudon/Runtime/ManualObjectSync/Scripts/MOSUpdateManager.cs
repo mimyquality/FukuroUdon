@@ -26,7 +26,7 @@ namespace MimyLab
         private float _respawnHightY = -100.0f;
         private ManualObjectSync[] _mosList = new ManualObjectSync[0];
 
-#if !COMPILER_UDONSHARP && UNITY_EDITOR
+#if !COMPILER_UDONSHARP && UNITY_EDITOR        
         private void Reset()
         {
             SetupAllMOS();
@@ -53,7 +53,6 @@ namespace MimyLab
                 {
                     tmp_mos.updateManager = this;
                     tmp_mos.respawnHightY = respawnHightY;
-                    //UdonSharpEditorUtility.CopyProxyToUdon(tmp_mos);
                 }
             }
         }
