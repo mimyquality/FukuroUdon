@@ -188,7 +188,11 @@ namespace MimyLab
             if (PrefabUtility.IsPartOfPrefabAsset(this.gameObject)) { return; }
 
             if (updateManager) { return; }
-            if (updateManager = FindObjectOfType<MOSUpdateManager>()) { return; }
+            if (updateManager = FindObjectOfType<MOSUpdateManager>())
+            {
+                EditorUtility.SetDirty(gameObject);
+                return;
+            }
 
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(_UpdateManagerPrefabGUID));
             if (!prefab)
