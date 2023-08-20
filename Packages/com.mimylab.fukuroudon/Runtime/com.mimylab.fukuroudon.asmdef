@@ -4,7 +4,8 @@
         "Unity.TextMeshPro",
         "VRC.Udon",
         "VRC.Udon.Serialization.OdinSerializer",
-        "UdonSharp.Runtime"
+        "UdonSharp.Runtime",
+        "UdonSharp.Editor"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

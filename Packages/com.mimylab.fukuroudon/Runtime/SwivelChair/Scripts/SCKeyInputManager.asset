@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: SCKeyInputManager
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 9afacc0ef1d511747bf4cd2d1940f2ca,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: db8266b1352811a49b526103b6f4b4c6,
     type: 2}
   udonAssembly: 
   assemblyError: 

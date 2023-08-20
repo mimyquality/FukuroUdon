@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: MOSUpdateManager
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: ac843a01edc7a134caae2b273fd22b2b,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: a409812f3deaabf479217f1fd3a05771,
     type: 2}
   udonAssembly: 
   assemblyError: 

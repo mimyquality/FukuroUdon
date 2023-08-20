@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: PlayerAudioRegulatorArea
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: fb73f8b3352a4024986faa4845fd8b2f,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 374952417544b184197de684fac06e84,
     type: 2}
   udonAssembly: 
   assemblyError: 

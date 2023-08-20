@@ -12,6 +12,8 @@ using VRC.SDK3.Components;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.Experimental.SceneManagement;
+using UdonSharpEditor;
 #endif
 
 namespace MimyLab
@@ -20,11 +22,11 @@ namespace MimyLab
     public class MOSUpdateManager : UdonSharpBehaviour
     {
         [Header("Reset this component if you want the values to be the same as those of Scene Descriptor.")]
-        
+
         private float _respawnHightY = -100.0f;
         private ManualObjectSync[] _mosList = new ManualObjectSync[0];
 
-#if !COMPILER_UDONSHARP && UNITY_EDITOR        
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void Reset()
         {
             SetupAllMOS();
@@ -33,7 +35,8 @@ namespace MimyLab
         internal void SetupAllMOS()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode) { return; }
-            if (PrefabUtility.IsPartOfPrefabAsset(this.gameObject)) { return; }
+            if (PrefabStageUtility.GetCurrentPrefabStage() != null) { return; }
+            if (PrefabUtility.IsPartOfPrefabAsset(this)) { return; }
 
             var scene = this.gameObject.scene;
             if (!scene.IsValid()) { return; }
@@ -50,6 +53,7 @@ namespace MimyLab
                 {
                     tmp_mos.updateManager = this;
                     tmp_mos.respawnHightY = respawnHightY;
+                    //UdonSharpEditorUtility.CopyProxyToUdon(tmp_mos);
                 }
             }
         }

@@ -12,6 +12,7 @@ using VRC.SDK3.Components;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.Experimental.SceneManagement;
 #endif
 
 namespace MimyLab
@@ -137,9 +138,9 @@ namespace MimyLab
         }
 
         private string _UpdateManagerPrefabGUID = "51374f5e01425074ca9cb544fa44007d";
-        [HideInInspector]
+        //[HideInInspector]
         public MOSUpdateManager updateManager = null;
-        [HideInInspector]
+        //[HideInInspector]
         public float respawnHightY = -100.0f;   // ここより落下したらリスポーンする
 
         [UdonSynced] Vector3 _syncPosition = Vector3.zero; // 位置同期用、ピックアップ時はオフセット用
@@ -179,13 +180,14 @@ namespace MimyLab
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnValidate()
         {
-            EditorApplication.delayCall += () => { if (this) this.SetUpdateManager(); };
+            EditorApplication.delayCall += () => { if (this) this.MakeUpdateManager(); };
         }
 
-        private void SetUpdateManager()
+        private void MakeUpdateManager()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode) { return; }
-            if (PrefabUtility.IsPartOfPrefabAsset(this.gameObject)) { return; }
+            if (PrefabStageUtility.GetCurrentPrefabStage() != null) { return; }
+            if (PrefabUtility.IsPartOfPrefabAsset(this)) { return; }
 
             if (updateManager) { return; }
             if (updateManager = FindObjectOfType<MOSUpdateManager>()) { return; }

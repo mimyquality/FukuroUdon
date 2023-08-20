@@ -16,6 +16,12 @@ using UnityEditor;
 
 namespace MimyLab
 {
+    public enum SwivelChairPlayerPlatform
+    {
+        PC,
+        Android
+    }
+
     // 調節機能の切替
     public enum ChairFixMode
     {
@@ -110,6 +116,7 @@ namespace MimyLab
         Transform _parent;
 
         // ローカル処理用
+        SwivelChairPlayerPlatform _platform = SwivelChairPlayerPlatform.PC;
         VRCPlayerApi _lPlayer;
         bool _isSit = false;    // 自分がこの椅子に座っているか判定
         bool _fixShift = false, _lUse = false, _rUse = false;   // インプット渡し用
@@ -144,6 +151,10 @@ namespace MimyLab
         void Initialize()
         {
             if (_initialized) { return; }
+
+#if UNITY_ANDROID
+            _platform = SwivelChairPlayerPlatform.Android;
+#endif
 
             // ローカルプレイヤー参照使い回し用
             _lPlayer = Networking.LocalPlayer;
@@ -253,11 +264,12 @@ namespace MimyLab
         }
 
         /******************************
-         インプット(DTモード)
+         インプット(DTP)
         ******************************/
         void InputKeyboard()
         {
-            if (_lPlayer.IsUserInVR()) { return; }
+            if (!Utilities.IsValid(_lPlayer)) { return; }
+            if ((_platform != SwivelChairPlayerPlatform.PC) || _lPlayer.IsUserInVR()) { return; }
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
@@ -298,11 +310,11 @@ namespace MimyLab
         }
 
         /******************************
-         インプット(VRモード)
+         インプット(PCVR/Quest/Android)
         ******************************/
         public override void InputLookVertical(float value, UdonInputEventArgs args)
         {
-            if (!_lPlayer.IsUserInVR()) { return; }
+            if ((_platform == SwivelChairPlayerPlatform.PC) && !_lPlayer.IsUserInVR()) { return; }
 
             // 上下
             _lookVerticalValue = (Mathf.Abs(value) > deadZone) ? value : 0f;
@@ -310,7 +322,7 @@ namespace MimyLab
 
         public override void InputLookHorizontal(float value, UdonInputEventArgs args)
         {
-            if (!_lPlayer.IsUserInVR()) { return; }
+            if ((_platform == SwivelChairPlayerPlatform.PC) && !_lPlayer.IsUserInVR()) { return; }
 
             // 左右
             _lookHorizontalValue = (Mathf.Abs(value) > deadZone) ? value : 0f;
@@ -318,7 +330,7 @@ namespace MimyLab
 
         public override void InputUse(bool value, UdonInputEventArgs args)
         {
-            if (!_lPlayer.IsUserInVR()) { return; }
+            if ((_platform == SwivelChairPlayerPlatform.PC) && !_lPlayer.IsUserInVR()) { return; }
 
             if (args.handType == HandType.RIGHT) { _rUse = value; }
             if (args.handType == HandType.LEFT) { _lUse = value; }
