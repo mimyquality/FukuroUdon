@@ -13,6 +13,7 @@ using VRC.SDK3.Components;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Experimental.SceneManagement;
+using UdonSharpEditor;
 #endif
 
 namespace MimyLab
@@ -79,7 +80,7 @@ namespace MimyLab
                 {
                     _isEquiped = false;
                     _isAttached = false;
-                    updateManager.EnablePostLateUpdate(this);
+                    _updateManager.EnablePostLateUpdate(this);
                 }
                 if (_pickup) { Pickupable = Pickupable; }
                 if (_rigidbody) { IsKinematic = IsKinematic; }
@@ -111,7 +112,7 @@ namespace MimyLab
                 {
                     _isAttached = false;
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
-                    updateManager.EnablePostLateUpdate(this);
+                    _updateManager.EnablePostLateUpdate(this);
                 }
                 if (_rigidbody) { IsKinematic = IsKinematic; }
                 RequestSerialization();
@@ -130,7 +131,7 @@ namespace MimyLab
                 {
                     _isEquiped = false;
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
-                    updateManager.EnablePostLateUpdate(this);
+                    _updateManager.EnablePostLateUpdate(this);
                 }
                 if (_rigidbody) { IsKinematic = IsKinematic; }
                 RequestSerialization();
@@ -138,10 +139,10 @@ namespace MimyLab
         }
 
         private string _UpdateManagerPrefabGUID = "51374f5e01425074ca9cb544fa44007d";
-        //[HideInInspector]
-        public MOSUpdateManager updateManager = null;
-        //[HideInInspector]
-        public float respawnHightY = -100.0f;   // ここより落下したらリスポーンする
+        [SerializeField]
+        private MOSUpdateManager _updateManager = null;
+        [SerializeField]
+        private float _respawnHightY = -100.0f;   // ここより落下したらリスポーンする
 
         [UdonSynced] Vector3 _syncPosition = Vector3.zero; // 位置同期用、ピックアップ時はオフセット用
         [UdonSynced] Quaternion _syncRotation = Quaternion.identity; // 回転同期用、ピックアップ時はオフセット用
@@ -189,10 +190,11 @@ namespace MimyLab
             if (PrefabStageUtility.GetCurrentPrefabStage() != null) { return; }
             if (PrefabUtility.IsPartOfPrefabAsset(this)) { return; }
 
-            if (updateManager) { return; }
-            if (updateManager = FindObjectOfType<MOSUpdateManager>())
+            if (_updateManager) { return; }
+            if (_updateManager = FindObjectOfType<MOSUpdateManager>())
             {
-                EditorUtility.SetDirty(gameObject);
+                _respawnHightY = _updateManager.respawnHightY;
+                RecordSelf();
                 return;
             }
 
@@ -208,6 +210,23 @@ namespace MimyLab
             Debug.Log("Created MOSUpdateManager prefab");
 
             instance.GetComponentInChildren<MOSUpdateManager>().SetupAllMOS();
+        }
+
+        internal void SetUpdateManager(MOSUpdateManager um)
+        {
+            _updateManager = um;
+        }
+
+        internal void SetRespawnHeightY(float y)
+        {
+            _respawnHightY = y;
+        }
+
+        internal void RecordSelf()
+        {
+            UdonSharpEditorUtility.CopyProxyToUdon(this);
+            EditorUtility.SetDirty(this);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(this);
         }
 #endif
 
@@ -279,7 +298,7 @@ namespace MimyLab
 
             if (Networking.IsOwner(this.gameObject))
             {
-                updateManager.DisablePostLateUpdate(this);
+                _updateManager.DisablePostLateUpdate(this);
 
                 if (PickupOffsetCheck()) { return; }
 
@@ -294,7 +313,7 @@ namespace MimyLab
                 ApplySyncTransform();
             }
 
-            updateManager.DisablePostLateUpdate(this);
+            _updateManager.DisablePostLateUpdate(this);
         }
 
         public void _IntervalPostLateUpdate()
@@ -303,7 +322,7 @@ namespace MimyLab
 
             if (Networking.IsOwner(this.gameObject))
             {
-                updateManager.EnablePostLateUpdate(this);
+                _updateManager.EnablePostLateUpdate(this);
                 SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), moveCheckTickRate);
                 _reservedInterval = true;
             }
@@ -350,7 +369,7 @@ namespace MimyLab
 
             // 本当に_syncPosition/Rotation/Scaleに変化があったかは見ない
             _syncHasChanged = true;
-            updateManager.EnablePostLateUpdate(this);
+            _updateManager.EnablePostLateUpdate(this);
         }
 
         // OnOwnershipTransferred()が発火しないバグが修正されたため、この処理は不要になった
@@ -484,7 +503,7 @@ namespace MimyLab
         {
             if (!_transform.hasChanged) { return false; }
 
-            if (_transform.position.y <= respawnHightY)
+            if (_transform.position.y <= _respawnHightY)
             {
                 Respawn();
                 return true;

@@ -4,6 +4,11 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.6.1] - 2023/8/20
+### Fixed
+- Manual ObjectSync
+  - Nested Prefabに付いているManual ObjectSyncが再生/ビルド時にエラーになるのを修正しました。
+
 ## [1.6.0] - 2023/8/16
 ### Changed
 - Manual ObjectSync
@@ -162,6 +167,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
+[1.6.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.1
 [1.6.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.0
 [1.5.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.5.2
 [1.5.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.5.0
