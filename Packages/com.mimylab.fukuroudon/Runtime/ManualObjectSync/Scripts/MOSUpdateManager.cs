@@ -25,6 +25,23 @@ namespace MimyLab
         private ManualObjectSync[] _mosList = new ManualObjectSync[0];
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR        
+
+        [InitializeOnLoadMethod]
+        private static void OnPlayModeStateChanged()
+        {
+            EditorApplication.playModeStateChanged += state =>
+            {
+                if (state == PlayModeStateChange.EnteredEditMode)
+                {
+                    var tmpMosUpdateManagerList = FindObjectsOfType<MOSUpdateManager>();
+                    foreach (var tmpMosUpdateManager in tmpMosUpdateManagerList)
+                    {
+                        tmpMosUpdateManager.SetupAllMOS();
+                    }
+                }
+            };
+        }
+
         private void Reset()
         {
             SetupAllMOS();
@@ -50,6 +67,7 @@ namespace MimyLab
                 {
                     tmp_mos.updateManager = this;
                     tmp_mos.respawnHightY = respawnHightY;
+                    EditorUtility.SetDirty(tmp_mos);
                 }
             }
         }
