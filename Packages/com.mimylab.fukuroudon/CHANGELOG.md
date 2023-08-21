@@ -4,6 +4,11 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.6.2] - 2023/8/21
+### Changed
+- Manual ObjectSync
+  - RespawnHeightY(落下時のリスポーン基準)がVRC Scene Descriptorと連動するようになりました。
+
 ## [1.6.1] - 2023/8/20
 ### Fixed
 - Manual ObjectSync

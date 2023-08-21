@@ -7,7 +7,6 @@ https://opensource.org/licenses/mit-license.php
 using UdonSharp;
 using UnityEngine;
 //using VRC.SDKBase;
-using VRC.SDK3.Components;
 //using VRC.Udon;
 
 #if UNITY_EDITOR
@@ -20,10 +19,10 @@ namespace MimyLab
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MOSUpdateManager : UdonSharpBehaviour
     {
-        internal float respawnHightY = -100.0f;
+        internal float respawnHeightY = -100.0f;
         private ManualObjectSync[] _mosList = new ManualObjectSync[0];
 
-#if !COMPILER_UDONSHARP && UNITY_EDITOR        
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void Reset()
         {
             SetupAllMOS();
@@ -39,9 +38,6 @@ namespace MimyLab
             if (!scene.IsValid()) { return; }
             if (!scene.isLoaded) { return; }
 
-            var sceneDescriptor = FindObjectOfType<VRCSceneDescriptor>();
-            respawnHightY = (sceneDescriptor) ? sceneDescriptor.RespawnHeightY : respawnHightY;
-
             var rootObjects = scene.GetRootGameObjects();
             foreach (var obj in rootObjects)
             {
@@ -49,7 +45,7 @@ namespace MimyLab
                 foreach (var tmp_mos in tmp_mosList)
                 {
                     tmp_mos.SetUpdateManager(this);
-                    tmp_mos.SetRespawnHeightY(respawnHightY);
+                    tmp_mos.SetRespawnHeightY(respawnHeightY);
                     tmp_mos.RecordSelf();
                 }
             }

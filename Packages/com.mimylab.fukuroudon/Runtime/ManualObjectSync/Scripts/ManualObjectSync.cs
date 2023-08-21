@@ -193,7 +193,7 @@ namespace MimyLab
             if (_updateManager) { return; }
             if (_updateManager = FindObjectOfType<MOSUpdateManager>())
             {
-                _respawnHightY = _updateManager.respawnHightY;
+                _respawnHightY = _updateManager.respawnHeightY;
                 RecordSelf();
                 return;
             }
