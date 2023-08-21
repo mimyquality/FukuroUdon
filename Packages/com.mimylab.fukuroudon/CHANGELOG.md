@@ -4,7 +4,7 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
-## [1.6.3] - 2023/8/21
+## [1.6.4] - 2023/8/21
 ### Changed
 - Manual ObjectSync
   - RespawnHeightY(落下時のリスポーン基準)がVRC Scene Descriptorと連動するようになりました。
@@ -172,7 +172,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
-[1.6.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.1
+[1.6.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.4
 [1.6.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.0
 [1.5.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.5.2
 [1.5.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.5.0

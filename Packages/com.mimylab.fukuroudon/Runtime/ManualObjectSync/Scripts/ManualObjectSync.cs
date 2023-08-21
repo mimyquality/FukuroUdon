@@ -139,10 +139,10 @@ namespace MimyLab
         }
 
         private string _UpdateManagerPrefabGUID = "51374f5e01425074ca9cb544fa44007d";
-        //[SerializeField]
-        private MOSUpdateManager _updateManager = null;
-        //[SerializeField]
-        private float _respawnHightY = -100.0f;   // ここより落下したらリスポーンする
+        [HideInInspector]
+        public MOSUpdateManager _updateManager = null;
+        [HideInInspector]
+        public float _respawnHightY = -100.0f;   // ここより落下したらリスポーンする
 
         [UdonSynced] Vector3 _syncPosition = Vector3.zero; // 位置同期用、ピックアップ時はオフセット用
         [UdonSynced] Quaternion _syncRotation = Quaternion.identity; // 回転同期用、ピックアップ時はオフセット用
