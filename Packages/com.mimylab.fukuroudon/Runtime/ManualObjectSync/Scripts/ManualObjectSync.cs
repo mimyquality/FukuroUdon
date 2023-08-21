@@ -139,9 +139,9 @@ namespace MimyLab
         }
 
         private string _UpdateManagerPrefabGUID = "51374f5e01425074ca9cb544fa44007d";
-        [SerializeField]
+        //[SerializeField]
         private MOSUpdateManager _updateManager = null;
-        [SerializeField]
+        //[SerializeField]
         private float _respawnHightY = -100.0f;   // ここより落下したらリスポーンする
 
         [UdonSynced] Vector3 _syncPosition = Vector3.zero; // 位置同期用、ピックアップ時はオフセット用

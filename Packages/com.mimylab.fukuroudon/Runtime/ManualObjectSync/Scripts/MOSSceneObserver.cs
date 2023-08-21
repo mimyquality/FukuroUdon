@@ -5,9 +5,12 @@ https://opensource.org/licenses/mit-license.php
 */
 
 using UnityEngine;
+using VRC.SDK3.Components;
+
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Experimental.SceneManagement;
-using VRC.SDK3.Components;
+#endif
 
 namespace MimyLab
 {
