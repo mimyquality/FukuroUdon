@@ -39,7 +39,7 @@ namespace MimyLab
         {
             if (!target) { return; }
 
-            target.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, nameof(target.Unequip));
+            target.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(target.Unequip));
         }
 
         public override void OnPickupUseDown()
