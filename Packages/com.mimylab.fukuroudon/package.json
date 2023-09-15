@@ -1,6 +1,6 @@
 {
   "name": "com.mimylab.fukuroudon",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "displayName": "Fukuro Udon",
   "description": "MimyLab's U# utilitiy pack for VPM.",
   "unity": "2019.4",
@@ -11,8 +11,7 @@
   "documentationUrl": "https://github.com/mimyquality/FukuroUdon/wiki",
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.worlds":"^3.2.2",
-    "com.vrchat.udonsharp": "^1.1.9"
+    "com.vrchat.worlds":"^3.2.2"
   },
   "legacyFolders": {
     "Assets\\MimyLab/ActiveRelay": "",
