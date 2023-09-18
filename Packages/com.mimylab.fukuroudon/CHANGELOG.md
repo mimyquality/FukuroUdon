@@ -4,6 +4,12 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.6.6] - 2023/9/17
+### Fixed
+- Grab SlideDoor
+  - 大量に置いた場合の負荷軽減のため、必要な時だけPickupHandleからLimitedPosition/LookConstraintの有効無効を切り替えるようにしました。LimitedPosition/LookConstraint単体でも引き続き使えます。  
+  - 内部処理のリファクタリングをしました。
+
 ## [1.6.5] - 2023/9/15
 ### Fixed
 - U#がVRCSDK-WORLDに統合される発表を受けて、依存先をVRCSDK-WORLDのみに変更しました。
@@ -176,6 +182,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
+[1.6.6]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.6
 [1.6.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.5
 [1.6.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.4
 [1.6.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.0

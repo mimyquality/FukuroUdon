@@ -73,333 +73,212 @@ namespace MimyLab
         [SerializeField]
         private Transform[] inactivateWhenReachMaxZ;
 
+        // キャッシュ用
+        OcclusionPortal[] _openPortalWhenReachMinX;
+        OcclusionPortal[] _closePortalWhenReachMinX;
+        OcclusionPortal[] _openPortalWhenReachMaxX;
+        OcclusionPortal[] _closePortalWhenReachMaxX;
+        OcclusionPortal[] _openPortalWhenReachMinY;
+        OcclusionPortal[] _closePortalWhenReachMinY;
+        OcclusionPortal[] _openPortalWhenReachMaxY;
+        OcclusionPortal[] _closePortalWhenReachMaxY;
+        OcclusionPortal[] _openPortalWhenReachMinZ;
+        OcclusionPortal[] _closePortalWhenReachMinZ;
+        OcclusionPortal[] _openPortalWhenReachMaxZ;
+        OcclusionPortal[] _closePortalWhenReachMaxZ;
+
         // 計算用
-        private Vector3 offset;     // 追従先とのDistance詰め用
-        private Vector3 fixPosition, targetPosition;
-        private float localX, localY, localZ;
-        private bool reachMinX = false, reachMaxX = false;
-        private bool reachMinY = false, reachMaxY = false;
-        private bool reachMinZ = false, reachMaxZ = false;
+        private Transform _localAxis;    // 基準とするローカル座標系
+        private Vector3 _offset;     // 追従先とのDistance詰め用
+        private Vector3 _fixPosition, _targetPosition;
+        private float _localX, _localY, _localZ;
+
+        // オブジェクトのアクティブ切り替え用
+        private bool _reachMinX = false;
+        private bool ReachMinX
+        {
+            get => _reachMinX;
+            set
+            {
+                if (_reachMinX == value) { return; }
+                _reachMinX = value;
+
+                ToggleActive(activateWhenReachMinX, value);
+                ToggleOpen(_openPortalWhenReachMinX, value);
+
+                ToggleActive(inactivateWhenReachMinX, !value);
+                ToggleOpen(_closePortalWhenReachMinX, !value);
+            }
+        }
+
+        private bool _reachMaxX = false;
+        private bool ReachMaxX
+        {
+            get => _reachMaxX;
+            set
+            {
+                if (_reachMaxX == value) { return; }
+                _reachMaxX = value;
+
+                ToggleActive(activateWhenReachMaxX, value);
+                ToggleOpen(_openPortalWhenReachMaxX, value);
+
+                ToggleActive(inactivateWhenReachMaxX, !value);
+                ToggleOpen(_closePortalWhenReachMaxX, !value);
+            }
+        }
+
+        private bool _reachMinY = false;
+        private bool ReachMinY
+        {
+            get => _reachMinY;
+            set
+            {
+                if (_reachMinY == value) { return; }
+                _reachMinY = value;
+
+                ToggleActive(activateWhenReachMinY, value);
+                ToggleOpen(_openPortalWhenReachMinY, value);
+
+                ToggleActive(inactivateWhenReachMinY, !value);
+                ToggleOpen(_closePortalWhenReachMinY, !value);
+            }
+        }
+
+        private bool _reachMaxY = false;
+        private bool ReachMaxY
+        {
+            get => _reachMaxY;
+            set
+            {
+                if (_reachMaxY == value) { return; }
+                _reachMaxY = value;
+
+                ToggleActive(activateWhenReachMaxY, value);
+                ToggleOpen(_openPortalWhenReachMaxY, value);
+
+                ToggleActive(inactivateWhenReachMaxY, !value);
+                ToggleOpen(_closePortalWhenReachMaxY, !value);
+            }
+        }
+
+        private bool _reachMinZ = false;
+        private bool ReachMinZ
+        {
+            get => _reachMinZ;
+            set
+            {
+                if (_reachMinZ == value) { return; }
+                _reachMinZ = value;
+
+                ToggleActive(activateWhenReachMinZ, value);
+                ToggleOpen(_openPortalWhenReachMinZ, value);
+
+                ToggleActive(inactivateWhenReachMinZ, !value);
+                ToggleOpen(_closePortalWhenReachMinZ, !value);
+            }
+        }
+
+        private bool _reachMaxZ = false;
+        private bool ReachMaxZ
+        {
+            get => _reachMaxZ;
+            set
+            {
+                if (_reachMaxZ == value) { return; }
+                _reachMaxZ = value;
+
+                ToggleActive(activateWhenReachMaxZ, value);
+                ToggleOpen(_openPortalWhenReachMaxZ, value);
+
+                ToggleActive(inactivateWhenReachMaxZ, !value);
+                ToggleOpen(_closePortalWhenReachMaxZ, !value);
+            }
+        }
 
         private void Start()
         {
-            offset = target.position - this.transform.position;
+            // キャッシュ
+            _localAxis = this.transform.parent;
+            _offset = target.position - this.transform.position;
+
+            _openPortalWhenReachMinX = GetOcclusionPortals(activateWhenReachMinX);
+            _closePortalWhenReachMinX = GetOcclusionPortals(inactivateWhenReachMinX);
+            _openPortalWhenReachMaxX = GetOcclusionPortals(activateWhenReachMaxX);
+            _closePortalWhenReachMaxX = GetOcclusionPortals(inactivateWhenReachMaxX);
+            _openPortalWhenReachMinY = GetOcclusionPortals(activateWhenReachMinY);
+            _closePortalWhenReachMinY = GetOcclusionPortals(inactivateWhenReachMinY);
+            _openPortalWhenReachMaxY = GetOcclusionPortals(activateWhenReachMaxY);
+            _closePortalWhenReachMaxY = GetOcclusionPortals(inactivateWhenReachMaxY);
+            _openPortalWhenReachMinZ = GetOcclusionPortals(activateWhenReachMinZ);
+            _closePortalWhenReachMinZ = GetOcclusionPortals(inactivateWhenReachMinZ);
+            _openPortalWhenReachMaxZ = GetOcclusionPortals(activateWhenReachMaxZ);
+            _closePortalWhenReachMaxZ = GetOcclusionPortals(inactivateWhenReachMaxZ);
         }
 
         private void Update()
         {
             // 各軸ごとにtargetに追従させる
-            fixPosition = this.transform.position;
-            targetPosition = target.position;
+            _fixPosition = this.transform.position;
+            _targetPosition = target.position;
             if (enableX)
             {
-                fixPosition.x = targetPosition.x - offset.x;
+                _fixPosition.x = _targetPosition.x - _offset.x;
             }
             if (enableY)
             {
-                fixPosition.y = targetPosition.y - offset.y;
+                _fixPosition.y = _targetPosition.y - _offset.y;
             }
             if (enableZ)
             {
-                fixPosition.z = targetPosition.z - offset.z;
+                _fixPosition.z = _targetPosition.z - _offset.z;
             }
 
             // ここからローカル座標で計算
-            fixPosition = this.transform.parent.InverseTransformPoint(fixPosition);
-            localX = Mathf.Clamp(fixPosition.x, minX, maxX);
-            localY = Mathf.Clamp(fixPosition.y, minY, maxY);
-            localZ = Mathf.Clamp(fixPosition.z, minZ, maxZ);
+            _fixPosition = _localAxis.InverseTransformPoint(_fixPosition);
+            _localX = Mathf.Clamp(_fixPosition.x, minX, maxX);
+            _localY = Mathf.Clamp(_fixPosition.y, minY, maxY);
+            _localZ = Mathf.Clamp(_fixPosition.z, minZ, maxZ);
 
-            this.transform.localPosition = new Vector3(localX, localY, localZ);
+            this.transform.localPosition = new Vector3(_localX, _localY, _localZ);
 
-            // minX到達時の処理
-            if (localX <= minX + Vector3.kEpsilon)
-            {
-                if (!reachMinX)
-                {
-                    reachMinX = true;
-                    ToggleActiveMinX(reachMinX);
-                }
-            }
-            else
-            {
-                if (reachMinX)
-                {
-                    reachMinX = false;
-                    ToggleActiveMinX(reachMinX);
-                }
-            }
+            ReachMinX = (_localX <= minX + Vector3.kEpsilon);
+            ReachMaxX = (_localX >= maxX - Vector3.kEpsilon);
 
-            // maxX到達時の処理
-            if (localX >= maxX - Vector3.kEpsilon)
-            {
-                if (!reachMaxX)
-                {
-                    reachMaxX = true;
-                    ToggleActiveMaxX(reachMaxX);
-                }
-            }
-            else
-            {
-                if (reachMaxX)
-                {
-                    reachMaxX = false;
-                    ToggleActiveMaxX(reachMaxX);
-                }
-            }
+            ReachMinY = (_localY <= minY + Vector3.kEpsilon);
+            ReachMaxY = (_localY >= maxY - Vector3.kEpsilon);
 
-            // minY到達時の処理
-            if (localY <= minY + Vector3.kEpsilon)
-            {
-                if (!reachMinY)
-                {
-                    reachMinY = true;
-                    ToggleActiveMinY(reachMinY);
-                }
-            }
-            else
-            {
-                if (reachMinY)
-                {
-                    reachMinY = false;
-                    ToggleActiveMinY(reachMinY);
-                }
-            }
+            ReachMinZ = (_localZ <= minZ + Vector3.kEpsilon);
+            ReachMaxZ = (_localZ >= maxZ - Vector3.kEpsilon);
+        }
 
-            // maxY到達時の処理
-            if (localY >= maxY - Vector3.kEpsilon)
+        private OcclusionPortal[] GetOcclusionPortals(Transform[] objectArray)
+        {
+            var ops = new OcclusionPortal[objectArray.Length];
+            for (int i = 0; i < objectArray.Length; i++)
             {
-                if (!reachMaxY)
-                {
-                    reachMaxY = true;
-                    ToggleActiveMaxY(reachMaxY);
-                }
+                ops[i] = objectArray[i].gameObject.GetComponent<OcclusionPortal>();
             }
-            else
-            {
-                if (reachMaxY)
-                {
-                    reachMaxY = false;
-                    ToggleActiveMaxY(reachMaxY);
-                }
-            }
+            return ops;
+        }
 
+        private void ToggleActive(Transform[] transformArray, bool value)
+        {
+            for (int i = 0; i < transformArray.Length; i++)
+            {
+                if (!transformArray[i]) { continue; }
 
-            // minZ到達時の処理
-            if (localZ <= minZ + Vector3.kEpsilon)
-            {
-                if (!reachMinZ)
-                {
-                    reachMinZ = true;
-                    ToggleActiveMinZ(reachMinZ);
-
-                }
-            }
-            else
-            {
-                if (reachMinZ)
-                {
-                    reachMinZ = false;
-                    ToggleActiveMinZ(reachMinZ);
-                }
-            }
-
-            // maxZ到達時の処理
-            if (localZ >= maxZ - Vector3.kEpsilon)
-            {
-                if (!reachMaxZ)
-                {
-                    reachMaxZ = true;
-                    ToggleActiveMaxZ(reachMaxZ);
-                }
-            }
-            else
-            {
-                if (reachMaxZ)
-                {
-                    reachMaxZ = false;
-                    ToggleActiveMaxZ(reachMaxZ);
-                }
+                transformArray[i].gameObject.SetActive(value);
             }
         }
 
-        private void ToggleActiveMinX(bool isReach)
+        private void ToggleOpen(OcclusionPortal[] occlusionPortalArray, bool value)
         {
-            for (int i = 0; i < activateWhenReachMinX.Length; i++)
+            for (int i = 0; i < occlusionPortalArray.Length; i++)
             {
-                if (!activateWhenReachMinX[i]) { continue; }
-                OcclusionPortal op = activateWhenReachMinX[i].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = isReach;
-                }
-                else
-                {
-                    activateWhenReachMinX[i].gameObject.SetActive(isReach);
-                }
-            }
-            for (int j = 0; j < inactivateWhenReachMinX.Length; j++)
-            {
-                if (!inactivateWhenReachMinX[j]) { continue; }
-                OcclusionPortal op = inactivateWhenReachMinX[j].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = !isReach;
-                }
-                else
-                {
-                    inactivateWhenReachMinX[j].gameObject.SetActive(!isReach);
-                }
-            }
-        }
+                if (!occlusionPortalArray[i]) { continue; }
 
-        private void ToggleActiveMaxX(bool isReach)
-        {
-            for (int i = 0; i < activateWhenReachMaxX.Length; i++)
-            {
-                if (!activateWhenReachMaxX[i]) { continue; }
-                OcclusionPortal op = activateWhenReachMaxX[i].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = isReach;
-                }
-                else
-                {
-                    activateWhenReachMaxX[i].gameObject.SetActive(isReach);
-                }
-            }
-            for (int j = 0; j < inactivateWhenReachMaxX.Length; j++)
-            {
-                if (!inactivateWhenReachMaxX[j]) { continue; }
-                OcclusionPortal op = inactivateWhenReachMaxX[j].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = !isReach;
-                }
-                else
-                {
-                    inactivateWhenReachMaxX[j].gameObject.SetActive(!isReach);
-                }
-            }
-        }
-
-        private void ToggleActiveMinY(bool isReach)
-        {
-            for (int i = 0; i < activateWhenReachMinY.Length; i++)
-            {
-                if (!activateWhenReachMinY[i]) { continue; }
-                OcclusionPortal op = activateWhenReachMinY[i].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = isReach;
-                }
-                else
-                {
-                    activateWhenReachMinY[i].gameObject.SetActive(isReach);
-                }
-            }
-            for (int j = 0; j < inactivateWhenReachMinY.Length; j++)
-            {
-                if (!inactivateWhenReachMinY[j]) { continue; }
-                OcclusionPortal op = inactivateWhenReachMinY[j].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = !isReach;
-                }
-                else
-                {
-                    inactivateWhenReachMinY[j].gameObject.SetActive(!isReach);
-                }
-            }
-        }
-
-        private void ToggleActiveMaxY(bool isReach)
-        {
-            for (int i = 0; i < activateWhenReachMaxY.Length; i++)
-            {
-                if (!activateWhenReachMaxY[i]) { continue; }
-                OcclusionPortal op = activateWhenReachMaxY[i].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = isReach;
-                }
-                else
-                {
-                    activateWhenReachMaxY[i].gameObject.SetActive(isReach);
-                }
-            }
-            for (int j = 0; j < inactivateWhenReachMaxY.Length; j++)
-            {
-                if (!inactivateWhenReachMaxY[j]) { continue; }
-                OcclusionPortal op = inactivateWhenReachMaxY[j].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = !isReach;
-                }
-                else
-                {
-                    inactivateWhenReachMaxY[j].gameObject.SetActive(!isReach);
-                }
-            }
-        }
-
-        private void ToggleActiveMinZ(bool isReach)
-        {
-            for (int i = 0; i < activateWhenReachMinZ.Length; i++)
-            {
-                if (!activateWhenReachMinZ[i]) { continue; }
-                OcclusionPortal op = activateWhenReachMinZ[i].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = isReach;
-                }
-                else
-                {
-                    activateWhenReachMinZ[i].gameObject.SetActive(isReach);
-                }
-            }
-            for (int j = 0; j < inactivateWhenReachMinZ.Length; j++)
-            {
-                if (!inactivateWhenReachMinZ[j]) { continue; }
-                OcclusionPortal op = inactivateWhenReachMinZ[j].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = !isReach;
-                }
-                else
-                {
-                    inactivateWhenReachMinZ[j].gameObject.SetActive(!isReach);
-                }
-            }
-        }
-
-        private void ToggleActiveMaxZ(bool isReach)
-        {
-            for (int i = 0; i < activateWhenReachMaxZ.Length; i++)
-            {
-                if (!activateWhenReachMaxZ[i]) { continue; }
-                OcclusionPortal op = activateWhenReachMaxZ[i].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = isReach;
-                }
-                else
-                {
-                    activateWhenReachMaxZ[i].gameObject.SetActive(isReach);
-                }
-            }
-            for (int j = 0; j < inactivateWhenReachMaxZ.Length; j++)
-            {
-                if (!inactivateWhenReachMaxZ[j]) { continue; }
-                OcclusionPortal op = inactivateWhenReachMaxZ[j].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = !isReach;
-                }
-                else
-                {
-                    inactivateWhenReachMaxZ[j].gameObject.SetActive(!isReach);
-                }
+                occlusionPortalArray[i].open = value;
             }
         }
     }

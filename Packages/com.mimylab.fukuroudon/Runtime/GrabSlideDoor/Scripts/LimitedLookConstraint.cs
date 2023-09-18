@@ -15,7 +15,7 @@ namespace MimyLab
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class LimitedLookConstraint : UdonSharpBehaviour
     {
-        private const float angleEpsilon = 0.01f;
+        private const float AngleEpsilon = 0.01f;
 
         [Header("Source")]
         [SerializeField]
@@ -60,23 +60,110 @@ namespace MimyLab
         [SerializeField]
         private Transform[] inactivateWhenReachPitchUp;
 
+        // キャッシュ用
+        private OcclusionPortal[] _openPortalWhenReachYawRight;
+        private OcclusionPortal[] _closePortalWhenReachYawRight;
+        private OcclusionPortal[] _openPortalWhenReachYawLeft;
+        private OcclusionPortal[] _closePortalWhenReachYawLeft;
+        private OcclusionPortal[] _openPortalWhenReachPitchDown;
+        private OcclusionPortal[] _closePortalWhenReachPitchDown;
+        private OcclusionPortal[] _openPortalWhenReachPitchUp;
+        private OcclusionPortal[] _closePortalWhenReachPitchUp;
+
         // 計算用
-        private Transform localAxis;    // 基準とするローカル座標系
-        private Vector3 baseTarget, currentTarget, currentYawTarget, thisLocalPos;    // targetから算出した計算用座標(ローカル)
-        private Vector3 baseForward, currentForward, currentYawForward, dir;   // targetから算出した計算用ベクトル(ローカル)
-        private float yawAngle, pitchAngle;     // 制限角度計算用
+        private Transform _localAxis;    // 基準とするローカル座標系
+        private Vector3 _baseTarget, _currentTarget, _currentYawTarget, _thisLocalPos;    // targetから算出した計算用座標(ローカル)
+        private Vector3 _baseForward, _currentForward, _currentYawForward, _sign;   // targetから算出した計算用ベクトル(ローカル)
+        private float _yawAngle, _pitchAngle;     // 制限角度計算用
 
         // オブジェクトのアクティブ切り替え用
-        private bool reachYawRight = false, reachYawLeft = false, reachPitchDown = false, reachPitchUp = false;
+        private bool _reachYawRight = false;
+        private bool ReachYawRight
+        {
+            get => _reachYawRight;
+            set
+            {
+                if (_reachYawRight == value) { return; }
+                _reachYawRight = value;
+
+                ToggleActive(activateWhenReachYawRight, value);
+                ToggleOpen(_openPortalWhenReachYawRight, value);
+
+                ToggleActive(inactivateWhenReachYawRight, !value);
+                ToggleOpen(_closePortalWhenReachYawRight, !value);
+            }
+        }
+
+        private bool _reachYawLeft = false;
+        private bool ReachYawLeft
+        {
+            get => _reachYawLeft;
+            set
+            {
+                if (_reachYawLeft == value) { return; }
+                _reachYawLeft = value;
+
+                ToggleActive(activateWhenReachYawLeft, value);
+                ToggleOpen(_openPortalWhenReachYawLeft, value);
+
+                ToggleActive(inactivateWhenReachYawLeft, !value);
+                ToggleOpen(_closePortalWhenReachYawLeft, !value);
+            }
+        }
+
+        private bool _reachPitchDown = false;
+        private bool ReachPitchDown
+        {
+            get => _reachPitchDown;
+            set
+            {
+                if (_reachPitchDown == value) { return; }
+                _reachPitchDown = value;
+
+                ToggleActive(activateWhenReachPitchDown, value);
+                ToggleOpen(_openPortalWhenReachPitchDown, value);
+
+                ToggleActive(inactivateWhenReachPitchDown, !value);
+                ToggleOpen(_closePortalWhenReachPitchDown, !value);
+            }
+        }
+
+        private bool _reachPitchUp = false;
+        private bool ReachPitchUp
+        {
+            get => _reachPitchUp;
+            set
+            {
+                if (_reachPitchUp == value) { return; }
+                _reachPitchUp = value;
+
+                ToggleActive(activateWhenReachPitchUp, value);
+                ToggleOpen(_openPortalWhenReachPitchUp, value);
+
+                ToggleActive(inactivateWhenReachPitchUp, !value);
+                ToggleOpen(_closePortalWhenReachPitchUp, !value);
+            }
+        }
 
         private void Start()
         {
-            localAxis = this.transform.parent;
+            // キャッシュ
+            _localAxis = this.transform.parent;
+
+            _openPortalWhenReachYawRight = GetOcclusionPortals(activateWhenReachYawRight);
+            _closePortalWhenReachYawRight = GetOcclusionPortals(inactivateWhenReachYawRight);
+            _openPortalWhenReachYawLeft = GetOcclusionPortals(activateWhenReachYawLeft);
+            _closePortalWhenReachYawLeft = GetOcclusionPortals(inactivateWhenReachYawLeft);
+
+            _openPortalWhenReachPitchDown = GetOcclusionPortals(activateWhenReachPitchDown);
+            _closePortalWhenReachPitchDown = GetOcclusionPortals(inactivateWhenReachPitchDown);
+            _openPortalWhenReachPitchUp = GetOcclusionPortals(activateWhenReachPitchUp);
+            _closePortalWhenReachPitchUp = GetOcclusionPortals(inactivateWhenReachPitchUp);
 
             // 基準ベクトル計算
-            baseTarget = localAxis.InverseTransformPoint(target.position);
-            baseTarget.y = (enablePitch) ? baseTarget.y : this.transform.localPosition.y;
-            baseForward = baseTarget - this.transform.localPosition;
+            _baseTarget = _localAxis.InverseTransformPoint(target.position);
+            _baseTarget.y = (enablePitch) ? _baseTarget.y : this.transform.localPosition.y;
+            _baseForward = _baseTarget - this.transform.localPosition;
 
             // バリデーション
             yawLeft = Mathf.Clamp(yawLeft, 0.0f, 180f);
@@ -87,228 +174,70 @@ namespace MimyLab
         private void Update()
         {
             // 使い回すので変数に格納する
-            thisLocalPos = this.transform.localPosition;
+            _thisLocalPos = this.transform.localPosition;
 
             // ターゲットの現在方向ベクトル計算
-            currentTarget = localAxis.InverseTransformPoint(target.position);
-            currentTarget.y = (enablePitch) ? currentTarget.y : thisLocalPos.y;
-            currentForward = currentTarget - thisLocalPos;
+            _currentTarget = _localAxis.InverseTransformPoint(target.position);
+            _currentTarget.y = (enablePitch) ? _currentTarget.y : _thisLocalPos.y;
+            _currentForward = _currentTarget - _thisLocalPos;
 
             // ターゲットのYaw方向ベクトル計算
-            currentYawTarget = currentTarget;
-            currentYawTarget.y = baseTarget.y;
-            currentYawForward = currentYawTarget - thisLocalPos;
+            _currentYawTarget = _currentTarget;
+            _currentYawTarget.y = _baseTarget.y;
+            _currentYawForward = _currentYawTarget - _thisLocalPos;
 
             // Yawの角度算出と可動域の制限
-            dir = Vector3.Cross(baseForward, currentYawForward);
-            yawAngle = Vector3.Angle(baseForward, currentYawForward) * (dir.y < 0 ? -1 : 1);
-            yawAngle = Mathf.Clamp(yawAngle, -yawLeft, yawRight);
+            _sign = Vector3.Cross(_baseForward, _currentYawForward);
+            _yawAngle = Vector3.Angle(_baseForward, _currentYawForward) * (_sign.y < 0.0f ? -1.0f : 1.0f);
+            _yawAngle = Mathf.Clamp(_yawAngle, -yawLeft, yawRight);
             // 計算結果を元に回転を反映
-            this.transform.localRotation = Quaternion.AngleAxis(yawAngle, Vector3.up) * Quaternion.LookRotation(baseForward);
+            this.transform.localRotation = Quaternion.AngleAxis(_yawAngle, Vector3.up) * Quaternion.LookRotation(_baseForward);
 
+            ReachYawRight = (_yawAngle >= yawRight - AngleEpsilon);
+            ReachYawLeft = (_yawAngle <= -yawLeft + AngleEpsilon);
 
             // Pitchの可動も有効な場合は追加でPitch回転させる
             if (enablePitch)
             {
                 // Pitchの角度算出と可動域の制限
-                // dirは途中計算用なので使い回している
-                dir = currentForward - currentYawForward;
-                pitchAngle = Vector3.Angle(currentYawForward, currentForward) * (dir.y < 0 ? 1 : -1);
-                pitchAngle = Mathf.Clamp(pitchAngle, -pitchUp, pitchDown);
+                _sign = _currentForward - _currentYawForward;
+                _pitchAngle = Vector3.Angle(_currentYawForward, _currentForward) * (_sign.y > 0.0f ? -1.0f : 1.0f);
+                _pitchAngle = Mathf.Clamp(_pitchAngle, -pitchUp, pitchDown);
                 // 計算結果を元に回転を反映
-                this.transform.localRotation *= Quaternion.AngleAxis(pitchAngle, Vector3.right);
+                this.transform.localRotation *= Quaternion.AngleAxis(_pitchAngle, Vector3.right);
 
-                // PitchDown到達時の処理
-                if (pitchAngle >= pitchDown - angleEpsilon)
-                {
-                    if (!reachPitchDown)
-                    {
-                        reachPitchDown = true;
-                        ToggleActivePitchDown(reachPitchDown);
-                    }
-                }
-                else
-                {
-                    if (reachPitchDown)
-                    {
-                        reachPitchDown = false;
-                        ToggleActivePitchDown(reachPitchDown);
-                    }
-                }
-
-                // PitchUp到達時の処理
-                if (pitchAngle <= -pitchUp + angleEpsilon)
-                {
-                    if (!reachPitchUp)
-                    {
-                        reachPitchUp = true;
-                        ToggleActivePitchUp(reachPitchUp);
-                    }
-                }
-                else
-                {
-                    if (reachPitchUp)
-                    {
-                        reachPitchUp = false;
-                        ToggleActivePitchUp(reachPitchUp);
-                    }
-                }
-            }
-
-            // YawRight到達時の処理
-            if (yawAngle >= yawRight - angleEpsilon)
-            {
-                if (!reachYawRight)
-                {
-                    reachYawRight = true;
-                    ToggleActiveYawRight(reachYawRight);
-                }
-            }
-            else
-            {
-                if (reachYawRight)
-                {
-                    reachYawRight = false;
-                    ToggleActiveYawRight(reachYawRight);
-                }
-            }
-
-            // YawLeft到達時の処理
-            if (yawAngle <= -yawLeft + angleEpsilon)
-            {
-                if (!reachYawLeft)
-                {
-                    reachYawLeft = true;
-                    ToggleActiveYawLeft(reachYawLeft);
-                }
-            }
-            else
-            {
-                if (reachYawLeft)
-                {
-                    reachYawLeft = false;
-                    ToggleActiveYawLeft(reachYawLeft);
-                }
+                ReachPitchDown = (_pitchAngle >= pitchDown - AngleEpsilon);
+                ReachPitchUp = (_pitchAngle <= -pitchUp + AngleEpsilon);
             }
         }
 
-        private void ToggleActiveYawRight(bool isReach)
+        private OcclusionPortal[] GetOcclusionPortals(Transform[] objectArray)
         {
-            for (int i = 0; i < activateWhenReachYawRight.Length; i++)
+            var ops = new OcclusionPortal[objectArray.Length];
+            for (int i = 0; i < objectArray.Length; i++)
             {
-                if (!activateWhenReachYawRight[i]) { continue; }
-                OcclusionPortal op = activateWhenReachYawRight[i].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = isReach;
-                }
-                else
-                {
-                    activateWhenReachYawRight[i].gameObject.SetActive(isReach);
-                }
+                ops[i] = objectArray[i].gameObject.GetComponent<OcclusionPortal>();
             }
-            for (int j = 0; j < inactivateWhenReachYawRight.Length; j++)
+            return ops;
+        }
+
+        private void ToggleActive(Transform[] transformArray, bool value)
+        {
+            for (int i = 0; i < transformArray.Length; i++)
             {
-                if (!inactivateWhenReachYawRight[j]) { continue; }
-                OcclusionPortal op = inactivateWhenReachYawRight[j].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = !isReach;
-                }
-                else
-                {
-                    inactivateWhenReachYawRight[j].gameObject.SetActive(!isReach);
-                }
+                if (!transformArray[i]) { continue; }
+
+                transformArray[i].gameObject.SetActive(value);
             }
         }
 
-        private void ToggleActiveYawLeft(bool isReach)
+        private void ToggleOpen(OcclusionPortal[] occlusionPortalArray, bool value)
         {
-            for (int i = 0; i < activateWhenReachYawLeft.Length; i++)
+            for (int i = 0; i < occlusionPortalArray.Length; i++)
             {
-                if (!activateWhenReachYawLeft[i]) { continue; }
-                OcclusionPortal op = activateWhenReachYawLeft[i].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = isReach;
-                }
-                else
-                {
-                    activateWhenReachYawLeft[i].gameObject.SetActive(isReach);
-                }
-            }
-            for (int j = 0; j < inactivateWhenReachYawLeft.Length; j++)
-            {
-                if (!inactivateWhenReachYawLeft[j]) { continue; }
-                OcclusionPortal op = inactivateWhenReachYawLeft[j].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = !isReach;
-                }
-                else
-                {
-                    inactivateWhenReachYawLeft[j].gameObject.SetActive(!isReach);
-                }
-            }
-        }
+                if (!occlusionPortalArray[i]) { continue; }
 
-        private void ToggleActivePitchDown(bool isReach)
-        {
-            for (int i = 0; i < activateWhenReachPitchDown.Length; i++)
-            {
-                if (!activateWhenReachPitchDown[i]) { continue; }
-                OcclusionPortal op = activateWhenReachPitchDown[i].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = isReach;
-                }
-                else
-                {
-                    activateWhenReachPitchDown[i].gameObject.SetActive(isReach);
-                }
-            }
-            for (int j = 0; j < inactivateWhenReachPitchDown.Length; j++)
-            {
-                if (!inactivateWhenReachPitchDown[j]) { continue; }
-                OcclusionPortal op = inactivateWhenReachPitchDown[j].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = !isReach;
-                }
-                else
-                {
-                    inactivateWhenReachPitchDown[j].gameObject.SetActive(!isReach);
-                }
-            }
-        }
-
-        private void ToggleActivePitchUp(bool isReach)
-        {
-            for (int i = 0; i < activateWhenReachPitchUp.Length; i++)
-            {
-                if (!activateWhenReachPitchUp[i]) { continue; }
-                OcclusionPortal op = activateWhenReachPitchUp[i].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = isReach;
-                }
-                else
-                {
-                    activateWhenReachPitchUp[i].gameObject.SetActive(isReach);
-                }
-            }
-            for (int j = 0; j < inactivateWhenReachPitchUp.Length; j++)
-            {
-                if (!inactivateWhenReachPitchUp[j]) { continue; }
-                OcclusionPortal op = inactivateWhenReachPitchUp[j].GetComponent<OcclusionPortal>();
-                if (op)
-                {
-                    op.open = !isReach;
-                }
-                else
-                {
-                    inactivateWhenReachPitchUp[j].gameObject.SetActive(!isReach);
-                }
+                occlusionPortalArray[i].open = value;
             }
         }
     }
