@@ -9,7 +9,6 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.SDK3.Components;
 using VRC.Udon;
-using VRC.Udon.Common.Interfaces;
 
 namespace MimyLab
 {
@@ -23,11 +22,12 @@ namespace MimyLab
         [SerializeField]
         private UdonBehaviour workingTogether = null;
 
+        private VRCPickup _pickup;
         private Vector3 _returnPosition;
         private Quaternion _returnRotation;
         private bool _isLinkedUdonEnabled = false;
 
-        [UdonSynced, FieldChangeCallback(nameof(Position))]
+        [FieldChangeCallback(nameof(Position))]
         private Vector3 _position = Vector3.zero;
         private Vector3 Position
         {
@@ -44,6 +44,8 @@ namespace MimyLab
 
         private void Start()
         {
+            _pickup = GetComponent<VRCPickup>();
+
             _returnPosition = this.transform.position;
             _returnRotation = this.transform.rotation;
             if (returnPoint)
@@ -52,10 +54,14 @@ namespace MimyLab
             }
 
             Position = transform.position;
-            RequestSerialization();
         }
 
         public override void OnPreSerialization()
+        {
+            Position = transform.position;
+        }
+
+        public override void OnDeserialization()
         {
             Position = transform.position;
         }
@@ -87,7 +93,7 @@ namespace MimyLab
 
         public void _DisableLinkUdon()
         {
-            if (Position == transform.position)
+            if ((Position == transform.position) && !_pickup.IsHeld)
             {
                 SetEnabledLinkUdon(false);
             }
