@@ -202,18 +202,20 @@ namespace MimyLab
             _localAxis = this.transform.parent;
             _offset = target.position - this.transform.position;
 
-            _openPortalWhenReachMinX = GetOcclusionPortals(activateWhenReachMinX);
-            _closePortalWhenReachMinX = GetOcclusionPortals(inactivateWhenReachMinX);
-            _openPortalWhenReachMaxX = GetOcclusionPortals(activateWhenReachMaxX);
-            _closePortalWhenReachMaxX = GetOcclusionPortals(inactivateWhenReachMaxX);
-            _openPortalWhenReachMinY = GetOcclusionPortals(activateWhenReachMinY);
-            _closePortalWhenReachMinY = GetOcclusionPortals(inactivateWhenReachMinY);
-            _openPortalWhenReachMaxY = GetOcclusionPortals(activateWhenReachMaxY);
-            _closePortalWhenReachMaxY = GetOcclusionPortals(inactivateWhenReachMaxY);
-            _openPortalWhenReachMinZ = GetOcclusionPortals(activateWhenReachMinZ);
-            _closePortalWhenReachMinZ = GetOcclusionPortals(inactivateWhenReachMinZ);
-            _openPortalWhenReachMaxZ = GetOcclusionPortals(activateWhenReachMaxZ);
-            _closePortalWhenReachMaxZ = GetOcclusionPortals(inactivateWhenReachMaxZ);
+            _openPortalWhenReachMinX = GetOcclusionPortals(ref activateWhenReachMinX);
+            _closePortalWhenReachMinX = GetOcclusionPortals(ref inactivateWhenReachMinX);
+            _openPortalWhenReachMaxX = GetOcclusionPortals(ref activateWhenReachMaxX);
+            _closePortalWhenReachMaxX = GetOcclusionPortals(ref inactivateWhenReachMaxX);
+
+            _openPortalWhenReachMinY = GetOcclusionPortals(ref activateWhenReachMinY);
+            _closePortalWhenReachMinY = GetOcclusionPortals(ref inactivateWhenReachMinY);
+            _openPortalWhenReachMaxY = GetOcclusionPortals(ref activateWhenReachMaxY);
+            _closePortalWhenReachMaxY = GetOcclusionPortals(ref inactivateWhenReachMaxY);
+            
+            _openPortalWhenReachMinZ = GetOcclusionPortals(ref activateWhenReachMinZ);
+            _closePortalWhenReachMinZ = GetOcclusionPortals(ref inactivateWhenReachMinZ);
+            _openPortalWhenReachMaxZ = GetOcclusionPortals(ref activateWhenReachMaxZ);
+            _closePortalWhenReachMaxZ = GetOcclusionPortals(ref inactivateWhenReachMaxZ);
         }
 
         private void Update()
@@ -252,12 +254,13 @@ namespace MimyLab
             ReachMaxZ = (_localZ >= maxZ - Vector3.kEpsilon);
         }
 
-        private OcclusionPortal[] GetOcclusionPortals(Transform[] objectArray)
+        private OcclusionPortal[] GetOcclusionPortals(ref Transform[] objectArray)
         {
             var ops = new OcclusionPortal[objectArray.Length];
             for (int i = 0; i < objectArray.Length; i++)
             {
                 ops[i] = objectArray[i].gameObject.GetComponent<OcclusionPortal>();
+                if (ops[i]) { objectArray[i] = null; }
             }
             return ops;
         }

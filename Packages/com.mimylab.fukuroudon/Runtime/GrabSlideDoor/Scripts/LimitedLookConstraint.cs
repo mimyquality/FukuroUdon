@@ -150,15 +150,15 @@ namespace MimyLab
             // キャッシュ
             _localAxis = this.transform.parent;
 
-            _openPortalWhenReachYawRight = GetOcclusionPortals(activateWhenReachYawRight);
-            _closePortalWhenReachYawRight = GetOcclusionPortals(inactivateWhenReachYawRight);
-            _openPortalWhenReachYawLeft = GetOcclusionPortals(activateWhenReachYawLeft);
-            _closePortalWhenReachYawLeft = GetOcclusionPortals(inactivateWhenReachYawLeft);
+            _openPortalWhenReachYawRight = GetOcclusionPortals(ref activateWhenReachYawRight);
+            _closePortalWhenReachYawRight = GetOcclusionPortals(ref inactivateWhenReachYawRight);
+            _openPortalWhenReachYawLeft = GetOcclusionPortals(ref activateWhenReachYawLeft);
+            _closePortalWhenReachYawLeft = GetOcclusionPortals(ref inactivateWhenReachYawLeft);
 
-            _openPortalWhenReachPitchDown = GetOcclusionPortals(activateWhenReachPitchDown);
-            _closePortalWhenReachPitchDown = GetOcclusionPortals(inactivateWhenReachPitchDown);
-            _openPortalWhenReachPitchUp = GetOcclusionPortals(activateWhenReachPitchUp);
-            _closePortalWhenReachPitchUp = GetOcclusionPortals(inactivateWhenReachPitchUp);
+            _openPortalWhenReachPitchDown = GetOcclusionPortals(ref activateWhenReachPitchDown);
+            _closePortalWhenReachPitchDown = GetOcclusionPortals(ref inactivateWhenReachPitchDown);
+            _openPortalWhenReachPitchUp = GetOcclusionPortals(ref activateWhenReachPitchUp);
+            _closePortalWhenReachPitchUp = GetOcclusionPortals(ref inactivateWhenReachPitchUp);
 
             // 基準ベクトル計算
             _baseTarget = _localAxis.InverseTransformPoint(target.position);
@@ -211,12 +211,13 @@ namespace MimyLab
             }
         }
 
-        private OcclusionPortal[] GetOcclusionPortals(Transform[] objectArray)
+        private OcclusionPortal[] GetOcclusionPortals(ref Transform[] objectArray)
         {
             var ops = new OcclusionPortal[objectArray.Length];
             for (int i = 0; i < objectArray.Length; i++)
             {
                 ops[i] = objectArray[i].gameObject.GetComponent<OcclusionPortal>();
+                if (ops[i]) { objectArray[i] = null; }
             }
             return ops;
         }

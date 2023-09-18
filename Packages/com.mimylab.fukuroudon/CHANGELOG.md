@@ -4,6 +4,11 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.6.7] - 2023/9/18
+### Fixed
+- Grab SlideDoor
+  - OcclusionPortalの付いたオブジェクトをセットしても、オブジェクトのアクティブも切り替わってしまうのを修正しました
+
 ## [1.6.6] - 2023/9/17
 ### Fixed
 - Grab SlideDoor
@@ -182,6 +187,7 @@
 - Swivel Chairを追加
 - VR Follow HUDを追加
 
+[1.6.7]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.7
 [1.6.6]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.6
 [1.6.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.5
 [1.6.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.4
