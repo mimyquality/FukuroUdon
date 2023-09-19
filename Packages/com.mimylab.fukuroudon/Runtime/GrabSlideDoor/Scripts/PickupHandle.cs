@@ -55,12 +55,6 @@ namespace MimyLab
 
             Position = transform.position;
         }
-
-        public override void OnPreSerialization()
-        {
-            Position = transform.position;
-        }
-
         public override void OnDeserialization()
         {
             Position = transform.position;
@@ -99,8 +93,7 @@ namespace MimyLab
             }
             else
             {
-                Position = transform.position;
-                RequestSerialization();
+                _position = transform.position;
                 SendCustomEventDelayedSeconds(nameof(_DisableLinkUdon), 1.0f);
             }
         }
