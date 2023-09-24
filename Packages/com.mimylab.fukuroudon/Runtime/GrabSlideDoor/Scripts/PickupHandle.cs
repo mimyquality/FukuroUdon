@@ -55,6 +55,7 @@ namespace MimyLab
 
             Position = transform.position;
         }
+        
         public override void OnDeserialization()
         {
             Position = transform.position;
