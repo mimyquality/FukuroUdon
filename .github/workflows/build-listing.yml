@@ -1,5 +1,10 @@
 name: Build Repo Listing
 
+env:
+  CurrentPackageName: com.mimylab.fukuroudon
+  listPublishDirectory: Website
+  pathToCi: ci
+  
 on: 
   workflow_dispatch:
   workflow_run:
@@ -19,10 +24,6 @@ permissions:
 concurrency:
   group: "pages"
   cancel-in-progress: true
-  
-env:
-  listPublishDirectory: Website
-  pathToCi: ci
 
 jobs:
   
@@ -42,7 +43,7 @@ jobs:
           clean: false # otherwise the local repo will no longer be checked out
           
       - name: Restore Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ${{env.pathToCi}}/.nuke/temp
@@ -50,12 +51,12 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
           
       - name: Build Package Version Listing
-        run: ${{env.pathToCi}}/build.cmd BuildRepoListing --root ${{env.pathToCi}} --list-publish-directory $GITHUB_WORKSPACE/${{env.listPublishDirectory}}
+        run: ${{env.pathToCi}}/build.cmd BuildRepoListing --root ${{env.pathToCi}} --list-publish-directory $GITHUB_WORKSPACE/${{env.listPublishDirectory}} --current-package-name ${{env.CurrentPackageName}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
  
       - name: Setup Pages
-        uses: actions/configure-pages@v2
+        uses: actions/configure-pages@v3
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
@@ -64,4 +65,4 @@ jobs:
           
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v2

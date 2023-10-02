@@ -2,13 +2,13 @@ name: Build Release
 
 on: 
   workflow_dispatch:
-  push:
-    branches: main
-    paths: Packages/com.mimylab.fukuroudon/**
 
 env:
   packageName: "com.mimylab.fukuroudon"
 
+  permissions:
+    contents: write
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,9 +23,7 @@ jobs:
         with: 
             path: "Packages/${{env.packageName}}/package.json"
             prop_path: "version"
-            
-      - run: echo ${{steps.version.outputs.prop}} 
-    
+
       - name: Set Environment Variables
         run: |
           echo "zipFile=${{ env.packageName }}-${{ steps.version.outputs.prop }}".zip >> $GITHUB_ENV
