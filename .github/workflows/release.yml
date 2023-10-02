@@ -6,8 +6,8 @@ on:
 env:
   packageName: "com.mimylab.fukuroudon"
 
-  permissions:
-    contents: write
+permissions:
+  contents: write
   
 jobs:
   build:
