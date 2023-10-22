@@ -11,14 +11,12 @@ using VRC.Udon;
 
 namespace MimyLab
 {
-    [AddComponentMenu("Fukuro Udon/VR Follow HUD")]
+    [AddComponentMenu("Fukuro Udon/VR Follow HUD/VR Follow HUD")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class VRFollowHUD : UdonSharpBehaviour
+    public class VRFollowHUD : LocalPlayerTrackingTracker
     {
-        [Header("General Settings")]
-        public VRCPlayerApi.TrackingDataType trackingPoint = VRCPlayerApi.TrackingDataType.Head;    // 追跡箇所
         [SerializeField]
-        bool vROnly = true; // VRモードでのみ有効
+        private bool vROnly = true; // VRモードでのみ有効
 
         [Header("Position Settings")]
         public bool syncPosition = true;  // 位置同期
@@ -26,8 +24,7 @@ namespace MimyLab
         public float followMoveSpeed = 0.1f;   // 追跡速度
         public float distanceRange = 1.0f; // 最大離散距離
         public float moveThreshold = 0.0f;  // 追跡開始閾値
-        float pauseThreshold; // 追跡終了閾値、追跡開始閾値の5%を使う
-
+        private float pauseThreshold; // 追跡終了閾値、追跡開始閾値の5%を使う
 
         [Header("Rotation Settings")]
         public bool syncRotation = false;   // 回転同期
@@ -38,94 +35,50 @@ namespace MimyLab
         [Range(0.0f, 180.0f)]
         public float RotateThreshold = 0.0f; // 追跡回転開始閾値
         [Range(0.0f, 180.0f)]
-        float restThreshold;  // 追跡回転終了閾値、追跡回転開始閾値の5%を使う
+        private float restThreshold;  // 追跡回転終了閾値、追跡回転開始閾値の5%を使う
         public bool lockRoll = true, lockPitch = false, lockYaw = false;   // 遅延せず回転同期(軸毎)
 
-        // Updateで使う変数キャッシュ用
-        Transform _selfTf;
-        Vector3 _selfPos, _targetPos;
-        Quaternion _selfRot, _targetRot;
-        float _distance, _angle;
-        VRCPlayerApi _lPlayer;
-        bool _isVR, _isPause, _isRest;
+        // 計算用
+        private float _distance, _angle;
+        private bool _isPause, _isRest;
 
-        public void TrackingHead() { trackingPoint = VRCPlayerApi.TrackingDataType.Head; }
-        public void TrackingLeftHand() { trackingPoint = VRCPlayerApi.TrackingDataType.LeftHand; }
-        public void TrackingRightHand() { trackingPoint = VRCPlayerApi.TrackingDataType.RightHand; }
-        public void TrackingOrigin() { trackingPoint = VRCPlayerApi.TrackingDataType.Origin; }
-
-        void OnEnable()
+        protected override Vector3 GetTrackingPosition(VRCPlayerApi.TrackingDataType trackingTarget)
         {
-            _selfTf = transform;
-            if (Networking.LocalPlayer.IsValid())
+            if (!vROnly || _isVR)
             {
-                _lPlayer = Networking.LocalPlayer;
-
-                // 初期位置にリセット
-                _selfTf.position = _lPlayer.GetTrackingData(trackingPoint).position;
-                _selfTf.rotation = _lPlayer.GetTrackingData(trackingPoint).rotation;
-
-                // VRか判定
-                _isVR = _lPlayer.IsUserInVR();
-            }
-        }
-
-        public override void PostLateUpdate()
-        {
-            if (!_lPlayer.IsValid()) { return; }
-
-            _targetPos = _lPlayer.GetTrackingData(trackingPoint).position;
-            _targetRot = _lPlayer.GetTrackingData(trackingPoint).rotation;
-
-            if (vROnly && !_isVR)
-            {
-                // VR時のみ有効かつDTモードなら
-                SyncPosition();
-                SyncRotation();
-            }
-            else
-            {
-                if (syncPosition)
+                if (!syncPosition)
                 {
-                    SyncPosition();
-                }
-                else
-                {
-                    FollowPosition();
-                }
-
-                if (syncRotation)
-                {
-                    SyncRotation();
-                }
-                else
-                {
-                    FollowRotation();
+                    return GetFollowPosition(_lPlayer.GetTrackingData(trackingPoint).position);
                 }
             }
-            _selfTf.SetPositionAndRotation(_selfPos, _selfRot);
+
+            return base.GetTrackingPosition(trackingTarget);
         }
 
-        // 位置同期
-        void SyncPosition()
+        protected override Quaternion GetTrackingRotation(VRCPlayerApi.TrackingDataType trackingTarget)
         {
-            _selfPos = _targetPos;
+            if (!vROnly || _isVR)
+            {
+                if (!syncRotation)
+                {
+                    return GetFollowRotation(_lPlayer.GetTrackingData(trackingPoint).rotation);
+                }
+            }
+
+            return base.GetTrackingRotation(trackingTarget);
         }
 
-        // 回転同期
-        void SyncRotation()
-        {
-            _selfRot = _targetRot;
-        }
 
         // 位置の遅延追従
-        void FollowPosition()
+        private Vector3 GetFollowPosition(Vector3 targetPosition)
         {
+            var selfPos = _selfTransform.position;
+
             // moveThresholdの5%を閾値に使う
             pauseThreshold = moveThreshold * 0.05f;
 
             // 相対距離を算出
-            _distance = (_selfPos - _targetPos).sqrMagnitude;
+            _distance = (selfPos - targetPosition).sqrMagnitude;
 
             // 閾値判定
             if (_distance >= moveThreshold * moveThreshold)
@@ -140,24 +93,28 @@ namespace MimyLab
             if (_distance > distanceRange * distanceRange)
             {
                 // 離散距離の制限
-                _selfPos = Vector3.MoveTowards(_targetPos, _selfPos, Mathf.Abs(distanceRange));
+                selfPos = Vector3.MoveTowards(targetPosition, selfPos, Mathf.Abs(distanceRange));
             }
             else if (!_isPause)
             {
                 // 位置を遅延追従
-                _selfPos = Vector3.Lerp(_selfPos, _targetPos, followMoveSpeed);
+                selfPos = Vector3.Lerp(selfPos, targetPosition, followMoveSpeed);
             }
+
+            return selfPos;
         }
 
         // 回転の遅延追従
-        void FollowRotation()
+        private Quaternion GetFollowRotation(Quaternion targetRotation)
         {
+            var selfRot = _selfTransform.rotation;
+
             angleRange = Mathf.Clamp(angleRange, 0.0f, 180.0f);
             RotateThreshold = Mathf.Clamp(RotateThreshold, 0.0f, 180.0f);
             restThreshold = RotateThreshold * 0.05f; // angleThresholdの5%を閾値に使う
 
             // 相対角度を算出
-            _angle = Quaternion.Angle(_selfRot, _targetRot);
+            _angle = Quaternion.Angle(selfRot, targetRotation);
 
             // 閾値判定
             if (_angle >= RotateThreshold)
@@ -170,23 +127,25 @@ namespace MimyLab
             }
 
             // 軸毎に遅延しない追従を追加処理
-            if (lockRoll) { _selfRot = Quaternion.LookRotation(_selfRot * Vector3.forward, _targetRot * Vector3.up); }
-            if (lockPitch) { _selfRot = Quaternion.LookRotation(Vector3.ProjectOnPlane(_selfRot * Vector3.forward, _targetRot * Vector3.up), _selfRot * Vector3.up); }
-            if (lockYaw) { _selfRot = Quaternion.LookRotation(Vector3.ProjectOnPlane(_selfRot * Vector3.forward, _targetRot * Vector3.right), _selfRot * Vector3.up); }
+            if (lockRoll) { selfRot = Quaternion.LookRotation(selfRot * Vector3.forward, targetRotation * Vector3.up); }
+            if (lockPitch) { selfRot = Quaternion.LookRotation(Vector3.ProjectOnPlane(selfRot * Vector3.forward, targetRotation * Vector3.up), selfRot * Vector3.up); }
+            if (lockYaw) { selfRot = Quaternion.LookRotation(Vector3.ProjectOnPlane(selfRot * Vector3.forward, targetRotation * Vector3.right), selfRot * Vector3.up); }
 
             if (!_isRest)
             {
                 if (_angle > angleRange)
                 {
                     // 距離が遠いので加速して回転を遅延追従
-                    _selfRot = Quaternion.Lerp(_selfRot, _targetRot, followRotateSpeed * 4);
+                    selfRot = Quaternion.Lerp(selfRot, targetRotation, followRotateSpeed * 4);
                 }
                 else
                 {
                     // 回転を遅延追従
-                    _selfRot = Quaternion.Lerp(_selfRot, _targetRot, followRotateSpeed);
+                    selfRot = Quaternion.Lerp(selfRot, targetRotation, followRotateSpeed);
                 }
             }
+
+            return selfRot;
         }
     }
 }

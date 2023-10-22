@@ -12,12 +12,6 @@ using VRC.Udon.Common;
 
 namespace MimyLab
 {
-    public enum InputFlyingSystemPlayerPlatform
-    {
-        PC,
-        Android
-    }
-
     [AddComponentMenu("Fukuro Udon/Input Flying System")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class InputFlyingSystem : UdonSharpBehaviour
@@ -51,12 +45,11 @@ namespace MimyLab
 
         [Header("Input config for desktop")]
         [SerializeField]
-        KeyCode riseKeyCode = KeyCode.Q;    // 上昇
+        KeyCode riseKeyCode = KeyCode.E;    // 上昇
         [SerializeField]
-        KeyCode fallKeyCode = KeyCode.E;    // 下降
+        KeyCode fallKeyCode = KeyCode.Q;    // 下降
 
         // 計算用
-        InputFlyingSystemPlayerPlatform _platform = InputFlyingSystemPlayerPlatform.PC;
         VRCPlayerApi _lPlayer = null;
         float _defaultGravity, _elapsedTime;
         bool _isFly, _dampInput;
@@ -65,10 +58,6 @@ namespace MimyLab
 
         void Start()
         {
-#if UNITY_ANDROID
-            _platform = InputFlyingSystemPlayerPlatform.Android;
-#endif
-
             _lPlayer = Networking.LocalPlayer;
         }
 
@@ -76,8 +65,8 @@ namespace MimyLab
         {
             if (!Utilities.IsValid(_lPlayer)) { return; }
 
-            // DTPのみキーボード入力受付
-            InputKeyboard();
+            // 非VRのみキーボード入力受付
+            if (!_lPlayer.IsUserInVR()) { InputKeyboard(); }
 
             // 着地したら移動制御を返す
             if (_isFly && _lPlayer.IsPlayerGrounded())
@@ -102,8 +91,6 @@ namespace MimyLab
         ******************************/
         void InputKeyboard()
         {
-            if ((_platform != InputFlyingSystemPlayerPlatform.PC) || _lPlayer.IsUserInVR()) { return; }
-
             if (Input.GetKeyDown(fallKeyCode))
             {
                 // 下降
@@ -134,8 +121,8 @@ namespace MimyLab
 
         public override void InputLookVertical(float value, UdonInputEventArgs args)
         {
-            // DTPは無効
-            if ((_platform == InputFlyingSystemPlayerPlatform.PC) && !_lPlayer.IsUserInVR()) { return; }
+            // 非VRは無効
+            if (!_lPlayer.IsUserInVR()) { return; }
 
             _inputDirection.y = (Mathf.Abs(value) >= deadZone) ? (flipInput) ? -value : value : 0.0f;
         }

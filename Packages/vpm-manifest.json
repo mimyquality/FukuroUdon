@@ -1,8 +1,5 @@
 {
   "dependencies": {
-    "com.vrchat.udonsharp": {
-      "version": "1.1.1"
-    },
     "com.vrchat.core.vpm-resolver": {
       "version": "0.1.17"
     },
@@ -17,24 +14,18 @@
     }
   },
   "locked": {
-    "com.vrchat.udonsharp": {
-      "version": "1.1.9",
-      "dependencies": {
-        "com.vrchat.worlds": "^3.1.x"
-      }
-    },
     "com.vrchat.worlds": {
-      "version": "3.4.0",
+      "version": "3.4.1",
       "dependencies": {
-        "com.vrchat.base": "3.4.0"
+        "com.vrchat.base": "3.4.1"
       }
     },
     "com.vrchat.base": {
-      "version": "3.4.0",
+      "version": "3.4.1",
       "dependencies": {}
     },
     "com.vrchat.core.vpm-resolver": {
-      "version": "0.1.24",
+      "version": "0.1.26",
       "dependencies": {}
     },
     "dev.onevr.vrworldtoolkit": {
@@ -50,11 +41,10 @@
       }
     },
     "net.kaikoga.pen": {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "dependencies": {
         "com.vrchat.base": "^3.0.0",
-        "com.vrchat.worlds": "^3.0.0",
-        "com.vrchat.udonsharp": "^1.0.0"
+        "com.vrchat.worlds": "^3.0.0"
       }
     }
   }

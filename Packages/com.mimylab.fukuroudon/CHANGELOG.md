@@ -4,6 +4,17 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.7.0] - 2023/10/23
+### Add
+- VR Follow HUD
+  - LocalPlayer Tracking Trackerコンポーネントを追加しました。
+
+### Changed
+- Input Flying System
+  - キー入力設定の昇降操作のデフォルトを逆(Eで上昇、Qで下降)にしました。
+- VR Follow HUD
+  - VR Follow HUDコンポーネントはLocalPlayer Tracking Trackerを継承したコンポーネントになりました。
+
 ## [1.6.9] - 2023/9/24
 ### Fixed
 - Grab SlideDoor
@@ -158,6 +169,7 @@
   - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
   - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.7.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.7.0
 [1.6.9]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.9
 [1.6.8]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.8
 [1.6.7]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.7
