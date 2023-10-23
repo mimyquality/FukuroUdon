@@ -55,13 +55,13 @@ namespace MimyLab
 
             Position = transform.position;
         }
-        
+
         public override void OnDeserialization()
         {
             Position = transform.position;
         }
 
-        public override void Interact()
+        public override void OnPickup()
         {
             _EnableLinkedUdon();
         }

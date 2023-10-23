@@ -4,6 +4,11 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.7.1] - 2023/10/23
+### Fixed
+- Grab SlideDoor
+  - VRモードでPickupHandleを掴んでもLimitedPosition/LookConstraintが有効にならないバグを修正しました。
+
 ## [1.7.0] - 2023/10/23
 ### Add
 - VR Follow HUD
@@ -169,6 +174,7 @@
   - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
   - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.7.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.7.1
 [1.7.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.7.0
 [1.6.9]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.9
 [1.6.8]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.8
