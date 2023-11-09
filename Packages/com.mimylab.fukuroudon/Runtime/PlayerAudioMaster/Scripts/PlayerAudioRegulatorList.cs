@@ -1,12 +1,17 @@
-﻿
-using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-//using VRC.Udon;
-//using VRC.SDK3.Components;
+﻿/*
+Copyright (c) 2023 Mimy Quality
+Released under the MIT license
+https://opensource.org/licenses/mit-license.php
+*/
 
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    using VRC.SDKBase;
+    //using VRC.Udon;
+    //using VRC.SDK3.Components;
+
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator List")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class PlayerAudioRegulatorList : IPlayerAudioRegulator

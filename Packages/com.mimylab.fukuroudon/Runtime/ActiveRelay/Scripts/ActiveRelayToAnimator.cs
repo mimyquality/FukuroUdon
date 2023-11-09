@@ -4,13 +4,13 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-using UdonSharp;
-using UnityEngine;
-//using VRC.SDKBase;
-//using VRC.Udon;
-
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    //using VRC.SDKBase;
+    //using VRC.Udon;
+
     public enum ActiveRelayToAnimatorEventType
     {
         Active,
@@ -93,7 +93,7 @@ namespace MimyLab
             {
                 if (_triggerName != "")
                 {
-                    if (_resetTrigger) { _animator.ResetTrigger(_triggerNameHash);}
+                    if (_resetTrigger) { _animator.ResetTrigger(_triggerNameHash); }
                     else { _animator.SetTrigger(_triggerNameHash); }
                 }
                 if (_boolName != "") { _animator.SetBool(_boolNameHash, _boolValue); }

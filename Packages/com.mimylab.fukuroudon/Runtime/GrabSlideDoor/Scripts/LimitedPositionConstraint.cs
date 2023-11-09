@@ -4,13 +4,13 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-using UdonSharp;
-using UnityEngine;
-//using VRC.SDKBase;
-//using VRC.Udon;
-
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    //using VRC.SDKBase;
+    //using VRC.Udon;
+
     [AddComponentMenu("Fukuro Udon/Limited Constraint/Position")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class LimitedPositionConstraint : UdonSharpBehaviour
@@ -211,7 +211,7 @@ namespace MimyLab
             _closePortalWhenReachMinY = GetOcclusionPortals(ref inactivateWhenReachMinY);
             _openPortalWhenReachMaxY = GetOcclusionPortals(ref activateWhenReachMaxY);
             _closePortalWhenReachMaxY = GetOcclusionPortals(ref inactivateWhenReachMaxY);
-            
+
             _openPortalWhenReachMinZ = GetOcclusionPortals(ref activateWhenReachMinZ);
             _closePortalWhenReachMinZ = GetOcclusionPortals(ref inactivateWhenReachMinZ);
             _openPortalWhenReachMaxZ = GetOcclusionPortals(ref activateWhenReachMaxZ);

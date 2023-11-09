@@ -4,14 +4,14 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
-using VRC.Udon.Common;
-
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    using VRC.SDKBase;
+    using VRC.Udon;
+    using VRC.Udon.Common;
+
     [AddComponentMenu("Fukuro Udon/Input Flying System")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class InputFlyingSystem : UdonSharpBehaviour

@@ -157,7 +157,7 @@ namespace MimyLab
             _mirror.TurnOffMirrorOcclusion = _profileList[num].turnOffMirrorOcclusion;
             _mirror.m_ReflectLayers = _profileList[num].reflectLayers;
             _mirror.cameraClearFlags = _profileList[num].cameraClearFlags;
-            if (_profileList[num].customSkybox) { _mirror.customSkybox = _profileList[num].customSkybox; }
+            _mirror.customSkybox = _profileList[num].customSkybox;
             _mirror.customClearColor = _profileList[num].customCrearColor;
 
             if (_profileList[num].customMaterial) { _mesh.material = _profileList[num].customMaterial; }

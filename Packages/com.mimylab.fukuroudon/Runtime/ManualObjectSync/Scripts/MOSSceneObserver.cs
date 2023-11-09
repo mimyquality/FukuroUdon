@@ -4,16 +4,16 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-using UnityEngine;
-using VRC.SDK3.Components;
-
-#if UNITY_EDITOR
-using UnityEditor;
-using UnityEditor.Experimental.SceneManagement;
-#endif
-
 namespace MimyLab
 {
+    using UnityEngine;
+    using VRC.SDK3.Components;
+
+#if UNITY_EDITOR
+    using UnityEditor;
+    using UnityEditor.Experimental.SceneManagement;
+#endif
+
     [ExecuteAlways]
     public class MOSSceneObserver : MonoBehaviour
     {

@@ -4,15 +4,15 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-using UdonSharp;
-using UnityEngine;
-using UnityEngine.UI;
-using VRC.SDKBase;
-using VRC.Udon.Common.Interfaces;
-using VRC.SDK3.Image;
-
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    using UnityEngine.UI;
+    using VRC.SDKBase;
+    using VRC.Udon.Common.Interfaces;
+    using VRC.SDK3.Image;
+
     [AddComponentMenu("Fukuro Udon/Smart Slideshow/Web Literature")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class WebLiterature : Literature

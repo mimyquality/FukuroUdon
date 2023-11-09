@@ -4,6 +4,10 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.8.1] - 2023/11/9
+### Fixed
+- 名前空間が被ってエラーになる可能性があった問題に対処しました。
+
 ## [1.8.0] - 2023/11/4
 ### Add
 - [Mirror Tuner](https://github.com/mimyquality/FukuroUdon/wiki/Mirror-Tuner)を追加
@@ -178,6 +182,7 @@
   - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
   - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.8.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.8.1
 [1.8.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.8.0
 [1.7.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.7.1
 [1.7.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.7.0

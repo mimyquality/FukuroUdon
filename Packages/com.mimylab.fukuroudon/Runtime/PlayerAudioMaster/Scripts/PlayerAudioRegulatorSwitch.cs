@@ -1,12 +1,17 @@
-﻿
-using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-//using VRC.Udon;
-//using VRC.SDK3.Components;
+﻿/*
+Copyright (c) 2023 Mimy Quality
+Released under the MIT license
+https://opensource.org/licenses/mit-license.php
+*/
 
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    using VRC.SDKBase;
+    //using VRC.Udon;
+    //using VRC.SDK3.Components;
+
     public enum PlayerAudioRegulatorSwitchMode
     {
         Toggle,
@@ -87,7 +92,7 @@ namespace MimyLab
         public void ReleasePlayer()
         {
             Initialize();
-            
+
             if (!_localPlayer.IsOwner(this.gameObject)) { return; }
 
             _assignedPlayerID = -1;

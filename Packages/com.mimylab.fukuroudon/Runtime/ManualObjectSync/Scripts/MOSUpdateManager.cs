@@ -4,18 +4,18 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-using UdonSharp;
-using UnityEngine;
-//using VRC.SDKBase;
-//using VRC.Udon;
-
-#if UNITY_EDITOR
-using UnityEditor;
-using UnityEditor.Experimental.SceneManagement;
-#endif
-
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    //using VRC.SDKBase;
+    //using VRC.Udon;
+
+#if UNITY_EDITOR
+    using UnityEditor;
+    using UnityEditor.Experimental.SceneManagement;
+#endif
+
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MOSUpdateManager : UdonSharpBehaviour
     {

@@ -4,20 +4,20 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.SDK3.Components;
-//using VRC.Udon;
-
-#if UNITY_EDITOR
-using UnityEditor;
-using UnityEditor.Experimental.SceneManagement;
-using UdonSharpEditor;
-#endif
-
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    using VRC.SDKBase;
+    using VRC.SDK3.Components;
+    //using VRC.Udon;
+
+#if UNITY_EDITOR
+    using UnityEditor;
+    using UnityEditor.Experimental.SceneManagement;
+    using UdonSharpEditor;
+#endif
+
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Manual ObjectSync")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class ManualObjectSync : UdonSharpBehaviour

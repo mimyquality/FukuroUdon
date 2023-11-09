@@ -4,13 +4,13 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
-
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    //using VRC.SDKBase;
+    //using VRC.Udon;
+
     [AddComponentMenu("Fukuro Udon/Active Relay/To Effect")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class ActiveRelayToEffect : UdonSharpBehaviour
