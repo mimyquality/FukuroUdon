@@ -4,18 +4,18 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-//using VRC.Udon;
-using VRC.Udon.Common;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    using VRC.SDKBase;
+    //using VRC.Udon;
+    using VRC.Udon.Common;
+
+    #if UNITY_EDITOR
+    using UnityEditor;
+    #endif
+
     public enum SwivelChairPlayerPlatform
     {
         PC,
