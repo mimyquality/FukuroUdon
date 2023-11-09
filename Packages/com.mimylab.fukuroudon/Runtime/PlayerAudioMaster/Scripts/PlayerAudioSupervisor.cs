@@ -1,12 +1,12 @@
 ﻿
-using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-//using VRC.Udon;
-//using VRC.SDK3.Components;
-
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    using VRC.SDKBase;
+    //using VRC.Udon;
+    //using VRC.SDK3.Components;
+
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Supervisor")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerAudioSupervisor : UdonSharpBehaviour

@@ -4,13 +4,13 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
-
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    using VRC.SDKBase;
+    using VRC.Udon;
+
     [AddComponentMenu("Fukuro Udon/VR Follow HUD/VR Follow HUD")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class VRFollowHUD : LocalPlayerTrackingTracker

@@ -4,15 +4,15 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-using UdonSharp;
-using UnityEngine;
-using UnityEngine.UI;
-//using VRC.SDKBase;
-//using VRC.Udon;
-using TMPro;
-
 namespace MimyLab
 {
+    using UdonSharp;
+    using UnityEngine;
+    using UnityEngine.UI;
+    //using VRC.SDKBase;
+    //using VRC.Udon;
+    using TMPro;
+
     [AddComponentMenu("Fukuro Udon/Smart Slideshow/Controller")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class SSs_Controller : UdonSharpBehaviour
