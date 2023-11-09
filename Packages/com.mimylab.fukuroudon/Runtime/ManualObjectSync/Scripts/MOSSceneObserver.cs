@@ -9,10 +9,10 @@ namespace MimyLab
     using UnityEngine;
     using VRC.SDK3.Components;
 
-#if UNITY_EDITOR
+    #if UNITY_EDITOR
     using UnityEditor;
     using UnityEditor.Experimental.SceneManagement;
-#endif
+    #endif
 
     [ExecuteAlways]
     public class MOSSceneObserver : MonoBehaviour

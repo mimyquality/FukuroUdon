@@ -11,10 +11,10 @@ namespace MimyLab
     //using VRC.SDKBase;
     //using VRC.Udon;
 
-#if UNITY_EDITOR
+    #if UNITY_EDITOR
     using UnityEditor;
     using UnityEditor.Experimental.SceneManagement;
-#endif
+    #endif
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MOSUpdateManager : UdonSharpBehaviour
