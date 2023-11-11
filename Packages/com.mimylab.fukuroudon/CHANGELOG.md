@@ -4,12 +4,22 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.9.0] - 2023/11/11
+### Added
+- [SwivelChair2](https://github.com/mimyquality/FukuroUdon/wiki/Swivel-Chair-2)を追加
+- Mirror Tuner
+  - Add Componentメニューに追加しました。
+
+### Deprecated
+- SwivelChair
+  - SwivelChair2の公開に伴い、SwivelChairは致命的な不具合を除いて更新を停止します。
+
 ## [1.8.1] - 2023/11/9
 ### Fixed
 - 名前空間が被ってエラーになる可能性があった問題に対処しました。
 
 ## [1.8.0] - 2023/11/4
-### Add
+### Added
 - [Mirror Tuner](https://github.com/mimyquality/FukuroUdon/wiki/Mirror-Tuner)を追加
 
 ## [1.7.1] - 2023/10/23
@@ -18,7 +28,7 @@
   - VRモードでPickupHandleを掴んでもLimitedPosition/LookConstraintが有効にならないバグを修正しました。
 
 ## [1.7.0] - 2023/10/23
-### Add
+### Added
 - VR Follow HUD
   - LocalPlayer Tracking Trackerコンポーネントを追加しました。
 
@@ -77,7 +87,7 @@
   - Avatar Eye Hieghtの設定を固定値ではなく、上限と下限を設定する方式に変更しました
 
 ## [1.5.0] - 2023/8/1
-### Add
+### Added
 - [Advanced World Settings](https://github.com/mimyquality/FukuroUdon/wiki/Advanced-World-Settings)を追加
 
 ## [1.4.4] - 2023/7/5
@@ -102,7 +112,7 @@
   - PickupEventTransferにInteract()を追加しました。これに合わせてVRCPickupを必須コンポーネントから外しました。
 
 ## [1.4.0] - 2023/6/20
-### Add
+### Added
 - Manual ObjectSync
   - 他のUdonスクリプトにピックアップ系イベントを横流しできる補助スクリプトを追加しました。  
     VRCPickupコンポーネントが付いていなくてもピックアップ系イベントを実行できるようになります。
@@ -112,7 +122,7 @@
   - アタッチモード用のフィールド名を変更しました。
 
 ## [1.3.0] - 2023/6/20
-### Add
+### Added
 - Manual ObjectSync
   - アタッチモード、ボーンに装着モードを追加しました。
   - 使い方のサンプルとして、関連する補助スクリプトとサンプルプレハブも追加しました。
@@ -127,7 +137,7 @@
   - 内部処理を見直しました。
 
 ## [1.2.0] - 2023/6/4
-### Add
+### Added
 - Manual ObjectSync
   - 同期オブジェクト(VRC ObjectSyncまたはManual ObjectSync、SmartObjectSync等の、Respawn()メソッドの存在するUdonスクリプトが付いたオブジェクト)の一括位置リセットができるスイッチを追加しました。
 
@@ -137,7 +147,7 @@
   - Add Componentメニューの階層を整理しました。
 
 ## [1.1.2] - 2023/5/27
-### Add
+### Added
 - PlayerAudio Master
   - ユースケース別のサンプルプレハブを追加しました。使い方は[Wiki](https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master)を見てください。
 
@@ -147,7 +157,7 @@
   - サンプルプレハブ用のマテリアルがパッケージに含まれていなかったのを修正しました。
 
 ## [1.1.0] - 2023/4/13
-### Add
+### Added
 - [PlayerAudio Master](https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master)を追加
 
 ### Fixed
@@ -182,6 +192,7 @@
   - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
   - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.9.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.9.0
 [1.8.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.8.1
 [1.8.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.8.0
 [1.7.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.7.1

@@ -12,6 +12,7 @@ namespace MimyLab
     //using VRC.Udon;
     using VRC.SDK3.Components;
 
+    [AddComponentMenu("Fukuro Udon/Mirror Tuner/Mirror Profile")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MirrorProfile : UdonSharpBehaviour
     {
