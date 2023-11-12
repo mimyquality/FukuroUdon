@@ -26,21 +26,25 @@ namespace MimyLab
         private Animator _tooltipAnimator;
 
         [Min(0.0f), Tooltip("sec")]
-        public float exitLatency = 0.8f;
+        public float longPushDuration = 0.8f;
+        [Min(0.0f), Tooltip("sec")]
+        public float doubleTapDuration = 0.2f;
 
         private Rigidbody _casterRigidbody;
         private SwivelChairPlayerPlatform _platform = default;
         private SwivelChairInputMode _inputMode = default;
         private float _turnValue, _prevTurnValue;
         private Vector3 _moveValue, _prevMoveValue;
-        private bool _isJump = false;
-        private float _inputJumpInterval = 0.0f;
+        private bool _isJump;
+        private float _inputJumpInterval;
+        private float _inputDoubleJumpInterval;
 
         // Tooltipアニメーター用
         private int _param_OnStationEnter = Animator.StringToHash("OnStationEnter");
         private int _param_OnModeVertical = Animator.StringToHash("OnModeVertical");
         private int _param_OnModeHorizontal = Animator.StringToHash("OnModeHorizontal");
         private int _param_OnModeCasterMove = Animator.StringToHash("OnModeCasterMove");
+        private int _param_Platform = Animator.StringToHash("Platform");
 
         private bool _initialized = false;
         private void Initialize()
@@ -69,13 +73,19 @@ namespace MimyLab
             _prevMoveValue = Vector3.zero;
             _isJump = false;
             _inputJumpInterval = 0.0f;
+            _inputDoubleJumpInterval = doubleTapDuration;
 
             if (_tooltipAnimator)
             {
                 _tooltipAnimator.gameObject.SetActive(true);
-                _tooltipAnimator.SetTrigger(_param_OnStationEnter);
-                ChangeInputMode(_inputMode);
+                SendCustomEventDelayedFrames(nameof(_AnimateOnEnter), 1);
             }
+        }
+        public void _AnimateOnEnter()
+        {
+            _tooltipAnimator.SetInteger(_param_Platform, (int)_platform);
+            _tooltipAnimator.SetTrigger(_param_OnStationEnter);
+            ChangeInputMode(_inputMode);
         }
 
         private void OnDisable()
@@ -88,9 +98,13 @@ namespace MimyLab
 
         private void Update()
         {
+
             // ジャンプボタン長押し処理
             if (_isJump) { _inputJumpInterval += Time.deltaTime; }
-            if (_inputJumpInterval > exitLatency) { seatAdjuster.Exit(); }
+            if (_inputJumpInterval > longPushDuration) { seatAdjuster.Exit(); }
+
+            // ジャンプボタン二度押し処理
+            if (!_isJump && _inputDoubleJumpInterval < doubleTapDuration) { _inputDoubleJumpInterval += Time.deltaTime; }
 
             // 入力値を各種操作に反映
             if (_turnValue != 0.0f || _prevTurnValue != 0.0f)
@@ -191,7 +205,18 @@ namespace MimyLab
             _isJump = value;
             _inputJumpInterval = 0.0f;
 
-            if (value) { return; }
+            if (value)
+            {
+                if (_platform == SwivelChairPlayerPlatform.Android)
+                {
+                    if (_inputDoubleJumpInterval < doubleTapDuration) { seatAdjuster.Exit(); }
+                }
+
+                return;
+            }
+            // ここからJumpボタンpull時の処理
+
+            _inputDoubleJumpInterval = 0.0f;
 
             var tmpInputMode = SwivelChairInputMode.Vertical;
             switch (_inputMode)

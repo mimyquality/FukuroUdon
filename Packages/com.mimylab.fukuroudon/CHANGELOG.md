@@ -4,6 +4,11 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.9.4] - 2023/11/12
+### Fixed
+- SwivelChair2
+  - スマホモードでジャンプボタンの長押しが無効のため、椅子から降りる操作をジャンプボタンのダブルタップに変更しました。他のモードでは長押しのままです。
+
 ## [1.9.3] - 2023/11/12
 ### Fixed
 - SwivelChair
