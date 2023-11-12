@@ -74,7 +74,7 @@ namespace MimyLab
 
             _offset = _enterPoint.localPosition;
             _localOffset = _offset;
-            _direction = _seat.rotation;
+            _direction = _seat.localRotation;
             _localOffset = _offset;
 
             _initialized = true;
