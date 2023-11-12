@@ -51,7 +51,7 @@ namespace MimyLab
 
             if (!_seatAdjuster) { _seatAdjuster = GetComponentInChildren<SC2SeatAdjuster>(); }
             if (!_inputManager) { _inputManager = GetComponentInChildren<SC2InputManager>(); }
-            if (!_pickup) { _pickup = GetComponentInChildren<VRCPickup>(); }
+            if (!_pickup) { _pickup = GetComponent<VRCPickup>(); }
             if (!_caster) { _caster = GetComponentInChildren<SC2Caster>(); }
 
             _seatAdjuster.manager = this;
