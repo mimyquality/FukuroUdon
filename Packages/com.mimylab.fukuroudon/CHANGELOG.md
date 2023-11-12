@@ -4,6 +4,11 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.9.3] - 2023/11/12
+### Fixed
+- SwivelChair
+  - 1.9.0以降でAndroidプラットフォームに切り替えた時、エラーになっていたのを修正しました。
+
 ## [1.9.2] - 2023/11/12
 ### Changed
 - SwivelChair2
@@ -202,6 +207,7 @@
   - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
   - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.9.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.9.3
 [1.9.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.9.2
 [1.9.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.9.1
 [1.9.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.9.0

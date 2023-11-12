@@ -145,10 +145,6 @@ namespace MimyLab
         {
             if (_initialized) { return; }
 
-#if UNITY_ANDROID
-            _platform = SwivelChairPlayerPlatform.Android;
-#endif
-
             // ローカルプレイヤー参照使い回し用
             _lPlayer = Networking.LocalPlayer;
 

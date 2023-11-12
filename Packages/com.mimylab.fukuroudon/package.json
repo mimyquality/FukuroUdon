@@ -1,6 +1,6 @@
 {
   "name": "com.mimylab.fukuroudon",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "displayName": "Fukuro Udon",
   "description": "MimyLab's U# utilitiy pack for VPM.",
   "unity": "2019.4",
@@ -55,9 +55,9 @@
       "path": "Samples/SmartSlideshow"
     },
     {
-      "displayName": "Swivel Chair",
+      "displayName": "Swivel Chair 2",
       "description": "UIを必要としない、座高調節とスイベル回転が可能な椅子ギミック",
-      "path": "Samples/SwivelChair"
+      "path": "Samples/SwivelChair2"
     },
     {
       "displayName": "VR Follow HUD",
