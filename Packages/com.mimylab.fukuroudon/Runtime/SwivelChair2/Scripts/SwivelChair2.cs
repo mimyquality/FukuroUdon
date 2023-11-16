@@ -49,10 +49,10 @@ namespace MimyLab
         {
             if (_initialized) { return; }
 
-            if (!_seatAdjuster) { _seatAdjuster = GetComponentInChildren<SC2SeatAdjuster>(); }
-            if (!_inputManager) { _inputManager = GetComponentInChildren<SC2InputManager>(); }
+            if (!_seatAdjuster) { _seatAdjuster = GetComponentInChildren<SC2SeatAdjuster>(true); }
+            if (!_inputManager) { _inputManager = GetComponentInChildren<SC2InputManager>(true); }
             if (!_pickup) { _pickup = GetComponent<VRCPickup>(); }
-            if (!_caster) { _caster = GetComponentInChildren<SC2Caster>(); }
+            if (!_caster) { _caster = GetComponentInChildren<SC2Caster>(true); }
 
             _seatAdjuster.manager = this;
             _inputManager.seatAdjuster = _seatAdjuster;

@@ -23,7 +23,8 @@ namespace MimyLab
         public SC2Caster caster;
 
         [SerializeField]
-        private Animator _tooltipAnimator;
+        [Tooltip("0 = PCVR \n1 = Desktop \n2 = Quest \n3 = Android")]
+        private GameObject[] _tooltip = new GameObject[0];
 
         [Min(0.0f), Tooltip("sec")]
         public float longPushDuration = 0.8f;
@@ -31,6 +32,7 @@ namespace MimyLab
         public float doubleTapDuration = 0.2f;
 
         private Rigidbody _casterRigidbody;
+        private Animator[] _tooltipAnimator;
         private SwivelChairPlayerPlatform _platform = default;
         private SwivelChairInputMode _inputMode = default;
         private float _turnValue, _prevTurnValue;
@@ -44,7 +46,6 @@ namespace MimyLab
         private int _param_OnModeVertical = Animator.StringToHash("OnModeVertical");
         private int _param_OnModeHorizontal = Animator.StringToHash("OnModeHorizontal");
         private int _param_OnModeCasterMove = Animator.StringToHash("OnModeCasterMove");
-        private int _param_Platform = Animator.StringToHash("Platform");
 
         private bool _initialized = false;
         private void Initialize()
@@ -58,15 +59,19 @@ namespace MimyLab
 
             if (caster) { _casterRigidbody = caster.GetComponent<Rigidbody>(); }
 
+            _tooltipAnimator = new Animator[_tooltip.Length];
+            for (int i = 0; i < _tooltip.Length; i++)
+            {
+                _tooltipAnimator[i] = (_tooltip[i]) ? _tooltip[i].GetComponentInChildren<Animator>(true) : null;
+            }
+
             _initialized = true;
-        }
-        private void Start()
-        {
-            Initialize();
         }
 
         private void OnEnable()
         {
+            Initialize();
+
             _turnValue = 0.0f;
             _prevTurnValue = 0.0f;
             _moveValue = Vector3.zero;
@@ -75,24 +80,25 @@ namespace MimyLab
             _inputJumpInterval = 0.0f;
             _inputDoubleJumpInterval = doubleTapDuration;
 
-            if (_tooltipAnimator)
+            for (int i = 0; i < _tooltip.Length; i++)
             {
-                _tooltipAnimator.gameObject.SetActive(true);
-                SendCustomEventDelayedFrames(nameof(_AnimateOnEnter), 1);
+                if (i == (int)_platform)
+                {
+                    if (_tooltip[i]) { _tooltip[i].SetActive(true); }
+                }
             }
-        }
-        public void _AnimateOnEnter()
-        {
-            _tooltipAnimator.SetInteger(_param_Platform, (int)_platform);
-            _tooltipAnimator.SetTrigger(_param_OnStationEnter);
-            ChangeInputMode(_inputMode);
+            if (_tooltipAnimator[(int)_platform])
+            {
+                _tooltipAnimator[(int)_platform].SetTrigger(_param_OnStationEnter);
+                ChangeInputMode(_inputMode);
+            }
         }
 
         private void OnDisable()
         {
-            if (_tooltipAnimator)
+            for (int i = 0; i < _tooltip.Length; i++)
             {
-                _tooltipAnimator.gameObject.SetActive(false);
+                if (_tooltip[i]) { _tooltip[i].SetActive(false); }
             }
         }
 
@@ -242,16 +248,16 @@ namespace MimyLab
                 _inputMode = tmpInputMode;
             }
 
-            if (_tooltipAnimator) { ChangeInputMode(_inputMode); }
+            if (_tooltipAnimator[(int)_platform]) { ChangeInputMode(_inputMode); }
         }
 
         private void ChangeInputMode(SwivelChairInputMode mode)
         {
             switch (mode)
             {
-                case SwivelChairInputMode.Vertical: _tooltipAnimator.SetTrigger(_param_OnModeVertical); break;
-                case SwivelChairInputMode.Horizontal: _tooltipAnimator.SetTrigger(_param_OnModeHorizontal); break;
-                case SwivelChairInputMode.CasterMove: _tooltipAnimator.SetTrigger(_param_OnModeCasterMove); break;
+                case SwivelChairInputMode.Vertical: _tooltipAnimator[(int)_platform].SetTrigger(_param_OnModeVertical); break;
+                case SwivelChairInputMode.Horizontal: _tooltipAnimator[(int)_platform].SetTrigger(_param_OnModeHorizontal); break;
+                case SwivelChairInputMode.CasterMove: _tooltipAnimator[(int)_platform].SetTrigger(_param_OnModeCasterMove); break;
             }
         }
     }
