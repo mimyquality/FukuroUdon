@@ -10,11 +10,11 @@ namespace MimyLab
      using UnityEngine;
      //using VRC.SDKBase;
      using VRC.Udon;
-     using VRC.SDK3.Components;
+     //using VRC.SDK3.Components;
 
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Pickup Event Transfer")]
     //[RequireComponent(typeof(VRCPickup))]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
     public class PickupEventTransfer : UdonSharpBehaviour
     {
         [SerializeField]

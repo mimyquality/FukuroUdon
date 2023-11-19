@@ -51,10 +51,10 @@ namespace MimyLab
 
             if (!_seatAdjuster) { _seatAdjuster = GetComponentInChildren<SC2SeatAdjuster>(true); }
             if (!_inputManager) { _inputManager = GetComponentInChildren<SC2InputManager>(true); }
-            if (!_pickup) { _pickup = GetComponent<VRCPickup>(); }
+            if (!_pickup) { _pickup = GetComponentInParent<VRCPickup>(); }
             if (!_caster) { _caster = GetComponentInChildren<SC2Caster>(true); }
 
-            _seatAdjuster.manager = this;
+            _seatAdjuster.swivelChair2 = this;
             _inputManager.seatAdjuster = _seatAdjuster;
             _inputManager.caster = _caster;
 
@@ -67,15 +67,29 @@ namespace MimyLab
             _inputManager.enabled = false;
         }
 
+        public override void OnPickup()
+        {
+            if (_caster)
+            {
+                Networking.SetOwner(Networking.LocalPlayer, _caster.gameObject);
+            }
+        }
+
+        public override void OnDrop()
+        {
+            if (_caster)
+            {
+                var stationOwner = Networking.GetOwner(_seatAdjuster.gameObject);
+                Networking.SetOwner(stationOwner, _caster.gameObject);
+            }
+        }
+
         public void OnSitDown()
         {
-            Initialize();
-            Networking.SetOwner(Networking.LocalPlayer, _seatAdjuster.gameObject);
-            if (_caster) { Networking.SetOwner(Networking.LocalPlayer, _caster.gameObject); }
-
             _seatAdjuster.DisableInteractive = true;
             _inputManager.enabled = true;
             if (_pickup) { _pickup.pickupable = false; }
+            if (_caster) { Networking.SetOwner(Networking.LocalPlayer, _caster.gameObject); }
         }
 
         public void OnStandUp()

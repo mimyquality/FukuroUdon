@@ -17,6 +17,7 @@ namespace MimyLab
     [UdonBehaviourSyncMode(BehaviourSyncMode.Continuous)]
     public class SC2Caster : UdonSharpBehaviour
     {
+        public bool immobile = false;
         [Tooltip("meter/sec (If physics Rigidbody is attached, the units for this parameter are [N].)")]
         public float moveSpeed = 2.0f;
         [Tooltip("degree/sec (If physics Rigidbody is attached, the units for this parameter are [Nm].)")]
@@ -25,7 +26,6 @@ namespace MimyLab
         private Transform _transform;
         private Rigidbody _rigidbody;
         private VRCObjectSync _objectSync;
-        private VRCPickup _pickup;
 
         private bool _initialized = false;
         private void Initialize()
@@ -35,7 +35,6 @@ namespace MimyLab
             _transform = transform;
             _rigidbody = GetComponent<Rigidbody>();
             _objectSync = GetComponent<VRCObjectSync>();
-            _pickup = GetComponent<VRCPickup>();
 
             _initialized = true;
         }
@@ -47,7 +46,7 @@ namespace MimyLab
         public void Move(Vector3 inputValue)
         {
             if (!Networking.IsOwner(this.gameObject)) { return; }
-            if (_pickup && _pickup.IsHeld) { return; }
+            if (immobile) { return; }
 
             var shift = Time.deltaTime * moveSpeed * inputValue;
             if (_rigidbody)
@@ -70,7 +69,7 @@ namespace MimyLab
         public void Turn(float inputValue)
         {
             if (!Networking.IsOwner(this.gameObject)) { return; }
-            if (_pickup && _pickup.IsHeld) { return; }
+            if (immobile) { return; }
 
             var angle = Time.deltaTime * turnSpeed * inputValue;
             if (_rigidbody)

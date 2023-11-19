@@ -4,6 +4,13 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.9.6] - 2023/11/19
+### Fixed
+- SwivelChair2
+  - キャスター移動とピックアップが共存できるようにしました。
+  - 上記に伴い、サンプルPrefabを追加しました。
+  - CasterコンポーネントにImmobileパラメーターを追加しました。これが有効な間、Casterによる移動処理が無視されます。
+
 ## [1.9.5] - 2023/11/16
 ### Fixed
 - SwivelChair2
@@ -217,6 +224,7 @@
   - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
   - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.9.6]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.9.6
 [1.9.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.9.5
 [1.9.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.9.4
 [1.9.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.9.3

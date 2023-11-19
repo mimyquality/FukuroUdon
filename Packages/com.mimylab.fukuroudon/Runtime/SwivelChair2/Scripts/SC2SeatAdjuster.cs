@@ -19,7 +19,7 @@ namespace MimyLab
     public class SC2SeatAdjuster : UdonSharpBehaviour
     {
         [HideInInspector]
-        public SwivelChair2 manager;
+        public SwivelChair2 swivelChair2;
 
         public Vector3 adjustMinLimit = new Vector3(0.0f, -0.5f, -0.3f);
         public Vector3 adjustMaxLimit = new Vector3(0.0f, 0.5f, 0.3f);
@@ -93,9 +93,12 @@ namespace MimyLab
         {
             if (!player.isLocal) { return; }
 
-            manager.OnSitDown();
+            swivelChair2.OnSitDown();
+
+            Networking.SetOwner(player, this.gameObject);
 
             Offset = _localOffset;
+
             RequestSerialization();
         }
 
@@ -103,9 +106,9 @@ namespace MimyLab
         {
             if (!player.isLocal) { return; }
 
-            manager.OnStandUp();
+            swivelChair2.OnStandUp();
 
-            _localOffset = _offset;
+            _localOffset = Offset;
         }
 
         public void Enter()
