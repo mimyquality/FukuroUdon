@@ -25,9 +25,9 @@ namespace MimyLab
         public bool enablePlayerVoiceOverride = true;
         [Range(0f, 24f)]
         public float voiceGain = 15f;
-        [Range(0f, 999999f)]
+        [Range(0f, 999999.9f)]
         public float voiceDistanceNear = 0f;
-        [Range(0f, 999999f)]
+        [Range(0f, 999999.9f)]
         public float voiceDistanceFar = 25f;
 
         [Header("Player Voice Advance Settings")]

@@ -97,9 +97,9 @@ namespace MimyLab
                 if (_playerIDList[i] == playerID)
                 {
                     _playerIDList[i] = 0;
+                    RequestSerialization();
                 }
             }
-            RequestSerialization();
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace MimyLab
                     }
                 }
             }
-
+            
             _playerIDList = tmpPlayerIDList;
         }
     }

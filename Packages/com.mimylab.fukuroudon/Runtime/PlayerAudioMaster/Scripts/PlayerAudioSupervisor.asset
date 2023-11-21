@@ -233,7 +233,7 @@ MonoBehaviour:
       Data: 0
     - Name: max
       Entry: 4
-      Data: 999999
+      Data: 999999.9
     - Name: 
       Entry: 8
       Data: 
@@ -293,7 +293,7 @@ MonoBehaviour:
       Data: 0
     - Name: max
       Entry: 4
-      Data: 999999
+      Data: 999999.9
     - Name: 
       Entry: 8
       Data: 

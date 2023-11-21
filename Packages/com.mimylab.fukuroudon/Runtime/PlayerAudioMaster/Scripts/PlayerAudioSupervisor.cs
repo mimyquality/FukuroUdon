@@ -16,8 +16,8 @@ namespace MimyLab
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerAudioSupervisor : UdonSharpBehaviour
     {
-        private const string PlayerAudioChannelTagName = "PlayerAudioChannel";
-        private const string PlayerAudioOverrideTagName = "PlayerAudioOverride";
+        public const string PlayerAudioChannelTagName = "PlayerAudioChannel";
+        public const string PlayerAudioOverrideTagName = "PlayerAudioOverride";
 
         [Header("Reference Settings")]
         public IPlayerAudioRegulator[] playerAudioRegulators;
@@ -25,9 +25,9 @@ namespace MimyLab
         [Header("Player Voice Settings")]
         [Range(0f, 24f)]
         public float defaultVoiceGain = 15f;
-        [Range(0f, 999999f)]
+        [Range(0f, 999999.9f)]
         public float defaultVoiceDistanceNear = 0f;
-        [Range(0f, 999999f)]
+        [Range(0f, 999999.9f)]
         public float defaultVoiceDistanceFar = 25f;
 
         [Header("Player Voice Advance Settings")]
@@ -70,7 +70,7 @@ namespace MimyLab
 
         private void Update()
         {
-            var selecter = Time.frameCount % Mathf.Clamp(_players.Length, 1, _players.Length);
+            var selecter = Time.frameCount % Mathf.Max(_players.Length, 1);
             if (!Utilities.IsValid(_players[selecter])) { return; }
 
             var channel = "None";
@@ -146,7 +146,7 @@ namespace MimyLab
         {
             Initialize();
 
-            var playerCount = Mathf.Clamp(VRCPlayerApi.GetPlayerCount(), 1, int.MaxValue);
+            var playerCount = Mathf.Max(VRCPlayerApi.GetPlayerCount(), 1);
             VRCPlayerApi.GetPlayers(_players = new VRCPlayerApi[playerCount]);
         }
 

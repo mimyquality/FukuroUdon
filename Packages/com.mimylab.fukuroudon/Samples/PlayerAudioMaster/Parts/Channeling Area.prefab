@@ -325,7 +325,7 @@ PrefabInstance:
     - target: {fileID: 5391508250777434678, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e,
         type: 3}
       propertyPath: voiceDistanceFar
-      value: 999999
+      value: 999999.9
       objectReference: {fileID: 0}
     - target: {fileID: 5391508250777434678, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e,
         type: 3}
@@ -335,7 +335,7 @@ PrefabInstance:
     - target: {fileID: 5391508250777434678, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e,
         type: 3}
       propertyPath: voiceDistanceNear
-      value: 999999
+      value: 999999.9
       objectReference: {fileID: 0}
     - target: {fileID: 5391508250777434678, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e,
         type: 3}

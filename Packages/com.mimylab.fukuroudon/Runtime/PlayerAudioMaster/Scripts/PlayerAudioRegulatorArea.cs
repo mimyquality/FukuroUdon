@@ -16,13 +16,13 @@ namespace MimyLab
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerAudioRegulatorArea : IPlayerAudioRegulator
     {
-        private bool isInvalid = true;
+        private bool _isInvalid = true;
         private Collider _collider;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void Reset()
         {
-            this.gameObject.layer = 18;
+            this.gameObject.layer = 5;
             if (!GetComponent<Collider>())
             {
                 _collider = this.gameObject.AddComponent<BoxCollider>();
@@ -48,17 +48,17 @@ namespace MimyLab
 
         private void OnEnable()
         {
-            isInvalid = false;
+            _isInvalid = false;
         }
 
         private void OnDisable()
         {
-            isInvalid = true;
+            _isInvalid = true;
         }
 
         protected override bool CheckApplicableInternal(VRCPlayerApi target)
         {
-            if (isInvalid || !_collider.enabled) { return false; }
+            if (_isInvalid || !_collider.enabled) { return false; }
 
             var pos = target.GetPosition();
 

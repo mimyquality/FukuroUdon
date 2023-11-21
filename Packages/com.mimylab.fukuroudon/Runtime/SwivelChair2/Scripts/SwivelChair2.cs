@@ -44,6 +44,8 @@ namespace MimyLab
         [SerializeField]
         private SC2Caster _caster;
 
+        private bool _isSit = false;
+
         private bool _initialized = false;
         private void Initialize()
         {
@@ -69,6 +71,8 @@ namespace MimyLab
 
         public override void OnPickup()
         {
+            _seatAdjuster.DisableInteractive = true;
+
             if (_caster)
             {
                 Networking.SetOwner(Networking.LocalPlayer, _caster.gameObject);
@@ -77,6 +81,8 @@ namespace MimyLab
 
         public override void OnDrop()
         {
+            if (!_isSit) { _seatAdjuster.DisableInteractive = false; }
+
             if (_caster)
             {
                 var stationOwner = Networking.GetOwner(_seatAdjuster.gameObject);
@@ -86,6 +92,7 @@ namespace MimyLab
 
         public void OnSitDown()
         {
+            _isSit = true;
             _seatAdjuster.DisableInteractive = true;
             _inputManager.enabled = true;
             if (_pickup) { _pickup.pickupable = false; }
@@ -94,6 +101,7 @@ namespace MimyLab
 
         public void OnStandUp()
         {
+            _isSit = false;
             _seatAdjuster.DisableInteractive = false;
             _inputManager.enabled = false;
             if (_pickup) { _pickup.pickupable = true; }
