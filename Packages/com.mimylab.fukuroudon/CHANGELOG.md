@@ -12,6 +12,8 @@
 ### Fixed
 - SwivelChair2
   - ピックアップ付き椅子にて、ピックアップ中に反対の手で座れてしまうのを修正しました。
+- PlayerAudio Master
+  - PlayerAudio Regulator Areaコンポーネントをリセットした時に適用されるレイヤーをUIに修正しました。
 
 ## [1.9.7] - 2023/11/19
 ### Fixed
