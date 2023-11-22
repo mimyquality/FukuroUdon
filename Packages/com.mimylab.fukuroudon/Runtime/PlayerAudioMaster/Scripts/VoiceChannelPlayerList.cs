@@ -99,7 +99,7 @@ namespace MimyLab
                 if (_channelList[i] == channel)
                 {
                     _playersNameText[target].text = _players[target].displayName;
-                    _playersNameSlotTf[target].parent = _channelSlot[i];
+                    _playersNameSlotTf[target].SetParent(_channelSlot[i], false);
                     _playersNameSlot[target].SetActive(true);
                     return;
                 }
