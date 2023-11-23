@@ -16,7 +16,7 @@ namespace MimyLab
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class PlayerAudioRegulatorList : IPlayerAudioRegulator
     {
-        private const int HardCap = 96;
+        private const int HardCap = 90;
 
         [UdonSynced]
         private int[] _playerIDList = new int[HardCap];
@@ -42,7 +42,6 @@ namespace MimyLab
             if (!_localPlayer.IsOwner(this.gameObject)) { return; }
 
             RefreshPlayerList();
-            RequestSerialization();
         }
 
         public override void OnPlayerLeft(VRCPlayerApi player)
@@ -50,7 +49,6 @@ namespace MimyLab
             if (!_localPlayer.IsOwner(this.gameObject)) { return; }
 
             RefreshPlayerList();
-            RequestSerialization();
         }
 
         /// <summary>
@@ -62,7 +60,6 @@ namespace MimyLab
 
             if (!_localPlayer.IsOwner(this.gameObject)) { return false; }
 
-            var result = false;
             var playerID = target.playerId;
             for (int i = 0; i < _playerIDList.Length; i++)
             {
@@ -73,13 +70,13 @@ namespace MimyLab
                 if (_playerIDList[j] <= 0)
                 {
                     _playerIDList[j] = playerID;
-                    result = true;
-                    break;
+                    RequestSerialization();
+
+                    return true;
                 }
             }
-            RequestSerialization();
-
-            return result;
+            
+            return false;
         }
 
         /// <summary>
@@ -111,8 +108,7 @@ namespace MimyLab
 
             if (!_localPlayer.IsOwner(this.gameObject)) { return; }
 
-            System.Array.Clear(_playerIDList, 0, _playerIDList.Length);
-            //_playerIDList = new int[HardCap];
+            _playerIDList = new int[HardCap];
             RequestSerialization();
         }
 
@@ -128,16 +124,15 @@ namespace MimyLab
 
         private void RefreshPlayerList()
         {
-            var tmpPlayers = new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()];
-            VRCPlayerApi.GetPlayers(tmpPlayers);
-
+            var players = new VRCPlayerApi[HardCap];
+            VRCPlayerApi.GetPlayers(players);
             var tmpPlayerIDList = new int[HardCap];
             int tmpPlayerID;
-            for (int i = 0; i < tmpPlayers.Length; i++)
+            for (int i = 0; i < players.Length; i++)
             {
-                if (!Utilities.IsValid(tmpPlayers[i])) { continue; }
+                if (!Utilities.IsValid(players[i])) { continue; }
 
-                tmpPlayerID = tmpPlayers[i].playerId;
+                tmpPlayerID = players[i].playerId;
                 for (int j = 0; j < _playerIDList.Length; j++)
                 {
                     if (tmpPlayerID == _playerIDList[j])
@@ -147,8 +142,9 @@ namespace MimyLab
                     }
                 }
             }
-            
+
             _playerIDList = tmpPlayerIDList;
+            RequestSerialization();
         }
     }
 }

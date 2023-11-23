@@ -19,6 +19,8 @@ namespace MimyLab
         public const string PlayerAudioChannelTagName = "PlayerAudioChannel";
         public const string PlayerAudioOverrideTagName = "PlayerAudioOverride";
 
+        private const string TagIsEmpty = "None";
+
         [Header("Reference Settings")]
         public IPlayerAudioRegulator[] playerAudioRegulators;
 
@@ -73,8 +75,8 @@ namespace MimyLab
             var selecter = Time.frameCount % Mathf.Max(_players.Length, 1);
             if (!Utilities.IsValid(_players[selecter])) { return; }
 
-            var channel = "None";
-            var overrideNumber = "None";
+            var channel = TagIsEmpty;
+            var overrideNumber = TagIsEmpty;
             IPlayerAudioRegulator overrideRegulator = null;
             for (int i = 0; i < playerAudioRegulators.Length; i++)
             {
@@ -101,13 +103,16 @@ namespace MimyLab
                     break;
                 }
             }
-            _players[selecter].SetPlayerTag(PlayerAudioChannelTagName, channel);
+            if (_players[selecter].GetPlayerTag(PlayerAudioChannelTagName) != channel)
+            {
+                _players[selecter].SetPlayerTag(PlayerAudioChannelTagName, channel);
+            }
 
             if (_players[selecter].GetPlayerTag(PlayerAudioOverrideTagName) != overrideNumber)
             {
                 _players[selecter].SetPlayerTag(PlayerAudioOverrideTagName, overrideNumber);
 
-                if (overrideNumber == "None")
+                if (overrideNumber == TagIsEmpty)
                 {
                     SetDefaultPlayerVoice(_players[selecter]);
                     SetDefaultAvatarAudio(_players[selecter]);
@@ -131,8 +136,8 @@ namespace MimyLab
         {
             Initialize();
 
-            player.SetPlayerTag(PlayerAudioChannelTagName, "None");
-            player.SetPlayerTag(PlayerAudioOverrideTagName, "None");
+            player.SetPlayerTag(PlayerAudioChannelTagName, TagIsEmpty);
+            player.SetPlayerTag(PlayerAudioOverrideTagName, TagIsEmpty);
             SetDefaultPlayerVoice(player);
             SetDefaultAvatarAudio(player);
 

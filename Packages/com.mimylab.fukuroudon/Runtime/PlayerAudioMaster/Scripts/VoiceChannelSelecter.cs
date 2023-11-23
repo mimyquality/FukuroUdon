@@ -43,7 +43,12 @@ namespace MimyLab
         public void Assign2() { Assign(2); }
         public void Assign3() { Assign(3); }
         public void Assign4() { Assign(4); }
-        private void Assign(int num)
+        public void Assign5() { Assign(5); }
+        public void Assign6() { Assign(6); }
+        public void Assign7() { Assign(7); }
+        public void Assign8() { Assign(8); }
+        public void Assign9() { Assign(9); }
+        public void Assign(int num)
         {
             for (int i = 0; i < _targetRegulator.Length; i++)
             {
@@ -64,7 +69,12 @@ namespace MimyLab
         public void Release2() { Release(2); }
         public void Release3() { Release(3); }
         public void Release4() { Release(4); }
-        private void Release(int num)
+        public void Release5() { Release(5); }
+        public void Release6() { Release(6); }
+        public void Release7() { Release(7); }
+        public void Release8() { Release(8); }
+        public void Release9() { Release(9); }
+        public void Release(int num)
         {
             Networking.SetOwner(_localPlayer, _targetRegulator[num].gameObject);
             ReleaseSelectChannel(num);
