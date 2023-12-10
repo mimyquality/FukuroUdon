@@ -11,21 +11,14 @@
     },
     "net.kaikoga.pen": {
       "version": "1.0.0"
+    },
+    "com.vrchat.worlds": {
+      "version": "3.5.0"
     }
   },
   "locked": {
-    "com.vrchat.worlds": {
-      "version": "3.4.1",
-      "dependencies": {
-        "com.vrchat.base": "3.4.1"
-      }
-    },
-    "com.vrchat.base": {
-      "version": "3.4.1",
-      "dependencies": {}
-    },
     "com.vrchat.core.vpm-resolver": {
-      "version": "0.1.26",
+      "version": "0.1.27",
       "dependencies": {}
     },
     "dev.onevr.vrworldtoolkit": {
@@ -46,6 +39,16 @@
         "com.vrchat.base": "^3.0.0",
         "com.vrchat.worlds": "^3.0.0"
       }
+    },
+    "com.vrchat.worlds": {
+      "version": "3.5.0",
+      "dependencies": {
+        "com.vrchat.base": "3.5.0"
+      }
+    },
+    "com.vrchat.base": {
+      "version": "3.5.0",
+      "dependencies": {}
     }
   }
 }

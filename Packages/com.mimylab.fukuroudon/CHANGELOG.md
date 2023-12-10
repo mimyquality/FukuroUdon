@@ -4,7 +4,13 @@
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.10.2] - 2023/12/11
+### Fixed
+- Manual ObjectSync
+  - Unity2021以降のバージョンに対応しました。
+
 ## [1.10.1] - 2023/11/23
+### Fixed
 - PlayerAudio Master
   - 一部の内部処理をリファクタリングをしました。
   - VoiceChannelSelecterの最大切替数を10個までに拡張しました。
@@ -245,6 +251,7 @@
   - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
   - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.10.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.10.2
 [1.10.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.10.1
 [1.10.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.10.0
 [1.9.7]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.9.7
