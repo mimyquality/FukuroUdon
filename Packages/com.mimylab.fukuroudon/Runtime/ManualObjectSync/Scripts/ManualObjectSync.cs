@@ -142,7 +142,7 @@ namespace MimyLab
             }
         }
 
-        private string _UpdateManagerPrefabGUID = "51374f5e01425074ca9cb544fa44007d";
+        private readonly string _UpdateManagerPrefabGUID = "51374f5e01425074ca9cb544fa44007d";
         [HideInInspector]
         public MOSUpdateManager _updateManager = null;
         [HideInInspector]
