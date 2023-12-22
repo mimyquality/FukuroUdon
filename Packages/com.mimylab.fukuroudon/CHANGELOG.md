@@ -3,7 +3,22 @@
 このプロジェクトに対する注目すべきすべての変更は、このファイルに記録されます。  
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)のフォーマットと、
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)の採番に則り更新されます。  
+
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
+
+## [1.11.0] - 2023/12/22
+
+### Added
+
+- PlayerAudio Master
+  - PlayerAudio Regulator Baseを追加しました。無条件にマッチするタイプのPA Regulatorです。
+  - 全てのPlayer Audio Regulatorに `Channel Unmatch Mode` を追加しました。
+
+### Changed
+
+- asmdefをリネームしました
+- PlayerAudio Master
+  - サンプルのPlayerAudioMaster_PrivateRoom_Sampleプレハブを、PA Regulator Baseを使った形に変更しました。
 
 ## [1.10.2] - 2023/12/11
 
@@ -23,7 +38,7 @@
 
 ## [1.10.0] - 2023/11/21
 
-### Add
+### Added
 
 - PlayerAudio Master
   - サンプルに `PlayerAudioMaster_List_Sample` を追加しました。付属のメニューからリストに入れて1ch～5chを切り替えるサンプルです。
@@ -337,6 +352,7 @@
   - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
   - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.11.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.11.0
 [1.10.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.10.2
 [1.10.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.10.1
 [1.10.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.10.0

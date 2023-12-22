@@ -12,12 +12,21 @@ namespace MimyLab
     //using VRC.Udon;
     //using VRC.SDK3.Components;
 
+    public enum PlayerAudioRegulatorChannelUncmatchMode
+    {
+        None,
+        Fallback,
+        Passthrough
+    }
+
     public class IPlayerAudioRegulator : UdonSharpBehaviour
     {
         [Header("Options")]
         public bool enableChannelMode = false;
         [Min(0)]
         public int channel = 0;
+        public PlayerAudioRegulatorChannelUncmatchMode channelUnmatchMode = default;
+        public IPlayerAudioRegulator unmatchFallback = null;
         [Space]
         public string[] whiteListPlayerName = new string[0];
 
@@ -90,18 +99,16 @@ namespace MimyLab
         {
             if (whiteListPlayerName.Length == 0) { return true; }
 
-            var result = false;
             var targetPlayerName = target.displayName;
             for (int i = 0; i < whiteListPlayerName.Length; i++)
             {
                 if (whiteListPlayerName[i] == targetPlayerName)
                 {
-                    result = true;
-                    break;
+                    return true;
                 }
             }
 
-            return result;
+            return false;
         }
 
         protected virtual bool CheckApplicableInternal(VRCPlayerApi target) { return false; }

@@ -116,7 +116,7 @@ MonoBehaviour:
       Data: 6|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.ManualObjectSync[], com.mimylab.fukuroudon
+      Data: MimyLab.ManualObjectSync[], FukuroUdon
     - Name: 
       Entry: 8
       Data: 

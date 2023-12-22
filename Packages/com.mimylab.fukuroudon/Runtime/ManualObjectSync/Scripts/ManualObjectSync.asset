@@ -314,7 +314,7 @@ MonoBehaviour:
       Data: 19|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.MOSUpdateManager, com.mimylab.fukuroudon
+      Data: MimyLab.MOSUpdateManager, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

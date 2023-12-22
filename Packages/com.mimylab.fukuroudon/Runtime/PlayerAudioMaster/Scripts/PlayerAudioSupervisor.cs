@@ -8,6 +8,7 @@ namespace MimyLab
 {
     using UdonSharp;
     using UnityEngine;
+    using UnityEngine.Analytics;
     using VRC.SDKBase;
     //using VRC.Udon;
     //using VRC.SDK3.Components;
@@ -54,7 +55,6 @@ namespace MimyLab
         // キャッシュ用
         private VRCPlayerApi _localPlayer;
         private VRCPlayerApi[] _players = new VRCPlayerApi[1];
-        private int[] _assignChannel;
 
         private bool _initialized = false;
         private void Initialize()
@@ -81,28 +81,43 @@ namespace MimyLab
             for (int i = 0; i < playerAudioRegulators.Length; i++)
             {
                 if (!playerAudioRegulators[i]) { continue; }
+                if (!playerAudioRegulators[i].CheckApplicable(_players[selecter])) { continue; }
 
-                if (playerAudioRegulators[i].CheckApplicable(_players[selecter]))
+                if (!playerAudioRegulators[i].enableChannelMode)
                 {
-                    if (playerAudioRegulators[i].enableChannelMode)
-                    {
-                        channel = playerAudioRegulators[i].channel.ToString();
-
-                        if (_localPlayer.GetPlayerTag(PlayerAudioChannelTagName) == channel)
-                        {
-                            overrideNumber = i.ToString();
-                            overrideRegulator = playerAudioRegulators[i];
-                        }
-                    }
-                    else
-                    {
-                        overrideNumber = i.ToString();
-                        overrideRegulator = playerAudioRegulators[i];
-                    }
-
+                    overrideNumber = i.ToString();
+                    overrideRegulator = playerAudioRegulators[i];
                     break;
                 }
+                // ここからチャンネル処理
+
+                channel = playerAudioRegulators[i].channel.ToString();
+                if (_players[selecter].isLocal) { break; }
+
+                if (_localPlayer.GetPlayerTag(PlayerAudioChannelTagName) == channel)
+                {
+                    overrideNumber = i.ToString();
+                    overrideRegulator = playerAudioRegulators[i];
+                    break;
+                }
+
+                switch (playerAudioRegulators[i].channelUnmatchMode)
+                {
+                    case PlayerAudioRegulatorChannelUncmatchMode.Fallback:
+                        if (overrideRegulator = playerAudioRegulators[i].unmatchFallback)
+                        {
+                            overrideNumber = i.ToString();
+                        }
+                        break;
+                    case PlayerAudioRegulatorChannelUncmatchMode.Passthrough:
+                        channel = TagIsEmpty;
+                        continue;
+                    default:
+                        break;
+                }
+                break;
             }
+
             if (_players[selecter].GetPlayerTag(PlayerAudioChannelTagName) != channel)
             {
                 _players[selecter].SetPlayerTag(PlayerAudioChannelTagName, channel);
@@ -116,7 +131,6 @@ namespace MimyLab
                 {
                     SetDefaultPlayerVoice(_players[selecter]);
                     SetDefaultAvatarAudio(_players[selecter]);
-
                     return;
                 }
 

@@ -62,7 +62,7 @@ namespace MimyLab
 
             var pos = target.GetPosition();
 
-            return (_collider.ClosestPoint(pos) == pos);
+            return _collider.ClosestPoint(pos) == pos;
         }
     }
 }

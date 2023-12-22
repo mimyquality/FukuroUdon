@@ -62,7 +62,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.SC2SeatAdjuster, com.mimylab.fukuroudon
+      Data: MimyLab.SC2SeatAdjuster, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -137,7 +137,7 @@ MonoBehaviour:
       Data: 9|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.SC2InputManager, com.mimylab.fukuroudon
+      Data: MimyLab.SC2InputManager, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -266,7 +266,7 @@ MonoBehaviour:
       Data: 18|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.SC2Caster, com.mimylab.fukuroudon
+      Data: MimyLab.SC2Caster, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

@@ -245,7 +245,7 @@ MonoBehaviour:
       Data: 14|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.ChairFixMode, com.mimylab.fukuroudon
+      Data: MimyLab.ChairFixMode, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -976,7 +976,7 @@ MonoBehaviour:
       Data: 59|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.SCKeyInputManager, com.mimylab.fukuroudon
+      Data: MimyLab.SCKeyInputManager, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

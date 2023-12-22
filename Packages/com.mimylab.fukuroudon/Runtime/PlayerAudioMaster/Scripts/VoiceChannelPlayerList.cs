@@ -9,8 +9,8 @@ namespace MimyLab
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    using VRC.Udon;
-    using VRC.SDK3.Components;
+    //using VRC.Udon;
+    //using VRC.SDK3.Components;
     using TMPro;
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

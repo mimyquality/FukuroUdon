@@ -62,7 +62,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.PlayerAudioRegulatorList, com.mimylab.fukuroudon
+      Data: MimyLab.PlayerAudioRegulatorList, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -128,7 +128,7 @@ MonoBehaviour:
       Data: 8|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.PlayerAudioRegulatorListControllerSwitchMode, com.mimylab.fukuroudon
+      Data: MimyLab.PlayerAudioRegulatorListControllerSwitchMode, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

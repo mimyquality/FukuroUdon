@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
-  m_Name: IPlayerAudioRegulator
+  m_Name: PlayerAudioRegulatorBase
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 3a389df9d974caf48a13177958737b98,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 87959618ccb4839409f20b4bda431c9f,
     type: 2}
   udonAssembly: 
   assemblyError: 
-  sourceCsScript: {fileID: 11500000, guid: 9608aaad32be4e241845079d5ed83ef1, type: 3}
+  sourceCsScript: {fileID: 11500000, guid: a0c9e495d38e69f4a9c323f8a5cdfd0c, type: 3}
   scriptVersion: 2
   compiledVersion: 2
-  behaviourSyncMode: 0
+  behaviourSyncMode: 1
   hasInteractEvent: 0
-  scriptID: -928000865002268612
+  scriptID: -7793683715313434086
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 

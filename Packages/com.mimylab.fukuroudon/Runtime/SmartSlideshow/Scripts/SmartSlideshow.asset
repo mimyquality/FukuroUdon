@@ -62,7 +62,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.Literature[], com.mimylab.fukuroudon
+      Data: MimyLab.Literature[], FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -137,7 +137,7 @@ MonoBehaviour:
       Data: 9|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.SSs_Controller[], com.mimylab.fukuroudon
+      Data: MimyLab.SSs_Controller[], FukuroUdon
     - Name: 
       Entry: 8
       Data: 

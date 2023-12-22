@@ -53,7 +53,7 @@ namespace MimyLab
             for (int i = 0; i < _targetRegulator.Length; i++)
             {
                 Networking.SetOwner(_localPlayer, _targetRegulator[i].gameObject);
-                if ((i == num))
+                if (i == num)
                 {
                     AssignSelectChannel(i);
                 }

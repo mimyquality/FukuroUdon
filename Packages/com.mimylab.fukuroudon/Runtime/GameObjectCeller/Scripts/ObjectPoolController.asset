@@ -62,7 +62,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.ObjectPoolManager, com.mimylab.fukuroudon
+      Data: MimyLab.ObjectPoolManager, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -128,7 +128,7 @@ MonoBehaviour:
       Data: 8|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.ObjectPoolControllerSwitchType, com.mimylab.fukuroudon
+      Data: MimyLab.ObjectPoolControllerSwitchType, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

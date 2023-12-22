@@ -62,7 +62,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.SwivelChair2, com.mimylab.fukuroudon
+      Data: MimyLab.SwivelChair2, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

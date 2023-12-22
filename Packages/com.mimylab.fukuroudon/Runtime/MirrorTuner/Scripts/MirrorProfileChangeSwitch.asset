@@ -62,7 +62,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.MirrorTuner, com.mimylab.fukuroudon
+      Data: MimyLab.MirrorTuner, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

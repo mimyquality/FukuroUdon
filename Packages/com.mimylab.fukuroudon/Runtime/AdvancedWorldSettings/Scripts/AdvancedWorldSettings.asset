@@ -1732,7 +1732,7 @@ MonoBehaviour:
       Data: 106|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.AdvancedWorldSettingsInitializeEyeHeightType, com.mimylab.fukuroudon
+      Data: MimyLab.AdvancedWorldSettingsInitializeEyeHeightType, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
