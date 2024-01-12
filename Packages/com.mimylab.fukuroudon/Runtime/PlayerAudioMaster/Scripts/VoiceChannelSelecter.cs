@@ -49,7 +49,9 @@ namespace MimyLab
         public void Assign8() { Assign(8); }
         public void Assign9() { Assign(9); }
         public void Assign(int num)
-        {
+        {            
+            Initialize();
+
             for (int i = 0; i < _targetRegulator.Length; i++)
             {
                 Networking.SetOwner(_localPlayer, _targetRegulator[i].gameObject);
@@ -76,6 +78,8 @@ namespace MimyLab
         public void Release9() { Release(9); }
         public void Release(int num)
         {
+            Initialize();
+            
             Networking.SetOwner(_localPlayer, _targetRegulator[num].gameObject);
             ReleaseSelectChannel(num);
         }

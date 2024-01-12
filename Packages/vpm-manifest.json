@@ -37,7 +37,7 @@
       }
     },
     "net.kaikoga.pen": {
-      "version": "1.0.1",
+      "version": "1.0.2",
       "dependencies": {
         "com.vrchat.base": "^3.0.0",
         "com.vrchat.worlds": "^3.0.0"

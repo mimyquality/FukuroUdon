@@ -8,7 +8,6 @@ namespace MimyLab
 {
     using UdonSharp;
     using UnityEngine;
-    using UnityEngine.Analytics;
     using VRC.SDKBase;
     //using VRC.Udon;
     //using VRC.SDK3.Components;

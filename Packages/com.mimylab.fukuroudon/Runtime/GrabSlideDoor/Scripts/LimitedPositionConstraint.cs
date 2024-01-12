@@ -11,7 +11,7 @@ namespace MimyLab
     //using VRC.SDKBase;
     //using VRC.Udon;
 
-    [AddComponentMenu("Fukuro Udon/Limited Constraint/Position")]
+    [AddComponentMenu("Fukuro Udon/Limited Constraint/Limited Position Constraint")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class LimitedPositionConstraint : UdonSharpBehaviour
     {

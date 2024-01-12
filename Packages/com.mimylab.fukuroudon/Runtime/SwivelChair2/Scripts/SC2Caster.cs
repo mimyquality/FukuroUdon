@@ -12,7 +12,7 @@ namespace MimyLab
     //using VRC.Udon;
     using VRC.SDK3.Components;
 
-    [AddComponentMenu("Fukuro Udon/Swivel Chair 2/Caster")]
+    [AddComponentMenu("Fukuro Udon/Swivel Chair 2/SC2 Caster")]
     [RequireComponent(typeof(VRCObjectSync))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Continuous)]
     public class SC2Caster : UdonSharpBehaviour

@@ -11,7 +11,7 @@ namespace MimyLab
     //using VRC.SDKBase;
     //using VRC.Udon;
 
-    [AddComponentMenu("Fukuro Udon/Limited Constraint/LookAt")]
+    [AddComponentMenu("Fukuro Udon/Limited Constraint/Limited LookAt Constraint")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class LimitedLookConstraint : UdonSharpBehaviour
     {

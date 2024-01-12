@@ -13,7 +13,7 @@ namespace MimyLab
     //using VRC.SDK3.Components;
     using VRCStation = VRC.SDK3.Components.VRCStation;
 
-    [AddComponentMenu("Fukuro Udon/Swivel Chair 2/Seat Adjuster")]
+    [AddComponentMenu("Fukuro Udon/Swivel Chair 2/SC2 Seat Adjuster")]
     [RequireComponent(typeof(VRCStation))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class SC2SeatAdjuster : UdonSharpBehaviour

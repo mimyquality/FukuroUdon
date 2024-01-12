@@ -19,7 +19,7 @@ namespace MimyLab
         ReleaseAll
     }
 
-    [AddComponentMenu("Fukuro Udon/PlayerAudio Master/List Controller")]
+    [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PAR List Controller")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PARListController : UdonSharpBehaviour
     {

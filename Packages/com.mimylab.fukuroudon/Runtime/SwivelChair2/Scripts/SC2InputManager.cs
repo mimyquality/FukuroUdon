@@ -13,7 +13,7 @@ namespace MimyLab
     using VRC.Udon.Common;
     //using VRC.SDK3.Components;
 
-    [AddComponentMenu("Fukuro Udon/Swivel Chair 2/Input Manager")]
+    [AddComponentMenu("Fukuro Udon/Swivel Chair 2/SC2 Input Manager")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
     public class SC2InputManager : UdonSharpBehaviour
     {

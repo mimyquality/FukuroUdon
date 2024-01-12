@@ -58,11 +58,14 @@ namespace MimyLab
         private void Update()
         {
             var target = Time.frameCount % HardCap;
-            if (!Utilities.IsValid(_players[target])) { return; }
+            if (!Utilities.IsValid(_players[target]))
+            {
+                _playersNameSlot[target].SetActive(false);
+                return;
+            }
 
             var channelTag = _players[target].GetPlayerTag(PlayerAudioSupervisor.PlayerAudioChannelTagName);
-            int channel;
-            if (int.TryParse(channelTag, out channel))
+            if (int.TryParse(channelTag, out int channel))
             {
                 SetPlayerNameSlot(target, channel);
             }
@@ -90,6 +93,13 @@ namespace MimyLab
         private void RefreshPlayers()
         {
             VRCPlayerApi.GetPlayers(_players);
+            bool valid;
+            for (int i = 0; i < _players.Length; i++)
+            {
+                valid = Utilities.IsValid(_players[i]);
+                _playersNameText[i].text = valid ? _players[i].displayName : "";
+                _playersNameSlot[i].SetActive(valid);
+            }
         }
 
         private void SetPlayerNameSlot(int target, int channel)
@@ -98,7 +108,6 @@ namespace MimyLab
             {
                 if (_channelList[i] == channel)
                 {
-                    _playersNameText[target].text = _players[target].displayName;
                     _playersNameSlotTf[target].SetParent(_channelSlot[i], false);
                     _playersNameSlot[target].SetActive(true);
                     return;

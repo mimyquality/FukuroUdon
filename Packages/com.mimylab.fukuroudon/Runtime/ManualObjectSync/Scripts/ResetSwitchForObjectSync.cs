@@ -19,7 +19,7 @@ namespace MimyLab
         public GameObject[] resetObjects;
 
         [SerializeField]
-        [Min(0.0f)]
+        [Min(0.0f), Tooltip("sec")]
         private float _interval = 5.0f;
 
         private float _lastResetTime;

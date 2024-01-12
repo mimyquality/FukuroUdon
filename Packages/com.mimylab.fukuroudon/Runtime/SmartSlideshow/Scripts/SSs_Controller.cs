@@ -13,7 +13,7 @@ namespace MimyLab
     //using VRC.Udon;
     using TMPro;
 
-    [AddComponentMenu("Fukuro Udon/Smart Slideshow/Controller")]
+    [AddComponentMenu("Fukuro Udon/Smart Slideshow/SSs Controller")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class SSs_Controller : UdonSharpBehaviour
     {
