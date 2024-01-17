@@ -427,6 +427,11 @@ namespace MimyLab
 
         public void Respawn()
         {
+            SetPositionAndRotation(_startPosition, _startRotation);
+        }
+
+        public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
+        {
             Initialize();
 
             if (Networking.IsOwner(this.gameObject))
@@ -439,16 +444,16 @@ namespace MimyLab
                 {
                     _rigidbody.velocity = Vector3.zero;
                     _rigidbody.angularVelocity = Vector3.zero;
-                    _rigidbody.position = _startPosition;
-                    _rigidbody.rotation = _startRotation;
+                    _rigidbody.position = position;
+                    _rigidbody.rotation = rotation;
                 }
                 else
                 {
-                    _transform.SetPositionAndRotation(_startPosition, _startRotation);
+                    _transform.SetPositionAndRotation(position, rotation);
                 }
 
-                _syncPosition = _startPosition;
-                _syncRotation = _startRotation;
+                _syncPosition = position;
+                _syncRotation = rotation;
                 _localPosition = _transform.localPosition;
                 _localRotation = _transform.localRotation;
 
