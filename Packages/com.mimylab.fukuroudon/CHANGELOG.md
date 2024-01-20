@@ -6,6 +6,13 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.11.2] - 2024/1/21
+
+### Fixed
+
+- PlayerAudio Master
+  - まだ `PlayerAudioMaster_List_Sample` のプレイヤー退室バグが残っていたのを修正しました。
+
 ## [1.11.1] - 2024/1/12
 
 ### Fixed
@@ -360,6 +367,7 @@
   - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
   - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.11.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.11.2
 [1.11.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.11.1
 [1.11.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.11.0
 [1.10.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.10.2

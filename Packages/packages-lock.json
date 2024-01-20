@@ -235,9 +235,7 @@
       "version": "file:net.ureishi.qvpen",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {
-        "com.unity.textmeshpro": "^2.1.4"
-      }
+      "dependencies": {}
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

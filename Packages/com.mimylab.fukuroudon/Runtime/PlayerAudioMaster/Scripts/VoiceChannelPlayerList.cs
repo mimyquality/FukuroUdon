@@ -92,7 +92,7 @@ namespace MimyLab
 
         private void RefreshPlayers()
         {
-            VRCPlayerApi.GetPlayers(_players);
+            _players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[HardCap]);
             bool valid;
             for (int i = 0; i < _players.Length; i++)
             {
