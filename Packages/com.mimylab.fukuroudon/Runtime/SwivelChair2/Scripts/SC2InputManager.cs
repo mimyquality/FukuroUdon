@@ -34,7 +34,7 @@ namespace MimyLab
         private Rigidbody _casterRigidbody;
         private Animator[] _tooltipAnimator;
         private SwivelChairPlayerPlatform _platform = default;
-        private SwivelChairInputMode _inputMode = default;
+        private SwivelChairInputMode _inputMode = SwivelChairInputMode.Vertical;
         private float _turnValue, _prevTurnValue;
         private Vector3 _moveValue, _prevMoveValue;
         private bool _isJump;
@@ -43,9 +43,8 @@ namespace MimyLab
 
         // Tooltipアニメーター用
         private int _param_OnStationEnter = Animator.StringToHash("OnStationEnter");
-        private int _param_OnModeVertical = Animator.StringToHash("OnModeVertical");
-        private int _param_OnModeHorizontal = Animator.StringToHash("OnModeHorizontal");
-        private int _param_OnModeCasterMove = Animator.StringToHash("OnModeCasterMove");
+        private int _param_OnModeChange = Animator.StringToHash("OnModeChange");
+        private int _param_InputMode = Animator.StringToHash("InputMode");
 
         private bool _initialized = false;
         private void Initialize()
@@ -62,7 +61,7 @@ namespace MimyLab
             _tooltipAnimator = new Animator[_tooltip.Length];
             for (int i = 0; i < _tooltip.Length; i++)
             {
-                _tooltipAnimator[i] = (_tooltip[i]) ? _tooltip[i].GetComponentInChildren<Animator>(true) : null;
+                _tooltipAnimator[i] = _tooltip[i] ? _tooltip[i].GetComponentInChildren<Animator>(true) : null;
             }
 
             _initialized = true;
@@ -199,6 +198,8 @@ namespace MimyLab
 
         public override void InputLookHorizontal(float value, UdonInputEventArgs args)
         {
+            if (_inputMode == SwivelChairInputMode.Disable) { return; }
+
             if (_platform == SwivelChairPlayerPlatform.PCVR
              || _platform == SwivelChairPlayerPlatform.Quest)
             {
@@ -224,16 +225,17 @@ namespace MimyLab
 
             _inputDoubleJumpInterval = 0.0f;
 
-            var tmpInputMode = SwivelChairInputMode.Vertical;
+            var tmpInputMode = (SwivelChairInputMode)default;
             switch (_inputMode)
             {
+                case SwivelChairInputMode.Disable: tmpInputMode = SwivelChairInputMode.Vertical; break;
                 case SwivelChairInputMode.Vertical: tmpInputMode = SwivelChairInputMode.Horizontal; break;
                 case SwivelChairInputMode.Horizontal: tmpInputMode = SwivelChairInputMode.CasterMove; break;
-                case SwivelChairInputMode.CasterMove: tmpInputMode = SwivelChairInputMode.Vertical; break;
+                case SwivelChairInputMode.CasterMove: tmpInputMode = SwivelChairInputMode.Disable; break;
             }
             if (tmpInputMode == SwivelChairInputMode.CasterMove && !caster)
             {
-                tmpInputMode = SwivelChairInputMode.Vertical;
+                tmpInputMode = SwivelChairInputMode.Disable;
             }
             // 無効なモードがあればFix
 
@@ -253,12 +255,8 @@ namespace MimyLab
 
         private void ChangeInputMode(SwivelChairInputMode mode)
         {
-            switch (mode)
-            {
-                case SwivelChairInputMode.Vertical: _tooltipAnimator[(int)_platform].SetTrigger(_param_OnModeVertical); break;
-                case SwivelChairInputMode.Horizontal: _tooltipAnimator[(int)_platform].SetTrigger(_param_OnModeHorizontal); break;
-                case SwivelChairInputMode.CasterMove: _tooltipAnimator[(int)_platform].SetTrigger(_param_OnModeCasterMove); break;
-            }
+            _tooltipAnimator[(int)_platform].SetTrigger(_param_OnModeChange);
+            _tooltipAnimator[(int)_platform].SetInteger(_param_InputMode, (int)mode);
         }
     }
 }

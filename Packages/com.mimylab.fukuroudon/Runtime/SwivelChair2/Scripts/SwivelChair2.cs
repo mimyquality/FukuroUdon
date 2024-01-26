@@ -22,6 +22,7 @@ namespace MimyLab
 
     public enum SwivelChairInputMode
     {
+        Disable,
         Vertical,
         Horizontal,
         CasterMove
