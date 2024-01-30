@@ -275,6 +275,7 @@ namespace MimyLab
             else
             {
                 _syncHasChanged = true;
+                _updateManager.EnablePostLateUpdate(this);
             }
 
             _initialized = true;
@@ -363,7 +364,7 @@ namespace MimyLab
             // Ownerに物理演算書き戻し
             if (_rigidbody)
             {
-                _rigidbody.isKinematic = (player.isLocal) ? IsKinematic : true;
+                _rigidbody.isKinematic = player.isLocal ? IsKinematic : true;
             }
         }
 
@@ -484,8 +485,8 @@ namespace MimyLab
             _equipBone = (byte)targetBone;
             var bonePosition = _localPlayer.GetBonePosition(targetBone);
             var boneRotation = _localPlayer.GetBoneRotation(targetBone);
-            _syncPosition = (bonePosition.Equals(Vector3.zero)) ? Vector3.zero : Quaternion.Inverse(boneRotation) * (_transform.position - bonePosition);
-            _syncRotation = (boneRotation.Equals(Quaternion.identity)) ? Quaternion.identity : (Quaternion.Inverse(boneRotation) * _transform.rotation);
+            _syncPosition = bonePosition.Equals(Vector3.zero) ? Vector3.zero : Quaternion.Inverse(boneRotation) * (_transform.position - bonePosition);
+            _syncRotation = boneRotation.Equals(Quaternion.identity) ? Quaternion.identity : (Quaternion.Inverse(boneRotation) * _transform.rotation);
 
             RequestSerialization();
         }
@@ -594,8 +595,8 @@ namespace MimyLab
             var handPosition = _localPlayer.GetBonePosition(pickupHandBone);
             var handRotation = _localPlayer.GetBoneRotation(pickupHandBone);
 
-            var offsetPosition = (handPosition.Equals(Vector3.zero)) ? Vector3.zero : Quaternion.Inverse(handRotation) * (_rigidbody.position - handPosition);
-            var offsetRotation = (handRotation.Equals(Quaternion.identity)) ? Quaternion.identity : (Quaternion.Inverse(handRotation) * _rigidbody.rotation);
+            var offsetPosition = handPosition.Equals(Vector3.zero) ? Vector3.zero : Quaternion.Inverse(handRotation) * (_rigidbody.position - handPosition);
+            var offsetRotation = handRotation.Equals(Quaternion.identity) ? Quaternion.identity : (Quaternion.Inverse(handRotation) * _rigidbody.rotation);
 
             if (offsetPosition != _syncPosition
              || offsetRotation != _syncRotation)

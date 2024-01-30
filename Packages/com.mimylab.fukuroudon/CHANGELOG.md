@@ -6,6 +6,13 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.12.1] - 2024/1/30
+
+### Fixed
+
+- Manual ObjectSync
+  - 初期状態が非アクティブまたはVRCObjectPoolなどでアクティブ状態を管理している場合に、later-joinerに初期位置が同期しないのを修正しました。
+
 ## [1.12.0] - 2024/1/26
 
 ### Changed
@@ -374,6 +381,7 @@
   - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
   - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.12.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.12.1
 [1.12.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.12.0
 [1.11.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.11.2
 [1.11.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.11.1
