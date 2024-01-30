@@ -287,6 +287,11 @@ namespace MimyLab
             UseGravity = UseGravity;
             IsKinematic = IsKinematic;
             Pickupable = Pickupable;
+        }
+
+        private void OnEnable()
+        {
+            Initialize();
 
             if (Networking.IsOwner(this.gameObject) && !_reservedInterval)
             {
