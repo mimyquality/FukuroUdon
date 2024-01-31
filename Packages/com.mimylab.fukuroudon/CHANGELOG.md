@@ -6,14 +6,7 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
-## [1.12.2] - 2024/1/30
-
-### Fixed
-
-- Manual ObjectSync
-  - 同期の確実性を向上させました。
-
-## [1.12.1] - 2024/1/30
+## [1.12.3] - 2024/1/31
 
 ### Fixed
 
@@ -28,13 +21,6 @@
   - Input ModeにDisableを追加しました。これに合わせてTooltipのAnimatorに渡すパラメーターを変更しました。
 
 ## [1.11.2] - 2024/1/21
-
-### Fixed
-
-- PlayerAudio Master
-  - まだ `PlayerAudioMaster_List_Sample` のプレイヤー退室バグが残っていたのを修正しました。
-
-## [1.11.1] - 2024/1/12
 
 ### Fixed
 
@@ -388,11 +374,9 @@
   - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
   - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
-[1.12.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.12.2
-[1.12.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.12.1
+[1.12.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.12.3
 [1.12.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.12.0
 [1.11.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.11.2
-[1.11.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.11.1
 [1.11.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.11.0
 [1.10.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.10.2
 [1.10.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.10.1

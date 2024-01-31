@@ -287,16 +287,18 @@ namespace MimyLab
             UseGravity = UseGravity;
             IsKinematic = IsKinematic;
             Pickupable = Pickupable;
-        }
 
-        private void OnEnable()
-        {
-            Initialize();
-
-            if (Networking.IsOwner(this.gameObject) && !_reservedInterval)
+            if (Networking.IsOwner(this.gameObject))
             {
-                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), _firstCheckTiming);
+                if (_reservedInterval) { return; }
+
                 _reservedInterval = true;
+                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), _firstCheckTiming);
+            }
+            else
+            {
+                // 初期非アクティブからのアクティブ化だと発火しないバグ対策
+                OnDeserialization();
             }
         }
 
@@ -308,13 +310,10 @@ namespace MimyLab
 
             if (Networking.IsOwner(this.gameObject))
             {
-                _updateManager.DisablePostLateUpdate(this);
-
-                if (PickupOffsetCheck()) { return; }
-
-                TransformMoveCheck();
-
-                return;
+                if (!PickupOffsetCheck())
+                {
+                    TransformMoveCheck();
+                }
             }
             else
             {
@@ -333,8 +332,8 @@ namespace MimyLab
             if (Networking.IsOwner(this.gameObject))
             {
                 _updateManager.EnablePostLateUpdate(this);
-                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), moveCheckTickRate);
                 _reservedInterval = true;
+                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), moveCheckTickRate);
             }
         }
 
@@ -344,8 +343,8 @@ namespace MimyLab
 
             if (player.isLocal && !_reservedInterval)
             {
-                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), _firstCheckTiming);
                 _reservedInterval = true;
+                SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), _firstCheckTiming);
             }
 
             if (_pickup)

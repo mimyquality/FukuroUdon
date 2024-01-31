@@ -60,11 +60,15 @@ namespace MimyLab
         public override void PostLateUpdate()
         {
             var pauseUpdate = true;
-            for (int i = 0; i < _mosList.Length; i++)
+            foreach (var mos in _mosList)
             {
-                if (_mosList[i])
+                if (mos)
                 {
-                    _mosList[i]._OnPostLateUpdate();
+                    if (mos.enabled && mos.gameObject.activeInHierarchy)
+                    {
+                        mos._OnPostLateUpdate();
+                    }
+
                     pauseUpdate = false;
                 }
             }
