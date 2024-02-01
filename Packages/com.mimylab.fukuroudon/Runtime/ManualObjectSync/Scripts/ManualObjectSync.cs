@@ -20,6 +20,7 @@ namespace MimyLab
     using UnityEditor.Experimental.SceneManagement;
 #endif
     using UdonSharpEditor;
+    using UnityEngine.UIElements;
 #endif
 
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Manual ObjectSync")]
@@ -114,6 +115,7 @@ namespace MimyLab
                 _isEquiped = value;
                 if (value)
                 {
+                    _equipPlayerId = _ownerPlayer.playerId;
                     _isAttached = false;
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
                     _updateManager.EnablePostLateUpdate(this);
@@ -178,6 +180,7 @@ namespace MimyLab
         Rigidbody _rigidbody = null;
         VRCPickup _pickup = null;
         VRCPlayerApi _localPlayer, _ownerPlayer;
+        int _equipPlayerId;
         int _firstCheckTiming;
         bool _reservedInterval = false;
         bool _syncHasChanged = false;
@@ -243,6 +246,7 @@ namespace MimyLab
             _rigidbody = GetComponent<Rigidbody>();
             _pickup = GetComponent<VRCPickup>();
             _localPlayer = Networking.LocalPlayer;
+            _ownerPlayer = Networking.GetOwner(this.gameObject);
 
             _startPosition = _transform.position;
             _startRotation = _transform.rotation;
@@ -341,6 +345,9 @@ namespace MimyLab
         {
             Initialize();
 
+            _ownerPlayer = player;
+            _equipPlayerId = player.playerId;
+
             if (player.isLocal && !_reservedInterval)
             {
                 _reservedInterval = true;
@@ -381,28 +388,15 @@ namespace MimyLab
             _updateManager.EnablePostLateUpdate(this);
         }
 
-        // OnOwnershipTransferred()が発火しないバグが修正されたため、この処理は不要になった
-        /* public override void OnPlayerLeft(VRCPlayerApi player)
+        public override void OnPlayerLeft(VRCPlayerApi player)
         {
             Initialize();
 
-            if (_pickup)
+            if (player.playerId == _equipPlayerId)
             {
-                if (Networking.IsOwner(this.gameObject))
-                {
-                    // Pickup抱えたまま落ちたかもしれないのでピックアップ状況更新
-                    _isHeld = _pickup.IsHeld;
-                    _pickup.pickupable = Pickupable;
-                    RequestSerialization();
-                }
+                IsEquiped = false;
             }
-
-            // Ownerが落ちたかもしれないので改めて物理演算更新
-            if (_rigidbody)
-            {
-                _rigidbody.isKinematic = (Networking.IsOwner(this.gameObject)) ? IsKinematic : true;
-            }
-        } */
+        }
 
         // VRCPickupとRigidbodyがある
         public override void OnPickup()
@@ -618,8 +612,6 @@ namespace MimyLab
         private bool HoldingOther()
         {
             if (!_isHeld) { return _isHeld; }
-
-            _ownerPlayer = Networking.GetOwner(this.gameObject);
             if (!Utilities.IsValid(_ownerPlayer)) { return _isHeld; }
 
             var pickupHandBone = (_equipBone == (byte)HumanBodyBones.LeftHand) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
@@ -646,8 +638,6 @@ namespace MimyLab
         private bool EquipBone()
         {
             if (!_isEquiped) { return _isEquiped; }
-
-            _ownerPlayer = Networking.GetOwner(this.gameObject);
             if (!Utilities.IsValid(_ownerPlayer)) { return _isEquiped; }
 
             var bonePosition = _ownerPlayer.GetBonePosition((HumanBodyBones)_equipBone);

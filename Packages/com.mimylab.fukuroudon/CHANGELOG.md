@@ -6,12 +6,17 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.12.4] - 2024/2/1
+
+- Manual ObjectSync
+  - オブジェクトをEquipしたプレイヤーがEquipしたまま退室した時にEquipが外れるようにしました。 #9
+
 ## [1.12.3] - 2024/1/31
 
 ### Fixed
 
 - Manual ObjectSync
-  - 初期状態が非アクティブまたはVRCObjectPoolなどでアクティブ状態を管理している場合に、later-joinerに初期位置が同期しないのを修正しました。
+  - 初期状態が非アクティブまたはVRCObjectPoolなどでアクティブ状態を管理している場合に、later-joinerに初期位置が同期しないのを修正しました。 #8
 
 ## [1.12.0] - 2024/1/26
 
@@ -374,6 +379,7 @@
   - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
   - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.12.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.12.4
 [1.12.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.12.3
 [1.12.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.12.0
 [1.11.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.11.2
@@ -399,6 +405,7 @@
 [1.6.6]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.6
 [1.6.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.5
 [1.6.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.4
+[1.6.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.1
 [1.6.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.6.0
 [1.5.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.5.2
 [1.5.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.5.0
