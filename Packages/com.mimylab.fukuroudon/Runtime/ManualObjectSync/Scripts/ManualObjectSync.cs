@@ -115,7 +115,6 @@ namespace MimyLab
                 _isEquiped = value;
                 if (value)
                 {
-                    _equipPlayerId = _ownerPlayer.playerId;
                     _isAttached = false;
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
                     _updateManager.EnablePostLateUpdate(this);
@@ -180,7 +179,6 @@ namespace MimyLab
         Rigidbody _rigidbody = null;
         VRCPickup _pickup = null;
         VRCPlayerApi _localPlayer, _ownerPlayer;
-        int _equipPlayerId;
         int _firstCheckTiming;
         bool _reservedInterval = false;
         bool _syncHasChanged = false;
@@ -346,7 +344,6 @@ namespace MimyLab
             Initialize();
 
             _ownerPlayer = player;
-            _equipPlayerId = player.playerId;
 
             if (player.isLocal && !_reservedInterval)
             {
@@ -392,9 +389,12 @@ namespace MimyLab
         {
             Initialize();
 
-            if (player.playerId == _equipPlayerId)
+            if (IsEquiped)
             {
-                IsEquiped = false;
+                if (player.playerId == _ownerPlayer.playerId)
+                {
+                    IsEquiped = false;
+                }
             }
         }
 
