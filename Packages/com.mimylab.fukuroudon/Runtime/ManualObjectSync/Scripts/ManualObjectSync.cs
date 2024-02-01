@@ -274,11 +274,6 @@ namespace MimyLab
                 _syncRotation = _startRotation;
                 _syncScale = _startScale;
             }
-            else
-            {
-                _syncHasChanged = true;
-                _updateManager.EnablePostLateUpdate(this);
-            }
 
             _initialized = true;
         }
