@@ -21,6 +21,7 @@ namespace MimyLab
 #endif
     using UdonSharpEditor;
     using UnityEngine.UIElements;
+    using Mono.Cecil;
 #endif
 
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Manual ObjectSync")]
@@ -253,6 +254,7 @@ namespace MimyLab
             _localRotation = _transform.localRotation;
             _localScale = _transform.localScale;
 
+            moveCheckTickRate = Mathf.Max(moveCheckTickRate, 2);
             _firstCheckTiming = moveCheckTickRate + GetInstanceID() % moveCheckTickRate;
 
             if (_rigidbody)
@@ -346,6 +348,9 @@ namespace MimyLab
                 SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), _firstCheckTiming);
             }
 
+            // Ownerだった人が落ちた対策に、いったん強制解除
+            if (_isEquiped) { IsEquiped = false; }
+
             if (_pickup)
             {
                 if (player.isLocal)
@@ -354,7 +359,6 @@ namespace MimyLab
                     if (!_pickup.IsHeld)
                     {
                         IsHeld = false;
-                        RequestSerialization();
                     }
                 }
                 else
@@ -380,19 +384,6 @@ namespace MimyLab
             _updateManager.EnablePostLateUpdate(this);
         }
 
-        public override void OnPlayerLeft(VRCPlayerApi player)
-        {
-            Initialize();
-
-            if (IsEquiped)
-            {
-                if (player.playerId == _ownerPlayer.playerId)
-                {
-                    IsEquiped = false;
-                }
-            }
-        }
-
         // VRCPickupとRigidbodyがある
         public override void OnPickup()
         {
@@ -400,8 +391,6 @@ namespace MimyLab
             IsHeld = true;
 
             PickupOffsetCheck();
-
-            RequestSerialization();
         }
 
         // VRCPickupとRigidbodyがある
@@ -576,7 +565,7 @@ namespace MimyLab
         // _isHeldならVRCPickupとRigidbodyが付いている
         private bool PickupOffsetCheck()
         {
-            if (!_isHeld) { return _isHeld; }
+            if (!_isHeld) { return false; }
 
             var pickupHandBone = (_pickup.currentHand == VRCPickup.PickupHand.Left) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
             if (_equipBone != (byte)pickupHandBone)
@@ -600,14 +589,14 @@ namespace MimyLab
                 RequestSerialization();
             }
 
-            return _isHeld;
+            return true;
         }
 
         // _isHeldならVRCPickupとRigidbodyが付いている
         private bool HoldingOther()
         {
-            if (!_isHeld) { return _isHeld; }
-            if (!Utilities.IsValid(_ownerPlayer)) { return _isHeld; }
+            if (!_isHeld) { return false; }
+            if (!Utilities.IsValid(_ownerPlayer)) { return true; }
 
             var pickupHandBone = (_equipBone == (byte)HumanBodyBones.LeftHand) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
             var handPosition = _ownerPlayer.GetBonePosition(pickupHandBone);
@@ -627,13 +616,13 @@ namespace MimyLab
                 _rigidbody.MoveRotation(handRotation * _syncRotation);
             }
 
-            return _isHeld;
+            return true;
         }
 
         private bool EquipBone()
         {
-            if (!_isEquiped) { return _isEquiped; }
-            if (!Utilities.IsValid(_ownerPlayer)) { return _isEquiped; }
+            if (!_isEquiped) { return false; }
+            if (!Utilities.IsValid(_ownerPlayer)) { return true; }
 
             var bonePosition = _ownerPlayer.GetBonePosition((HumanBodyBones)_equipBone);
             var boneRotation = _ownerPlayer.GetBoneRotation((HumanBodyBones)_equipBone);
@@ -645,17 +634,17 @@ namespace MimyLab
             _transform.SetPositionAndRotation(equipPosition, equipRotation);
             _syncHasChanged = false;
 
-            return _isEquiped;
+            return true;
         }
 
         private bool AttachToTransform()
         {
-            if (!_isAttached) { return _isAttached; }
+            if (!_isAttached) { return false; }
 
             _transform.SetPositionAndRotation(attachPoint.position, attachPoint.rotation);
             _syncHasChanged = false;
 
-            return _isAttached;
+            return true;
         }
     }
 }

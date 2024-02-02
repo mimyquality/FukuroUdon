@@ -149,16 +149,10 @@ namespace MimyLab
             for (int i = 0; i < _pool.Length; i++)
             {
                 resultObject = _objectPool.TryToSpawn();
-                if (resultObject)
-                {
-                    _lastSpawnedObject = resultObject;
-                    spawnObjects[spawnCount] = resultObject;
-                    spawnCount++;
-                }
-                else
-                {
-                    break;
-                }
+                if (!resultObject) { break; }
+
+                _lastSpawnedObject = resultObject;
+                spawnObjects[spawnCount++] = resultObject;
             }
 
             // スポーンしたオブジェクトだけの配列を作る(色々と使えないので原始的にやる)
