@@ -9,7 +9,9 @@
 ## [1.13.1] - 2024/2/11
 
 - **Fixed**
-  - Autor NameのTypo修正
+  - パッケージのAutor NameのTypo修正
+  - PlayerAudio Master
+    - 一斉にJoinされると機能しないことがある不具合を修正しました。
 
 ## [1.13.0] - 2024/2/2
 

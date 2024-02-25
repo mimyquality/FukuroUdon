@@ -54,7 +54,7 @@
       "dependencies": {}
     },
     "com.mimylab.penoptimizationutility": {
-      "version": "1.0.1",
+      "version": "1.0.2",
       "dependencies": {
         "com.vrchat.worlds": "^3.4.2",
         "net.ureishi.qvpen": "^3.2.6"

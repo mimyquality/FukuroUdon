@@ -16,6 +16,7 @@ namespace MimyLab
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerAudioSupervisor : UdonSharpBehaviour
     {
+        public const int HardCap = 90;
         public const string PlayerAudioChannelTagName = "PlayerAudioChannel";
         public const string PlayerAudioOverrideTagName = "PlayerAudioOverride";
 
@@ -53,7 +54,7 @@ namespace MimyLab
 
         // キャッシュ用
         private VRCPlayerApi _localPlayer;
-        private VRCPlayerApi[] _players = new VRCPlayerApi[1];
+        private VRCPlayerApi[] _players = new VRCPlayerApi[HardCap];
 
         private bool _initialized = false;
         private void Initialize()
@@ -71,8 +72,8 @@ namespace MimyLab
 
         private void Update()
         {
-            var selecter = Time.frameCount % Mathf.Max(_players.Length, 1);
-            if (!Utilities.IsValid(_players[selecter])) { return; }
+            var selecter = _players[Time.frameCount % HardCap];
+            if (!Utilities.IsValid(selecter)) { return; }
 
             var channel = TagIsEmpty;
             var overrideNumber = TagIsEmpty;
@@ -80,7 +81,7 @@ namespace MimyLab
             for (int i = 0; i < playerAudioRegulators.Length; i++)
             {
                 if (!playerAudioRegulators[i]) { continue; }
-                if (!playerAudioRegulators[i].CheckApplicable(_players[selecter])) { continue; }
+                if (!playerAudioRegulators[i].CheckApplicable(selecter)) { continue; }
 
                 if (!playerAudioRegulators[i].enableChannelMode)
                 {
@@ -91,7 +92,7 @@ namespace MimyLab
                 // ここからチャンネル処理
 
                 channel = playerAudioRegulators[i].channel.ToString();
-                if (_players[selecter].isLocal) { break; }
+                if (selecter.isLocal) { break; }
 
                 if (_localPlayer.GetPlayerTag(PlayerAudioChannelTagName) == channel)
                 {
@@ -117,30 +118,30 @@ namespace MimyLab
                 break;
             }
 
-            if (_players[selecter].GetPlayerTag(PlayerAudioChannelTagName) != channel)
+            if (selecter.GetPlayerTag(PlayerAudioChannelTagName) != channel)
             {
-                _players[selecter].SetPlayerTag(PlayerAudioChannelTagName, channel);
+                selecter.SetPlayerTag(PlayerAudioChannelTagName, channel);
             }
 
-            if (_players[selecter].GetPlayerTag(PlayerAudioOverrideTagName) != overrideNumber)
+            if (selecter.GetPlayerTag(PlayerAudioOverrideTagName) != overrideNumber)
             {
-                _players[selecter].SetPlayerTag(PlayerAudioOverrideTagName, overrideNumber);
+                selecter.SetPlayerTag(PlayerAudioOverrideTagName, overrideNumber);
 
                 if (overrideNumber == TagIsEmpty)
                 {
-                    SetDefaultPlayerVoice(_players[selecter]);
-                    SetDefaultAvatarAudio(_players[selecter]);
+                    SetDefaultPlayerVoice(selecter);
+                    SetDefaultAvatarAudio(selecter);
                     return;
                 }
 
-                if (!overrideRegulator.OverridePlayerVoice(_players[selecter]))
+                if (!overrideRegulator.OverridePlayerVoice(selecter))
                 {
-                    SetDefaultPlayerVoice(_players[selecter]);
+                    SetDefaultPlayerVoice(selecter);
                 }
 
-                if (!overrideRegulator.OverrideAvatarAudio(_players[selecter]))
+                if (!overrideRegulator.OverrideAvatarAudio(selecter))
                 {
-                    SetDefaultAvatarAudio(_players[selecter]);
+                    SetDefaultAvatarAudio(selecter);
                 }
             }
         }
@@ -154,20 +155,18 @@ namespace MimyLab
             SetDefaultPlayerVoice(player);
             SetDefaultAvatarAudio(player);
 
-            if (player.playerId >= _localPlayer.playerId)
-            {
-                VRCPlayerApi.GetPlayers(_players = new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()]);
-            }
+            VRCPlayerApi.GetPlayers(_players);
         }
-
+        // プレイヤー保持配列の数を固定化したので不要
+        /* 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
             Initialize();
 
             var playerCount = Mathf.Max(VRCPlayerApi.GetPlayerCount(), 1);
-            VRCPlayerApi.GetPlayers(_players = new VRCPlayerApi[playerCount]);
+            _players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[playerCount]);
         }
-
+         */
         private void SetDefaultPlayerVoice(VRCPlayerApi selectPlayer)
         {
             selectPlayer.SetVoiceGain(defaultVoiceGain);
