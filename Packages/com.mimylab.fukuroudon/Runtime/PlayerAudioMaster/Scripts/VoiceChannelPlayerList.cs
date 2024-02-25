@@ -16,8 +16,6 @@ namespace MimyLab
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class VoiceChannelPlayerList : UdonSharpBehaviour
     {
-        private const int HardCap = 90;
-
         [SerializeField]
         private GameObject _playerPrefab;
         [SerializeField]
@@ -26,10 +24,10 @@ namespace MimyLab
         private int[] _channelList;
 
         private VRCPlayerApi _localPlayer;
-        private VRCPlayerApi[] _players = new VRCPlayerApi[HardCap];
-        private GameObject[] _playersNameSlot = new GameObject[HardCap];
-        private Transform[] _playersNameSlotTf = new Transform[HardCap];
-        private TextMeshProUGUI[] _playersNameText = new TextMeshProUGUI[HardCap];
+        private VRCPlayerApi[] _players = new VRCPlayerApi[PlayerAudioSupervisor.HardCap];
+        private GameObject[] _playersNameSlot = new GameObject[PlayerAudioSupervisor.HardCap];
+        private Transform[] _playersNameSlotTf = new Transform[PlayerAudioSupervisor.HardCap];
+        private TextMeshProUGUI[] _playersNameText = new TextMeshProUGUI[PlayerAudioSupervisor.HardCap];
 
         private bool _initialized = false;
         private void Initialize()
@@ -57,7 +55,7 @@ namespace MimyLab
 
         private void Update()
         {
-            var target = Time.frameCount % HardCap;
+            var target = Time.frameCount % PlayerAudioSupervisor.HardCap;
             if (!Utilities.IsValid(_players[target]))
             {
                 _playersNameSlot[target].SetActive(false);
@@ -92,7 +90,7 @@ namespace MimyLab
 
         private void RefreshPlayers()
         {
-            _players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[HardCap]);
+            _players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[PlayerAudioSupervisor.HardCap]);
             bool valid;
             for (int i = 0; i < _players.Length; i++)
             {

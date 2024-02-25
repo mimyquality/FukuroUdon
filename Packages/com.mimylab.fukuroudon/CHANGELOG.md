@@ -6,7 +6,7 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
-## [1.13.1] - 2024/2/11
+## [1.13.2] - 2024/2/25
 
 - **Fixed**
   - パッケージのAutor NameのTypo修正
@@ -342,7 +342,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
-[1.13.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.13.1
+[1.13.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.13.2
 [1.13.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.13.0
 [1.12.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.12.4
 [1.12.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.12.3

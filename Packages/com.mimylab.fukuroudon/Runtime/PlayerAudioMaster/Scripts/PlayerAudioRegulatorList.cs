@@ -16,37 +16,12 @@ namespace MimyLab
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class PlayerAudioRegulatorList : IPlayerAudioRegulator
     {
-        private const int HardCap = 90;
-
         [UdonSynced]
-        private int[] _playerIDList = new int[HardCap];
-
-        private VRCPlayerApi _localPlayer;
-        private bool _initialized = false;
-        private void Initialize()
-        {
-            if (_initialized) { return; }
-
-            _localPlayer = Networking.LocalPlayer;
-
-            _initialized = true;
-        }
-        private void Start()
-        {
-            Initialize();
-        }
-
-        public override void OnPlayerJoined(VRCPlayerApi player)
-        {
-            if (player.playerId < _localPlayer.playerId) { return; }
-            if (!_localPlayer.IsOwner(this.gameObject)) { return; }
-
-            RefreshPlayerList();
-        }
+        private int[] _playerIDList = new int[PlayerAudioSupervisor.HardCap];
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
-            if (!_localPlayer.IsOwner(this.gameObject)) { return; }
+            if (!Networking.IsOwner(this.gameObject)) { return; }
 
             RefreshPlayerList();
         }
@@ -56,9 +31,7 @@ namespace MimyLab
         /// </summary>
         public bool AssignPlayer(VRCPlayerApi target)
         {
-            Initialize();
-
-            if (!_localPlayer.IsOwner(this.gameObject)) { return false; }
+            if (!Networking.IsOwner(this.gameObject)) { return false; }
 
             var playerID = target.playerId;
             for (int i = 0; i < _playerIDList.Length; i++)
@@ -67,15 +40,14 @@ namespace MimyLab
             }
             for (int j = 0; j < _playerIDList.Length; j++)
             {
-                if (_playerIDList[j] <= 0)
-                {
-                    _playerIDList[j] = playerID;
-                    RequestSerialization();
+                if (_playerIDList[j] > 0) { continue; }
 
-                    return true;
-                }
+                _playerIDList[j] = playerID;
+                RequestSerialization();
+
+                return true;
             }
-            
+
             return false;
         }
 
@@ -84,9 +56,7 @@ namespace MimyLab
         /// </summary>
         public void ReleasePlayer(VRCPlayerApi target)
         {
-            Initialize();
-
-            if (!_localPlayer.IsOwner(this.gameObject)) { return; }
+            if (!Networking.IsOwner(this.gameObject)) { return; }
 
             var playerID = target.playerId;
             for (int i = 0; i < _playerIDList.Length; i++)
@@ -104,11 +74,9 @@ namespace MimyLab
         /// </summary>
         public void ReleaseAllPlayer()
         {
-            Initialize();
+            if (!Networking.IsOwner(this.gameObject)) { return; }
 
-            if (!_localPlayer.IsOwner(this.gameObject)) { return; }
-
-            _playerIDList = new int[HardCap];
+            _playerIDList = new int[PlayerAudioSupervisor.HardCap];
             RequestSerialization();
         }
 
@@ -124,9 +92,8 @@ namespace MimyLab
 
         private void RefreshPlayerList()
         {
-            var players = new VRCPlayerApi[HardCap];
-            VRCPlayerApi.GetPlayers(players);
-            var tmpPlayerIDList = new int[HardCap];
+            var players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[PlayerAudioSupervisor.HardCap]);
+            var tmpPlayerIDList = new int[PlayerAudioSupervisor.HardCap];
             int tmpPlayerID;
             for (int i = 0; i < players.Length; i++)
             {
