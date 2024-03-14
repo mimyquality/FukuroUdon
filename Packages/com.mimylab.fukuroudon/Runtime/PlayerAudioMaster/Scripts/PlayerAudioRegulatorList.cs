@@ -21,8 +21,6 @@ namespace MimyLab
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
-            if (!Networking.IsOwner(this.gameObject)) { return; }
-
             RefreshPlayerList();
         }
 

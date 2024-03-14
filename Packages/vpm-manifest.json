@@ -1,41 +1,25 @@
 {
   "dependencies": {
-    "com.vrchat.core.vpm-resolver": {
-      "version": "0.1.17"
-    },
-    "dev.onevr.vrworldtoolkit": {
-      "version": "2.1.4"
-    },
-    "net.ureishi.qvpen": {
-      "version": "3.2.6"
-    },
     "net.kaikoga.pen": {
       "version": "1.0.0"
     },
-    "com.vrchat.worlds": {
-      "version": "3.5.0"
-    },
     "com.mimylab.penoptimizationutility": {
       "version": "1.0.0"
+    },
+    "com.vrchat.core.vpm-resolver": {
+      "version": "0.1.28"
+    },
+    "com.vrchat.worlds": {
+      "version": "3.5.1"
+    },
+    "dev.onevr.vrworldtoolkit": {
+      "version": "3.0.1"
+    },
+    "net.ureishi.qvpen": {
+      "version": "3.2.12"
     }
   },
   "locked": {
-    "com.vrchat.core.vpm-resolver": {
-      "version": "0.1.27",
-      "dependencies": {}
-    },
-    "dev.onevr.vrworldtoolkit": {
-      "version": "2.1.5",
-      "dependencies": {
-        "com.vrchat.base": "^3.2.x"
-      }
-    },
-    "net.ureishi.qvpen": {
-      "version": "3.2.11",
-      "dependencies": {
-        "com.vrchat.worlds": "^3.4.0"
-      }
-    },
     "net.kaikoga.pen": {
       "version": "1.0.2",
       "dependencies": {
@@ -43,21 +27,35 @@
         "com.vrchat.worlds": "^3.0.0"
       }
     },
-    "com.vrchat.worlds": {
-      "version": "3.5.0",
-      "dependencies": {
-        "com.vrchat.base": "3.5.0"
-      }
-    },
-    "com.vrchat.base": {
-      "version": "3.5.0",
-      "dependencies": {}
-    },
     "com.mimylab.penoptimizationutility": {
       "version": "1.0.2",
       "dependencies": {
         "com.vrchat.worlds": "^3.4.2",
         "net.ureishi.qvpen": "^3.2.6"
+      }
+    },
+    "com.vrchat.core.vpm-resolver": {
+      "version": "0.1.28",
+      "dependencies": {}
+    },
+    "com.vrchat.worlds": {
+      "version": "3.5.1",
+      "dependencies": {
+        "com.vrchat.base": "3.5.1"
+      }
+    },
+    "com.vrchat.base": {
+      "version": "3.5.1",
+      "dependencies": {}
+    },
+    "dev.onevr.vrworldtoolkit": {
+      "version": "3.0.1",
+      "dependencies": {}
+    },
+    "net.ureishi.qvpen": {
+      "version": "3.2.12",
+      "dependencies": {
+        "com.vrchat.worlds": "^3.4.0"
       }
     }
   }

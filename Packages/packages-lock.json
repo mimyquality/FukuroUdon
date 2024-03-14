@@ -117,7 +117,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {
-      "version": "3.0.6",
+      "version": "3.0.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -187,7 +187,8 @@
         "com.unity.mathematics": "1.2.6",
         "com.unity.nuget.newtonsoft-json": "3.2.1",
         "com.unity.xr.management": "4.3.3",
-        "com.unity.xr.oculus": "4.0.0"
+        "com.unity.xr.oculus": "4.0.0",
+        "com.unity.postprocessing": "3.2.2"
       }
     },
     "com.vrchat.core.bootstrap": {
@@ -212,7 +213,6 @@
       "source": "embedded",
       "dependencies": {
         "com.unity.cinemachine": "2.9.7",
-        "com.unity.postprocessing": "3.2.2",
         "com.unity.textmeshpro": "3.0.6",
         "com.unity.inputsystem": "1.2.0"
       }

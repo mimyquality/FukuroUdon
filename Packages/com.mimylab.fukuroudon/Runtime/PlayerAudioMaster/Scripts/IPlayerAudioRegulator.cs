@@ -14,7 +14,7 @@ namespace MimyLab
 
     public enum PlayerAudioRegulatorChannelUncmatchMode
     {
-        None,
+        Default,
         Fallback,
         Passthrough
     }

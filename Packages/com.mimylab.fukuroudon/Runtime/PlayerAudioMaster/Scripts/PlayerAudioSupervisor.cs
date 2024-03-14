@@ -106,7 +106,7 @@ namespace MimyLab
                     case PlayerAudioRegulatorChannelUncmatchMode.Fallback:
                         if (overrideRegulator = playerAudioRegulators[i].unmatchFallback)
                         {
-                            overrideNumber = i.ToString();
+                            overrideNumber = i.ToString() + "fb";
                         }
                         break;
                     case PlayerAudioRegulatorChannelUncmatchMode.Passthrough:
