@@ -9,10 +9,10 @@ namespace MimyLab
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    using VRC.Udon;
-    using VRC.SDK3.Components;
+    //using VRC.Udon;
+    //using VRC.SDK3.Components;
 
-    [AddComponentMenu("Fukuro Udon/VR Follow HUD/LocalPlayer Tracking Tracker")]
+    [AddComponentMenu("Fukuro Udon/General/LocalPlayer Tracking Tracker")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class LocalPlayerTrackingTracker : UdonSharpBehaviour
     {
@@ -35,8 +35,8 @@ namespace MimyLab
                 _isVR = _lPlayer.IsUserInVR();
 
                 // 初期位置にリセット
-                var selfPos = (enablePosition) ? _lPlayer.GetTrackingData(trackingPoint).position : _selfTransform.position;
-                var selfRot = (enableRotation) ? _lPlayer.GetTrackingData(trackingPoint).rotation : _selfTransform.rotation;
+                var selfPos = enablePosition ? _lPlayer.GetTrackingData(trackingPoint).position : _selfTransform.position;
+                var selfRot = enableRotation ? _lPlayer.GetTrackingData(trackingPoint).rotation : _selfTransform.rotation;
                 _selfTransform.SetPositionAndRotation(selfPos, selfRot);
             }
         }
@@ -46,8 +46,8 @@ namespace MimyLab
             if (!enablePosition & !enableRotation) { return; }
             if (!Utilities.IsValid(_lPlayer)) { return; }
 
-            var selfPos = (enablePosition) ? GetTrackingPosition(trackingPoint) : _selfTransform.position;
-            var selfRot = (enableRotation) ? GetTrackingRotation(trackingPoint) : _selfTransform.rotation;
+            var selfPos = enablePosition ? GetTrackingPosition(trackingPoint) : _selfTransform.position;
+            var selfRot = enableRotation ? GetTrackingRotation(trackingPoint) : _selfTransform.rotation;
             _selfTransform.SetPositionAndRotation(selfPos, selfRot);
         }
 

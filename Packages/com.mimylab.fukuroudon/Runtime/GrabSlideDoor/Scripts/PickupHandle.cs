@@ -12,7 +12,7 @@ namespace MimyLab
     using VRC.SDK3.Components;
     using VRC.Udon;
 
-    [AddComponentMenu("Fukuro Udon/Pickup Handle")]
+    [AddComponentMenu("Fukuro Udon/General/Pickup Handle")]
     [RequireComponent(typeof(VRCPickup))]
     public class PickupHandle : UdonSharpBehaviour
     {

@@ -19,7 +19,11 @@ MonoBehaviour:
     width: 3072
     height: 1636.8
   m_ShowMode: 4
+<<<<<<< HEAD
   m_Title: VRChat SDK
+=======
+  m_Title: Inspector
+>>>>>>> AmbientSoundAssistant
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +123,11 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
+<<<<<<< HEAD
   controlID: 197
+=======
+  controlID: 196
+>>>>>>> AmbientSoundAssistant
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -313,7 +321,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+<<<<<<< HEAD
   m_Name: VRCSdkControlPanel
+=======
+  m_Name: InspectorWindow
+>>>>>>> AmbientSoundAssistant
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -322,6 +334,7 @@ MonoBehaviour:
     y: 0
     width: 521.6001
     height: 1586.8
+<<<<<<< HEAD
   m_MinSize: {x: 517, y: 621}
   m_MaxSize: {x: 517, y: 2021}
   m_ActualView: {fileID: 23}
@@ -330,6 +343,16 @@ MonoBehaviour:
   - {fileID: 23}
   m_Selected: 1
   m_LastSelected: 0
+=======
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 22}
+  m_Panes:
+  - {fileID: 22}
+  - {fileID: 23}
+  m_Selected: 0
+  m_LastSelected: 1
+>>>>>>> AmbientSoundAssistant
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -370,7 +393,11 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
+<<<<<<< HEAD
       m_ExpandedIDs: ca28ffff2229ffffee8cffffd4faffff
+=======
+      m_ExpandedIDs: befaffff
+>>>>>>> AmbientSoundAssistant
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1048,7 +1075,11 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
+<<<<<<< HEAD
     - Packages/com.mimylab.fukuroudon/Runtime/GameObjectCeller/Prefabs
+=======
+    - Packages/com.mimylab.fukuroudon/Runtime/AmbientSoundAssistant/Prefabs
+>>>>>>> AmbientSoundAssistant
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1056,16 +1087,27 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
+<<<<<<< HEAD
   - Packages/com.mimylab.fukuroudon/Runtime/GameObjectCeller/Prefabs
+=======
+  - Packages/com.mimylab.fukuroudon/Runtime/AmbientSoundAssistant/Prefabs
+>>>>>>> AmbientSoundAssistant
   m_LastFoldersGridSize: 96
   m_LastProjectPath: D:\VRChatProject\FukuroUdon
   m_LockTracker:
     m_IsLocked: 1
   m_FolderTreeState:
+<<<<<<< HEAD
     scrollPos: {x: 0, y: 223}
     m_SelectedIDs: 161c0100
     m_LastClickedID: 72726
     m_ExpandedIDs: 00000000da1b0100dc1b0100de1b0100e01b0100e21b0100e41b0100e61b0100e81b0100ea1b0100ec1b0100ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100ffffff7f
+=======
+    scrollPos: {x: 0, y: 159}
+    m_SelectedIDs: 2c1c0100
+    m_LastClickedID: 72748
+    m_ExpandedIDs: 00000000ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c01000c1c01000e1c0100101c0100121c0100141c0100161c0100181c0100ffffff7f
+>>>>>>> AmbientSoundAssistant
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1093,7 +1135,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000da1b0100dc1b0100de1b0100e01b0100e21b0100e41b0100e61b0100e81b0100ea1b0100ec1b0100ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100
+=======
+    m_ExpandedIDs: 00000000ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c01000c1c01000e1c0100101c0100121c0100141c0100161c0100181c0100
+>>>>>>> AmbientSoundAssistant
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1268,7 +1314,11 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
+<<<<<<< HEAD
     - Assets/Scenes
+=======
+    - Assets/MimyLab
+>>>>>>> AmbientSoundAssistant
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1276,16 +1326,26 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
+<<<<<<< HEAD
   - Assets/Scenes
+=======
+  - Assets/MimyLab
+>>>>>>> AmbientSoundAssistant
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\VRChatProject\FukuroUdon
   m_LockTracker:
     m_IsLocked: 1
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: f61b0100
     m_LastClickedID: 72694
     m_ExpandedIDs: 00000000485d0000da1b0100dc1b0100de1b0100e01b0100e21b0100e41b0100e61b0100e81b0100ea1b0100ec1b0100ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100ffffff7f
+=======
+    m_SelectedIDs: ee1b0100
+    m_LastClickedID: 72686
+    m_ExpandedIDs: 00000000525d0000ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c01000c1c01000e1c0100101c0100121c0100141c0100161c0100181c0100ffffff7f
+>>>>>>> AmbientSoundAssistant
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1313,7 +1373,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000da1b0100dc1b0100de1b0100e01b0100e21b0100e41b0100e61b0100e81b0100ea1b0100ec1b0100ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100
+=======
+    m_ExpandedIDs: 00000000ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c01000c1c01000e1c0100101c0100121c0100141c0100161c0100181c0100
+>>>>>>> AmbientSoundAssistant
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

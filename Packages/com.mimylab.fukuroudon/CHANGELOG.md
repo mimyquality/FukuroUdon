@@ -6,6 +6,14 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.14.0] - 2024/3/21
+
+- **Added**
+  - [Ambient Sound Assistant](https://github.com/mimyquality/FukuroUdon/wiki/Ambient-Sound-Assistant)を追加
+
+- **Fixed**
+  - AddComponentMenuを整理しました。
+
 ## [1.13.3] - 2024/3/14
 
 - **Fixed**
@@ -349,6 +357,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.14.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.14.0
 [1.13.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.13.3
 [1.13.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.13.2
 [1.13.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.13.0

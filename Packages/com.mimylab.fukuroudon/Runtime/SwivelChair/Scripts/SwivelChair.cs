@@ -24,7 +24,7 @@ namespace MimyLab
         Vertical     // 2:座高(上下)
     }
 
-    [AddComponentMenu("Fukuro Udon/Swivel Chair")]
+    [AddComponentMenu("Fukuro Udon/Swivel Chair/Swivel Chair")]
     [RequireComponent(typeof(SCKeyInputManager), typeof(VRCStation))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class SwivelChair : UdonSharpBehaviour

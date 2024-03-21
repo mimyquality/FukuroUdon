@@ -11,7 +11,7 @@ namespace MimyLab
     using VRC.SDKBase;
     using VRC.Udon;
 
-    [AddComponentMenu("Fukuro Udon/Ambient Sound Assistant/ViewPoint Tracker")]
+    [AddComponentMenu("Fukuro Udon/General/ViewPoint Tracker")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ViewPointTracker : UdonSharpBehaviour
     {
