@@ -20,9 +20,17 @@ MonoBehaviour:
     height: 1636.8
   m_ShowMode: 4
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_Title: VRChat SDK
 =======
   m_Title: Inspector
+>>>>>>> AmbientSoundAssistant
+=======
+<<<<<<< Updated upstream
+  m_Title: Inspector
+=======
+  m_Title: Hierarchy 4
+>>>>>>> Stashed changes
 >>>>>>> AmbientSoundAssistant
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
@@ -124,9 +132,17 @@ MonoBehaviour:
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   controlID: 197
 =======
   controlID: 196
+>>>>>>> AmbientSoundAssistant
+=======
+<<<<<<< Updated upstream
+  controlID: 196
+=======
+  controlID: 27
+>>>>>>> Stashed changes
 >>>>>>> AmbientSoundAssistant
 --- !u!114 &6
 MonoBehaviour:
@@ -391,12 +407,21 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
+<<<<<<< Updated upstream
       m_SelectedIDs: 
       m_LastClickedID: 0
 <<<<<<< HEAD
       m_ExpandedIDs: ca28ffff2229ffffee8cffffd4faffff
 =======
       m_ExpandedIDs: befaffff
+<<<<<<< HEAD
+>>>>>>> AmbientSoundAssistant
+=======
+=======
+      m_SelectedIDs: 3a91ffff
+      m_LastClickedID: -28358
+      m_ExpandedIDs: 3e91ffffd4faffff
+>>>>>>> Stashed changes
 >>>>>>> AmbientSoundAssistant
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -413,7 +438,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 8}
+        m_ClientGUIView: {fileID: 9}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -486,7 +511,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 24.666666}
+      snapOffset: {x: 0, y: 24.8}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-scene-view-toolbar
@@ -778,9 +803,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -5.7695003, y: 0.613956, z: 6.1244287}
+    m_Target: {x: 0.5774131, y: 0.71265596, z: -0.7635459}
     speed: 2
-    m_Value: {x: -5.7695003, y: 0.613956, z: 6.1244287}
+    m_Value: {x: 0.5774131, y: 0.71265596, z: -0.7635459}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -826,13 +851,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.064596675, y: -0.07179201, z: 0.0046602753, w: 0.99532235}
+    m_Target: {x: 0.14440627, y: -0.29354435, z: 0.044909015, w: 0.9439159}
     speed: 2
-    m_Value: {x: -0.064596675, y: 0.071792014, z: -0.0046602758, w: -0.9953224}
+    m_Value: {x: 0.14440516, y: -0.2935421, z: 0.04490867, w: 0.9439086}
   m_Size:
-    m_Target: 2.3783982
+    m_Target: 1.1047513
     speed: 2
-    m_Value: 2.3783982
+    m_Value: 1.1047513
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1076,9 +1101,17 @@ MonoBehaviour:
     m_SearchArea: 1
     m_Folders:
 <<<<<<< HEAD
+<<<<<<< HEAD
     - Packages/com.mimylab.fukuroudon/Runtime/GameObjectCeller/Prefabs
 =======
     - Packages/com.mimylab.fukuroudon/Runtime/AmbientSoundAssistant/Prefabs
+>>>>>>> AmbientSoundAssistant
+=======
+<<<<<<< Updated upstream
+    - Packages/com.mimylab.fukuroudon/Runtime/AmbientSoundAssistant/Prefabs
+=======
+    - Packages/com.mimylab.fukuroudon/Samples/AmbientSoundAssistant
+>>>>>>> Stashed changes
 >>>>>>> AmbientSoundAssistant
     m_Globs: []
     m_OriginalText: 
@@ -1088,9 +1121,17 @@ MonoBehaviour:
   m_StartGridSize: 96
   m_LastFolders:
 <<<<<<< HEAD
+<<<<<<< HEAD
   - Packages/com.mimylab.fukuroudon/Runtime/GameObjectCeller/Prefabs
 =======
   - Packages/com.mimylab.fukuroudon/Runtime/AmbientSoundAssistant/Prefabs
+>>>>>>> AmbientSoundAssistant
+=======
+<<<<<<< Updated upstream
+  - Packages/com.mimylab.fukuroudon/Runtime/AmbientSoundAssistant/Prefabs
+=======
+  - Packages/com.mimylab.fukuroudon/Samples/AmbientSoundAssistant
+>>>>>>> Stashed changes
 >>>>>>> AmbientSoundAssistant
   m_LastFoldersGridSize: 96
   m_LastProjectPath: D:\VRChatProject\FukuroUdon
@@ -1098,15 +1139,28 @@ MonoBehaviour:
     m_IsLocked: 1
   m_FolderTreeState:
 <<<<<<< HEAD
+<<<<<<< HEAD
     scrollPos: {x: 0, y: 223}
     m_SelectedIDs: 161c0100
     m_LastClickedID: 72726
     m_ExpandedIDs: 00000000da1b0100dc1b0100de1b0100e01b0100e21b0100e41b0100e61b0100e81b0100ea1b0100ec1b0100ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100ffffff7f
 =======
+=======
+<<<<<<< Updated upstream
+>>>>>>> AmbientSoundAssistant
     scrollPos: {x: 0, y: 159}
     m_SelectedIDs: 2c1c0100
     m_LastClickedID: 72748
     m_ExpandedIDs: 00000000ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c01000c1c01000e1c0100101c0100121c0100141c0100161c0100181c0100ffffff7f
+<<<<<<< HEAD
+>>>>>>> AmbientSoundAssistant
+=======
+=======
+    scrollPos: {x: 0, y: 143}
+    m_SelectedIDs: 461c0100
+    m_LastClickedID: 72774
+    m_ExpandedIDs: 00000000dc1b0100de1b0100e01b0100e21b0100e41b0100e61b0100e81b0100ea1b0100ec1b0100ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c0100ffffff7f
+>>>>>>> Stashed changes
 >>>>>>> AmbientSoundAssistant
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1136,9 +1190,17 @@ MonoBehaviour:
     m_SelectedIDs: 
     m_LastClickedID: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000da1b0100dc1b0100de1b0100e01b0100e21b0100e41b0100e61b0100e81b0100ea1b0100ec1b0100ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100
 =======
     m_ExpandedIDs: 00000000ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c01000c1c01000e1c0100101c0100121c0100141c0100161c0100181c0100
+>>>>>>> AmbientSoundAssistant
+=======
+<<<<<<< Updated upstream
+    m_ExpandedIDs: 00000000ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c01000c1c01000e1c0100101c0100121c0100141c0100161c0100181c0100
+=======
+    m_ExpandedIDs: 00000000dc1b0100de1b0100e01b0100e21b0100e41b0100e61b0100e81b0100ea1b0100ec1b0100ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c0100
+>>>>>>> Stashed changes
 >>>>>>> AmbientSoundAssistant
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1166,7 +1228,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1232,7 +1294,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 26390
+  m_LastSelectedObjectID: 184708
 --- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1315,9 +1377,17 @@ MonoBehaviour:
     m_SearchArea: 1
     m_Folders:
 <<<<<<< HEAD
+<<<<<<< HEAD
     - Assets/Scenes
 =======
     - Assets/MimyLab
+>>>>>>> AmbientSoundAssistant
+=======
+<<<<<<< Updated upstream
+    - Assets/MimyLab
+=======
+    - Packages/com.mimylab.fukuroudon/Runtime/AmbientSoundAssistant/Scripts
+>>>>>>> Stashed changes
 >>>>>>> AmbientSoundAssistant
     m_Globs: []
     m_OriginalText: 
@@ -1327,15 +1397,24 @@ MonoBehaviour:
   m_StartGridSize: 16
   m_LastFolders:
 <<<<<<< HEAD
+<<<<<<< HEAD
   - Assets/Scenes
 =======
   - Assets/MimyLab
 >>>>>>> AmbientSoundAssistant
+=======
+<<<<<<< Updated upstream
+  - Assets/MimyLab
+=======
+  - Packages/com.mimylab.fukuroudon/Runtime/AmbientSoundAssistant/Scripts
+>>>>>>> Stashed changes
+>>>>>>> AmbientSoundAssistant
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\VRChatProject\FukuroUdon
   m_LockTracker:
-    m_IsLocked: 1
+    m_IsLocked: 0
   m_FolderTreeState:
+<<<<<<< Updated upstream
     scrollPos: {x: 0, y: 0}
 <<<<<<< HEAD
     m_SelectedIDs: f61b0100
@@ -1345,6 +1424,15 @@ MonoBehaviour:
     m_SelectedIDs: ee1b0100
     m_LastClickedID: 72686
     m_ExpandedIDs: 00000000525d0000ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c01000c1c01000e1c0100101c0100121c0100141c0100161c0100181c0100ffffff7f
+<<<<<<< HEAD
+>>>>>>> AmbientSoundAssistant
+=======
+=======
+    scrollPos: {x: 0, y: 143}
+    m_SelectedIDs: 201c0100
+    m_LastClickedID: 72736
+    m_ExpandedIDs: 00000000dc1b0100de1b0100e01b0100e21b0100e41b0100e61b0100e81b0100ea1b0100ec1b0100ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c0100ffffff7f
+>>>>>>> Stashed changes
 >>>>>>> AmbientSoundAssistant
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1374,9 +1462,17 @@ MonoBehaviour:
     m_SelectedIDs: 
     m_LastClickedID: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000da1b0100dc1b0100de1b0100e01b0100e21b0100e41b0100e61b0100e81b0100ea1b0100ec1b0100ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100
 =======
     m_ExpandedIDs: 00000000ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c01000c1c01000e1c0100101c0100121c0100141c0100161c0100181c0100
+>>>>>>> AmbientSoundAssistant
+=======
+<<<<<<< Updated upstream
+    m_ExpandedIDs: 00000000ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c01000c1c01000e1c0100101c0100121c0100141c0100161c0100181c0100
+=======
+    m_ExpandedIDs: 00000000dc1b0100de1b0100e01b0100e21b0100e41b0100e61b0100e81b0100ea1b0100ec1b0100ee1b0100f01b0100f21b0100f41b0100f61b0100f81b0100fa1b0100fc1b0100fe1b0100001c0100021c0100041c0100061c0100081c01000a1c0100
+>>>>>>> Stashed changes
 >>>>>>> AmbientSoundAssistant
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1404,7 +1500,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 
     m_RenameOverlay:
       m_UserAcceptedRename: 0
