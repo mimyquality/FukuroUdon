@@ -7,10 +7,8 @@ https://opensource.org/licenses/mit-license.php
 namespace MimyLab
 {
     using UdonSharp;
-    using UnityEditor.EditorTools;
-
     using UnityEngine;
-    using VRC.SDKBase;
+    //using VRC.SDKBase;
     //using VRC.Udon;
 
     [AddComponentMenu("Fukuro Udon/Ambient Sound Assistant/Flexible Spatial Audio")]
