@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: MirrorTuner
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: fad4242047e3c29468719407603e1ede,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: fad4242047e3c29468719407603e1ede, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: f8e777043c926dc48af2b90e28e55f6a, type: 3}

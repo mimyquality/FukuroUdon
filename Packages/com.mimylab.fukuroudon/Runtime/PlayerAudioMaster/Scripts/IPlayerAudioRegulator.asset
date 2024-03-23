@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: IPlayerAudioRegulator
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 3a389df9d974caf48a13177958737b98,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 3a389df9d974caf48a13177958737b98, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: 9608aaad32be4e241845079d5ed83ef1, type: 3}

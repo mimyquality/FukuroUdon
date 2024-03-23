@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: PARListController
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 7e01378528c0151459eced3f355fdc99,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 7e01378528c0151459eced3f355fdc99, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: 99983b22bf4c4ff49b28c8732fc918dd, type: 3}

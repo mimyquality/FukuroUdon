@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: PARSwitchController
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: e0041725a77c08648a8acf641c05af86,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: e0041725a77c08648a8acf641c05af86, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: 1d121625248056844a1da06d1b7fd42a, type: 3}

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: SC2SeatAdjuster
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 5959a82b47d8f524db2679f2c5a5eaf2,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 5959a82b47d8f524db2679f2c5a5eaf2, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: 29594cc077786a1489f7c7509ced6419, type: 3}
