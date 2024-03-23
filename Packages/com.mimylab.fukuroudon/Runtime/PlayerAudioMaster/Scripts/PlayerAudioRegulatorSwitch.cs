@@ -101,7 +101,7 @@ namespace MimyLab
 
         protected override bool CheckApplicableInternal(VRCPlayerApi target)
         {
-            return (target.playerId == _assignedPlayerID);
+            return target.playerId == _assignedPlayerID;
         }
     }
 }

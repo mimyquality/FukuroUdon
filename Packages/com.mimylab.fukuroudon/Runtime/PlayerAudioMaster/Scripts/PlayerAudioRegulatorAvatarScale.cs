@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2023 Mimy Quality
+Copyright (c) 2024 Mimy Quality
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
@@ -10,15 +10,16 @@ namespace MimyLab
     using UnityEngine;
     using VRC.SDKBase;
     using VRC.Udon;
+    //using VRC.SDK3.Components;
 
     public class PlayerAudioRegulatorAvatarScale : IPlayerAudioRegulator
     {
-        [SerializeField, Tooltip("meter")]
+        [SerializeField, Min(0.1f), Tooltip("meter")]
         private float _baseEyeHeight = 1.6f;
 
-        [SerializeField, Range(-1.0f, 1.0f)]
+        [SerializeField, Range(0.0f, 1.0f)]
         private float _underScaleMultiplier = 0.0f;
-        [SerializeField, Range(-1.0f, 1.0f)]
+        [SerializeField, Range(0.0f, 5.0f)]
         private float _overScaleMultiplier = 1.0f;
 
         private float _baseVoiceGain;
@@ -53,7 +54,18 @@ namespace MimyLab
         {
             Initialize();
 
-            
+            var targetScale = target.GetAvatarEyeHeightAsMeters() / _baseEyeHeight;
+            var multiply = (targetScale < 1.0f ? 1f - _underScaleMultiplier : _overScaleMultiplier) * targetScale;
+
+            voiceGain = Mathf.Clamp(multiply * _baseVoiceGain, 0f, 24f);
+            voiceDistanceNear = Mathf.Clamp(multiply * _baseVoiceDistanceNear, 0f, 999999.9f);
+            voiceDistanceFar = Mathf.Clamp(multiply * _baseVoiceDistanceFar, 0f, 999999.9f);
+            voiceVolumetricRadius = Mathf.Clamp(multiply * _baseVoiceVolumetricRadius, 0f, 1000f);
+
+            avatarAudioGain = Mathf.Clamp(multiply * _baseAvatarAudioGain, 0f, 10f);
+            avatarAudioDistanceNear = Mathf.Max(multiply * _baseAvatarAudioDistanceNear, 0f);
+            avatarAudioDistanceFar = Mathf.Max(multiply * _baseAvatarAudioDistanceFar, 0f);
+            avatarAudioVolumetricRadius = Mathf.Max(multiply * _baseAvatarAudioVolumetricRadius, 0f);
 
             return false;
         }
