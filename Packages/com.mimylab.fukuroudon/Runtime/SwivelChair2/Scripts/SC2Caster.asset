@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: SC2Caster
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: e3b3ebedf9628ef4896f614697cfbc0c,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: e3b3ebedf9628ef4896f614697cfbc0c, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: ea5c565c384d9954e9fdfdbfe37b1b5f, type: 3}

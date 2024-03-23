@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: IViewPointReceiver
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 2572d976951cc184da8110c35adef5da,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 2572d976951cc184da8110c35adef5da, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: 6b4a83aa9782eab4eab6d7904444cfa9, type: 3}

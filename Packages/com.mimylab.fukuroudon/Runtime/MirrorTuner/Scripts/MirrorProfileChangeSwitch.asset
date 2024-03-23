@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: MirrorProfileChangeSwitch
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: ec05a8f4cbc4892408831009aa79dcb5,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: ec05a8f4cbc4892408831009aa79dcb5, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: 31f3840ad6611b04fa38b42e390edc09, type: 3}

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: FlexibleSpatialAudio
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 8fa32759195e9ac48b39b624a0aec4fc,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 8fa32759195e9ac48b39b624a0aec4fc, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: 1cde93459aa155d4ebb1e0980e8913d1, type: 3}

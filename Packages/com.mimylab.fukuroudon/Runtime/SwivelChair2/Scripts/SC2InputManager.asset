@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: SC2InputManager
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: d003ca10a7ef2024789287785939a38f,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: d003ca10a7ef2024789287785939a38f, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: 8f5bb6e3a997a244d8d9203fcde76f32, type: 3}

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: AdvancedWorldSettings
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 11bce350d763cd047aaca91623b55b11,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 11bce350d763cd047aaca91623b55b11, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: 000606caafd1d214fb7e140e24335db8, type: 3}
