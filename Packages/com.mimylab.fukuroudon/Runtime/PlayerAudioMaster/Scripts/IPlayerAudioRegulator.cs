@@ -59,6 +59,8 @@ namespace MimyLab
         public bool avatarAudioForceSpatial = false;
         public bool avatarAudioCustomCurve = false;
 
+        public virtual bool NeedRealtimeOverride { get => false; }
+
         public bool CheckApplicable(VRCPlayerApi target)
         {
             if (!enabled || !gameObject.activeInHierarchy) { return false; }
@@ -95,7 +97,7 @@ namespace MimyLab
 
             return enableAvatarAudioOverride;
         }
-
+        
         protected bool EligiblePlayer(VRCPlayerApi target)
         {
             if (whiteListPlayerName.Length == 0) { return true; }

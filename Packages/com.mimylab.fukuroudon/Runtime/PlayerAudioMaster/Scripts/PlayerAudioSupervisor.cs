@@ -123,10 +123,15 @@ namespace MimyLab
                 selecter.SetPlayerTag(PlayerAudioChannelTagName, channel);
             }
 
+            var executeOverride = overrideRegulator && overrideRegulator.NeedRealtimeOverride;
             if (selecter.GetPlayerTag(PlayerAudioOverrideTagName) != overrideNumber)
             {
                 selecter.SetPlayerTag(PlayerAudioOverrideTagName, overrideNumber);
+                executeOverride = true;
+            }
 
+            if (executeOverride)
+            {
                 if (overrideNumber == TagIsEmpty)
                 {
                     SetDefaultPlayerVoice(selecter);

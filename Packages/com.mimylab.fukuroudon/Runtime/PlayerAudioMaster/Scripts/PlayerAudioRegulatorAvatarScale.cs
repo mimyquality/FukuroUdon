@@ -12,6 +12,8 @@ namespace MimyLab
     using VRC.Udon;
     //using VRC.SDK3.Components;
 
+    [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator AvatarScale")]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerAudioRegulatorAvatarScale : IPlayerAudioRegulator
     {
         [SerializeField, Min(0.1f), Tooltip("meter")]
@@ -31,6 +33,8 @@ namespace MimyLab
         private float _baseAvatarAudioDistanceNear;
         private float _baseAvatarAudioDistanceFar;
         private float _baseAvatarAudioVolumetricRadius;
+
+        public override bool NeedRealtimeOverride { get => true; }
 
         private bool _initialized = false;
         private void Initialize()
@@ -55,7 +59,10 @@ namespace MimyLab
             Initialize();
 
             var targetScale = target.GetAvatarEyeHeightAsMeters() / _baseEyeHeight;
-            var multiply = (targetScale < 1.0f ? 1f - _underScaleMultiplier : _overScaleMultiplier) * targetScale;
+            var multiply = targetScale < 1.0f ? 1f - _underScaleMultiplier * (1 - targetScale) : _overScaleMultiplier * targetScale;
+
+            Debug.Log("Avatar Scale :" + targetScale.ToString());
+            Debug.Log("Multiply :" + multiply.ToString());
 
             voiceGain = Mathf.Clamp(multiply * _baseVoiceGain, 0f, 24f);
             voiceDistanceNear = Mathf.Clamp(multiply * _baseVoiceDistanceNear, 0f, 999999.9f);
@@ -67,7 +74,7 @@ namespace MimyLab
             avatarAudioDistanceFar = Mathf.Max(multiply * _baseAvatarAudioDistanceFar, 0f);
             avatarAudioVolumetricRadius = Mathf.Max(multiply * _baseAvatarAudioVolumetricRadius, 0f);
 
-            return false;
+            return true;
         }
     }
 }
