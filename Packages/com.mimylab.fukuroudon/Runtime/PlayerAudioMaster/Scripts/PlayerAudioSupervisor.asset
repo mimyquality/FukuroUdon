@@ -538,13 +538,10 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 7
-      Data: 31|UnityEngine.RangeAttribute, UnityEngine.CoreModule
+      Data: 31|UnityEngine.MinAttribute, UnityEngine.CoreModule
     - Name: min
       Entry: 4
       Data: 0
-    - Name: max
-      Entry: 4
-      Data: 40
     - Name: 
       Entry: 8
       Data: 
@@ -598,13 +595,10 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 7
-      Data: 34|UnityEngine.RangeAttribute, UnityEngine.CoreModule
+      Data: 34|UnityEngine.MinAttribute, UnityEngine.CoreModule
     - Name: min
       Entry: 4
       Data: 0
-    - Name: max
-      Entry: 4
-      Data: 40
     - Name: 
       Entry: 8
       Data: 
@@ -667,13 +661,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 38|UnityEngine.RangeAttribute, UnityEngine.CoreModule
+      Data: 38|UnityEngine.MinAttribute, UnityEngine.CoreModule
     - Name: min
       Entry: 4
       Data: 0
-    - Name: max
-      Entry: 4
-      Data: 40
     - Name: 
       Entry: 8
       Data: 

@@ -48,19 +48,22 @@ namespace MimyLab
         public bool enableAvatarAudioOverride = false;
         [Range(0f, 10f)]
         public float avatarAudioGain = 10f;
-        [Range(0f, 40f)]
-        public float avatarAudioDistanceNear = 40f;
-        [Range(0f, 40f)]
+        [Min(0f)]
+        public float avatarAudioDistanceNear = 0f;
+        [Min(0f)]
         public float avatarAudioDistanceFar = 40f;
 
         [Header("Avatar Audio Advance Settings")]
-        [Range(0f, 40f)]
-        public float avatarAudioVolumetricRadius = 40f;
+        [Min(0f)]
+        public float avatarAudioVolumetricRadius = 0f;
         public bool avatarAudioForceSpatial = false;
         public bool avatarAudioCustomCurve = false;
 
+        public virtual bool NeedRealtimeOverride { get => false; }
+
         public bool CheckApplicable(VRCPlayerApi target)
         {
+            if (!enabled || !gameObject.activeInHierarchy) { return false; }
             if (!EligiblePlayer(target)) { return false; }
 
             return CheckApplicableInternal(target);
@@ -94,7 +97,7 @@ namespace MimyLab
 
             return enableAvatarAudioOverride;
         }
-
+        
         protected bool EligiblePlayer(VRCPlayerApi target)
         {
             if (whiteListPlayerName.Length == 0) { return true; }

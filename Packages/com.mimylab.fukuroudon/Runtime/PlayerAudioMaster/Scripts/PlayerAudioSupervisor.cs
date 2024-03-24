@@ -41,14 +41,14 @@ namespace MimyLab
         [Header("Avatar Audio Settings")]
         [Range(0f, 10f)]
         public float defaultAvatarAudioGain = 10f;
-        [Range(0f, 40f)]
-        public float defaultAvatarAudioDistanceNear = 40f;
-        [Range(0f, 40f)]
+        [Min(0f)]
+        public float defaultAvatarAudioDistanceNear = 0f;
+        [Min(0f)]
         public float defaultAvatarAudioDistanceFar = 40f;
 
         [Header("Avatar Audio Advance Settings")]
-        [Range(0f, 40f)]
-        public float defaultAvatarAudioVolumetricRadius = 40f;
+        [Min(0f)]
+        public float defaultAvatarAudioVolumetricRadius = 0f;
         public bool defaultAvatarAudioForceSpatial = false;
         public bool defaultAvatarAudioCustomCurve = false;
 
@@ -123,10 +123,15 @@ namespace MimyLab
                 selecter.SetPlayerTag(PlayerAudioChannelTagName, channel);
             }
 
+            var executeOverride = overrideRegulator && overrideRegulator.NeedRealtimeOverride;
             if (selecter.GetPlayerTag(PlayerAudioOverrideTagName) != overrideNumber)
             {
                 selecter.SetPlayerTag(PlayerAudioOverrideTagName, overrideNumber);
+                executeOverride = true;
+            }
 
+            if (executeOverride)
+            {
                 if (overrideNumber == TagIsEmpty)
                 {
                     SetDefaultPlayerVoice(selecter);
