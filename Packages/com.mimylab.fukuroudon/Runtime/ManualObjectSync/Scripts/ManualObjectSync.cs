@@ -20,8 +20,6 @@ namespace MimyLab
     using UnityEditor.Experimental.SceneManagement;
 #endif
     using UdonSharpEditor;
-    using UnityEngine.UIElements;
-    using Mono.Cecil;
 #endif
 
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Manual ObjectSync")]
@@ -176,7 +174,6 @@ namespace MimyLab
         Vector3 _startScale = Vector3.one, _localScale = Vector3.one;
 
         // 計算用
-        Transform _transform;
         Rigidbody _rigidbody = null;
         VRCPickup _pickup = null;
         VRCPlayerApi _localPlayer, _ownerPlayer;
@@ -241,18 +238,17 @@ namespace MimyLab
         {
             if (_initialized) { return; }
 
-            _transform = transform;
             _rigidbody = GetComponent<Rigidbody>();
             _pickup = GetComponent<VRCPickup>();
             _localPlayer = Networking.LocalPlayer;
             _ownerPlayer = Networking.GetOwner(this.gameObject);
 
-            _startPosition = _transform.position;
-            _startRotation = _transform.rotation;
-            _startScale = _transform.localScale;
-            _localPosition = _transform.localPosition;
-            _localRotation = _transform.localRotation;
-            _localScale = _transform.localScale;
+            _startPosition = transform.position;
+            _startRotation = transform.rotation;
+            _startScale = transform.localScale;
+            _localPosition = transform.localPosition;
+            _localRotation = transform.localRotation;
+            _localScale = transform.localScale;
 
             moveCheckTickRate = Mathf.Max(moveCheckTickRate, 2);
             _firstCheckTiming = moveCheckTickRate + GetInstanceID() % moveCheckTickRate;
@@ -398,14 +394,14 @@ namespace MimyLab
         {
             IsHeld = false;
 
-            _syncPosition = _transform.position;
-            _syncRotation = _transform.rotation;
-            _localPosition = _transform.localPosition;
-            _localRotation = _transform.localRotation;
+            _syncPosition = transform.position;
+            _syncRotation = transform.rotation;
+            _localPosition = transform.localPosition;
+            _localRotation = transform.localRotation;
 
             RequestSerialization();
 
-            _transform.hasChanged = false;
+            transform.hasChanged = false;
         }
 
         public void Respawn()
@@ -427,17 +423,17 @@ namespace MimyLab
                 }
                 else
                 {
-                    _transform.SetPositionAndRotation(_startPosition, _startRotation);
+                    transform.SetPositionAndRotation(_startPosition, _startRotation);
                 }
 
                 _syncPosition = _startPosition;
                 _syncRotation = _startRotation;
-                _localPosition = _transform.localPosition;
-                _localRotation = _transform.localRotation;
+                _localPosition = transform.localPosition;
+                _localRotation = transform.localRotation;
 
                 RequestSerialization();
 
-                _transform.hasChanged = false;
+                transform.hasChanged = false;
             }
         }
 
@@ -447,14 +443,14 @@ namespace MimyLab
 
             if (Networking.IsOwner(this.gameObject))
             {
-                _transform.localScale = _startScale;
+                transform.localScale = _startScale;
 
                 _syncScale = _startScale;
-                _localScale = _transform.localScale;
+                _localScale = transform.localScale;
 
                 RequestSerialization();
 
-                _transform.hasChanged = false;
+                transform.hasChanged = false;
             }
         }
 
@@ -467,8 +463,8 @@ namespace MimyLab
             _equipBone = (byte)targetBone;
             var bonePosition = _localPlayer.GetBonePosition(targetBone);
             var boneRotation = _localPlayer.GetBoneRotation(targetBone);
-            _syncPosition = bonePosition.Equals(Vector3.zero) ? Vector3.zero : Quaternion.Inverse(boneRotation) * (_transform.position - bonePosition);
-            _syncRotation = boneRotation.Equals(Quaternion.identity) ? Quaternion.identity : (Quaternion.Inverse(boneRotation) * _transform.rotation);
+            _syncPosition = bonePosition.Equals(Vector3.zero) ? Vector3.zero : Quaternion.Inverse(boneRotation) * (transform.position - bonePosition);
+            _syncRotation = boneRotation.Equals(Quaternion.identity) ? Quaternion.identity : (Quaternion.Inverse(boneRotation) * transform.rotation);
 
             RequestSerialization();
         }
@@ -488,49 +484,49 @@ namespace MimyLab
 
         private bool TransformMoveCheck()
         {
-            if (!_transform.hasChanged) { return false; }
+            if (!transform.hasChanged) { return false; }
 
-            if (_transform.position.y <= _respawnHightY)
+            if (transform.position.y <= _respawnHightY)
             {
                 Respawn();
                 return true;
             }
 
             if (moveCheckSpace == Space.Self
-            && (_transform.localPosition != _localPosition
-             || _transform.localRotation != _localRotation))
+            && (transform.localPosition != _localPosition
+             || transform.localRotation != _localRotation))
             {
                 SyncLocation();
             }
             else if (moveCheckSpace == Space.World
-            && (_transform.position != _syncPosition
-             || _transform.rotation != _syncRotation))
+            && (transform.position != _syncPosition
+             || transform.rotation != _syncRotation))
             {
                 SyncLocation();
             }
 
-            if (_transform.localScale != _localScale)
+            if (transform.localScale != _localScale)
             {
                 SyncScale();
             }
 
-            _transform.hasChanged = false;
+            transform.hasChanged = false;
 
             return true;
         }
         private void SyncLocation()
         {
-            _syncPosition = _transform.position;
-            _syncRotation = _transform.rotation;
-            _localPosition = _transform.localPosition;
-            _localRotation = _transform.localRotation;
+            _syncPosition = transform.position;
+            _syncRotation = transform.rotation;
+            _localPosition = transform.localPosition;
+            _localRotation = transform.localRotation;
 
             RequestSerialization();
         }
         private void SyncScale()
         {
-            _syncScale = _transform.localScale;
-            _localScale = _transform.localScale;
+            _syncScale = transform.localScale;
+            _localScale = transform.localScale;
 
             RequestSerialization();
         }
@@ -546,14 +542,14 @@ namespace MimyLab
             }
             else
             {
-                _transform.SetPositionAndRotation(_syncPosition, _syncRotation);
+                transform.SetPositionAndRotation(_syncPosition, _syncRotation);
             }
             _localPosition = _syncPosition;
             _localRotation = _syncRotation;
 
-            if (_transform.localScale != _syncScale)
+            if (transform.localScale != _syncScale)
             {
-                _transform.localScale = _syncScale;
+                transform.localScale = _syncScale;
                 _localScale = _syncScale;
             }
 
@@ -631,7 +627,7 @@ namespace MimyLab
             var equipPosition = bonePosition + (boneRotation * _syncPosition);
             var equipRotation = boneRotation * _syncRotation;
 
-            _transform.SetPositionAndRotation(equipPosition, equipRotation);
+            transform.SetPositionAndRotation(equipPosition, equipRotation);
             _syncHasChanged = false;
 
             return true;
@@ -641,7 +637,7 @@ namespace MimyLab
         {
             if (!_isAttached) { return false; }
 
-            _transform.SetPositionAndRotation(attachPoint.position, attachPoint.rotation);
+            transform.SetPositionAndRotation(attachPoint.position, attachPoint.rotation);
             _syncHasChanged = false;
 
             return true;
