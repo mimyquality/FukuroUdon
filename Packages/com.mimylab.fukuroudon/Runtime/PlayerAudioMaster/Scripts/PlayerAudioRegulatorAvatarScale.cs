@@ -61,9 +61,6 @@ namespace MimyLab
             var targetScale = target.GetAvatarEyeHeightAsMeters() / _baseEyeHeight;
             var multiply = targetScale < 1.0f ? 1f - _underScaleMultiplier * (1 - targetScale) : _overScaleMultiplier * targetScale;
 
-            Debug.Log("Avatar Scale :" + targetScale.ToString());
-            Debug.Log("Multiply :" + multiply.ToString());
-
             voiceGain = Mathf.Clamp(multiply * _baseVoiceGain, 0f, 24f);
             voiceDistanceNear = Mathf.Clamp(multiply * _baseVoiceDistanceNear, 0f, 999999.9f);
             voiceDistanceFar = Mathf.Clamp(multiply * _baseVoiceDistanceFar, 0f, 999999.9f);
