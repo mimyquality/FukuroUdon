@@ -6,6 +6,12 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.15.1] - 2024/3/25
+
+- **Fixed**
+  - PlayerAudio Master
+    - 安定性と、インスタンス人数が少ない時の応答性を向上させました。
+
 ## [1.15.0] - 2024/3/24
 
 - **Added**
@@ -375,6 +381,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.15.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.15.1
 [1.15.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.15.0
 [1.14.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.14.1
 [1.14.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.14.0
