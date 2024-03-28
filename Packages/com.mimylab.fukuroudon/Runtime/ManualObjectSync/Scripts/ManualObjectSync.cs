@@ -290,11 +290,6 @@ namespace MimyLab
                 _reservedInterval = true;
                 SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), _firstCheckTiming);
             }
-            else
-            {
-                // 初期非アクティブからのアクティブ化だと発火しないバグ対策
-                OnDeserialization();
-            }
         }
 
         public void _OnPostLateUpdate()
@@ -544,8 +539,9 @@ namespace MimyLab
             {
                 transform.SetPositionAndRotation(_syncPosition, _syncRotation);
             }
-            _localPosition = _syncPosition;
-            _localRotation = _syncRotation;
+            var parent = transform.parent;
+            _localPosition = parent ? transform.InverseTransformPoint(_syncPosition) : _syncPosition;
+            _localRotation = parent ? Quaternion.Inverse(parent.rotation) * _syncRotation : _syncRotation;
 
             if (transform.localScale != _syncScale)
             {
