@@ -113,25 +113,13 @@ namespace MimyLab
         {
             Initialize();
 
-<<<<<<< HEAD
             _isEquiped = value;
             if (value)
             {
-                _isAttached = false;
                 if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
+                _isHeld = false;
+                _isAttached = false;
                 _updateManager.EnablePostLateUpdate(this);
-=======
-                _isEquiped = value;
-                if (value)
-                {
-                    if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
-                    _isHeld = false;
-                    _isAttached = false;
-                    _updateManager.EnablePostLateUpdate(this);
-                }
-                if (_rigidbody) { IsKinematic = IsKinematic; }
-                RequestSerialization();
->>>>>>> main
             }
             if (_rigidbody) { IsKinematic = IsKinematic; }
             RequestSerialization();
@@ -145,25 +133,13 @@ namespace MimyLab
         {
             Initialize();
 
-<<<<<<< HEAD
             _isAttached = value;
             if (value)
             {
-                _isEquiped = false;
                 if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
+                _isHeld = false;
+                _isEquiped = false;
                 _updateManager.EnablePostLateUpdate(this);
-=======
-                _isAttached = value;
-                if (value)
-                {
-                    if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
-                    _isHeld = false;
-                    _isEquiped = false;
-                    _updateManager.EnablePostLateUpdate(this);
-                }
-                if (_rigidbody) { IsKinematic = IsKinematic; }
-                RequestSerialization();
->>>>>>> main
             }
             if (_rigidbody) { IsKinematic = IsKinematic; }
             RequestSerialization();
