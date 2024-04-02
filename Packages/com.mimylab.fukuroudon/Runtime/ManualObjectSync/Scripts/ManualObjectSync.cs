@@ -180,7 +180,6 @@ namespace MimyLab
         Rigidbody _rigidbody = null;
         VRCPickup _pickup = null;
         VRCPlayerApi _localPlayer, _ownerPlayer;
-        int _prevOwnerPlayerId;
         int _firstCheckTiming;
         bool _reservedInterval = false;
         bool _syncHasChanged = false;
@@ -321,9 +320,12 @@ namespace MimyLab
 
         public void _IntervalPostLateUpdate()
         {
-            if (_reservedInterval = Networking.IsOwner(this.gameObject))
+            _reservedInterval = false;
+
+            if (Networking.IsOwner(this.gameObject))
             {
                 _updateManager.EnablePostLateUpdate(this);
+                _reservedInterval = true;
                 SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), moveCheckTickRate);
             }
         }
@@ -332,7 +334,6 @@ namespace MimyLab
         {
             Initialize();
 
-            _prevOwnerPlayerId = _ownerPlayer.playerId;
             _ownerPlayer = player;
 
             if (player.isLocal && !_reservedInterval)
@@ -341,27 +342,30 @@ namespace MimyLab
                 SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), _firstCheckTiming);
             }
 
-            if (_pickup && !player.isLocal)
+            // Ownerだった人が落ちた対策に、いったん強制解除
+            if (_isEquiped) { SetIsEquiped(false); }
+
+            if (_pickup)
             {
-                // 他人がOwner化＝ピックアップを奪われた
-                _pickup.Drop();
+                if (player.isLocal)
+                {
+                    // 自分がOwner化＝ピックアップを奪ったか、Ownerだった人が落ちた
+                    if (!_pickup.IsHeld)
+                    {
+                        SetIsHeld(false);
+                    }
+                }
+                else
+                {
+                    // 他人がOwner化＝ピックアップを奪われた
+                    _pickup.Drop();
+                }
             }
 
             // Ownerに物理演算書き戻し
             if (_rigidbody)
             {
                 _rigidbody.isKinematic = player.isLocal ? IsKinematic : true;
-            }
-        }
-
-        public override void OnPlayerLeft(VRCPlayerApi player)
-        {
-            if (_prevOwnerPlayerId == player.playerId
-             || _ownerPlayer.playerId == player.playerId)
-            {
-                // Ownerだった人が落ちた
-                SetIsEquiped(false);
-                if (_pickup) { SetIsHeld(false); }
             }
         }
 
