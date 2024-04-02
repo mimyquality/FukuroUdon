@@ -14,13 +14,15 @@
 
 ## [1.16.1] - 2024/4/2
 
-- **Added**
-  - Ambient Sound Assistant
-    - ImpactEffectを追加しました。
-
 - **Fixed**
   - Manual ObjectSync
     - 安定性を向上しました。
+
+## [1.16.0] - 2024/4/2
+
+- **Added**
+  - Ambient Sound Assistant
+    - ImpactEffectを追加しました。
 
 ## [1.15.1] - 2024/3/25
 
@@ -399,6 +401,7 @@
 
 [1.16.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.16.2
 [1.16.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.16.1
+[1.16.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.16.0
 [1.15.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.15.1
 [1.15.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.15.0
 [1.14.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.14.1
