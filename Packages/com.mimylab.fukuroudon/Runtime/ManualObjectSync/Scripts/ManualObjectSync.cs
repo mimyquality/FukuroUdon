@@ -113,25 +113,13 @@ namespace MimyLab
         {
             Initialize();
 
-<<<<<<< HEAD
             _isEquiped = value;
             if (value)
             {
-                _isAttached = false;
                 if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
+                _isHeld = false;
+                _isAttached = false;
                 _updateManager.EnablePostLateUpdate(this);
-=======
-                _isEquiped = value;
-                if (value)
-                {
-                    if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
-                    _isHeld = false;
-                    _isAttached = false;
-                    _updateManager.EnablePostLateUpdate(this);
-                }
-                if (_rigidbody) { IsKinematic = IsKinematic; }
-                RequestSerialization();
->>>>>>> main
             }
             if (_rigidbody) { IsKinematic = IsKinematic; }
             RequestSerialization();
@@ -145,25 +133,13 @@ namespace MimyLab
         {
             Initialize();
 
-<<<<<<< HEAD
             _isAttached = value;
             if (value)
             {
-                _isEquiped = false;
                 if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
+                _isHeld = false;
+                _isEquiped = false;
                 _updateManager.EnablePostLateUpdate(this);
-=======
-                _isAttached = value;
-                if (value)
-                {
-                    if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
-                    _isHeld = false;
-                    _isEquiped = false;
-                    _updateManager.EnablePostLateUpdate(this);
-                }
-                if (_rigidbody) { IsKinematic = IsKinematic; }
-                RequestSerialization();
->>>>>>> main
             }
             if (_rigidbody) { IsKinematic = IsKinematic; }
             RequestSerialization();
@@ -204,6 +180,7 @@ namespace MimyLab
         Rigidbody _rigidbody = null;
         VRCPickup _pickup = null;
         VRCPlayerApi _localPlayer, _ownerPlayer;
+        int _prevOwnerPlayerId;
         int _firstCheckTiming;
         bool _reservedInterval = false;
         bool _syncHasChanged = false;
@@ -344,12 +321,9 @@ namespace MimyLab
 
         public void _IntervalPostLateUpdate()
         {
-            _reservedInterval = false;
-
-            if (Networking.IsOwner(this.gameObject))
+            if (_reservedInterval = Networking.IsOwner(this.gameObject))
             {
                 _updateManager.EnablePostLateUpdate(this);
-                _reservedInterval = true;
                 SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), moveCheckTickRate);
             }
         }
@@ -358,6 +332,7 @@ namespace MimyLab
         {
             Initialize();
 
+            _prevOwnerPlayerId = _ownerPlayer.playerId;
             _ownerPlayer = player;
 
             if (player.isLocal && !_reservedInterval)
@@ -366,30 +341,27 @@ namespace MimyLab
                 SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), _firstCheckTiming);
             }
 
-            // Ownerだった人が落ちた対策に、いったん強制解除
-            if (_isEquiped) { SetIsEquiped(false); }
-
-            if (_pickup)
+            if (_pickup && !player.isLocal)
             {
-                if (player.isLocal)
-                {
-                    // 自分がOwner化＝ピックアップを奪ったか、Ownerだった人が落ちた
-                    if (!_pickup.IsHeld)
-                    {
-                        SetIsHeld(false);
-                    }
-                }
-                else
-                {
-                    // 他人がOwner化＝ピックアップを奪われた
-                    _pickup.Drop();
-                }
+                // 他人がOwner化＝ピックアップを奪われた
+                _pickup.Drop();
             }
 
             // Ownerに物理演算書き戻し
             if (_rigidbody)
             {
                 _rigidbody.isKinematic = player.isLocal ? IsKinematic : true;
+            }
+        }
+
+        public override void OnPlayerLeft(VRCPlayerApi player)
+        {
+            if (_prevOwnerPlayerId == player.playerId
+             || _ownerPlayer.playerId == player.playerId)
+            {
+                // Ownerだった人が落ちた
+                SetIsEquiped(false);
+                if (_pickup) { SetIsHeld(false); }
             }
         }
 
