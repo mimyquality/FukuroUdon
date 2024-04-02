@@ -30,7 +30,7 @@ namespace MimyLab
         [SerializeField, Range(1, 32)]
         private int _poolSize = 10;
         [SerializeField]
-        private Vector3 _normal;
+        private Vector3 _normal = Vector3.up;
         [SerializeField, Min(0.0f), Tooltip("sec")]
         private float _effectTime = 3.0f;
 
