@@ -58,16 +58,14 @@ namespace MimyLab
         {
             var result = HumanBodyBones.LastBone;
             var snapPosition = snapPoint.position;
-            var bonePosition = Vector3.zero;
-            var sqrtDistance = 0.0f;
             var mostNearSqrtDistance = float.PositiveInfinity;
             var lastBone = (int)HumanBodyBones.LastBone;
             for (int i = 0; i < lastBone; i++)
             {
-                bonePosition = pl.GetBonePosition((HumanBodyBones)i);
+                var bonePosition = pl.GetBonePosition((HumanBodyBones)i);
                 if (bonePosition.Equals(Vector3.zero)) { continue; }
 
-                sqrtDistance = (snapPosition - bonePosition).sqrMagnitude;
+                var sqrtDistance = (snapPosition - bonePosition).sqrMagnitude;
                 if (sqrtDistance < mostNearSqrtDistance)
                 {
                     mostNearSqrtDistance = sqrtDistance;
