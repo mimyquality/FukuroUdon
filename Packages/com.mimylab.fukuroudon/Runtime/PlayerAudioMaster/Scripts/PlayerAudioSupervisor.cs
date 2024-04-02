@@ -41,38 +41,24 @@ namespace MimyLab
         [Header("Avatar Audio Settings")]
         [Range(0f, 10f)]
         public float defaultAvatarAudioGain = 10f;
-        [Range(0f, 40f)]
-        public float defaultAvatarAudioDistanceNear = 40f;
-        [Range(0f, 40f)]
+        [Min(0f)]
+        public float defaultAvatarAudioDistanceNear = 0f;
+        [Min(0f)]
         public float defaultAvatarAudioDistanceFar = 40f;
 
         [Header("Avatar Audio Advance Settings")]
-        [Range(0f, 40f)]
-        public float defaultAvatarAudioVolumetricRadius = 40f;
+        [Min(0f)]
+        public float defaultAvatarAudioVolumetricRadius = 0f;
         public bool defaultAvatarAudioForceSpatial = false;
         public bool defaultAvatarAudioCustomCurve = false;
 
         // キャッシュ用
-        private VRCPlayerApi _localPlayer;
-        private VRCPlayerApi[] _players = new VRCPlayerApi[HardCap];
-
-        private bool _initialized = false;
-        private void Initialize()
-        {
-            if (_initialized) { return; }
-
-            _localPlayer = Networking.LocalPlayer;
-
-            _initialized = true;
-        }
-        private void Start()
-        {
-            Initialize();
-        }
+        private int _playerCount = 1;
+        private VRCPlayerApi[] _players = new VRCPlayerApi[1];
 
         private void Update()
         {
-            var selecter = _players[Time.frameCount % HardCap];
+            var selecter = _players[Time.frameCount % Mathf.Max(_playerCount, 1)];
             if (!Utilities.IsValid(selecter)) { return; }
 
             var channel = TagIsEmpty;
@@ -94,7 +80,7 @@ namespace MimyLab
                 channel = playerAudioRegulators[i].channel.ToString();
                 if (selecter.isLocal) { break; }
 
-                if (_localPlayer.GetPlayerTag(PlayerAudioChannelTagName) == channel)
+                if (Networking.LocalPlayer.GetPlayerTag(PlayerAudioChannelTagName) == channel)
                 {
                     overrideNumber = i.ToString();
                     overrideRegulator = playerAudioRegulators[i];
@@ -123,10 +109,15 @@ namespace MimyLab
                 selecter.SetPlayerTag(PlayerAudioChannelTagName, channel);
             }
 
+            var executeOverride = overrideRegulator && overrideRegulator.NeedRealtimeOverride;
             if (selecter.GetPlayerTag(PlayerAudioOverrideTagName) != overrideNumber)
             {
                 selecter.SetPlayerTag(PlayerAudioOverrideTagName, overrideNumber);
+                executeOverride = true;
+            }
 
+            if (executeOverride)
+            {
                 if (overrideNumber == TagIsEmpty)
                 {
                     SetDefaultPlayerVoice(selecter);
@@ -148,25 +139,19 @@ namespace MimyLab
 
         public override void OnPlayerJoined(VRCPlayerApi player)
         {
-            Initialize();
-
             player.SetPlayerTag(PlayerAudioChannelTagName, TagIsEmpty);
             player.SetPlayerTag(PlayerAudioOverrideTagName, TagIsEmpty);
             SetDefaultPlayerVoice(player);
             SetDefaultAvatarAudio(player);
 
-            VRCPlayerApi.GetPlayers(_players);
+            SendCustomEventDelayedFrames(nameof(_RefreshPlayerList), 1);
         }
-        // プレイヤー保持配列の数を固定化したので不要
-        /* 
+
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
-            Initialize();
-
-            var playerCount = Mathf.Max(VRCPlayerApi.GetPlayerCount(), 1);
-            _players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[playerCount]);
+            SendCustomEventDelayedFrames(nameof(_RefreshPlayerList), 1);
         }
-         */
+
         private void SetDefaultPlayerVoice(VRCPlayerApi selectPlayer)
         {
             selectPlayer.SetVoiceGain(defaultVoiceGain);
@@ -184,6 +169,12 @@ namespace MimyLab
             selectPlayer.SetAvatarAudioVolumetricRadius(defaultAvatarAudioVolumetricRadius);
             selectPlayer.SetAvatarAudioForceSpatial(defaultAvatarAudioForceSpatial);
             selectPlayer.SetAvatarAudioCustomCurve(defaultAvatarAudioCustomCurve);
+        }
+
+        public void _RefreshPlayerList()
+        {
+            _playerCount = Mathf.Max(VRCPlayerApi.GetPlayerCount(), 1);
+            _players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[_playerCount]);
         }
     }
 }

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: SwivelChair2
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 73032ac3efeae984787b5f38fcfc890b,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 73032ac3efeae984787b5f38fcfc890b, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: b891a554c48120646868c5a94529236b, type: 3}

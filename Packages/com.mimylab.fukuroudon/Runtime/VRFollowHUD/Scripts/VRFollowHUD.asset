@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: VRFollowHUD
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: bcd72373692944a46af8798a88bfeeed,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: bcd72373692944a46af8798a88bfeeed, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: 5d251618b3a40c643a0be978b25542b8, type: 3}

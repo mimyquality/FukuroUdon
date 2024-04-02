@@ -50,10 +50,10 @@ namespace MimyLab
         [Tooltip("Note that this is compared to the audio source's settings, and the smaller value is used.")]
         [SerializeField] private bool _initializeAvatarAudio = true;
         [SerializeField][Range(0f, 10f)] private float _avatarAudioGain = 10f;
-        [SerializeField][Range(0f, 40f)] private float _avatarAudioDistanceNear = 40f;
-        [SerializeField][Range(0f, 40f)] private float _avatarAudioDistanceFar = 40f;
+        [SerializeField][Min(0f)] private float _avatarAudioDistanceNear = 0f;
+        [SerializeField][Min(0f)] private float _avatarAudioDistanceFar = 40f;
         [Space]
-        [SerializeField][Range(0f, 40f)] private float _avatarAudioVolumetricRadius = 40f;
+        [SerializeField][Min(0f)] private float _avatarAudioVolumetricRadius = 0f;
         [SerializeField] private bool _avatarAudioForceSpatial = false;
         [SerializeField] private bool _avatarAudioCustomCurve = false;
 
@@ -134,7 +134,14 @@ namespace MimyLab
             if (!player.isLocal) { return; }
             if (!_hasAvatarChanged) { return; }
 
-            if (!_hasFirstAvatarChanged)
+            if (_hasFirstAvatarChanged)
+            {
+                if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightType.AvatarChange) > 0)
+                {
+                    ClampAvatarEyeHeight(player);
+                }
+            }
+            else
             {
                 if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightType.Join) > 0)
                 {
@@ -142,13 +149,6 @@ namespace MimyLab
                 }
 
                 _hasFirstAvatarChanged = true;
-            }
-            else
-            {
-                if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightType.AvatarChange) > 0)
-                {
-                    ClampAvatarEyeHeight(player);
-                }
             }
 
             CloseAvatarChangeProcessing();

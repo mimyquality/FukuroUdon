@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: ActiveRelayToEffect
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: c0bbae5ffaf207342bf1ce8b150d8bc4,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: c0bbae5ffaf207342bf1ce8b150d8bc4, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: b322e7d50e7fa864cb3497dec0a87ed2, type: 3}

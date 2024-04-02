@@ -6,6 +6,35 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.16.0] - 2024/4/2
+
+- **Added**
+  - Ambient Sound Assistant
+    - ImpactEffectを追加しました。
+
+- **Fixed**
+  - Manual ObjectSync
+    - 安定性を向上しました。
+
+## [1.15.1] - 2024/3/25
+
+- **Fixed**
+  - PlayerAudio Master
+    - 安定性と、インスタンス人数が少ない時の応答性を向上させました。
+
+## [1.15.0] - 2024/3/24
+
+- **Added**
+  - PlayerAudio Master
+    - PA Regulator AvatarScaleを追加しました。
+
+- **Fixed**
+  - AdvancedWorldSettings
+  - PlayerAudio Master
+    - アバター音量の設定範囲をVRChatの仕様に合わせました。
+  - Manual ObjectSync
+    - 内部的な微修正
+
 ## [1.14.1] - 2024/3/22
 
 - **Fixed**
@@ -362,6 +391,9 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.16.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.16.0
+[1.15.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.15.1
+[1.15.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.15.0
 [1.14.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.14.1
 [1.14.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.14.0
 [1.13.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.13.3

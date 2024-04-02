@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: PlayerAudioRegulatorList
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: f6c8a55ef301aad4f9aae28be5d5b0f0,
-    type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: f6c8a55ef301aad4f9aae28be5d5b0f0, type: 2}
   udonAssembly: 
   assemblyError: 
   sourceCsScript: {fileID: 11500000, guid: 4afe6692a2a866f40aa229b0f77f2683, type: 3}
@@ -863,13 +862,10 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 7
-      Data: 48|UnityEngine.RangeAttribute, UnityEngine.CoreModule
+      Data: 48|UnityEngine.MinAttribute, UnityEngine.CoreModule
     - Name: min
       Entry: 4
       Data: 0
-    - Name: max
-      Entry: 4
-      Data: 40
     - Name: 
       Entry: 8
       Data: 
@@ -923,13 +919,10 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 7
-      Data: 51|UnityEngine.RangeAttribute, UnityEngine.CoreModule
+      Data: 51|UnityEngine.MinAttribute, UnityEngine.CoreModule
     - Name: min
       Entry: 4
       Data: 0
-    - Name: max
-      Entry: 4
-      Data: 40
     - Name: 
       Entry: 8
       Data: 
@@ -992,13 +985,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 55|UnityEngine.RangeAttribute, UnityEngine.CoreModule
+      Data: 55|UnityEngine.MinAttribute, UnityEngine.CoreModule
     - Name: min
       Entry: 4
       Data: 0
-    - Name: max
-      Entry: 4
-      Data: 40
     - Name: 
       Entry: 8
       Data: 
