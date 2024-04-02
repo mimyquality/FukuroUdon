@@ -114,8 +114,9 @@ namespace MimyLab
                 _isEquiped = value;
                 if (value)
                 {
-                    _isAttached = false;
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
+                    _isHeld = false;
+                    _isAttached = false;
                     _updateManager.EnablePostLateUpdate(this);
                 }
                 if (_rigidbody) { IsKinematic = IsKinematic; }
@@ -133,8 +134,9 @@ namespace MimyLab
                 _isAttached = value;
                 if (value)
                 {
-                    _isEquiped = false;
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
+                    _isHeld = false;
+                    _isEquiped = false;
                     _updateManager.EnablePostLateUpdate(this);
                 }
                 if (_rigidbody) { IsKinematic = IsKinematic; }

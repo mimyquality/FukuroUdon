@@ -6,6 +6,16 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.16.0] - 2024/4/2
+
+- **Added**
+  - Ambient Sound Assistant
+    - ImpactEffectを追加しました。
+
+- **Fixed**
+  - Manual ObjectSync
+    - 安定性を向上しました。
+
 ## [1.15.1] - 2024/3/25
 
 - **Fixed**
@@ -381,6 +391,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.16.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.16.0
 [1.15.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.15.1
 [1.15.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.15.0
 [1.14.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.14.1
