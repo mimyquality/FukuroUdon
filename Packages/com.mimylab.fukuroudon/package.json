@@ -1,7 +1,7 @@
 {
   "name": "com.mimylab.fukuroudon",
   "displayName": "Fukuro Udon",
-  "version": "1.16.2",
+  "version": "1.16.3",
   "description": "MimyLab's U# utilitiy pack for VPM.",
   "unity": "2019.4",
   "author": {
@@ -70,6 +70,11 @@
       "description": "様々な条件でプレイヤー同士の声量やアバター音量を制御できるギミック",
       "path": "Samples/PlayerAudioMaster"
     },
+    {
+      "displayName": "AmbientSound Assistant",
+      "description": "ワールドの環境音・効果音を補助するギミック",
+      "path": "Samples/AmbientSoundAssistant"
+    },    
     {
       "displayName": "Advanced World Settings",
       "description": "Joinしたプレイヤーの各種初期化処理ができるギミック",
