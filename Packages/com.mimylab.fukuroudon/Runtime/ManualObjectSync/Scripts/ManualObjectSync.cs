@@ -20,6 +20,7 @@ namespace MimyLab
     using UnityEditor.Experimental.SceneManagement;
 #endif
     using UdonSharpEditor;
+    using BestHTTP.SecureProtocol.Org.BouncyCastle.Crypto.Engines;
 #endif
 
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Manual ObjectSync")]
@@ -75,21 +76,21 @@ namespace MimyLab
         public bool IsHeld  // ピックアップ中か(自他問わず)
         {
             get => _isHeld;
-        }
-        private void SetIsHeld(bool value)
-        {
-            Initialize();
-
-            _isHeld = value;
-            if (value)
+            private set
             {
-                _isEquiped = false;
-                _isAttached = false;
-                _updateManager.EnablePostLateUpdate(this);
+                Initialize();
+
+                _isHeld = value;
+                if (value)
+                {
+                    _isEquiped = false;
+                    _isAttached = false;
+                    _updateManager.EnablePostLateUpdate(this);
+                }
+                if (_pickup) { Pickupable = Pickupable; }
+                if (_rigidbody) { IsKinematic = IsKinematic; }
+                RequestSerialization();
             }
-            if (_pickup) { Pickupable = Pickupable; }
-            if (_rigidbody) { IsKinematic = IsKinematic; }
-            RequestSerialization();
         }
 
         public VRCPickup.PickupHand PickupHand    // ピックアップしてる方の手
@@ -108,41 +109,41 @@ namespace MimyLab
         public bool IsEquiped   // ボーンに装着モード
         {
             get => _isEquiped;
-        }
-        private void SetIsEquiped(bool value)
-        {
-            Initialize();
-
-            _isEquiped = value;
-            if (value)
+            private set
             {
-                if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
-                _isHeld = false;
-                _isAttached = false;
-                _updateManager.EnablePostLateUpdate(this);
+                Initialize();
+
+                _isEquiped = value;
+                if (value)
+                {
+                    if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
+                    _isHeld = false;
+                    _isAttached = false;
+                    _updateManager.EnablePostLateUpdate(this);
+                }
+                if (_rigidbody) { IsKinematic = IsKinematic; }
+                RequestSerialization();
             }
-            if (_rigidbody) { IsKinematic = IsKinematic; }
-            RequestSerialization();
         }
 
         public bool IsAttached  // アタッチモード
         {
             get => _isAttached;
-        }
-        private void SetIsAttached(bool value)
-        {
-            Initialize();
-
-            _isAttached = value;
-            if (value)
+            private set
             {
-                if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
-                _isHeld = false;
-                _isEquiped = false;
-                _updateManager.EnablePostLateUpdate(this);
+                Initialize();
+
+                _isAttached = value;
+                if (value)
+                {
+                    if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
+                    _isHeld = false;
+                    _isEquiped = false;
+                    _updateManager.EnablePostLateUpdate(this);
+                }
+                if (_rigidbody) { IsKinematic = IsKinematic; }
+                RequestSerialization();
             }
-            if (_rigidbody) { IsKinematic = IsKinematic; }
-            RequestSerialization();
         }
 
         private readonly string _UpdateManagerPrefabGUID = "51374f5e01425074ca9cb544fa44007d";
@@ -180,6 +181,7 @@ namespace MimyLab
         Rigidbody _rigidbody = null;
         VRCPickup _pickup = null;
         VRCPlayerApi _localPlayer, _ownerPlayer;
+        int _lastLeftPlayerId;
         int _firstCheckTiming;
         bool _reservedInterval = false;
         bool _syncHasChanged = false;
@@ -320,12 +322,9 @@ namespace MimyLab
 
         public void _IntervalPostLateUpdate()
         {
-            _reservedInterval = false;
-
-            if (Networking.IsOwner(this.gameObject))
+            if (_reservedInterval = Networking.IsOwner(this.gameObject))
             {
                 _updateManager.EnablePostLateUpdate(this);
-                _reservedInterval = true;
                 SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), moveCheckTickRate);
             }
         }
@@ -334,39 +333,47 @@ namespace MimyLab
         {
             Initialize();
 
-            _ownerPlayer = player;
-
             if (player.isLocal && !_reservedInterval)
             {
                 _reservedInterval = true;
                 SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), _firstCheckTiming);
             }
 
-            // Ownerだった人が落ちた対策に、いったん強制解除
-            if (_isEquiped) { SetIsEquiped(false); }
-
-            if (_pickup)
+            // Ownerだった人が落ちたので強制解除
+            if (!Utilities.IsValid(_ownerPlayer)
+             || _lastLeftPlayerId == _ownerPlayer.playerId)
             {
-                if (player.isLocal)
-                {
-                    // 自分がOwner化＝ピックアップを奪ったか、Ownerだった人が落ちた
-                    if (!_pickup.IsHeld)
-                    {
-                        SetIsHeld(false);
-                    }
-                }
-                else
-                {
-                    // 他人がOwner化＝ピックアップを奪われた
-                    _pickup.Drop();
-                }
+                IsHeld = false;
+                IsEquiped = false;
             }
 
-            // Ownerに物理演算書き戻し
-            if (_rigidbody)
+            // 他人がOwner化＝ピックアップを奪われた
+            if (_pickup && !player.isLocal)
             {
-                _rigidbody.isKinematic = player.isLocal ? IsKinematic : true;
+                _pickup.Drop();
             }
+
+            // Equipは強制解除
+            Unequip();
+
+            // 念のため物理演算書き戻し
+            IsKinematic = IsKinematic;
+
+            _ownerPlayer = player;
+        }
+
+        public override void OnPlayerLeft(VRCPlayerApi player)
+        {
+            Initialize();
+
+            if (!Utilities.IsValid(_ownerPlayer)
+             || player.playerId == _ownerPlayer.playerId)
+            {
+                IsHeld = false;
+                IsEquiped = false;
+            }
+
+            _lastLeftPlayerId = player.playerId;
         }
 
         public override void OnDeserialization()
@@ -382,7 +389,7 @@ namespace MimyLab
         public override void OnPickup()
         {
             Networking.SetOwner(_localPlayer, this.gameObject);
-            SetIsHeld(true);
+            IsHeld = true;
 
             PickupOffsetCheck();
         }
@@ -390,7 +397,7 @@ namespace MimyLab
         // VRCPickupとRigidbodyがある
         public override void OnDrop()
         {
-            SetIsHeld(false);
+            IsHeld = false;
 
             _syncPosition = transform.position;
             _syncRotation = transform.rotation;
@@ -409,8 +416,8 @@ namespace MimyLab
             if (Networking.IsOwner(this.gameObject))
             {
                 if (_pickup) { _pickup.Drop(); }
-                SetIsEquiped(false);
-                SetIsAttached(false);
+                IsEquiped = false;
+                IsAttached = false;
 
                 if (_rigidbody)
                 {
@@ -456,7 +463,7 @@ namespace MimyLab
         {
             if (!Networking.IsOwner(this.gameObject)) { return; }
 
-            SetIsEquiped(true);
+            IsEquiped = true;
 
             _equipBone = (byte)targetBone;
             var bonePosition = _localPlayer.GetBonePosition(targetBone);
@@ -468,16 +475,16 @@ namespace MimyLab
         }
         public void Unequip()
         {
-            if (Networking.IsOwner(this.gameObject)) { SetIsEquiped(false); }
+            if (Networking.IsOwner(this.gameObject)) { IsEquiped = false; }
         }
 
         public void Attach()
         {
-            if (Networking.IsOwner(this.gameObject)) { SetIsAttached(true); }
+            if (Networking.IsOwner(this.gameObject)) { IsAttached = true; }
         }
         public void Detach()
         {
-            if (Networking.IsOwner(this.gameObject)) { SetIsAttached(false); }
+            if (Networking.IsOwner(this.gameObject)) { IsAttached = false; }
         }
 
         private bool TransformMoveCheck()
