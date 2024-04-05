@@ -117,7 +117,6 @@ namespace MimyLab
                 if (value)
                 {
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
-                    _isHeld = false;
                     _isAttached = false;
                     _updateManager.EnablePostLateUpdate(this);
                 }
@@ -137,7 +136,6 @@ namespace MimyLab
                 if (value)
                 {
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
-                    _isHeld = false;
                     _isEquiped = false;
                     _updateManager.EnablePostLateUpdate(this);
                 }
