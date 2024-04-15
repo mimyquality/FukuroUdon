@@ -11,8 +11,8 @@ namespace MimyLab
     //using VRC.SDKBase;
     //using VRC.Udon;
 
-    public class IViewPointReceiver : UdonSharpBehaviour
+    abstract public class IViewPointReceiver : UdonSharpBehaviour
     {
-        public virtual void ReceiveViewPoint(Vector3 position, Quaternion rotation) { }
+        public abstract void ReceiveViewPoint(Vector3 position, Quaternion rotation);
     }
 }

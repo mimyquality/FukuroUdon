@@ -59,8 +59,10 @@ namespace MimyLab
             foreach (var col in _area)
             {
                 if (!col) { continue; }
+
                 var point = col.ClosestPoint(vpPosition);
                 nearest = (point - vpPosition).sqrMagnitude < (nearest - vpPosition).sqrMagnitude ? point : nearest;
+                
                 if (isIn = point == vpPosition) { break; }
             }
             // 1軸でもinfinityならコライダーが無かったと見なす。とりあえずX軸で判定
