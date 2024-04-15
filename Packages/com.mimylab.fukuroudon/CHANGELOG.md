@@ -6,6 +6,12 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.17.0] - 2024/4/15
+
+- **Added**
+  - AmbientSound Assistant
+    - Flexible ReverbZoneとFlexible Transformを追加しました。
+
 ## [1.16.4] - 2024/4/5
 
 - **Fixed**
@@ -411,6 +417,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.17.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.17.0
 [1.16.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.16.4
 [1.16.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.16.3
 [1.16.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.16.2
