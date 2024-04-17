@@ -69,7 +69,7 @@ namespace MimyLab
 
             if (_inactiveOutOfRange)
             {
-                var isInRange = (vpPosition - nearest).sqrMagnitude < (_activeRange * _activeRange);
+                var isInRange = (vpPosition - nearest).sqrMagnitude <= (_activeRange * _activeRange);
                 if (_target.gameObject.activeSelf != isInRange) { _target.gameObject.SetActive(isInRange); }
             }
         }

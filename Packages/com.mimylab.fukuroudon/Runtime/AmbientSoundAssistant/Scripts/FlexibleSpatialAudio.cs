@@ -74,7 +74,7 @@ namespace MimyLab
                 var effectiveRange = _decaySound.maxDistance + _effectiveRangeOffset;
 
                 _decayTransform.position = nearest;
-                _decaySound.enabled = !(_innerSound && isIn) && (vpPosition - nearest).sqrMagnitude < (effectiveRange * effectiveRange);
+                _decaySound.enabled = !(_innerSound && isIn) && (vpPosition - nearest).sqrMagnitude <= (effectiveRange * effectiveRange);
             }
 
             if (_innerSound)
