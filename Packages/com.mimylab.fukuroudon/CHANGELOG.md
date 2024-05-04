@@ -6,6 +6,12 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.18.2] - 2024/5/4
+
+- **Added**
+  - General
+    - Boundary Cullingを追加しました。ViewPoint Trackerの対象として使うコンポーネントです。
+
 ## [1.18.1] - 2024/4/17
 
 - **Fixed**
@@ -429,6 +435,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.18.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.18.2
 [1.18.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.18.1
 [1.18.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.18.0
 [1.17.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.17.0
