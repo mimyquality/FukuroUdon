@@ -11,23 +11,23 @@ namespace MimyLab
     //using VRC.SDKBase;
     using VRC.Udon;
 
-    [AddComponentMenu("Fukuro Udon/Active Relay/Active Relay to UdonBehaviour")]
+    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to UdonBehaviour")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class ActiveRelayToUdonBehaviour : UdonSharpBehaviour
     {
         [Header("Settings when active")]
         [SerializeField]
-        UdonBehaviour[] _udonBehaviourForActive = new UdonBehaviour[0];
+        private UdonBehaviour[] _udonBehaviourForActive = new UdonBehaviour[0];
         [SerializeField]
-        string _customEventNameForActive = "";
+        private string _customEventNameForActive = "";
 
         [Header("Settings when inactive")]
         [SerializeField]
-        UdonBehaviour[] _udonBehaviourForInactive = new UdonBehaviour[0];
+        private UdonBehaviour[] _udonBehaviourForInactive = new UdonBehaviour[0];
         [SerializeField]
-        string _customEventNameForInactive = "";
+        private string _customEventNameForInactive = "";
 
-        void OnEnable()
+        private void OnEnable()
         {
             if (_customEventNameForActive != "")
             {
@@ -38,7 +38,7 @@ namespace MimyLab
             }
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             if (_customEventNameForInactive != "")
             {

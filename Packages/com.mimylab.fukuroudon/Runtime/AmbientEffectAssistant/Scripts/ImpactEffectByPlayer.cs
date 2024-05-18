@@ -12,7 +12,7 @@ namespace MimyLab
     //using VRC.Udon;
     //using VRC.SDK3.Components;
 
-    [AddComponentMenu("Fukuro Udon/Ambient Sound Assistant/Impact Effect by Player")]
+    [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Impact Effect by Player")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ImpactEffectByPlayer : ImpactEffect
     {

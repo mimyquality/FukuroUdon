@@ -11,37 +11,37 @@ namespace MimyLab
     //using VRC.SDKBase;
     //using VRC.Udon;
 
-    [AddComponentMenu("Fukuro Udon/Active Relay/Active Relay to Effect")]
+    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Effect")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class ActiveRelayToEffect : UdonSharpBehaviour
     {
         [Tooltip("Only particle emission module toggle")]
         [SerializeField]
-        bool _invert = false;
+        private bool _invert = false;
 
         [Header("Settings when active")]
         [SerializeField]
-        AudioSource _audioSourceForActive = null;
+        private AudioSource _audioSourceForActive = null;
         [SerializeField]
-        AudioClip _soundForActive = null;
+        private AudioClip _soundForActive = null;
 
         [SerializeField]
-        ParticleSystem _particleForActive = null;
+        private ParticleSystem _particleForActive = null;
         [SerializeField]
-        int _emitForActive = 0;
+        private int _emitForActive = 0;
 
         [Header("Settings when inactive")]
         [SerializeField]
-        AudioSource _audioSourceForInactive = null;
+        private AudioSource _audioSourceForInactive = null;
         [SerializeField]
-        AudioClip _soundForInactive = null;
+        private AudioClip _soundForInactive = null;
 
         [SerializeField]
-        ParticleSystem _particleForInactive = null;
+        private ParticleSystem _particleForInactive = null;
         [SerializeField]
-        int _emitForInactive = 0;
+        private int _emitForInactive = 0;
 
-        void OnEnable()
+        private void OnEnable()
         {
             if (_audioSourceForActive)
             {
@@ -62,7 +62,7 @@ namespace MimyLab
             }
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             if (_audioSourceForInactive)
             {

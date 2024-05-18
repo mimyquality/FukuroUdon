@@ -18,19 +18,18 @@ namespace MimyLab
         Inactive,
     }
 
-    [AddComponentMenu("Fukuro Udon/Active Relay/Active Relay to GameObject")]
+    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to GameObject")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class ActiveRelayToGameObject : UdonSharpBehaviour
     {
         [SerializeField]
-        ActiveRelayEventType _eventType = default;
+        private ActiveRelayEventType _eventType = default;
         [SerializeField]
-        GameObject[] _gameObjects = new GameObject[0];
+        private GameObject[] _gameObjects = new GameObject[0];
         [SerializeField]
-        bool _invert = false;
+        private bool _invert = false;
 
-
-        void OnEnable()
+        private void OnEnable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
              || _eventType == ActiveRelayEventType.Active)
@@ -39,7 +38,7 @@ namespace MimyLab
             }
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
              || _eventType == ActiveRelayEventType.Inactive)

@@ -18,44 +18,44 @@ namespace MimyLab
         ActiveAndInactive,
     }
 
-    [AddComponentMenu("Fukuro Udon/Active Relay/Active Relay to Animator")]
+    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Animator")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class ActiveRelayToAnimator : UdonSharpBehaviour
     {
         [SerializeField]
-        ActiveRelayToAnimatorEventType _eventType = default;
+        private ActiveRelayToAnimatorEventType _eventType = default;
         [SerializeField]
-        Animator _animator = null;
+        private Animator _animator = null;
 
         [Header("Set Animator parameters by event")]
         [SerializeField]
-        string _triggerName = "";
+        private string _triggerName = "";
         [SerializeField]
-        bool _resetTrigger = false;
+        private bool _resetTrigger = false;
 
         [Space]
         [SerializeField]
-        string _boolName = "";
+        private string _boolName = "";
         [SerializeField]
-        bool _boolValue = false;
+        private bool _boolValue = false;
 
         [Space]
         [SerializeField]
-        string _intName = "";
+        private string _intName = "";
         [SerializeField]
-        int _intValue = 0;
+        private int _intValue = 0;
 
         [Space]
         [SerializeField]
-        string _floatName = "";
+        private string _floatName = "";
         [SerializeField]
-        float _floatValue = 0.0f;
+        private float _floatValue = 0.0f;
 
         // パラメーター名ハッシュのキャッシュ用
-        int _triggerNameHash, _boolNameHash, _intNameHash, _floatNameHash;
+        private int _triggerNameHash, _boolNameHash, _intNameHash, _floatNameHash;
 
-        bool _initialized = false;
-        void Initialize()
+        private bool _initialized = false;
+        private void Initialize()
         {
             if (_initialized) { return; }
 
@@ -67,7 +67,7 @@ namespace MimyLab
             _initialized = true;
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             Initialize();
 
@@ -78,7 +78,7 @@ namespace MimyLab
             }
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             if (_eventType == ActiveRelayToAnimatorEventType.ActiveAndInactive
              || _eventType == ActiveRelayToAnimatorEventType.Inactive)
@@ -87,7 +87,7 @@ namespace MimyLab
             }
         }
 
-        void TrySetValue()
+        private void TrySetValue()
         {
             if (_animator)
             {

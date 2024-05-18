@@ -11,7 +11,7 @@ namespace MimyLab
     //using VRC.SDKBase;
     //using VRC.Udon;
 
-    [AddComponentMenu("Fukuro Udon/Ambient Sound Assistant/Flexible Spatial Audio")]
+    [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Flexible Spatial Audio")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class FlexibleSpatialAudio : IViewPointReceiver
     {
@@ -65,8 +65,8 @@ namespace MimyLab
                 
                 if (isIn = point == vpPosition) { break; }
             }
-            // 1軸でもinfinityならコライダーが無かったと見なす。とりあえずX軸で判定
-            if (float.IsInfinity(nearest.x)) { Debug.LogWarning($"Flexible Spatial Audio in {this.gameObject.name} haven't Area Collider."); return; }
+            // positiveInfinityならコライダーが無かったと見なす。
+            if (nearest.Equals(Vector3.positiveInfinity)) { Debug.LogWarning($"Flexible Spatial Audio in {this.gameObject.name} haven't Area Collider."); return; }
 
             if (_decaySound)
             {

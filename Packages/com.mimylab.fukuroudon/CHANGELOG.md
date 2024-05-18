@@ -6,6 +6,21 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.19.0] - 2024/5/18
+
+- **Added**
+  - Active Relay
+    - ActiveRelay to GameObjectを追加、これに伴い、ActiveRelay to Componentではゲームオブジェクトのアクティブ切替ができなくなりました。
+    - ActiveRelay to ComponentにEvent Typeを追加、オブジェクトがアクティブに/非アクティブになった時だけ実行できるようになりました。
+    - ActiveRelay to VRCComponentを追加しました。
+    - ActiveRelay to ObjectSyncを追加しました。
+
+- **Changed**  
+  - AmbientEffect Assistant
+    - AmbientSound Assistantから改名しました。これに伴い、General枠に追加していた一部コンポーネントをこちらに移しました。
+  - Grab SlideDoor
+    - Prefab内のオブジェクト名を分かりやすいようリネームしました。
+
 ## [1.18.3] - 2024/5/5
 
 - **Added**
@@ -441,6 +456,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.19.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.19.0
 [1.18.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.18.3
 [1.18.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.18.2
 [1.18.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.18.1

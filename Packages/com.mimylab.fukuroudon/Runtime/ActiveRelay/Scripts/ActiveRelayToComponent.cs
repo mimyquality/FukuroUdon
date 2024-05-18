@@ -15,33 +15,44 @@ namespace MimyLab
     //using VRC.SDK3.Components;
     //using VRC.Udon;
 
-    [AddComponentMenu("Fukuro Udon/Active Relay/Active Relay to Component")]
+    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Component")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class ActiveRelayToComponent : UdonSharpBehaviour
     {
         [SerializeField]
-        Object[] _components = new Object[0];
+        private ActiveRelayEventType _eventType = default;
         [SerializeField]
-        bool _invert = false;
+        private Object[] _components = new Object[0];
+        [SerializeField]
+        private bool _invert = false;
 
-        void OnEnable()
+        private void OnEnable()
         {
-            ToggleComponents(!_invert);
+            if (_eventType == ActiveRelayEventType.ActiveAndInactive
+             || _eventType == ActiveRelayEventType.Active)
+            {
+                ToggleComponents(!_invert);
+            }
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
-            ToggleComponents(_invert);
+            if (_eventType == ActiveRelayEventType.ActiveAndInactive
+             || _eventType == ActiveRelayEventType.Inactive)
+            {
+                ToggleComponents(_invert);
+            }
         }
 
-        void ToggleComponents(bool value)
+        private void ToggleComponents(bool value)
         {
             foreach (var component in _components)
             {
                 if (!component) continue;
 
                 var type = component.GetType();
-                if (type == typeof(GameObject)) { var downCasted = (GameObject)component; downCasted.SetActive(value); }
+                //if (type == typeof(GameObject)) { var downCasted = (GameObject)component; downCasted.SetActive(value); }
+                if (type == typeof(GameObject)) { return; }
                 // Collider
                 else if (type == typeof(BoxCollider)) { var downCasted = (BoxCollider)component; downCasted.enabled = value; }
                 else if (type == typeof(SphereCollider)) { var downCasted = (SphereCollider)component; downCasted.enabled = value; }

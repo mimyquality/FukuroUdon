@@ -11,7 +11,7 @@ namespace MimyLab
     //using VRC.SDKBase;
     //using VRC.Udon;
 
-    [AddComponentMenu("Fukuro Udon/Ambient Sound Assistant/Flexible Reverb Zone")]
+    [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Flexible Reverb Zone")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class FlexibleReverbZone : IViewPointReceiver
     {
@@ -57,8 +57,8 @@ namespace MimyLab
 
                 if (point == vpPosition) { break; }
             }
-            // 1軸でもinfinityならコライダーが無かったと見なす。とりあえずX軸で判定
-            if (float.IsInfinity(nearest.x)) { Debug.LogWarning($"Flexible Reverb Zone in {this.gameObject.name} haven't Area Collider."); return; }
+            // positiveInfinityならコライダーが無かったと見なす。
+            if (nearest.Equals(Vector3.positiveInfinity)) { Debug.LogWarning($"Flexible Spatial Audio in {this.gameObject.name} haven't Area Collider."); return; }
 
             if (_reverbZone)
             {

@@ -11,10 +11,9 @@ namespace MimyLab
     //using VRC.SDKBase;
     //using VRC.Udon;
 
-
-    [AddComponentMenu("Fukuro Udon/General/Area Culling")]
+    [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Boundary Culling")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class AreaCulling : IViewPointReceiver
+    public class BoundaryCulling : IViewPointReceiver
     {
         [Header("Targets")]
         [SerializeField]
@@ -22,23 +21,20 @@ namespace MimyLab
         [SerializeField]
         private SkinnedMeshRenderer[] _skinnedMeshRenderer = new SkinnedMeshRenderer[0];
 
-        [Space]
-        [SerializeField]
-        private bool _invert;
-
         [Header("Bound Settings")]
-        [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
-        private Collider[] _area = new Collider[0];
+        [SerializeField]
+        private Transform _point;
+        [SerializeField]
+        private Vector3 _normal = Vector3.up;
 
-        private Vector3 _viewPointPosition;
-        private bool _prevEnabled;
+        private bool _prevEnabled = true;
 
         private bool _initialized = false;
         private void Initialize()
         {
             if (_initialized) { return; }
 
-            _prevEnabled = !_invert;
+            if (!_point) _point = transform;
             ToggleTargetsEnabled(!_prevEnabled);
 
             _initialized = true;
@@ -48,31 +44,9 @@ namespace MimyLab
         {
             Initialize();
 
-            if (position == _viewPointPosition) { return; }
-
-            SnapViewPoint(position);
-            _viewPointPosition = position;
-        }
-
-        private void SnapViewPoint(Vector3 vpPosition)
-        {
-            var isIn = false;
-            //var nearest = Vector3.positiveInfinity;
-            foreach (var col in _area)
-            {
-                if (!col) { continue; }
-
-                var point = col.ClosestPoint(vpPosition);
-                //nearest = (point - vpPosition).sqrMagnitude < (nearest - vpPosition).sqrMagnitude ? point : nearest;
-
-                if (point == vpPosition)
-                {
-                    isIn = true;
-                    break;
-                }
-            }
-
-            ToggleTargetsEnabled(isIn ^ _invert);
+            var direction = position - _point.position;
+            var borderNormal = _point.rotation * _normal;
+            ToggleTargetsEnabled(Vector3.Dot(borderNormal, direction) >= 0);
         }
 
         private void ToggleTargetsEnabled(bool value)
