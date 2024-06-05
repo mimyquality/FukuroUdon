@@ -14,7 +14,7 @@ namespace MimyLab
     using VRCStation = VRC.SDK3.Components.VRCStation;
 
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to VRCComponent")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToVRCComponent : UdonSharpBehaviour
     {
         [SerializeField]

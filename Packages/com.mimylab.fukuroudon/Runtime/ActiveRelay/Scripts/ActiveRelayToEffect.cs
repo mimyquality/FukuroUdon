@@ -12,7 +12,7 @@ namespace MimyLab
     //using VRC.Udon;
 
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Effect")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToEffect : UdonSharpBehaviour
     {
         [Tooltip("Only particle emission module toggle")]

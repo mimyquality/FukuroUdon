@@ -16,7 +16,7 @@ namespace MimyLab
     //using VRC.Udon;
 
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Component")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToComponent : UdonSharpBehaviour
     {
         [SerializeField]

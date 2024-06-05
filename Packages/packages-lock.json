@@ -12,6 +12,13 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.momoma.genelit": {
+      "version": "https://github.com/momoma-null/GeneLit.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "122040403fc17a13490b7804d58064bad81300b2"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

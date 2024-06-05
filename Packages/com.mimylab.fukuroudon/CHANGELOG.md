@@ -6,6 +6,20 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.20.0] - 2024/6/5
+
+- **Added**
+  - Active Relay
+    - ActiveRelay by Interactを追加しました。
+    - ActiveRelay by Pickupを追加しました。
+    - ActiveRelay by Stationを追加しました。
+    - ActiveRelay by PlayerCollisionを追加しました。
+    - ActiveRelay by PlayerTriggerを追加しました。
+  
+  - **Changed**
+    - ActiveRelay
+      - 同期が不要なコンポーネントに対して、全てBehaviourSyncModeをNoneにしました。
+
 ## [1.19.0] - 2024/5/18
 
 - **Added**
@@ -456,6 +470,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.20.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.20.0
 [1.19.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.19.0
 [1.18.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.18.3
 [1.18.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.18.2

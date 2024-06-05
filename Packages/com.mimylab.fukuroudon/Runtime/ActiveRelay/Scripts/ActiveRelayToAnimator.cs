@@ -19,7 +19,7 @@ namespace MimyLab
     }
 
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Animator")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToAnimator : UdonSharpBehaviour
     {
         [SerializeField]
