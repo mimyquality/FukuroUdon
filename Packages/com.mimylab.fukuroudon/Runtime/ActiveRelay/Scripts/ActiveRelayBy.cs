@@ -22,9 +22,9 @@ namespace MimyLab
     public class ActiveRelayBy : UdonSharpBehaviour
     {
         [SerializeField]
-        private GameObject[] _gameObjects = new GameObject[0];
+        protected GameObject[] _gameObjects = new GameObject[0];
         [SerializeField]
-        private ActiveRelayActivateType _actionType = default;
+        protected ActiveRelayActivateType _actionType = default;
 
         public void DoAction()
         {
@@ -36,7 +36,7 @@ namespace MimyLab
             }
         }
 
-        private void ToggleActive()
+        protected void ToggleActive()
         {
             for (int i = 0; i < _gameObjects.Length; i++)
             {
@@ -47,7 +47,7 @@ namespace MimyLab
             }
         }
 
-        private void SetActive(bool value)
+        protected void SetActive(bool value)
         {
             for (int i = 0; i < _gameObjects.Length; i++)
             {

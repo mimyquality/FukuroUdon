@@ -9,8 +9,6 @@ namespace MimyLab
     using UdonSharp;
     using UnityEngine;
     using UnityEngine.Animations;
-    //using UnityEngine.UI;
-    //using TMPro;
     //using VRC.SDKBase;
     //using VRC.SDK3.Components;
     //using VRC.Udon;
@@ -77,6 +75,8 @@ namespace MimyLab
                 else if (type == typeof(PositionConstraint)) { var downCasted = (PositionConstraint)component; downCasted.enabled = value; }
                 else if (type == typeof(RotationConstraint)) { var downCasted = (RotationConstraint)component; downCasted.enabled = value; }
                 else if (type == typeof(ScaleConstraint)) { var downCasted = (ScaleConstraint)component; downCasted.enabled = value; }
+                // Camera
+                else if (type == typeof(Camera)) { var downCasted = (Camera)component; downCasted.enabled = value; }
             }
         }
     }

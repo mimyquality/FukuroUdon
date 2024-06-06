@@ -6,6 +6,13 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.21.0] - 2024/6/6
+
+- **Added**
+  - Active Relay
+    - ActiveRelay by InteractとActiveRelay by Pickupが同期できる機構を追加しました。
+    - ActiveRelay to Componentで切り替えられるコンポーネントに `Camera` を追加しました。
+
 ## [1.20.0] - 2024/6/5
 
 - **Added**
@@ -470,6 +477,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.21.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.21.0
 [1.20.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.20.0
 [1.19.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.19.0
 [1.18.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.18.3
