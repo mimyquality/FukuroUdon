@@ -45,9 +45,9 @@ namespace MimyLab
 
         [Header("Input config for desktop")]
         [SerializeField]
-        KeyCode riseKeyCode = KeyCode.E;    // 上昇
+        KeyCode riseKeyCode = KeyCode.Q;    // 上昇
         [SerializeField]
-        KeyCode fallKeyCode = KeyCode.Q;    // 下降
+        KeyCode fallKeyCode = KeyCode.E;    // 下降
 
         // 計算用
         VRCPlayerApi _lPlayer = null;
