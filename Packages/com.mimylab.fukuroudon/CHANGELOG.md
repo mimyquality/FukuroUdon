@@ -6,6 +6,12 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.22.1] - 2024/7/18
+
+- **Fixed**
+  - InputFlyingSystem
+    - QとEキーのデフォルトが反対になっているのを修正
+
 ## [1.22.0] - 2024/7/18
 
 - **Added**
@@ -483,6 +489,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.22.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.22.1
 [1.22.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.22.0
 [1.21.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.21.0
 [1.20.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.20.0

@@ -61,8 +61,8 @@ MonoBehaviour:
   flightGravity: 0.1
   dampTime: 0.5
   deadZone: 0.05
-  riseKeyCode: 113
-  fallKeyCode: 101
+  riseKeyCode: 101
+  fallKeyCode: 113
 --- !u!114 &3589639034236251455
 MonoBehaviour:
   m_ObjectHideFlags: 0
