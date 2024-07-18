@@ -28,12 +28,27 @@ namespace MimyLab
         private GameObject[] _gameObjects = new GameObject[0];
         [SerializeField]
         private bool _invert = false;
+        [SerializeField, Min(0.0f), Tooltip("sec, No delay if 0")]
+        private float _delayTime = 0.0f;
 
         private void OnEnable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
              || _eventType == ActiveRelayEventType.Active)
             {
+                if (_delayTime > 0.0f)
+                {
+                    if (_invert)
+                    {
+                        SendCustomEventDelayedSeconds(nameof(_DeactivateDelayed), _delayTime);
+                    }
+                    else
+                    {
+                        SendCustomEventDelayedSeconds(nameof(_ActivateDelayerd), _delayTime);
+                    }
+                    return;
+                }
+
                 ToggleActive(!_invert);
             }
         }
@@ -43,8 +58,31 @@ namespace MimyLab
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
              || _eventType == ActiveRelayEventType.Inactive)
             {
+                if (_delayTime > 0.0f)
+                {
+                    if (_invert)
+                    {
+                        SendCustomEventDelayedSeconds(nameof(_ActivateDelayerd), _delayTime);
+                    }
+                    else
+                    {
+                        SendCustomEventDelayedSeconds(nameof(_DeactivateDelayed), _delayTime);
+                    }
+                    return;
+                }
+
                 ToggleActive(_invert);
             }
+        }
+
+        public void _ActivateDelayerd()
+        {
+            ToggleActive(true);
+        }
+
+        public void _DeactivateDelayed()
+        {
+            ToggleActive(false);
         }
 
         private void ToggleActive(bool value)
