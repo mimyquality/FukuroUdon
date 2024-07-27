@@ -51,9 +51,11 @@ namespace MimyLab
         {
             if (_initialized) { return; }
 
-            _platform = (Networking.LocalPlayer.IsUserInVR()) ? SwivelChairPlayerPlatform.PCVR : SwivelChairPlayerPlatform.Desktop;
-#if UNITY_ANDROID
-            _platform = (Networking.LocalPlayer.IsUserInVR()) ? SwivelChairPlayerPlatform.Quest : SwivelChairPlayerPlatform.Android;
+#if UNITY_STANDALONE_WIN
+            _platform = Networking.LocalPlayer.IsUserInVR() ? SwivelChairPlayerPlatform.PCVR : SwivelChairPlayerPlatform.Desktop;
+#endif
+#if UNITY_ANDROID || UNITY_IOS
+            _platform = Networking.LocalPlayer.IsUserInVR() ? SwivelChairPlayerPlatform.StandaloneVR : SwivelChairPlayerPlatform.Mobile;
 #endif
 
             if (caster) { _casterRigidbody = caster.GetComponent<Rigidbody>(); }
@@ -179,7 +181,7 @@ namespace MimyLab
         public override void InputMoveHorizontal(float value, UdonInputEventArgs args)
         {
             if (_platform == SwivelChairPlayerPlatform.PCVR
-             || _platform == SwivelChairPlayerPlatform.Quest)
+             || _platform == SwivelChairPlayerPlatform.StandaloneVR)
             {
                 _moveValue.x = value;
                 return;
@@ -201,7 +203,7 @@ namespace MimyLab
             if (_inputMode == SwivelChairInputMode.Disable) { return; }
 
             if (_platform == SwivelChairPlayerPlatform.PCVR
-             || _platform == SwivelChairPlayerPlatform.Quest)
+             || _platform == SwivelChairPlayerPlatform.StandaloneVR)
             {
                 _turnValue = value;
             }
@@ -214,7 +216,7 @@ namespace MimyLab
 
             if (value)
             {
-                if (_platform == SwivelChairPlayerPlatform.Android)
+                if (_platform == SwivelChairPlayerPlatform.Mobile)
                 {
                     if (_inputDoubleJumpInterval < doubleTapDuration) { seatAdjuster.Exit(); }
                 }

@@ -15,7 +15,7 @@ namespace MimyLab
     {
         ToggleActive,
         Activate,
-        Inactive
+        Inactivate
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
@@ -32,7 +32,7 @@ namespace MimyLab
             {
                 case ActiveRelayActivateType.ToggleActive: ToggleActive(); break;
                 case ActiveRelayActivateType.Activate: SetActive(true); break;
-                case ActiveRelayActivateType.Inactive: SetActive(false); break;
+                case ActiveRelayActivateType.Inactivate: SetActive(false); break;
             }
         }
 

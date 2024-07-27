@@ -16,8 +16,8 @@ namespace MimyLab
     {
         PCVR,
         Desktop,
-        Quest,
-        Android
+        StandaloneVR,
+        Mobile
     }
 
     public enum SwivelChairInputMode
