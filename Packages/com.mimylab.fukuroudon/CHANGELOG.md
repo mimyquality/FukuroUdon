@@ -6,6 +6,16 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [1.24.0] - 2024/8/3
+
+- **Added**
+  - Active Relay
+    - ActiveRelay by Visibleを追加しました。
+
+- **Changed**
+  - AmbientEffect Assistant
+    - Area CullingとBoundary Cullingで有効無効を切り替えられる対象をRenderer型に拡張しました。元のMeshRenderer/SkinnedMeshRenderer配列に設定していたものは再設定が必要です。
+
 ## [1.23.0] - 2024/7/27
 
 - **Added**
@@ -499,6 +509,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[1.24.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.24.0
 [1.23.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.23.0
 [1.22.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.22.1
 [1.22.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.22.0
