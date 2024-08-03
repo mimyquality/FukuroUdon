@@ -46,30 +46,35 @@ namespace MimyLab
             var viewPointPosition = viewPoint.position;
             var viewPointRotation = viewPoint.rotation;
 
-            foreach (var target in _viewPointReceiver)
+            var isMoved = viewPointPosition != _prevViewPointPosition;
+            var isTurned = viewPointRotation != _prevViewPointRotation;
+
+            if (isMoved | isTurned)
             {
-                if (target) target.ReceiveViewPoint(viewPointPosition, viewPointRotation);
+                foreach (var target in _viewPointReceiver)
+                {
+                    if (target) target.ReceiveViewPoint(viewPointPosition, viewPointRotation);
+                }
             }
 
-            if (viewPointPosition != _prevViewPointPosition)
+            if (isMoved)
             {
                 foreach (var target in _positionReceiver)
                 {
                     if (target) target.SetProgramVariable(ValNameViewPointPosition, viewPointPosition);
                 }
-
-                _prevViewPointPosition = viewPointPosition;
             }
 
-            if (viewPointRotation != _prevViewPointRotation)
+            if (isTurned)
             {
                 foreach (var target in _rotationReceiver)
                 {
                     if (target) target.SetProgramVariable(ValNameViewPointRotation, viewPointRotation);
                 }
-
-                _prevViewPointRotation = viewPointRotation;
             }
+
+            _prevViewPointPosition = viewPointPosition;
+            _prevViewPointRotation = viewPointRotation;
         }
     }
 }

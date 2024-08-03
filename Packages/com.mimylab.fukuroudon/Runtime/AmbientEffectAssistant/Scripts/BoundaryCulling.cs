@@ -17,9 +17,7 @@ namespace MimyLab
     {
         [Header("Targets")]
         [SerializeField]
-        private MeshRenderer[] _meshRenderer = new MeshRenderer[0];
-        [SerializeField]
-        private SkinnedMeshRenderer[] _skinnedMeshRenderer = new SkinnedMeshRenderer[0];
+        private Renderer[] _renderers = new Renderer[0];
 
         [Header("Bound Settings")]
         [SerializeField]
@@ -53,11 +51,7 @@ namespace MimyLab
         {
             if (value != _prevEnabled)
             {
-                foreach (var target in _meshRenderer)
-                {
-                    if (target) { target.enabled = value; }
-                }
-                foreach (var target in _skinnedMeshRenderer)
+                foreach (var target in _renderers)
                 {
                     if (target) { target.enabled = value; }
                 }
