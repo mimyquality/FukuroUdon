@@ -4,7 +4,7 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab
+namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
@@ -20,6 +20,7 @@ namespace MimyLab
         Invert
     }
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to ObjectSync")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class ActiveRelayToObjectSync : UdonSharpBehaviour

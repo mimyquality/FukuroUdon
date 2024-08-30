@@ -4,13 +4,14 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab
+namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
     using VRC.Udon;
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/General/ViewPoint Tracker")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ViewPointTracker : UdonSharpBehaviour

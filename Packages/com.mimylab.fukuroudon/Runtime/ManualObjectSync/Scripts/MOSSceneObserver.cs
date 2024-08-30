@@ -4,7 +4,7 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab
+namespace MimyLab.FukuroUdon
 {
     using UnityEngine;
     using VRC.SDK3.Components;

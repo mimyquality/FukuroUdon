@@ -20,7 +20,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 1
   hasInteractEvent: 1
-  scriptID: 6695293415045450800
+  scriptID: 1390773705675128572
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.ObjectPoolManager, FukuroUdon
+      Data: MimyLab.FukuroUdon.ObjectPoolManager, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -127,7 +127,7 @@ MonoBehaviour:
       Data: 8|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.ObjectPoolControllerSwitchType, FukuroUdon
+      Data: MimyLab.FukuroUdon.ObjectPoolControllerSwitchType, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

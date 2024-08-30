@@ -20,7 +20,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 1
   hasInteractEvent: 0
-  scriptID: 7866652564563924775
+  scriptID: -8986436599370957330
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -1722,7 +1722,7 @@ MonoBehaviour:
       Data: 106|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.AdvancedWorldSettingsInitializeEyeHeightType, FukuroUdon
+      Data: MimyLab.FukuroUdon.AdvancedWorldSettingsInitializeEyeHeightType, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

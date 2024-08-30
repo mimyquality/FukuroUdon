@@ -20,7 +20,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 1
   hasInteractEvent: 1
-  scriptID: 3875293127499415240
+  scriptID: 2773177086231132639
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.MirrorTuner, FukuroUdon
+      Data: MimyLab.FukuroUdon.MirrorTuner, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

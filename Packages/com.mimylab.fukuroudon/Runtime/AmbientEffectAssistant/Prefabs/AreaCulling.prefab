@@ -57,8 +57,7 @@ MonoBehaviour:
   _udonSharpBackingUdonBehaviour: {fileID: 4821403652541109881}
   _renderers: []
   _invert: 0
-  _area:
-  - {fileID: 0}
+  _area: []
 --- !u!114 &4821403652541109881
 MonoBehaviour:
   m_ObjectHideFlags: 0
