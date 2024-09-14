@@ -14,6 +14,16 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     abstract public class IViewPointReceiver : UdonSharpBehaviour
     {
+        internal Transform viewPointTracker = null;
+
         public abstract void ReceiveViewPoint(Vector3 position, Quaternion rotation);
+
+        public virtual void OnViewPointChanged()
+        {
+            if (viewPointTracker)
+            {
+                ReceiveViewPoint(viewPointTracker.position, viewPointTracker.rotation);
+            }
+        }
     }
 }
