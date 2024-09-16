@@ -4,7 +4,7 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab
+namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
@@ -13,6 +13,7 @@ namespace MimyLab
     //using VRC.SDK3.Components;
     using VRCStation = VRC.SDK3.Components.VRCStation;
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Swivel Chair 2/SC2 Seat Adjuster")]
     [RequireComponent(typeof(VRCStation))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]

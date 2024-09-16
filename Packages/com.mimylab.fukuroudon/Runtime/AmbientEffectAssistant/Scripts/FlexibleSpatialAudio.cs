@@ -4,7 +4,7 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab
+namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
@@ -29,8 +29,6 @@ namespace MimyLab
         private Transform _decayTransform;
         private Transform _innerTransform;
 
-        private Vector3 _viewPointPosition;
-
         private bool _initialized = false;
         private void Initialize()
         {
@@ -46,10 +44,7 @@ namespace MimyLab
         {
             Initialize();
 
-            if (position == _viewPointPosition) { return; }
-
             SnapViewPointPosition(position);
-            _viewPointPosition = position;
         }
 
         private void SnapViewPointPosition(Vector3 vpPosition)

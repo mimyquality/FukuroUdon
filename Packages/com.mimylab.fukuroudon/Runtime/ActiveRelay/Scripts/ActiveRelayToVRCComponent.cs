@@ -4,7 +4,7 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab
+namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
@@ -13,6 +13,7 @@ namespace MimyLab
     using VRC.SDK3.Components;
     using VRCStation = VRC.SDK3.Components.VRCStation;
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to VRCComponent")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToVRCComponent : UdonSharpBehaviour

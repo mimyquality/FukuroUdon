@@ -20,7 +20,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 4
   hasInteractEvent: 0
-  scriptID: 1641564398431002094
+  scriptID: -894442957220004761
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.ActiveRelayEventType, FukuroUdon
+      Data: MimyLab.FukuroUdon.ActiveRelayEventType, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -187,7 +187,7 @@ MonoBehaviour:
       Data: 12|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.ManualObjectSync[], FukuroUdon
+      Data: MimyLab.FukuroUdon.ManualObjectSync[], FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -253,7 +253,7 @@ MonoBehaviour:
       Data: 17|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.ActiveRelayActionType, FukuroUdon
+      Data: MimyLab.FukuroUdon.ActiveRelayActionType, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

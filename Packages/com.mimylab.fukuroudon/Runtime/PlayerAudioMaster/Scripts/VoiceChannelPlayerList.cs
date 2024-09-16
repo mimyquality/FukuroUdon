@@ -4,7 +4,7 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab
+namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
@@ -13,6 +13,7 @@ namespace MimyLab
     //using VRC.SDK3.Components;
     using TMPro;
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class VoiceChannelPlayerList : UdonSharpBehaviour
     {

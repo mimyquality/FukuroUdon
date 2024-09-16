@@ -20,7 +20,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 1
   hasInteractEvent: 0
-  scriptID: 8562673196207425448
+  scriptID: -4717174490979098742
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -115,7 +115,7 @@ MonoBehaviour:
       Data: 6|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.ManualObjectSync[], FukuroUdon
+      Data: MimyLab.FukuroUdon.ManualObjectSync[], FukuroUdon
     - Name: 
       Entry: 8
       Data: 

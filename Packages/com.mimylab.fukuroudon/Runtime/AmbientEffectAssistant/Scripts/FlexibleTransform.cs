@@ -4,7 +4,7 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab
+namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
@@ -28,17 +28,9 @@ namespace MimyLab
         [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
         private Collider[] _area = new Collider[0];
 
-        private Vector3 _viewPointPosition;
-        private Quaternion _viewPointRotation;
-
         public override void ReceiveViewPoint(Vector3 position, Quaternion rotation)
         {
-            if (position == _viewPointPosition
-             && rotation == _viewPointRotation) { return; }
-
             SnapViewPoint(position, rotation);
-            _viewPointPosition = position;
-            _viewPointRotation = rotation;
         }
 
         private void SnapViewPoint(Vector3 vpPosition, Quaternion vpRotation)
