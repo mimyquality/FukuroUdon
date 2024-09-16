@@ -23,6 +23,8 @@ namespace MimyLab.FukuroUdon
 
         Transform _reverbZoneTransform;
 
+        private Vector3 _viewPointPosition;
+
         private bool _initialized = false;
         private void Initialize()
         {
@@ -37,7 +39,10 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
+            if (position == _viewPointPosition) { return; }
+
             SnapViewPointPosition(position);
+            _viewPointPosition = position;
         }
 
         private void SnapViewPointPosition(Vector3 vpPosition)

@@ -1,7 +1,11 @@
 {
   "name": "com.mimylab.fukuroudon",
   "displayName": "Fukuro Udon",
+<<<<<<< HEAD
   "version": "1.23.0",
+=======
+  "version": "2.0.0-beta",
+>>>>>>> parent of 87382b1 (ver 2.0.0-beta.2)
   "description": "MimyLab's U# utilitiy pack for VPM.",
   "unity": "2022.3",
   "author": {

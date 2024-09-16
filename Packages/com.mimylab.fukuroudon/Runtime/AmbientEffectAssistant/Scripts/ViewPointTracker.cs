@@ -29,31 +29,21 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private UdonBehaviour[] _rotationReceiver = new UdonBehaviour[0];
 
-        private VRCPlayerApi _localPlayer;
+        private VRCPlayerApi _lPlayer;
         private Vector3 _prevViewPointPosition;
         private Quaternion _prevViewPointRotation;
 
         private void Start()
         {
-            _localPlayer = Networking.LocalPlayer;
-            var viewPoint = _localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
+            _lPlayer = Networking.LocalPlayer;
+            var viewPoint = _lPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
             _prevViewPointPosition = viewPoint.position;
             _prevViewPointRotation = viewPoint.rotation;
-            this.transform.SetPositionAndRotation(_prevViewPointPosition, _prevViewPointRotation);
-
-            foreach (var target in _viewPointReceiver)
-            {
-                if (target)
-                {
-                    target.viewPointTracker = this.transform;
-                    target.OnViewPointChanged();
-                }
-            }
         }
 
         public override void PostLateUpdate()
         {
-            var viewPoint = _localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
+            var viewPoint = _lPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
             var viewPointPosition = viewPoint.position;
             var viewPointRotation = viewPoint.rotation;
 
@@ -62,11 +52,9 @@ namespace MimyLab.FukuroUdon
 
             if (isMoved | isTurned)
             {
-                this.transform.SetPositionAndRotation(viewPointPosition, viewPointRotation);
-
                 foreach (var target in _viewPointReceiver)
                 {
-                    if (target) target.OnViewPointChanged();
+                    if (target) target.ReceiveViewPoint(viewPointPosition, viewPointRotation);
                 }
             }
 

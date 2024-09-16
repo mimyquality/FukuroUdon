@@ -28,6 +28,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
         private Collider[] _area = new Collider[0];
 
+        private Vector3 _viewPointPosition;
         private bool _prevEnabled;
 
         private bool _initialized = false;
@@ -45,10 +46,13 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            CullingByViewPointPosition(position);
+            if (position == _viewPointPosition) { return; }
+
+            SnapViewPoint(position);
+            _viewPointPosition = position;
         }
 
-        private void CullingByViewPointPosition(Vector3 vpPosition)
+        private void SnapViewPoint(Vector3 vpPosition)
         {
             var isIn = false;
             //var nearest = Vector3.positiveInfinity;
