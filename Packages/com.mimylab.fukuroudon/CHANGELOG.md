@@ -6,18 +6,6 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-## [2.0.0-beta] - 2024/8/30
-
-- **Changed**
-  - サポートバージョンをUnity2022.3、VRCSDK 3.5.0以上に引き上げました。
-  - 全てのU#スクリプトの名前空間を `MimyLab` から `MimyLab.FukuroUdon` に変更しました。
-  - 全てのコンポーネントにアイコンを実装しました。
-
-=======
->>>>>>> parent of f3d7c11 (ver2.0.0-beta更新)
 ## [1.24.0] - 2024/8/3
 
 - **Added**
@@ -28,7 +16,6 @@
   - AmbientEffect Assistant
     - Area CullingとBoundary Cullingで有効無効を切り替えられる対象をRenderer型に拡張しました。元のMeshRenderer/SkinnedMeshRenderer配列に設定していたものは再設定が必要です。
 
->>>>>>> parent of 87382b1 (ver 2.0.0-beta.2)
 ## [1.23.0] - 2024/7/27
 
 - **Added**
