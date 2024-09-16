@@ -4,7 +4,7 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab.FukuroUdon
+namespace MimyLab
 {
     using UdonSharp;
     using UnityEngine;
@@ -21,7 +21,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharpEditor;
 #endif
 
-    [Icon(ComponentIconPath.FukuroUdon)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MOSUpdateManager : UdonSharpBehaviour
     {

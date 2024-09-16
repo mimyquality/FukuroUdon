@@ -20,7 +20,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 4
   hasInteractEvent: 0
-  scriptID: -6531131994735418836
+  scriptID: 1626647845685910144
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -187,7 +187,7 @@ MonoBehaviour:
       Data: 11|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.PlayerAudioRegulatorChannelUncmatchMode, FukuroUdon
+      Data: MimyLab.PlayerAudioRegulatorChannelUncmatchMode, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -241,7 +241,7 @@ MonoBehaviour:
       Data: 14|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.IPlayerAudioRegulator, FukuroUdon
+      Data: MimyLab.IPlayerAudioRegulator, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

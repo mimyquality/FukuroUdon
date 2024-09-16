@@ -4,7 +4,7 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab.FukuroUdon
+namespace MimyLab
 {
     using UdonSharp;
     using UnityEngine;
@@ -23,7 +23,6 @@ namespace MimyLab.FukuroUdon
     using BestHTTP.SecureProtocol.Org.BouncyCastle.Crypto.Engines;
 #endif
 
-    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Manual ObjectSync")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class ManualObjectSync : UdonSharpBehaviour

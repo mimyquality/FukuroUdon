@@ -20,7 +20,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 4
   hasInteractEvent: 1
-  scriptID: 3738357061509762254
+  scriptID: -7225229588450987640
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -244,7 +244,7 @@ MonoBehaviour:
       Data: 14|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.ChairFixMode, FukuroUdon
+      Data: MimyLab.ChairFixMode, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -975,7 +975,7 @@ MonoBehaviour:
       Data: 59|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.SCKeyInputManager, FukuroUdon
+      Data: MimyLab.SCKeyInputManager, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

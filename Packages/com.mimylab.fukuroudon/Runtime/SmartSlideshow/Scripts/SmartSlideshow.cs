@@ -4,14 +4,13 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab.FukuroUdon
+namespace MimyLab
 {
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.Udon;
+    using VRC.Udon;
 
-    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Smart Slideshow/Smart Slideshow")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class SmartSlideshow : UdonSharpBehaviour

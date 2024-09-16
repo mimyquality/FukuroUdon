@@ -4,7 +4,7 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab.FukuroUdon
+namespace MimyLab
 {
     using UdonSharp;
     using UnityEngine;
@@ -12,7 +12,6 @@ namespace MimyLab.FukuroUdon
     //using VRC.Udon;
     //using VRC.SDK3.Components;
 
-    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Equip with MOS")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class EquipWithMOS : UdonSharpBehaviour

@@ -20,7 +20,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 0
   hasInteractEvent: 0
-  scriptID: 4621649365025797070
+  scriptID: -1033325046087664621
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.SC2SeatAdjuster, FukuroUdon
+      Data: MimyLab.SC2SeatAdjuster, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -127,7 +127,7 @@ MonoBehaviour:
       Data: 8|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.SC2Caster, FukuroUdon
+      Data: MimyLab.SC2Caster, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -502,7 +502,7 @@ MonoBehaviour:
       Data: 32|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.SwivelChairPlayerPlatform, FukuroUdon
+      Data: MimyLab.SwivelChairPlayerPlatform, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -562,7 +562,7 @@ MonoBehaviour:
       Data: 36|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.SwivelChairInputMode, FukuroUdon
+      Data: MimyLab.SwivelChairInputMode, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

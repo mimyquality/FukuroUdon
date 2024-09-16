@@ -7,6 +7,7 @@
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 ## [2.0.0-beta] - 2024/8/30
 
@@ -15,6 +16,8 @@
   - 全てのU#スクリプトの名前空間を `MimyLab` から `MimyLab.FukuroUdon` に変更しました。
   - 全てのコンポーネントにアイコンを実装しました。
 
+=======
+>>>>>>> parent of f3d7c11 (ver2.0.0-beta更新)
 ## [1.24.0] - 2024/8/3
 
 - **Added**
@@ -520,8 +523,11 @@
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 [2.0.0-beta]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0-beta
+=======
+>>>>>>> parent of f3d7c11 (ver2.0.0-beta更新)
 [1.24.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.24.0
 >>>>>>> parent of 87382b1 (ver 2.0.0-beta.2)
 [1.23.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.23.0

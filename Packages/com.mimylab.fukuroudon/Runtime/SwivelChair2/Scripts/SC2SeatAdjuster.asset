@@ -20,7 +20,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 4
   hasInteractEvent: 1
-  scriptID: 6262208841313022127
+  scriptID: 4748378806517189972
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.SwivelChair2, FukuroUdon
+      Data: MimyLab.SwivelChair2, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

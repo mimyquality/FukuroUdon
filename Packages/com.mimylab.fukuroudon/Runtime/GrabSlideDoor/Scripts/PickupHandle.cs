@@ -4,7 +4,7 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-namespace MimyLab.FukuroUdon
+namespace MimyLab
 {
     using UdonSharp;
     using UnityEngine;
@@ -12,7 +12,6 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Components;
     using VRC.Udon;
 
-    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/General/Pickup Handle")]
     [RequireComponent(typeof(VRCPickup))]
     public class PickupHandle : UdonSharpBehaviour
