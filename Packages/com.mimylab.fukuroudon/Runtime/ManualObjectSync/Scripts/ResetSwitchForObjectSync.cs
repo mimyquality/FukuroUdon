@@ -24,6 +24,7 @@ namespace MimyLab
 
         private float _lastResetTime;
         private VRCObjectSync[] _objectSyncs_vrc;
+        private ManualObjectSync[] _manualObjectSyncs;
         private UdonBehaviour[] _objectSyncs_udon;
 
         private bool _initialized = false;
@@ -32,12 +33,14 @@ namespace MimyLab
             if (_initialized) { return; }
 
             _objectSyncs_vrc = new VRCObjectSync[resetObjects.Length];
+            _manualObjectSyncs = new ManualObjectSync[resetObjects.Length];
             _objectSyncs_udon = new UdonBehaviour[resetObjects.Length];
             for (int i = 0; i < resetObjects.Length; i++)
             {
                 if (!resetObjects[i]) { continue; }
 
                 _objectSyncs_vrc[i] = resetObjects[i].GetComponent<VRCObjectSync>();
+                _manualObjectSyncs[i] = resetObjects[i].GetComponent<ManualObjectSync>();
                 _objectSyncs_udon[i] = resetObjects[i].GetComponent<UdonBehaviour>();
             }
 
@@ -72,6 +75,12 @@ namespace MimyLab
                 if (_objectSyncs_vrc[i])
                 {
                     _objectSyncs_vrc[i].Respawn();
+                    continue;
+                }
+
+                if (_manualObjectSyncs[i])
+                {
+                    _manualObjectSyncs[i].Respawn();
                     continue;
                 }
 
