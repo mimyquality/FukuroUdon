@@ -24,8 +24,8 @@ namespace MimyLab
 
         private float _lastResetTime;
         private VRCObjectSync[] _objectSyncs_vrc;
-        private ManualObjectSync[] _objectSyncs_mos;
-        private UdonBehaviour[][] _objectSyncs_udon;
+        private ManualObjectSync[] _manualObjectSyncs;
+        private UdonBehaviour[] _objectSyncs_udon;
 
         private bool _initialized = false;
         private void Initialize()
@@ -33,15 +33,15 @@ namespace MimyLab
             if (_initialized) { return; }
 
             _objectSyncs_vrc = new VRCObjectSync[resetObjects.Length];
-            _objectSyncs_mos = new ManualObjectSync[resetObjects.Length];
-            _objectSyncs_udon = new UdonBehaviour[resetObjects.Length][];
+            _manualObjectSyncs = new ManualObjectSync[resetObjects.Length];
+            _objectSyncs_udon = new UdonBehaviour[resetObjects.Length];
             for (int i = 0; i < resetObjects.Length; i++)
             {
                 if (!resetObjects[i]) { continue; }
 
                 _objectSyncs_vrc[i] = resetObjects[i].GetComponent<VRCObjectSync>();
-                _objectSyncs_mos[i] = resetObjects[i].GetComponent<ManualObjectSync>();
-                _objectSyncs_udon[i] = resetObjects[i].GetComponents<UdonBehaviour>();
+                _manualObjectSyncs[i] = resetObjects[i].GetComponent<ManualObjectSync>();
+                _objectSyncs_udon[i] = resetObjects[i].GetComponent<UdonBehaviour>();
             }
 
             _initialized = true;
@@ -78,21 +78,16 @@ namespace MimyLab
                     continue;
                 }
 
-                if (_objectSyncs_mos[i])
+                if (_manualObjectSyncs[i])
                 {
-                    _objectSyncs_mos[i].Respawn();
+                    _manualObjectSyncs[i].Respawn();
                     continue;
                 }
 
-                if (_objectSyncs_udon[i] != null)
+                if (_objectSyncs_udon[i])
                 {
-                    for (int j = 0; j < _objectSyncs_udon[i].Length; j++)
-                    {
-                        if (_objectSyncs_udon[i][j])
-                        {
-                            _objectSyncs_udon[i][j].SendCustomEvent("Respawn");
-                        }
-                    }
+                    _objectSyncs_udon[i].SendCustomEvent("Respawn");
+                    continue;
                 }
             }
         }
