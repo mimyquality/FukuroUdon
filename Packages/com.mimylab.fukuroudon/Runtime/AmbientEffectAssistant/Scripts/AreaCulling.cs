@@ -11,7 +11,7 @@ namespace MimyLab.FukuroUdon
     //using VRC.SDKBase;
     //using VRC.Udon;
 
-
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Area Culling")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class AreaCulling : IViewPointReceiver

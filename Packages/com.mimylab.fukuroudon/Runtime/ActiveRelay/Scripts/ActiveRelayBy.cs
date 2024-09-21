@@ -18,7 +18,6 @@ namespace MimyLab.FukuroUdon
         Inactivate
     }
 
-    [Icon(ComponentIconPath.FukuroUdon)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayBy : UdonSharpBehaviour
     {

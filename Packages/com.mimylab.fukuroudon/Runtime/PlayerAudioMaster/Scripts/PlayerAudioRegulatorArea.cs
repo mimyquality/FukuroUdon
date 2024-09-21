@@ -12,6 +12,7 @@ namespace MimyLab.FukuroUdon
     //using VRC.Udon;
     //using VRC.SDK3.Components;
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator Area")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerAudioRegulatorArea : IPlayerAudioRegulator

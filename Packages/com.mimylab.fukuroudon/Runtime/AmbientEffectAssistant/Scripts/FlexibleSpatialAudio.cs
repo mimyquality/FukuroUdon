@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     //using VRC.SDKBase;
     //using VRC.Udon;
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Flexible Spatial Audio")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class FlexibleSpatialAudio : IViewPointReceiver

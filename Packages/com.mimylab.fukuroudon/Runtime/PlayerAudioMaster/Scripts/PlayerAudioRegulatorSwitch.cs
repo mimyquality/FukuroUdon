@@ -19,6 +19,7 @@ namespace MimyLab.FukuroUdon
         ButtonOFF
     }
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator Switch")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class PlayerAudioRegulatorSwitch : IPlayerAudioRegulator

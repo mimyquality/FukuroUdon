@@ -19,6 +19,13 @@
   - 全てのU#スクリプトの名前空間を `MimyLab` から `MimyLab.FukuroUdon` に変更しました。
   - 全てのコンポーネントにアイコンを実装しました。
 
+## [1.24.1] - 2024/9/16
+
+- **Fixed**
+  - Manual ObjectSync
+    - 複数のUdonコンポーネントが付いているオブジェクトに対して、Reset Switch for ObjectSync がManual ObjectSyncを見失わなくなりました。 #15
+    - これに伴い、VRC ObjectSyncもManual ObjectSyncも付いていないオブジェクトに対しては、全てのUdonコンポーネントに対して `SendCustomEvent("Reset")` を実行するようになりました。
+
 ## [1.24.0] - 2024/8/3
 
 - **Added**
@@ -522,8 +529,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
-[2.0.0-beta.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0-beta.2
-[2.0.0-beta]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0-beta
+[1.24.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.24.1
 [1.24.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.24.0
 [1.23.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.23.0
 [1.22.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.22.1

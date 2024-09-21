@@ -11,7 +11,6 @@ namespace MimyLab.FukuroUdon
     //using VRC.SDKBase;
     //using VRC.Udon;
 
-    [Icon(ComponentIconPath.FukuroUdon)]
     abstract public class IViewPointReceiver : UdonSharpBehaviour
     {
         internal Transform viewPointTracker = null;

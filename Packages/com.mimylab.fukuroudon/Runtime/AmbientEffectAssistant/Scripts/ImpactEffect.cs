@@ -12,7 +12,6 @@ namespace MimyLab.FukuroUdon
     //using VRC.Udon;
     //using VRC.SDK3.Components;
 
-    [Icon(ComponentIconPath.FukuroUdon)]
     [RequireComponent(typeof(Collider))]
     public class ImpactEffect : UdonSharpBehaviour
     {

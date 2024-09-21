@@ -19,7 +19,6 @@ namespace MimyLab.FukuroUdon
         Passthrough
     }
 
-    [Icon(ComponentIconPath.FukuroUdon)]
     public class IPlayerAudioRegulator : UdonSharpBehaviour
     {
         [Header("Options")]

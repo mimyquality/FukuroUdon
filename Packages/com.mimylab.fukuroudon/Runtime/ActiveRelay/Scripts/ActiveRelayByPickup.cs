@@ -20,6 +20,7 @@ namespace MimyLab.FukuroUdon
         Drop
     }
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Pickup")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
     public class ActiveRelayByPickup : ActiveRelayBy

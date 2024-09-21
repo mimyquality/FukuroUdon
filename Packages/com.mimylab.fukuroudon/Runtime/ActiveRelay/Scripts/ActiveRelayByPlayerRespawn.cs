@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     //using VRC.Udon;
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Player Respawn")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayByPlayerRespawn : ActiveRelayBy
