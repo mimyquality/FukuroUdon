@@ -4,6 +4,8 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
+#pragma warning disable 0414
+
 namespace MimyLab.FukuroUdon
 {
     using UdonSharp;

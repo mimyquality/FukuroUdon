@@ -16,11 +16,7 @@
       "version": "3.1.0"
     },
     "com.vrchat.worlds": {
-<<<<<<< HEAD
       "version": "3.7.1-beta.2"
-=======
-      "version": "3.6.2-beta.1"
->>>>>>> main2.x
     }
   },
   "locked": {

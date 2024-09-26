@@ -6,24 +6,18 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
-## [2.0.0-beta.3] - 2024/9/21
-
-- **Fixed**
-  - ActiveRelay
-    - ActiveRelay to Componentに対象外のオブジェクト・コンポーネントをセットできなくなり、セットされていた場合除去されるようになりました。
-
-## [2.0.0-beta.2] - 2024/9/14
-
-- **Changed**
-  - AmbientEffect Assistant
-    - 軽量化。これに伴い、ViewPoint Tracker自身がビューポイントと一致して動くようになりました。
-
-## [2.0.0-beta] - 2024/8/30
+## [2.0.0] - 2024/9/26
 
 - **Changed**
   - サポートバージョンをUnity2022.3、VRCSDK 3.5.0以上に引き上げました。
   - 全てのU#スクリプトの名前空間を `MimyLab` から `MimyLab.FukuroUdon` に変更しました。
-  - 全てのコンポーネントにアイコンを実装しました。
+  - 全てのコンポーネントにアイコンを実装しました🦉
+  - AmbientEffect Assistant
+    - 軽量化。これに伴い、ViewPoint Tracker自身がビューポイントと一致して動くようになりました。
+
+- **Fixed**
+  - ActiveRelay
+    - ActiveRelay to Componentに対象外のオブジェクト・コンポーネントをセットできなくなり、セットされていた場合除去されるようになりました。
 
 ## [1.24.1] - 2024/9/16
 
@@ -535,9 +529,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
-[2.0.0-beta.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0-beta.3
-[2.0.0-beta.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0-beta.2
-[2.0.0-beta]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0-beta
+[2.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0
 [1.24.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.24.1
 [1.24.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.24.0
 [1.23.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.23.0
