@@ -41,13 +41,11 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
-        private void Start()
-        {
-            Initialize();
-        }
 
         protected override bool CheckApplicableInternal(VRCPlayerApi target)
         {
+            Initialize();
+
             if (!_collider.enabled) { return false; }
 
             var pos = target.GetPosition();

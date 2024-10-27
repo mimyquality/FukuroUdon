@@ -18,11 +18,29 @@ namespace MimyLab.FukuroUdon
     public class PlayerAudioRegulatorList : IPlayerAudioRegulator
     {
         [UdonSynced]
-        private int[] _playerIDList = new int[PlayerAudioSupervisor.HardCap];
+        private int[] _playerIdList = new int[PlayerAudioSupervisor.HardCap];
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
-            RefreshPlayerList();
+            SendCustomEventDelayedFrames(nameof(_RefreshPlayerList), 1);
+        }
+        public void _RefreshPlayerList()
+        {
+            var players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[PlayerAudioSupervisor.HardCap]);
+            var tmpPlayerIdList = new int[PlayerAudioSupervisor.HardCap];
+            var tmpCount = 0;
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (!Utilities.IsValid(players[i])) { continue; }
+
+                var tmpPlayerId = players[i].playerId;
+                if (System.Array.IndexOf(_playerIdList, tmpPlayerId) > -1)
+                {
+                    tmpPlayerIdList[tmpCount++] = tmpPlayerId;
+                }
+            }
+            tmpPlayerIdList.CopyTo(_playerIdList, 0);
+            RequestSerialization();
         }
 
         /// <summary>
@@ -32,16 +50,13 @@ namespace MimyLab.FukuroUdon
         {
             if (!Networking.IsOwner(this.gameObject)) { return false; }
 
-            var playerID = target.playerId;
-            for (int i = 0; i < _playerIDList.Length; i++)
-            {
-                if (_playerIDList[i] == playerID) { return false; }
-            }
-            for (int j = 0; j < _playerIDList.Length; j++)
-            {
-                if (_playerIDList[j] > 0) { continue; }
+            var playerId = target.playerId;
+            if (System.Array.IndexOf(_playerIdList, playerId) > -1) { return false; }
 
-                _playerIDList[j] = playerID;
+            var lastIndex = System.Array.IndexOf(_playerIdList, 0);
+            if (lastIndex > -1)
+            {
+                _playerIdList[lastIndex] = playerId;
                 RequestSerialization();
 
                 return true;
@@ -57,14 +72,12 @@ namespace MimyLab.FukuroUdon
         {
             if (!Networking.IsOwner(this.gameObject)) { return; }
 
-            var playerID = target.playerId;
-            for (int i = 0; i < _playerIDList.Length; i++)
+            var playerId = target.playerId;
+            int index;
+            while ((index = System.Array.IndexOf(_playerIdList, playerId)) > -1)
             {
-                if (_playerIDList[i] == playerID)
-                {
-                    _playerIDList[i] = 0;
-                    RequestSerialization();
-                }
+                _playerIdList[index] = 0;
+                RequestSerialization();
             }
         }
 
@@ -75,42 +88,15 @@ namespace MimyLab.FukuroUdon
         {
             if (!Networking.IsOwner(this.gameObject)) { return; }
 
-            _playerIDList = new int[PlayerAudioSupervisor.HardCap];
+            System.Array.Clear(_playerIdList, 0, _playerIdList.Length);
             RequestSerialization();
         }
 
         protected override bool CheckApplicableInternal(VRCPlayerApi target)
         {
-            var playerID = target.playerId;
-            for (int i = 0; i < _playerIDList.Length; i++)
-            {
-                if (_playerIDList[i] == playerID) { return true; }
-            }
+            if (System.Array.IndexOf(_playerIdList, target.playerId) > -1) { return true; }
+
             return false;
-        }
-
-        private void RefreshPlayerList()
-        {
-            var players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[PlayerAudioSupervisor.HardCap]);
-            var tmpPlayerIDList = new int[PlayerAudioSupervisor.HardCap];
-            int tmpPlayerID;
-            for (int i = 0; i < players.Length; i++)
-            {
-                if (!Utilities.IsValid(players[i])) { continue; }
-
-                tmpPlayerID = players[i].playerId;
-                for (int j = 0; j < _playerIDList.Length; j++)
-                {
-                    if (tmpPlayerID == _playerIDList[j])
-                    {
-                        tmpPlayerIDList[i] = tmpPlayerID;
-                        break;
-                    }
-                }
-            }
-
-            _playerIDList = tmpPlayerIDList;
-            RequestSerialization();
         }
     }
 }
