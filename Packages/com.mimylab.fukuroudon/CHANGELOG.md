@@ -6,6 +6,15 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [2.0.1] - 2024/10/27
+
+- **Fixed**
+  - PlayerAudio Master
+    - PA Regulator Areaの初期化処理を見直しました。
+  - GameObject Celler
+  - PlayerAudio Master
+    - 内部処理を一部最適化しました。
+
 ## [2.0.0] - 2024/9/26
 
 - **Changed**
@@ -529,6 +538,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[2.0.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.1
 [2.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0
 [1.24.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.24.1
 [1.24.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.24.0
