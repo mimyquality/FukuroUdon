@@ -18,12 +18,12 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class ObjectPoolManager : UdonSharpBehaviour
     {
-        VRCObjectPool _objectPool;
-        GameObject[] _pool;
-        GameObject _lastSpawnedObject = null;
-        bool _initialized = false;
+        private VRCObjectPool _objectPool;
+        private GameObject[] _pool;
+        private GameObject _lastSpawnedObject = null;
 
-        void Initialize()
+        private bool _initialized = false;
+        private void Initialize()
         {
             if (_initialized) { return; }
 
@@ -32,7 +32,7 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
-        void Start()
+        private void Start()
         {
             Initialize();
         }
@@ -45,6 +45,7 @@ namespace MimyLab.FukuroUdon
             get
             {
                 Initialize();
+
                 return _objectPool.Pool;
             }
         }
@@ -53,6 +54,7 @@ namespace MimyLab.FukuroUdon
             get
             {
                 Initialize();
+
                 return _objectPool.StartPositions;
             }
         }
@@ -61,6 +63,7 @@ namespace MimyLab.FukuroUdon
             get
             {
                 Initialize();
+
                 return _objectPool.StartRotations;
             }
         }
@@ -74,6 +77,8 @@ namespace MimyLab.FukuroUdon
         {
             get
             {
+                Initialize();
+
                 int count = 0;
                 for (int i = 0; i < _pool.Length; i++)
                 {
@@ -87,6 +92,8 @@ namespace MimyLab.FukuroUdon
         {
             get
             {
+                Initialize();
+
                 int count = 0;
                 for (int i = 0; i < _pool.Length; i++)
                 {
@@ -100,6 +107,8 @@ namespace MimyLab.FukuroUdon
         {
             get
             {
+                Initialize();
+
                 int count = 0;
                 for (int i = 0; i < _pool.Length; i++)
                 {
@@ -116,8 +125,7 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            GameObject resultObject;
-            resultObject = _objectPool.TryToSpawn();
+            var resultObject = _objectPool.TryToSpawn();
             if (resultObject) { _lastSpawnedObject = resultObject; }
 
             return resultObject;
@@ -144,12 +152,11 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            GameObject resultObject;
-            GameObject[] spawnObjects = new GameObject[_pool.Length];
-            int spawnCount = 0;
+            var spawnObjects = new GameObject[_pool.Length];
+            var spawnCount = 0;
             for (int i = 0; i < _pool.Length; i++)
             {
-                resultObject = _objectPool.TryToSpawn();
+                var resultObject = _objectPool.TryToSpawn();
                 if (!resultObject) { break; }
 
                 _lastSpawnedObject = resultObject;
@@ -157,7 +164,7 @@ namespace MimyLab.FukuroUdon
             }
 
             // スポーンしたオブジェクトだけの配列を作る(色々と使えないので原始的にやる)
-            GameObject[] returnObjects = new GameObject[spawnCount];
+            var returnObjects = new GameObject[spawnCount];
             System.Array.Copy(spawnObjects, returnObjects, spawnCount);
 
             return returnObjects;
