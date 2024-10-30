@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2023 Mimy Quality
+Copyright (c) 2024 Mimy Quality
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
@@ -19,9 +19,6 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class SC2SeatAdjuster : UdonSharpBehaviour
     {
-        [HideInInspector]
-        public SwivelChair2 swivelChair2;
-
         public Vector3 adjustMinLimit = new Vector3(0.0f, -0.5f, -0.3f);
         public Vector3 adjustMaxLimit = new Vector3(0.0f, 0.5f, 0.3f);
         [Min(0.0f), Tooltip("meter/sec")]
@@ -31,6 +28,9 @@ namespace MimyLab.FukuroUdon
         public float forwardSnapThrethold = 5.0f;
         [Min(0.0f), Tooltip("degree/sec")]
         public float rotateSpeed = 60.0f;
+
+        internal SwivelChair2 swivelChair2;
+        internal SC2AdjustmentSync adjustmentSync;
 
         [UdonSynced, FieldChangeCallback(nameof(Offset))]
         private Vector3 _offset;
@@ -70,13 +70,12 @@ namespace MimyLab.FukuroUdon
 
             _station = GetComponent<VRCStation>();
             _seat = _station.transform;
-            _enterPoint = (_station.stationEnterPlayerLocation) ? _station.stationEnterPlayerLocation : _seat;
+            _enterPoint = _station.stationEnterPlayerLocation ? _station.stationEnterPlayerLocation : _seat;
             _station.disableStationExit = true;
 
             _offset = _enterPoint.localPosition;
             _localOffset = _offset;
             _direction = _seat.localRotation;
-            _localOffset = _offset;
 
             _initialized = true;
         }
@@ -98,7 +97,7 @@ namespace MimyLab.FukuroUdon
 
             Networking.SetOwner(player, this.gameObject);
 
-            Offset = _localOffset;
+            Offset = adjustmentSync ? adjustmentSync.LocalOffset : _localOffset;
 
             RequestSerialization();
         }
@@ -110,6 +109,7 @@ namespace MimyLab.FukuroUdon
             swivelChair2.OnStandUp();
 
             _localOffset = Offset;
+            if (adjustmentSync) { adjustmentSync.LocalOffset = _localOffset; }
         }
 
         public void Enter()
