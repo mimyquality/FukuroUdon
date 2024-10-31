@@ -9,7 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    using VRC.Udon;
+    //using VRC.Udon;
     using VRC.SDK3.Components;
 
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -40,12 +40,17 @@ namespace MimyLab.FukuroUdon
                 {
                     if (_linkedAdjustmentSyncs == null) { _linkedAdjustmentSyncs = GetLinkedAdjustmentSyncs(); }
 
-                    foreach (var linkedAS in _linkedAdjustmentSyncs)
+                    foreach (var linkee in _linkedAdjustmentSyncs)
                     {
-                        linkedAS.LinkLocalOffset(value);
+                        linkee.LinkLocalOffset(this);
                     }
                 }
             }
+        }
+
+        private void Start()
+        {
+            this.gameObject.SetActive(Networking.IsOwner(this.gameObject));
         }
 
         public override void OnPlayerRestored(VRCPlayerApi player)
@@ -57,6 +62,12 @@ namespace MimyLab.FukuroUdon
             _adjuster.adjustmentSync = this;
         }
 
+        public void LinkLocalOffset(SC2AdjustmentSync linker)
+        {
+            _localOffset = linker.LocalOffset;
+            RequestSerialization();
+        }
+
         private SC2AdjustmentSync[] GetLinkedAdjustmentSyncs()
         {
             var playerObjects = Networking.LocalPlayer.GetPlayerObjects();
@@ -66,6 +77,7 @@ namespace MimyLab.FukuroUdon
             {
                 var adjustmentSync = playerObject.GetComponent<SC2AdjustmentSync>();
                 if (adjustmentSync &&
+                    adjustmentSync != this &&
                     adjustmentSync.enableLink &&
                     adjustmentSync.linkNumber == linkNumber)
                 {
@@ -77,12 +89,6 @@ namespace MimyLab.FukuroUdon
             System.Array.Copy(linkedAdjustmentSyncs, result, count);
 
             return result;
-        }
-
-        public void LinkLocalOffset(Vector3 offset)
-        {
-            _localOffset = offset;
-            RequestSerialization();
         }
     }
 }
