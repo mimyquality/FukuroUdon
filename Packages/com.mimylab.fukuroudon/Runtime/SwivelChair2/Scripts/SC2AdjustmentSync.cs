@@ -22,6 +22,8 @@ namespace MimyLab.FukuroUdon
         public int linkNumber = 0;
 
         [UdonSynced]
+        internal bool hasSaved = false;
+        [UdonSynced]
         private Vector3 _localOffset;
 
         private SC2SeatAdjuster _adjuster;
@@ -33,8 +35,7 @@ namespace MimyLab.FukuroUdon
             get => _localOffset;
             set
             {
-                _localOffset = value;
-                RequestSerialization();
+                SetLocalOffset(value);
 
                 if (enableLink)
                 {
@@ -50,13 +51,11 @@ namespace MimyLab.FukuroUdon
 
         private void Start()
         {
-            this.gameObject.SetActive(Networking.IsOwner(this.gameObject));
-        }
-
-        public override void OnPlayerRestored(VRCPlayerApi player)
-        {
-            if (!player.isLocal) { return; }
-            if (!player.IsOwner(this.gameObject)) { return; }
+            if (!Networking.IsOwner(this.gameObject))
+            {
+                this.gameObject.SetActive(false);
+                return;
+            }
 
             _adjuster = GetComponentInParent<SC2SeatAdjuster>(true);
             _adjuster.adjustmentSync = this;
@@ -64,7 +63,13 @@ namespace MimyLab.FukuroUdon
 
         public void LinkLocalOffset(SC2AdjustmentSync linker)
         {
-            _localOffset = linker.LocalOffset;
+            SetLocalOffset(linker.LocalOffset);
+        }
+
+        private void SetLocalOffset(Vector3 value)
+        {
+            _localOffset = value;
+            hasSaved = true;
             RequestSerialization();
         }
 

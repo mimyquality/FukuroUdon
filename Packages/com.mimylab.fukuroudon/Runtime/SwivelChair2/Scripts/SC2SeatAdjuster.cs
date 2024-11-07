@@ -50,6 +50,7 @@ namespace MimyLab.FukuroUdon
                 Initialize();
                 _enterPoint.localPosition = value;
                 _offset = value;
+                RequestSerialization();
             }
         }
         private Quaternion Direction
@@ -60,6 +61,17 @@ namespace MimyLab.FukuroUdon
                 Initialize();
                 _seat.localRotation = value;
                 _direction = value;
+                RequestSerialization();
+            }
+        }
+
+        private Vector3 LocalOffset
+        {
+            get => adjustmentSync && adjustmentSync.hasSaved ? adjustmentSync.LocalOffset : _localOffset;
+            set
+            {
+                _localOffset = value;
+                if (adjustmentSync) { adjustmentSync.LocalOffset = value; }
             }
         }
 
@@ -97,9 +109,7 @@ namespace MimyLab.FukuroUdon
 
             Networking.SetOwner(player, this.gameObject);
 
-            Offset = adjustmentSync ? adjustmentSync.LocalOffset : _localOffset;
-
-            RequestSerialization();
+            Offset = LocalOffset;
         }
 
         public override void OnStationExited(VRCPlayerApi player)
@@ -108,8 +118,7 @@ namespace MimyLab.FukuroUdon
 
             swivelChair2.OnStandUp();
 
-            _localOffset = Offset;
-            if (adjustmentSync) { adjustmentSync.LocalOffset = _localOffset; }
+            LocalOffset = Offset;
         }
 
         public void Enter()
@@ -138,7 +147,6 @@ namespace MimyLab.FukuroUdon
             }
 
             Direction = result;
-            RequestSerialization();
         }
 
         public void Adjust(Vector3 inputValue)
@@ -150,7 +158,6 @@ namespace MimyLab.FukuroUdon
             result = Vector3.Min(result, adjustMaxLimit);
 
             Offset = result;
-            RequestSerialization();
         }
     }
 }
