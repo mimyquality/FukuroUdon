@@ -27,9 +27,18 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private Transform[] _channelSlot = new Transform[0];
 
+        [Header("Options")]
+        [SerializeField]
+        private AudioSource _speaker;
+        [SerializeField]
+        private AudioClip _channelJoinSound;
+        [SerializeField]
+        private AudioClip _channelLeaveSound;
+
         public void _OnPlayerStatesChange(VoiceChannelPlayerStates states)
         {
             var owner = Networking.GetOwner(states.gameObject);
+            var isLocal = owner.isLocal;
             var channel = states.VoiceChannel;
             for (int i = 0; i < _targetRegulator.Length; i++)
             {
@@ -41,18 +50,57 @@ namespace MimyLab.FukuroUdon
                 {
                     _targetRegulator[i].ReleasePlayer(owner);
                 }
-                
-                _buttonChannelOFF[i].SetActive(i != channel);
-                _buttonChannelON[i].SetActive(i == channel);
+
+                if (isLocal)
+                {
+                    _buttonChannelOFF[i].SetActive(i != channel);
+                    _buttonChannelON[i].SetActive(i == channel);
+                }
+            }
+
+            // 誰かが同じチャンネルに入ってきたか、同じチャンネルから抜けた
+            if (!isLocal)
+            {
+                if (channel == localPlayerStates.VoiceChannel)
+                {
+                    if (_speaker && _channelJoinSound)
+                    {
+                        _speaker.PlayOneShot(_channelJoinSound, _speaker.volume);
+                    }
+                }
+                else if (localPlayerStates.VoiceChannel > -1 &&
+                         localPlayerStates.transform.parent == states.transform.parent)
+                {
+                    if (_speaker && _channelLeaveSound)
+                    {
+                        _speaker.PlayOneShot(_channelLeaveSound, _speaker.volume);
+                    }
+                }
             }
 
             if (-1 < channel && channel < _channelSlot.Length)
             {
                 states.transform.SetParent(_channelSlot[channel], false);
+
+                if (isLocal)
+                {
+                    if (_speaker && _channelJoinSound)
+                    {
+                        _speaker.PlayOneShot(_channelJoinSound, _speaker.volume);
+                    }
+                }
             }
             else
             {
                 states.ResetParent();
+
+                if (isLocal)
+                {
+                    if (_speaker && _channelLeaveSound)
+                    {
+                        _speaker.PlayOneShot(_channelLeaveSound, _speaker.volume);
+                    }
+                }
             }
         }
 

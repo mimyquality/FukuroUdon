@@ -99,6 +99,10 @@ namespace MimyLab.FukuroUdon
                     case PlayerAudioRegulatorChannelUncmatchMode.Passthrough:
                         channel = TagIsEmpty;
                         continue;
+                    case PlayerAudioRegulatorChannelUncmatchMode.Pretend:
+                        overrideNumber = i.ToString();
+                        overrideRegulator = playerAudioRegulators[i];
+                        break;
                     default:
                         break;
                 }
