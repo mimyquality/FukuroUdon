@@ -239,7 +239,6 @@ namespace MimyLab.FukuroUdon
             }
             // 無効なモードがあればFix
 
-
             if (tmpInputMode != _inputMode)
             {
                 _turnValue = 0.0f;
