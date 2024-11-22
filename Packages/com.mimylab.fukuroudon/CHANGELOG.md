@@ -6,6 +6,16 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.0.0] - 2024/11/22
+
+- **Added**
+- SwivelChair2
+  - Persistence機能により、インスタンス越しに座位置を保存できるようになる AdjustmentSync プレハブを追加しました。  
+    既存の椅子にも後付けできます。
+  - SwivelChair2 コンポーネントは必須の参照を自動で子孫オブジェクトから探すようになりました。
+- PlayerAudio Master
+  - PlayerAudioMaster_Channel_Sample プレハブがPersistence機能を使うようになりました。また、チャンネルへの参加・退出時に効果音が鳴るようにしました。
+
 ## [2.0.1] - 2024/10/27
 
 - **Fixed**
@@ -538,6 +548,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.0
 [2.0.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.1
 [2.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0
 [1.24.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.24.1

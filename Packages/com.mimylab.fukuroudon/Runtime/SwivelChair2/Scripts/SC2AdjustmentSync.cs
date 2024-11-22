@@ -57,7 +57,7 @@ namespace MimyLab.FukuroUdon
                 return;
             }
 
-            _adjuster = GetComponentInParent<SC2SeatAdjuster>(true);
+            _adjuster = GetComponentInParent<SwivelChair2>(true).seatAdjuster;
             _adjuster.adjustmentSync = this;
         }
 
