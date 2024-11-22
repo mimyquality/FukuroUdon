@@ -16,7 +16,8 @@ namespace MimyLab.FukuroUdon
     {
         Default,
         Fallback,
-        Passthrough
+        Passthrough,
+        Pretend,
     }
 
     public class IPlayerAudioRegulator : UdonSharpBehaviour
