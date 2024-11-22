@@ -9,14 +9,11 @@
     "com.vrchat.core.vpm-resolver": {
       "version": "0.1.28"
     },
-    "net.ureishi.qvpen": {
-      "version": "3.2.12"
-    },
     "dev.onevr.vrworldtoolkit": {
       "version": "3.1.0"
     },
-    "com.vrchat.worlds": {
-      "version": "3.7.1-beta.2"
+    "net.ureishi.qvpen": {
+      "version": "3.2.14"
     }
   },
   "locked": {
@@ -38,24 +35,24 @@
       "version": "0.1.29",
       "dependencies": {}
     },
-    "net.ureishi.qvpen": {
-      "version": "3.2.14",
-      "dependencies": {
-        "com.vrchat.worlds": "^3.4.0"
-      }
-    },
     "dev.onevr.vrworldtoolkit": {
       "version": "3.2.0",
       "dependencies": {}
     },
-    "com.vrchat.worlds": {
-      "version": "3.7.2-persistence-beta.1",
+    "net.ureishi.qvpen": {
+      "version": "3.2.15",
       "dependencies": {
-        "com.vrchat.base": "3.7.2-persistence-beta.1"
+        "com.vrchat.worlds": "^3.4.0"
+      }
+    },
+    "com.vrchat.worlds": {
+      "version": "3.7.4",
+      "dependencies": {
+        "com.vrchat.base": "3.7.4"
       }
     },
     "com.vrchat.base": {
-      "version": "3.7.2-persistence-beta.1",
+      "version": "3.7.4",
       "dependencies": {}
     }
   }
