@@ -34,6 +34,50 @@ namespace MimyLab.FukuroUdon
         [Header("Option Settings")]
         public Transform attachPoint = null;   // アタッチモード時の追従先
 
+        [HideInInspector]
+        public MOSUpdateManager _updateManager = null;
+        [HideInInspector]
+        public float _respawnHightY = -100.0f;   // ここより落下したらリスポーンする
+        private readonly string _UpdateManagerPrefabGUID = "51374f5e01425074ca9cb544fa44007d";
+
+        [UdonSynced]
+        private Vector3 _syncPosition = Vector3.zero; // 位置同期用、ピックアップ時はオフセット用
+        [UdonSynced]
+        private Quaternion _syncRotation = Quaternion.identity; // 回転同期用、ピックアップ時はオフセット用
+        [UdonSynced]
+        private Vector3 _syncScale = Vector3.one;    // 拡縮同期用
+
+        [UdonSynced, FieldChangeCallback(nameof(UseGravity))]
+        private bool _useGravity = false;
+        [UdonSynced, FieldChangeCallback(nameof(IsKinematic))]
+        private bool _isKinematic = true;
+        [UdonSynced, FieldChangeCallback(nameof(Pickupable))]
+        private bool _pickupable = true;
+        [UdonSynced, FieldChangeCallback(nameof(IsHeld))]
+        private bool _isHeld = false;
+        [UdonSynced]
+        private byte _equipBone = (byte)VRCPickup.PickupHand.None;
+
+        [UdonSynced, FieldChangeCallback(nameof(IsEquiped))]
+        private bool _isEquiped = false;
+
+        [UdonSynced, FieldChangeCallback(nameof(IsAttached))]
+        private bool _isAttached = false;
+
+        // 初期値保存用
+        private Vector3 _startPosition, _localPosition;
+        private Quaternion _startRotation, _localRotation;
+        private Vector3 _startScale = Vector3.one, _localScale = Vector3.one;
+
+        // 計算用
+        private Rigidbody _rigidbody = null;
+        private VRCPickup _pickup = null;
+        private VRCPlayerApi _localPlayer, _ownerPlayer;
+        private int _lastLeftPlayerId;
+        private int _firstCheckTiming;
+        private bool _reservedInterval = false;
+        private bool _syncHasChanged = false;
+
         public bool UseGravity  // Rigidbody.useGravity同期用
         {
             get => _useGravity;
@@ -141,46 +185,6 @@ namespace MimyLab.FukuroUdon
                 RequestSerialization();
             }
         }
-
-        private readonly string _UpdateManagerPrefabGUID = "51374f5e01425074ca9cb544fa44007d";
-        [HideInInspector]
-        public MOSUpdateManager _updateManager = null;
-        [HideInInspector]
-        public float _respawnHightY = -100.0f;   // ここより落下したらリスポーンする
-
-        [UdonSynced] Vector3 _syncPosition = Vector3.zero; // 位置同期用、ピックアップ時はオフセット用
-        [UdonSynced] Quaternion _syncRotation = Quaternion.identity; // 回転同期用、ピックアップ時はオフセット用
-        [UdonSynced] Vector3 _syncScale = Vector3.one;    // 拡縮同期用
-
-        [FieldChangeCallback(nameof(UseGravity))]
-        [UdonSynced] bool _useGravity = false;
-        [FieldChangeCallback(nameof(IsKinematic))]
-        [UdonSynced] bool _isKinematic = true;
-        [FieldChangeCallback(nameof(Pickupable))]
-        [UdonSynced] bool _pickupable = true;
-        [FieldChangeCallback(nameof(IsHeld))]
-        [UdonSynced] bool _isHeld = false;
-        [UdonSynced] byte _equipBone = (byte)VRCPickup.PickupHand.None;
-
-        [FieldChangeCallback(nameof(IsEquiped))]
-        [UdonSynced] bool _isEquiped = false;
-
-        [FieldChangeCallback(nameof(IsAttached))]
-        [UdonSynced] bool _isAttached = false;
-
-        // 初期値保存用
-        Vector3 _startPosition, _localPosition;
-        Quaternion _startRotation, _localRotation;
-        Vector3 _startScale = Vector3.one, _localScale = Vector3.one;
-
-        // 計算用
-        Rigidbody _rigidbody = null;
-        VRCPickup _pickup = null;
-        VRCPlayerApi _localPlayer, _ownerPlayer;
-        int _lastLeftPlayerId;
-        int _firstCheckTiming;
-        bool _reservedInterval = false;
-        bool _syncHasChanged = false;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnValidate()
@@ -336,17 +340,24 @@ namespace MimyLab.FukuroUdon
             }
 
             // Ownerだった人が落ちたので強制解除
-            if (!Utilities.IsValid(_ownerPlayer)
-             || _lastLeftPlayerId == _ownerPlayer.playerId)
+            /* 
+            if (!Utilities.IsValid(_ownerPlayer) ||
+                _ownerPlayer.playerId < 1 ||
+                _ownerPlayer.playerId == _lastLeftPlayerId)
             {
                 IsHeld = false;
                 IsEquiped = false;
-            }
+            } */
+
+            // 新Ownerが改めて同期するものとして、いったん強制リセット
+            _isHeld = false;
+            _isEquiped = false;
 
             // 他人がOwner化＝ピックアップを奪われた
             if (_pickup && !player.isLocal)
             {
                 _pickup.Drop();
+                _pickup.pickupable = _pickupable;
             }
 
             // Equipは強制解除
@@ -358,19 +369,21 @@ namespace MimyLab.FukuroUdon
             _ownerPlayer = player;
         }
 
+        /* 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
             Initialize();
 
-            if (!Utilities.IsValid(_ownerPlayer)
-             || player.playerId == _ownerPlayer.playerId)
+            if (!Utilities.IsValid(_ownerPlayer) ||
+                _ownerPlayer.playerId < 1 ||
+                _ownerPlayer.playerId == player.playerId)
             {
                 IsHeld = false;
                 IsEquiped = false;
             }
 
             _lastLeftPlayerId = player.playerId;
-        }
+        } */
 
         public override void OnDeserialization()
         {
@@ -493,15 +506,15 @@ namespace MimyLab.FukuroUdon
                 return true;
             }
 
-            if (moveCheckSpace == Space.Self
-            && (transform.localPosition != _localPosition
-             || transform.localRotation != _localRotation))
+            if (moveCheckSpace == Space.Self &&
+                (transform.localPosition != _localPosition ||
+                 transform.localRotation != _localRotation))
             {
                 SyncLocation();
             }
-            else if (moveCheckSpace == Space.World
-            && (transform.position != _syncPosition
-             || transform.rotation != _syncRotation))
+            else if (moveCheckSpace == Space.World &&
+                    (transform.position != _syncPosition ||
+                     transform.rotation != _syncRotation))
             {
                 SyncLocation();
             }
@@ -600,8 +613,8 @@ namespace MimyLab.FukuroUdon
             var handPosition = _ownerPlayer.GetBonePosition(pickupHandBone);
             var handRotation = _ownerPlayer.GetBoneRotation(pickupHandBone);
 
-            if (handPosition.Equals(Vector3.zero)
-             || handRotation.Equals(Quaternion.identity))
+            if (handPosition.Equals(Vector3.zero) ||
+                handRotation.Equals(Quaternion.identity))
             {
                 // ボーン情報の代わりにプレイヤー原点からの固定値
                 handPosition = new Vector3((_equipBone == (byte)HumanBodyBones.LeftHand) ? -0.2f : 0.2f, 1.0f, 0.3f);
