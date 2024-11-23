@@ -6,15 +6,21 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.0.1] - 2024/11/23
+
+- **Fixed**
+  - Manual ObjectSync
+    - プレイヤーがピックアップしたままLeaveした時のリセット処理を見直し、インスタンスマスターがピックアップ状態になるバグを修正しました。 mimyquality/FukuroUdon/#16
+
 ## [3.0.0] - 2024/11/22
 
 - **Added**
-- SwivelChair2
-  - Persistence機能により、インスタンス越しに座位置を保存できるようになる AdjustmentSync プレハブを追加しました。  
-    既存の椅子にも後付けできます。
-  - SwivelChair2 コンポーネントは必須の参照を自動で子孫オブジェクトから探すようになりました。
-- PlayerAudio Master
-  - PlayerAudioMaster_Channel_Sample プレハブがPersistence機能を使うようになりました。また、チャンネルへの参加・退出時に効果音が鳴るようにしました。
+  - SwivelChair2
+    - Persistence機能により、インスタンス越しに座位置を保存できるようになる AdjustmentSync プレハブを追加しました。  
+      既存の椅子にも後付けできます。
+    - SwivelChair2 コンポーネントは必須の参照を自動で子孫オブジェクトから探すようになりました。
+  - PlayerAudio Master
+    - PlayerAudioMaster_Channel_Sample プレハブがPersistence機能を使うようになりました。また、チャンネルへの参加・退出時に効果音が鳴るようにしました。
 
 ## [2.0.1] - 2024/10/27
 
@@ -42,7 +48,7 @@
 
 - **Fixed**
   - Manual ObjectSync
-    - 複数のUdonコンポーネントが付いているオブジェクトに対して、Reset Switch for ObjectSync がManual ObjectSyncを見失わなくなりました。 #15
+    - 複数のUdonコンポーネントが付いているオブジェクトに対して、Reset Switch for ObjectSync がManual ObjectSyncを見失わなくなりました。 mimyquality/FukuroUdon/#15
     - これに伴い、VRC ObjectSyncもManual ObjectSyncも付いていないオブジェクトに対しては、全てのUdonコンポーネントに対して `SendCustomEvent("Reset")` を実行するようになりました。
 
 ## [1.24.0] - 2024/8/3
@@ -223,19 +229,19 @@
 
 - **Changed**
   - Manual ObjectSync
-    - Owner権が移譲された際、Equipが強制的に外れるようにしました(1.12.4の内容が完全でなかったため) #[9]
+    - Owner権が移譲された際、Equipが強制的に外れるようにしました(1.12.4の内容が完全でなかったため) mimyquality/FukuroUdon/#9
 
 ## [1.12.4] - 2024/2/1
 
 - **Fixed**
   - Manual ObjectSync
-    - オブジェクトをEquipしたプレイヤーがEquipしたまま退室した時にEquipが外れるようにしました。 #[9]
+    - オブジェクトをEquipしたプレイヤーがEquipしたまま退室した時にEquipが外れるようにしました。 mimyquality/FukuroUdon/#9
 
 ## [1.12.3] - 2024/1/31
 
 - **Fixed**
   - Manual ObjectSync
-    - 初期状態が非アクティブまたはVRCObjectPoolなどでアクティブ状態を管理している場合に、later-joinerに初期位置が同期しないのを修正しました。 #[8]
+    - 初期状態が非アクティブまたはVRCObjectPoolなどでアクティブ状態を管理している場合に、later-joinerに初期位置が同期しないのを修正しました。 mimyquality/FukuroUdon/#8
 
 ## [1.12.0] - 2024/1/26
 
@@ -548,6 +554,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.0.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.1
 [3.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.0
 [2.0.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.1
 [2.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0
