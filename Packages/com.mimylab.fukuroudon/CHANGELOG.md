@@ -10,7 +10,7 @@
 
 - **Fixed**
   - Manual ObjectSync
-    - プレイヤーがピックアップしたままLeaveした時のリセット処理を見直し、インスタンスマスターがピックアップ状態になるバグを修正しました。 [#16](https://github.com/mimyquality/FukuroUdon/#16)
+    - プレイヤーがピックアップしたままLeaveした時のリセット処理を見直し、インスタンスマスターがピックアップ状態になるバグを修正しました。 [#16](https://github.com/mimyquality/FukuroUdon/issues/#16)
 
 ## [3.0.0] - 2024/11/22
 
@@ -48,7 +48,7 @@
 
 - **Fixed**
   - Manual ObjectSync
-    - 複数のUdonコンポーネントが付いているオブジェクトに対して、Reset Switch for ObjectSync がManual ObjectSyncを見失わなくなりました。 [#15](https://github.com/mimyquality/FukuroUdon/#15)
+    - 複数のUdonコンポーネントが付いているオブジェクトに対して、Reset Switch for ObjectSync がManual ObjectSyncを見失わなくなりました。 [#15](https://github.com/mimyquality/FukuroUdon/pull/#15)
     - これに伴い、VRC ObjectSyncもManual ObjectSyncも付いていないオブジェクトに対しては、全てのUdonコンポーネントに対して `SendCustomEvent("Reset")` を実行するようになりました。
 
 ## [1.24.0] - 2024/8/3
@@ -229,19 +229,19 @@
 
 - **Changed**
   - Manual ObjectSync
-    - Owner権が移譲された際、Equipが強制的に外れるようにしました(1.12.4の内容が完全でなかったため) [#9](https://github.com/mimyquality/FukuroUdon/#9)
+    - Owner権が移譲された際、Equipが強制的に外れるようにしました(1.12.4の内容が完全でなかったため) [#9](github.com/mimyquality/FukuroUdon/issues/9)
 
 ## [1.12.4] - 2024/2/1
 
 - **Fixed**
   - Manual ObjectSync
-    - オブジェクトをEquipしたプレイヤーがEquipしたまま退室した時にEquipが外れるようにしました。 [#9](https://github.com/mimyquality/FukuroUdon/#9)
+    - オブジェクトをEquipしたプレイヤーがEquipしたまま退室した時にEquipが外れるようにしました。 [#9](github.com/mimyquality/FukuroUdon/issues/9)
 
 ## [1.12.3] - 2024/1/31
 
 - **Fixed**
   - Manual ObjectSync
-    - 初期状態が非アクティブまたはVRCObjectPoolなどでアクティブ状態を管理している場合に、later-joinerに初期位置が同期しないのを修正しました。 [#8](https://github.com/mimyquality/FukuroUdon/#8)
+    - 初期状態が非アクティブまたはVRCObjectPoolなどでアクティブ状態を管理している場合に、later-joinerに初期位置が同期しないのを修正しました。 [#8](github.com/mimyquality/FukuroUdon/pull/#8)
 
 ## [1.12.0] - 2024/1/26
 
