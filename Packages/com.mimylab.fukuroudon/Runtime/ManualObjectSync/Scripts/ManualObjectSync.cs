@@ -349,22 +349,16 @@ namespace MimyLab.FukuroUdon
                 IsEquiped = false;
             } */
 
-            // 新Ownerが改めて同期するものとして、いったん強制リセット
-            _isHeld = false;
-            _isEquiped = false;
-
             // 他人がOwner化＝ピックアップを奪われた
             if (_pickup && !player.isLocal)
             {
                 _pickup.Drop();
-                _pickup.pickupable = _pickupable;
             }
+            // 新Ownerが改めて同期するものとして、いったん強制リセット
+            IsHeld = false;
 
-            // Equipは強制解除
-            Unequip();
-
-            // 念のため物理演算書き戻し
-            IsKinematic = IsKinematic;
+            // 装備は強制パージ
+            IsEquiped = false;
 
             _ownerPlayer = player;
         }

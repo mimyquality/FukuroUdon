@@ -6,6 +6,12 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.0.2] - 2024/11/24
+
+- **Fixed**
+  - Manual ObjectSync
+    - プレイヤーがピックアップしたままLeaveした時処理を再修正しました。 [#16](https://github.com/mimyquality/FukuroUdon/issues/16)
+
 ## [3.0.1] - 2024/11/23
 
 - **Fixed**
@@ -554,6 +560,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.0.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.2
 [3.0.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.1
 [3.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.0
 [2.0.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.1
