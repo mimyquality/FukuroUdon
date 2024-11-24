@@ -728,6 +728,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8638658866624757820, guid: b5c3958296787d64b97ee4589996e823, type: 3}
     - target: {fileID: 8638658866624757820, guid: b5c3958296787d64b97ee4589996e823, type: 3}
+      propertyPath: _targetRegulator.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638658866624757820, guid: b5c3958296787d64b97ee4589996e823, type: 3}
       propertyPath: _targetRegulator.Array.data[0]
       value: 
       objectReference: {fileID: 5676737520989330254}
@@ -745,6 +749,26 @@ PrefabInstance:
       objectReference: {fileID: 4623399498447791143}
     - target: {fileID: 8638658866624757820, guid: b5c3958296787d64b97ee4589996e823, type: 3}
       propertyPath: _targetRegulator.Array.data[4]
+      value: 
+      objectReference: {fileID: 3682874940744311068}
+    - target: {fileID: 8638658866624757820, guid: b5c3958296787d64b97ee4589996e823, type: 3}
+      propertyPath: _targetRegulator.Array.data[5]
+      value: 
+      objectReference: {fileID: 3682874940744311068}
+    - target: {fileID: 8638658866624757820, guid: b5c3958296787d64b97ee4589996e823, type: 3}
+      propertyPath: _targetRegulator.Array.data[6]
+      value: 
+      objectReference: {fileID: 3682874940744311068}
+    - target: {fileID: 8638658866624757820, guid: b5c3958296787d64b97ee4589996e823, type: 3}
+      propertyPath: _targetRegulator.Array.data[7]
+      value: 
+      objectReference: {fileID: 3682874940744311068}
+    - target: {fileID: 8638658866624757820, guid: b5c3958296787d64b97ee4589996e823, type: 3}
+      propertyPath: _targetRegulator.Array.data[8]
+      value: 
+      objectReference: {fileID: 3682874940744311068}
+    - target: {fileID: 8638658866624757820, guid: b5c3958296787d64b97ee4589996e823, type: 3}
+      propertyPath: _targetRegulator.Array.data[9]
       value: 
       objectReference: {fileID: 3682874940744311068}
     m_RemovedComponents: []
