@@ -19,6 +19,8 @@ namespace MimyLab.FukuroUdon
         [Header("Targets")]
         [SerializeField]
         private Renderer[] _renderers = new Renderer[0];
+        [SerializeField]
+        private GameObject[] _gameObjects = new GameObject[0];
 
         [Space]
         [SerializeField]
@@ -71,14 +73,18 @@ namespace MimyLab.FukuroUdon
 
         private void ToggleTargetsEnabled(bool value)
         {
-            if (value != _prevEnabled)
+            if (value == _prevEnabled) { return; }
+
+            foreach (var target in _renderers)
             {
-                foreach (var target in _renderers)
-                {
-                    if (target) { target.enabled = value; }
-                }
-                _prevEnabled = value;
+                if (target) { target.enabled = value; }
             }
+            foreach (var target in _gameObjects)
+            {
+                if (target) { target.SetActive(value); }
+            }
+
+            _prevEnabled = value;
         }
     }
 }
