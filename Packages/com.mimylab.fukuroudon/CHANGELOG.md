@@ -6,6 +6,12 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.1.0] - 2024/12/9
+
+- **Added**
+  - AmbientEffect Assistant
+    - Area CullingとBoundary Cullingで有効無効を切り替えられる対象にゲームオブジェクトを追加しました。
+
 ## [3.0.2] - 2024/11/24
 
 - **Fixed**
@@ -560,6 +566,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.1.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.1.0
 [3.0.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.2
 [3.0.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.1
 [3.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.0
