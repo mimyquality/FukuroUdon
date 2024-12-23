@@ -32,15 +32,23 @@ namespace MimyLab.FukuroUdon
             get => _voiceChannel;
             set
             {
-                _voiceChannel = value;
-                RequestSerialization();
+                Initialize();
 
-                _selector._OnPlayerStatesChange(this);
+                if (_voiceChannel != value)
+                {
+                    _voiceChannel = value;
+                    RequestSerialization();
+
+                    _selector._OnPlayerStatesChange(this);
+                }
             }
         }
 
-        private void Start()
+        private bool _initialized = false;
+        private void Initialize()
         {
+            if (_initialized) { return; }
+
             _defaultParent = this.transform.parent;
 
             if (!_playersNameText) { _playersNameText = GetComponentInChildren<TextMeshProUGUI>(true); }
@@ -50,6 +58,12 @@ namespace MimyLab.FukuroUdon
             {
                 _selector.localPlayerStates = this;
             }
+
+            _initialized = true;
+        }
+        private void Start()
+        {
+            Initialize();
         }
 
         // プレイヤーが退室したら自然とリストから消えるので気にしなくて良い
@@ -57,6 +71,8 @@ namespace MimyLab.FukuroUdon
 
         public void ResetParent()
         {
+            Initialize();
+
             this.transform.SetParent(_defaultParent, false);
         }
     }

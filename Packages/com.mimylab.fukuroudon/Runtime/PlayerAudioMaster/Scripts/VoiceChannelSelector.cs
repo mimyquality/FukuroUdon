@@ -6,6 +6,7 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
+    using BestHTTP.SecureProtocol.Org.BouncyCastle.Asn1.Misc;
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
@@ -37,18 +38,20 @@ namespace MimyLab.FukuroUdon
 
         public void _OnPlayerStatesChange(VoiceChannelPlayerStates states)
         {
-            var owner = Networking.GetOwner(states.gameObject);
-            var isLocal = owner.isLocal;
+            var changedPlayer = Networking.GetOwner(states.gameObject);
+            var isLocal = changedPlayer.isLocal;
             var channel = states.VoiceChannel;
+
+            // 対応するRegulatorListに登録処理
             for (int i = 0; i < _targetRegulator.Length; i++)
             {
                 if (i == channel)
                 {
-                    _targetRegulator[i].AssignPlayer(owner);
+                    _targetRegulator[i].AssignPlayer(changedPlayer);
                 }
                 else
                 {
-                    _targetRegulator[i].ReleasePlayer(owner);
+                    _targetRegulator[i].ReleasePlayer(changedPlayer);
                 }
 
                 if (isLocal)
@@ -59,7 +62,7 @@ namespace MimyLab.FukuroUdon
             }
 
             // 誰かが同じチャンネルに入ってきたか、同じチャンネルから抜けた
-            if (!isLocal)
+            if (!isLocal && localPlayerStates && localPlayerStates.VoiceChannel > -1)
             {
                 if (channel == localPlayerStates.VoiceChannel)
                 {
@@ -68,8 +71,7 @@ namespace MimyLab.FukuroUdon
                         _speaker.PlayOneShot(_channelJoinSound, _speaker.volume);
                     }
                 }
-                else if (localPlayerStates.VoiceChannel > -1 &&
-                         localPlayerStates.transform.parent == states.transform.parent)
+                else if (states.transform.parent == localPlayerStates.transform.parent)
                 {
                     if (_speaker && _channelLeaveSound)
                     {
@@ -78,6 +80,7 @@ namespace MimyLab.FukuroUdon
                 }
             }
 
+            // 表示更新
             if (-1 < channel && channel < _channelSlot.Length)
             {
                 states.transform.SetParent(_channelSlot[channel], false);

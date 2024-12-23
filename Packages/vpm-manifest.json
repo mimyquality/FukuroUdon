@@ -46,20 +46,14 @@
       }
     },
     "com.vrchat.worlds": {
-      "version": "3.7.4",
+      "version": "3.7.5",
       "dependencies": {
-        "com.vrchat.base": "3.7.4"
+        "com.vrchat.base": "3.7.5"
       }
     },
     "com.vrchat.base": {
-      "version": "3.7.4",
+      "version": "3.7.5",
       "dependencies": {}
-    },
-    "net.ureishi.qvpen": {
-      "version": "3.2.15",
-      "dependencies": {
-        "com.vrchat.worlds": "^3.4.0"
-      }
     }
   }
 }
