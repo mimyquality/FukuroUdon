@@ -72,7 +72,7 @@ namespace MimyLab.FukuroUdon
         // 計算用
         private Rigidbody _rigidbody = null;
         private VRCPickup _pickup = null;
-        private VRCPlayerApi _localPlayer, _ownerPlayer;
+        private VRCPlayerApi _localPlayer;
         private int _lastLeftPlayerId;
         private int _firstCheckTiming;
         private bool _reservedInterval = false;
@@ -246,7 +246,6 @@ namespace MimyLab.FukuroUdon
             _rigidbody = GetComponent<Rigidbody>();
             _pickup = GetComponent<VRCPickup>();
             _localPlayer = Networking.LocalPlayer;
-            _ownerPlayer = Networking.GetOwner(this.gameObject);
 
             _startPosition = transform.position;
             _startRotation = transform.rotation;
@@ -359,8 +358,6 @@ namespace MimyLab.FukuroUdon
 
             // 装備は強制パージ
             IsEquiped = false;
-
-            _ownerPlayer = player;
         }
 
         /* 
@@ -601,19 +598,21 @@ namespace MimyLab.FukuroUdon
         private bool HoldingOther()
         {
             if (!_isHeld) { return false; }
-            if (!Utilities.IsValid(_ownerPlayer)) { return true; }
+
+            var owner = Networking.GetOwner(this.gameObject);
+            if (!Utilities.IsValid(owner)) { return true; }
 
             var pickupHandBone = (_equipBone == (byte)HumanBodyBones.LeftHand) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
-            var handPosition = _ownerPlayer.GetBonePosition(pickupHandBone);
-            var handRotation = _ownerPlayer.GetBoneRotation(pickupHandBone);
+            var handPosition = owner.GetBonePosition(pickupHandBone);
+            var handRotation = owner.GetBoneRotation(pickupHandBone);
 
             if (handPosition.Equals(Vector3.zero) ||
                 handRotation.Equals(Quaternion.identity))
             {
                 // ボーン情報の代わりにプレイヤー原点からの固定値
                 handPosition = new Vector3((_equipBone == (byte)HumanBodyBones.LeftHand) ? -0.2f : 0.2f, 1.0f, 0.3f);
-                _rigidbody.MovePosition(_ownerPlayer.GetPosition() + (_ownerPlayer.GetRotation() * handPosition));
-                _rigidbody.MoveRotation(_ownerPlayer.GetRotation());
+                _rigidbody.MovePosition(owner.GetPosition() + (owner.GetRotation() * handPosition));
+                _rigidbody.MoveRotation(owner.GetRotation());
             }
             else
             {
@@ -627,10 +626,12 @@ namespace MimyLab.FukuroUdon
         private bool EquipBone()
         {
             if (!_isEquiped) { return false; }
-            if (!Utilities.IsValid(_ownerPlayer)) { return true; }
+            
+            var owner = Networking.GetOwner(this.gameObject);
+            if (!Utilities.IsValid(owner)) { return true; }
 
-            var bonePosition = _ownerPlayer.GetBonePosition((HumanBodyBones)_equipBone);
-            var boneRotation = _ownerPlayer.GetBoneRotation((HumanBodyBones)_equipBone);
+            var bonePosition = owner.GetBonePosition((HumanBodyBones)_equipBone);
+            var boneRotation = owner.GetBoneRotation((HumanBodyBones)_equipBone);
             if (bonePosition.Equals(Vector3.zero) || boneRotation.Equals(Quaternion.identity)) { return _isEquiped; }
 
             var equipPosition = bonePosition + (boneRotation * _syncPosition);
