@@ -85,17 +85,23 @@ namespace MimyLab.FukuroUdon
             Initialize();
 
             // 進入方向と速度のバリデーション
-            var localNormal = this.transform.TransformDirection(_normal);
-            if (_isNormalCheck && Vector3.Angle(localNormal, collideeVelocity) <= 90.0f) { return; }
-
-            var collideeSpeed = collideeVelocity.sqrMagnitude;
-            if (_highEffectPrefab && _highImpactSpeed * _highImpactSpeed <= collideeSpeed)
+            if (_isNormalCheck)
             {
-                SpawnHighEffect(_collider.ClosestPoint(collideePosition));
-                return;
+                var collideNormal = this.transform.TransformDirection(_normal);
+                if (Vector3.Dot(collideNormal, collideeVelocity) >= 0.0f) { return; }
             }
 
-            if (_impactSpeed * _impactSpeed <= collideeSpeed)
+            var collideeSpeed = collideeVelocity.sqrMagnitude;
+            if (_highEffectPrefab)
+            {
+                if (collideeSpeed > _highImpactSpeed * _highImpactSpeed)
+                {
+                    SpawnHighEffect(_collider.ClosestPoint(collideePosition));
+                    return;
+                }
+            }
+
+            if (collideeSpeed > _impactSpeed * _impactSpeed)
             {
                 SpawnEffect(_collider.ClosestPoint(collideePosition));
                 return;
