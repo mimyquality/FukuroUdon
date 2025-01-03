@@ -338,16 +338,6 @@ namespace MimyLab.FukuroUdon
                 SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), _firstCheckTiming);
             }
 
-            // Ownerだった人が落ちたので強制解除
-            /* 
-            if (!Utilities.IsValid(_ownerPlayer) ||
-                _ownerPlayer.playerId < 1 ||
-                _ownerPlayer.playerId == _lastLeftPlayerId)
-            {
-                IsHeld = false;
-                IsEquiped = false;
-            } */
-
             // 他人がOwner化＝ピックアップを奪われた
             if (_pickup && !player.isLocal)
             {
@@ -360,21 +350,16 @@ namespace MimyLab.FukuroUdon
             IsEquiped = false;
         }
 
-        /* 
-        public override void OnPlayerLeft(VRCPlayerApi player)
+        public override void OnPlayerRestored(VRCPlayerApi player)
         {
+            if (!player.isLocal) { return; }
+
             Initialize();
 
-            if (!Utilities.IsValid(_ownerPlayer) ||
-                _ownerPlayer.playerId < 1 ||
-                _ownerPlayer.playerId == player.playerId)
-            {
-                IsHeld = false;
-                IsEquiped = false;
-            }
-
-            _lastLeftPlayerId = player.playerId;
-        } */
+            // 本当に_syncPosition/Rotation/Scaleに変化があったかは見ない
+            _syncHasChanged = true;
+            _updateManager.EnablePostLateUpdate(this);
+        }
 
         public override void OnDeserialization()
         {
@@ -626,7 +611,7 @@ namespace MimyLab.FukuroUdon
         private bool EquipBone()
         {
             if (!_isEquiped) { return false; }
-            
+
             var owner = Networking.GetOwner(this.gameObject);
             if (!Utilities.IsValid(owner)) { return true; }
 

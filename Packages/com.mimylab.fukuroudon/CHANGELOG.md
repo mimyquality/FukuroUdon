@@ -6,6 +6,19 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.2.0] - 2025/1/3
+
+- **Added**
+  - AmbientEffec tAssistant
+    - CanvasDistanceFadeを追加しました。 [#20](https://github.com/mimyquality/FukuroUdon/issues/20)
+
+- **Changed**
+  - ViewPointTrackerは非アクティブor無効なReceiverを無視するようになりました。 [#20](https://github.com/mimyquality/FukuroUdon/issues/20)
+
+- **Fixed**
+  - Manual ObjectSync
+    - オーナーチェックを適宜実行するよう見直し
+
 ## [3.1.1] - 2024/12/23
 
 - **Fixed**
@@ -572,6 +585,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.2.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.0
 [3.1.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.1.1
 [3.1.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.1.0
 [3.0.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.2
