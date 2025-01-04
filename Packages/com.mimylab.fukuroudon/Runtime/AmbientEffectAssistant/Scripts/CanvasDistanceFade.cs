@@ -12,7 +12,7 @@ namespace MimyLab.FukuroUdon
     using VRC.Udon;
 
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Canvas Fader")]
+    [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Canvas Distance Fade")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class CanvasDistanceFade : IViewPointReceiver
     {
