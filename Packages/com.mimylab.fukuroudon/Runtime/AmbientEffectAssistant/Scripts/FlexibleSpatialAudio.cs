@@ -58,7 +58,7 @@ namespace MimyLab.FukuroUdon
 
                 var point = col.ClosestPoint(vpPosition);
                 nearest = (point - vpPosition).sqrMagnitude < (nearest - vpPosition).sqrMagnitude ? point : nearest;
-                
+
                 if (isIn = point == vpPosition) { break; }
             }
             // positiveInfinityならコライダーが無かったと見なす。
@@ -70,13 +70,29 @@ namespace MimyLab.FukuroUdon
                 var effectiveRange = _decaySound.maxDistance + _effectiveRangeOffset;
 
                 _decayTransform.position = nearest;
-                _decaySound.enabled = !(_innerSound && isIn) && (vpPosition - nearest).sqrMagnitude <= (effectiveRange * effectiveRange);
+                //_decaySound.enabled = !(_innerSound && isIn) && (vpPosition - nearest).sqrMagnitude <= (effectiveRange * effectiveRange);
+                if (!(_innerSound && isIn) && (vpPosition - nearest).sqrMagnitude <= (effectiveRange * effectiveRange))
+                {
+                    if (!_decaySound.isPlaying) { _decaySound.Play(); }
+                }
+                else
+                {
+                    if (_decaySound.isPlaying) { _decaySound.Pause(); }
+                }
             }
 
             if (_innerSound)
             {
                 _innerTransform.position = nearest;
-                _innerSound.enabled = isIn;
+                //_innerSound.enabled = isIn;
+                if (isIn)
+                {
+                    if (!_innerSound.isPlaying) { _innerSound.Play(); }
+                }
+                else
+                {
+                    if (_innerSound.isPlaying) { _innerSound.Pause(); }
+                }
             }
         }
     }

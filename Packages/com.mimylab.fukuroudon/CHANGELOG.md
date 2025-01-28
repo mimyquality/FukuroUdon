@@ -6,20 +6,26 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.2.2] - 2025/1/28
+
+- **Changed**
+  - AmbientEffect Assistant
+    - Flexible SpatialAudio は AudioSource の無効ではなく、 `AudioSource.Pause()` で再生を止めるようになりました。
+
 ## [3.2.1] - 2025/1/4
 
 - **Fixed**
   - AmbientEffec tAssistant
-    - CanvasDistanceFadeのコンポーネント名を修正しました。
+    - Canvas DistanceFade のコンポーネント名を修正しました。
 
 ## [3.2.0] - 2025/1/3
 
 - **Added**
-  - AmbientEffec tAssistant
-    - CanvasDistanceFadeを追加しました。 [#20](https://github.com/mimyquality/FukuroUdon/issues/20)
+  - AmbientEffect Assistant
+    - Canvas DistanceFade を追加しました。 [#20](https://github.com/mimyquality/FukuroUdon/issues/20)
 
 - **Changed**
-  - ViewPointTrackerは非アクティブor無効なReceiverを無視するようになりました。 [#20](https://github.com/mimyquality/FukuroUdon/issues/20)
+  - ViewPoint Tracker は非アクティブor無効な Receiver を無視するようになりました。 [#20](https://github.com/mimyquality/FukuroUdon/issues/20)
 
 - **Fixed**
   - Manual ObjectSync
@@ -29,35 +35,35 @@
 
 - **Fixed**
   - PlayerAudio Master
-    - VoiceChannelメニューで先にインスタンスに居る人のチャンネル所在表示が間違うバグを修正しました。
+    - VoiceChannel メニューで先にインスタンスに居る人のチャンネル所在表示が間違うバグを修正しました。
 
 ## [3.1.0] - 2024/12/9
 
 - **Added**
   - AmbientEffect Assistant
-    - Area CullingとBoundary Cullingで有効無効を切り替えられる対象にゲームオブジェクトを追加しました。
+    - Area Culling と Boundary Culling で有効無効を切り替えられる対象にゲームオブジェクトを追加しました。
 
 ## [3.0.2] - 2024/11/24
 
 - **Fixed**
   - Manual ObjectSync
-    - プレイヤーがピックアップしたままLeaveした時処理を再修正しました。 [#16](https://github.com/mimyquality/FukuroUdon/issues/16)
+    - プレイヤーがピックアップしたまま退出した時の処理を再修正しました。 [#16](https://github.com/mimyquality/FukuroUdon/issues/16)
 
 ## [3.0.1] - 2024/11/23
 
 - **Fixed**
   - Manual ObjectSync
-    - プレイヤーがピックアップしたままLeaveした時のリセット処理を見直し、インスタンスマスターがピックアップ状態になるバグを修正しました。 [#16](https://github.com/mimyquality/FukuroUdon/issues/16)
+    - プレイヤーがピックアップしたまま退出した時のリセット処理を見直し、インスタンスマスターがピックアップ状態になるバグを修正しました。 [#16](https://github.com/mimyquality/FukuroUdon/issues/16)
 
 ## [3.0.0] - 2024/11/22
 
 - **Added**
   - SwivelChair2
-    - Persistence機能により、インスタンス越しに座位置を保存できるようになる AdjustmentSync プレハブを追加しました。  
+    - Persistence 機能により、インスタンス越しに座位置を保存できるようになる AdjustmentSync プレハブを追加しました。  
       既存の椅子にも後付けできます。
     - SwivelChair2 コンポーネントは必須の参照を自動で子孫オブジェクトから探すようになりました。
   - PlayerAudio Master
-    - PlayerAudioMaster_Channel_Sample プレハブがPersistence機能を使うようになりました。また、チャンネルへの参加・退出時に効果音が鳴るようにしました。
+    - PlayerAudioMaster_Channel_Sample プレハブが Persistence 機能を使うようになりました。また、チャンネルへの参加・退出時に効果音が鳴るようにしました。
 
 ## [2.0.1] - 2024/10/27
 
@@ -591,6 +597,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.2.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.2
 [3.2.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.1
 [3.2.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.0
 [3.1.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.1.1
