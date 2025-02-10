@@ -68,14 +68,14 @@ namespace MimyLab.FukuroUdon
                 {
                     if (_speaker && _channelJoinSound)
                     {
-                        _speaker.PlayOneShot(_channelJoinSound, _speaker.volume);
+                        _speaker.PlayOneShot(_channelJoinSound);
                     }
                 }
                 else if (states.transform.parent == localPlayerStates.transform.parent)
                 {
                     if (_speaker && _channelLeaveSound)
                     {
-                        _speaker.PlayOneShot(_channelLeaveSound, _speaker.volume);
+                        _speaker.PlayOneShot(_channelLeaveSound);
                     }
                 }
             }
@@ -89,7 +89,7 @@ namespace MimyLab.FukuroUdon
                 {
                     if (_speaker && _channelJoinSound)
                     {
-                        _speaker.PlayOneShot(_channelJoinSound, _speaker.volume);
+                        _speaker.PlayOneShot(_channelJoinSound);
                     }
                 }
             }
@@ -101,7 +101,7 @@ namespace MimyLab.FukuroUdon
                 {
                     if (_speaker && _channelLeaveSound)
                     {
-                        _speaker.PlayOneShot(_channelLeaveSound, _speaker.volume);
+                        _speaker.PlayOneShot(_channelLeaveSound);
                     }
                 }
             }
