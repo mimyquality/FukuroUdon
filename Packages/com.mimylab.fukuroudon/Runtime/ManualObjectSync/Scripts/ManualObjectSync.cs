@@ -561,6 +561,8 @@ namespace MimyLab.FukuroUdon
                 RequestSerialization();
             }
 
+            if (!_localPlayer.IsUserInVR()) { pickupHandBone = HumanBodyBones.Head; }
+
             var handPosition = _localPlayer.GetBonePosition(pickupHandBone);
             var handRotation = _localPlayer.GetBoneRotation(pickupHandBone);
 
@@ -587,7 +589,9 @@ namespace MimyLab.FukuroUdon
             var owner = Networking.GetOwner(this.gameObject);
             if (!Utilities.IsValid(owner)) { return true; }
 
-            var pickupHandBone = (_equipBone == (byte)HumanBodyBones.LeftHand) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand;
+            var pickupHandBone = owner.IsUserInVR()
+                ? (_equipBone == (byte)HumanBodyBones.LeftHand) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand
+                : HumanBodyBones.Head;
             var handPosition = owner.GetBonePosition(pickupHandBone);
             var handRotation = owner.GetBoneRotation(pickupHandBone);
 
