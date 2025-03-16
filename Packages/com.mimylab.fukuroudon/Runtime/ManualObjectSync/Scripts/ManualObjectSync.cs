@@ -73,7 +73,6 @@ namespace MimyLab.FukuroUdon
         private Rigidbody _rigidbody = null;
         private VRCPickup _pickup = null;
         private VRCPlayerApi _localPlayer;
-        private int _lastLeftPlayerId;
         private int _firstCheckTiming;
         private bool _reservedInterval = false;
         private bool _syncHasChanged = false;
@@ -312,9 +311,9 @@ namespace MimyLab.FukuroUdon
             else
             {
                 if (HoldingOther()) { return; }
-
-                ApplySyncTransform();
             }
+
+            ApplySyncTransform();
 
             _updateManager.DisablePostLateUpdate(this);
         }
@@ -348,17 +347,6 @@ namespace MimyLab.FukuroUdon
 
             // 装備は強制パージ
             IsEquiped = false;
-        }
-
-        public override void OnPlayerRestored(VRCPlayerApi player)
-        {
-            if (!player.isLocal) { return; }
-
-            Initialize();
-
-            // 本当に_syncPosition/Rotation/Scaleに変化があったかは見ない
-            _syncHasChanged = true;
-            _updateManager.EnablePostLateUpdate(this);
         }
 
         public override void OnDeserialization()
@@ -589,9 +577,9 @@ namespace MimyLab.FukuroUdon
             var owner = Networking.GetOwner(this.gameObject);
             if (!Utilities.IsValid(owner)) { return true; }
 
-            var pickupHandBone = owner.IsUserInVR()
-                ? (_equipBone == (byte)HumanBodyBones.LeftHand) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand
-                : HumanBodyBones.Head;
+            var pickupHandBone = owner.IsUserInVR() ?
+                (_equipBone == (byte)HumanBodyBones.LeftHand) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand :
+                HumanBodyBones.Head;
             var handPosition = owner.GetBonePosition(pickupHandBone);
             var handRotation = owner.GetBoneRotation(pickupHandBone);
 

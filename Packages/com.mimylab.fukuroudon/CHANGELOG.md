@@ -6,6 +6,20 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.3.0] - 2025/3/17
+
+- **Added**
+  - ActiveRelay
+    - ActiveRelay to Effect が AudioSource に対して Play()/Pause()/Stop() もできるオプションを追加
+    - ActiveRelay to Effect が ParticleSystem に対して Emission モジュールのオンオフと Emit() を個別に設定できるよう追加変更
+    - ActiveRelay to Transform を追加
+
+- **Fixed**
+  - PlayOneShot() を使った処理の音量が過剰に小さくなるのを修正
+  - Manual ObjectSync
+    - 非VRモードのプレイヤーがピックアップを掴んだ時の挙動を改善
+    - Persistence 対象にした時、位置情報が書き戻されるように修正
+
 ## [3.2.2] - 2025/1/28
 
 - **Changed**
@@ -597,6 +611,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.3.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.3.0
 [3.2.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.2
 [3.2.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.1
 [3.2.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.0
