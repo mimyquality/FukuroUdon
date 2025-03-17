@@ -17,7 +17,7 @@
 - **Fixed**
   - PlayOneShot() を使った処理の音量が過剰に小さくなるのを修正
   - Manual ObjectSync
-    - 非VRモードのプレイヤーがピックアップを掴んだ時の挙動を改善
+    - 非VRモードのプレイヤーがピックアップを掴んだ時の挙動を改善 [#23](https://github.com/mimyquality/FukuroUdon/pull/23)
     - Persistence 対象にした時、位置情報が書き戻されるように修正
 
 ## [3.2.2] - 2025/1/28
