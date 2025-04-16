@@ -9,6 +9,8 @@
     "url": "https://github.com/mimyquality"
   },
   "documentationUrl": "https://github.com/mimyquality/FukuroUdon/wiki",
+  "changelogUrl": "https://github.com/mimyquality/FukuroUdon/blob/main/Packages/com.mimylab.fukuroudon/CHANGELOG.md",
+  "licensesUrl": "https://github.com/mimyquality/FukuroUdon/blob/main/Packages/com.mimylab.fukuroudon/LICENSE.md",
   "dependencies": {},
   "gitDependencies": {},
   "vpmDependencies": {
@@ -74,7 +76,7 @@
       "displayName": "AmbientSound Assistant",
       "description": "ワールドの環境音・効果音を補助するギミック",
       "path": "Samples/AmbientSoundAssistant"
-    },    
+    },
     {
       "displayName": "Advanced World Settings",
       "description": "Joinしたプレイヤーの各種初期化処理ができるギミック",
