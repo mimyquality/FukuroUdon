@@ -46,13 +46,13 @@
       }
     },
     "com.vrchat.worlds": {
-      "version": "3.7.6",
+      "version": "3.8.1-beta.1",
       "dependencies": {
-        "com.vrchat.base": "3.7.6"
+        "com.vrchat.base": "3.8.1-beta.1"
       }
     },
     "com.vrchat.base": {
-      "version": "3.7.6",
+      "version": "3.8.1-beta.1",
       "dependencies": {}
     }
   }
