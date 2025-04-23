@@ -11,6 +11,15 @@ namespace MimyLab.FukuroUdon
     //using VRC.SDKBase;
     //using VRC.Udon;
 
+    [System.Flags]
+    public enum ActiveRelayToTransformChangeProperty
+    {
+        //None = 0,
+        Position = 1 << 0,
+        Rotation = 1 << 1,
+        Scale = 1 << 2,
+    }
+
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Transform")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
@@ -20,19 +29,33 @@ namespace MimyLab.FukuroUdon
         private ActiveRelayEventType _eventType = default;
         [SerializeField]
         private Transform[] _transforms = new Transform[0];
+        [SerializeField, EnumFlag]
+        private ActiveRelayToTransformChangeProperty _changeProperty =
+            ActiveRelayToTransformChangeProperty.Position |
+            ActiveRelayToTransformChangeProperty.Rotation;
         [SerializeField]
         private Vector3 _position = Vector3.zero;
         [SerializeField]
         private Quaternion _rotation = Quaternion.identity;
         [SerializeField]
+        private Vector3 _scale = Vector3.one;
+        [SerializeField]
         private Space _relativeTo;
+
+        [Header("Advanced Settings")]
+        [SerializeField]
+        private Transform _referenceTransform = null;
 
         private void OnEnable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
              || _eventType == ActiveRelayEventType.Active)
             {
-                TranslateAndRotate();
+                switch (_relativeTo)
+                {
+                    case Space.World: Transforming(); break;
+                    case Space.Self: RelativeTransforming(); break;
+                }
             }
         }
 
@@ -41,18 +64,64 @@ namespace MimyLab.FukuroUdon
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
              || _eventType == ActiveRelayEventType.Inactive)
             {
-                TranslateAndRotate();
+                switch (_relativeTo)
+                {
+                    case Space.World: Transforming(); break;
+                    case Space.Self: RelativeTransforming(); break;
+                }
             }
         }
 
-        private void TranslateAndRotate()
+        private void Transforming()
         {
+            var position = _referenceTransform ? _referenceTransform.position : _position;
+            var rotation = _referenceTransform ? _referenceTransform.rotation : _rotation;
+            var scale = _referenceTransform ? _referenceTransform.lossyScale : _scale;
+
             for (int i = 0; i < _transforms.Length; i++)
             {
-                switch (_relativeTo)
+                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Position) > 0)
                 {
-                    case Space.World: _transforms[i].SetPositionAndRotation(_position, _rotation); break;
-                    case Space.Self: _transforms[i].SetLocalPositionAndRotation(_position, _rotation); break;
+                    _transforms[i].position = position;
+                }
+                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Rotation) > 0)
+                {
+                    _transforms[i].rotation = rotation;
+                }
+                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Scale) > 0)
+                {
+                    // ワールド空間のスケールを適用
+                    var parent = _transforms[i].parent;
+                    var parentScale = parent ? parent.lossyScale : Vector3.one;
+                    _transforms[i].localScale = new Vector3
+                    (
+                        scale.x / parentScale.x,
+                        scale.y / parentScale.y,
+                        scale.z / parentScale.z
+                    );
+                }
+            }
+        }
+
+        private void RelativeTransforming()
+        {
+            var position = _referenceTransform ? _referenceTransform.localPosition : _position;
+            var rotation = _referenceTransform ? _referenceTransform.localRotation : _rotation;
+            var scale = _referenceTransform ? _referenceTransform.localScale : _scale;
+
+            for (int i = 0; i < _transforms.Length; i++)
+            {
+                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Position) > 0)
+                {
+                    _transforms[i].localPosition = position;
+                }
+                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Rotation) > 0)
+                {
+                    _transforms[i].localRotation = rotation;
+                }
+                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Scale) > 0)
+                {
+                    _transforms[i].localScale = scale;
                 }
             }
         }
