@@ -6,12 +6,9 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
-    using BestHTTP.SecureProtocol.Org.BouncyCastle.Asn1.Misc;
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.Udon;
-    //using VRC.SDK3.Components;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

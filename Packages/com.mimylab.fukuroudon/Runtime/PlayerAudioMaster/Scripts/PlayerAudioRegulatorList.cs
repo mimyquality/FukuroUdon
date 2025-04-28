@@ -9,8 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.Udon;
-    //using VRC.SDK3.Components;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator List")]
@@ -26,7 +24,7 @@ namespace MimyLab.FukuroUdon
         }
         public void _RefreshPlayerList()
         {
-            var players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[PlayerAudioSupervisor.HardCap]);
+            var players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()]);
             var tmpPlayerIdList = new int[PlayerAudioSupervisor.HardCap];
             var tmpCount = 0;
             for (int i = 0; i < players.Length; i++)
@@ -54,15 +52,12 @@ namespace MimyLab.FukuroUdon
             if (System.Array.IndexOf(_playerIdList, playerId) > -1) { return false; }
 
             var lastIndex = System.Array.IndexOf(_playerIdList, 0);
-            if (lastIndex > -1)
-            {
-                _playerIdList[lastIndex] = playerId;
-                RequestSerialization();
+            if (lastIndex < 0) { return false; }
 
-                return true;
-            }
+            _playerIdList[lastIndex] = playerId;
+            RequestSerialization();
 
-            return false;
+            return true;
         }
 
         /// <summary>
@@ -94,9 +89,7 @@ namespace MimyLab.FukuroUdon
 
         protected override bool CheckApplicableInternal(VRCPlayerApi target)
         {
-            if (System.Array.IndexOf(_playerIdList, target.playerId) > -1) { return true; }
-
-            return false;
+            return System.Array.IndexOf(_playerIdList, target.playerId) > -1;
         }
     }
 }
