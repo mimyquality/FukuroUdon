@@ -14,16 +14,16 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class VoiceChannelSelector : UdonSharpBehaviour
     {
-        internal VoiceChannelPlayerStates localPlayerStates;
-
         [SerializeField]
-        private PlayerAudioRegulatorList[] _targetRegulator = new PlayerAudioRegulatorList[0];
+        private PlayerAudioRegulatorRegister[] _targetRegulator = new PlayerAudioRegulatorRegister[0];
         [SerializeField]
         private GameObject[] _buttonChannelOFF = new GameObject[0];
         [SerializeField]
         private GameObject[] _buttonChannelON = new GameObject[0];
         [SerializeField]
         private Transform[] _channelSlot = new Transform[0];
+        [SerializeField]
+        private VoiceChannelPlayerStates _playerStates;
 
         [Header("Options")]
         [SerializeField]
@@ -33,42 +33,87 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private AudioClip _channelLeaveSound;
 
+        private VRCPlayerApi[] _players = new VRCPlayerApi[PlayerAudioSupervisor.HardCap];
+        private int[][] _registeredPlayerIds;
+        private VoiceChannelPlayerStates _localPlayerStates;
+
+        private VoiceChannelPlayerStates _LocalPlayerStates { get => _localPlayerStates ? _localPlayerStates : _localPlayerStates = (VoiceChannelPlayerStates)Networking.LocalPlayer.FindComponentInPlayerObjects(_playerStates); }
+
+        private void OnValidate()
+        {
+            if (_targetRegulator.Length > 10)
+            {
+                var overcutTargetRegulator = new PlayerAudioRegulatorRegister[10];
+                System.Array.Copy(_targetRegulator, overcutTargetRegulator, 10);
+                _targetRegulator = overcutTargetRegulator;
+            }
+        }
+
+        private void OnEnable()
+        {
+            _registeredPlayerIds = new int[_targetRegulator.Length][];
+            for (int i = 0; i < _targetRegulator.Length; i++)
+            {
+                _registeredPlayerIds[i] = _targetRegulator[i] ? _targetRegulator[i].PlayerIds : new int[0];
+            }
+        }
+
+        private void Update()
+        {
+            var selectedPlayer = _players[Time.frameCount % _players.Length];
+            if (!Utilities.IsValid(selectedPlayer)) { return; }
+
+            var channel = -1;
+            for (int i = 0; i < _targetRegulator.Length; i++)
+            {
+                if (!_targetRegulator[i]) { continue; }
+
+                if (System.Array.IndexOf(_registeredPlayerIds[i], selectedPlayer.playerId) > -1)
+                {
+                    channel = i;
+                    break;
+                }
+            }
+            var playerStates = (VoiceChannelPlayerStates)selectedPlayer.FindComponentInPlayerObjects(_playerStates);
+            if (Utilities.IsValid(playerStates))
+            {
+                playerStates.VoiceChannel = channel;
+            }
+        }
+
+        public override void OnPlayerJoined(VRCPlayerApi player)
+        {
+            if (player.playerId < Networking.LocalPlayer.playerId) { return; }
+
+            SendCustomEventDelayedFrames(nameof(_RefreshPlayers), 1);
+        }
+
+        public override void OnPlayerLeft(VRCPlayerApi player)
+        {
+            SendCustomEventDelayedFrames(nameof(_RefreshPlayers), 1);
+        }
+
+        public void _RefreshPlayers()
+        {
+            _players = VRCPlayerApi.GetPlayers(_players);
+        }
+
         public void _OnPlayerStatesChange(VoiceChannelPlayerStates states)
         {
             var changedPlayer = Networking.GetOwner(states.gameObject);
-            var isLocal = changedPlayer.isLocal;
             var channel = states.VoiceChannel;
 
-            // 対応するRegulatorListに登録処理
-            for (int i = 0; i < _targetRegulator.Length; i++)
-            {
-                if (i == channel)
-                {
-                    _targetRegulator[i].AssignPlayer(changedPlayer);
-                }
-                else
-                {
-                    _targetRegulator[i].ReleasePlayer(changedPlayer);
-                }
-
-                if (isLocal)
-                {
-                    _buttonChannelOFF[i].SetActive(i != channel);
-                    _buttonChannelON[i].SetActive(i == channel);
-                }
-            }
-
             // 誰かが同じチャンネルに入ってきたか、同じチャンネルから抜けた
-            if (!isLocal && localPlayerStates && localPlayerStates.VoiceChannel > -1)
+            if (!changedPlayer.isLocal && _LocalPlayerStates.VoiceChannel > -1)
             {
-                if (channel == localPlayerStates.VoiceChannel)
+                if (channel == _LocalPlayerStates.VoiceChannel)
                 {
                     if (_speaker && _channelJoinSound)
                     {
                         _speaker.PlayOneShot(_channelJoinSound);
                     }
                 }
-                else if (states.transform.parent == localPlayerStates.transform.parent)
+                else if (states.transform.parent == _LocalPlayerStates.transform.parent)
                 {
                     if (_speaker && _channelLeaveSound)
                     {
@@ -81,26 +126,10 @@ namespace MimyLab.FukuroUdon
             if (-1 < channel && channel < _channelSlot.Length)
             {
                 states.transform.SetParent(_channelSlot[channel], false);
-
-                if (isLocal)
-                {
-                    if (_speaker && _channelJoinSound)
-                    {
-                        _speaker.PlayOneShot(_channelJoinSound);
-                    }
-                }
             }
             else
             {
                 states.ResetParent();
-
-                if (isLocal)
-                {
-                    if (_speaker && _channelLeaveSound)
-                    {
-                        _speaker.PlayOneShot(_channelLeaveSound);
-                    }
-                }
             }
         }
 
@@ -119,7 +148,33 @@ namespace MimyLab.FukuroUdon
         public void Assign9() { Assign(9); }
         public void Assign(int channel)
         {
-            localPlayerStates.VoiceChannel = channel;
+            if (channel < 0 || channel >= _targetRegulator.Length) { return; }
+            if (!_targetRegulator[channel]) { return; }
+
+            // 対応するRegulatorRegisterに登録処理
+            for (int i = 0; i < _targetRegulator.Length; i++)
+            {
+                if (!_targetRegulator[i]) { continue; }
+
+                if (i == channel)
+                {
+                    _targetRegulator[i].AssignPlayer();
+                }
+                else
+                {
+                    _targetRegulator[i].ReleasePlayer();
+                }
+
+                _buttonChannelOFF[i].SetActive(i != channel);
+                _buttonChannelON[i].SetActive(i == channel);
+            }
+
+            _LocalPlayerStates.VoiceChannel = channel;
+
+            if (_speaker && _channelJoinSound)
+            {
+                _speaker.PlayOneShot(_channelJoinSound);
+            }
         }
 
         public void Release0() { Release(0); }
@@ -134,7 +189,20 @@ namespace MimyLab.FukuroUdon
         public void Release9() { Release(9); }
         public void Release(int channel)
         {
-            localPlayerStates.VoiceChannel = -1;
+            if (channel < 0 || channel >= _targetRegulator.Length) { return; }
+            if (!_targetRegulator[channel]) { return; }
+
+            // 対応するRegulatorRegisterから除名処理
+            _targetRegulator[channel].ReleasePlayer();
+            _buttonChannelOFF[channel].SetActive(true);
+            _buttonChannelON[channel].SetActive(false);
+
+            _LocalPlayerStates.VoiceChannel = -1;
+
+            if (_speaker && _channelLeaveSound)
+            {
+                _speaker.PlayOneShot(_channelLeaveSound);
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ namespace MimyLab.FukuroUdon
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [RequireComponent(typeof(VRCPlayerObject))]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class VoiceChannelPlayerStates : UdonSharpBehaviour
     {
         [SerializeField]
@@ -24,7 +24,7 @@ namespace MimyLab.FukuroUdon
 
         private Transform _defaultParent;
 
-        [UdonSynced, FieldChangeCallback(nameof(VoiceChannel))]
+        [FieldChangeCallback(nameof(VoiceChannel))]
         private int _voiceChannel = -1;
         public int VoiceChannel
         {
@@ -36,7 +36,6 @@ namespace MimyLab.FukuroUdon
                 if (_voiceChannel != value)
                 {
                     _voiceChannel = value;
-                    RequestSerialization();
 
                     _selector._OnPlayerStatesChange(this);
                 }
@@ -52,11 +51,6 @@ namespace MimyLab.FukuroUdon
 
             if (!_playersNameText) { _playersNameText = GetComponentInChildren<TextMeshProUGUI>(true); }
             _playersNameText.text = Networking.GetOwner(this.gameObject).displayName;
-
-            if (Networking.IsOwner(this.gameObject))
-            {
-                _selector.localPlayerStates = this;
-            }
 
             _initialized = true;
         }

@@ -16,7 +16,9 @@ namespace MimyLab.FukuroUdon
     public class PlayerAudioRegulatorList : IPlayerAudioRegulator
     {
         [UdonSynced]
-        private int[] _playerIdList = new int[PlayerAudioSupervisor.HardCap];
+        private int[] _playerIds = new int[PlayerAudioSupervisor.HardCap];
+
+        public int[] PlayerIds { get => _playerIds; }
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
@@ -25,19 +27,19 @@ namespace MimyLab.FukuroUdon
         public void _RefreshPlayerList()
         {
             var players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()]);
-            var tmpPlayerIdList = new int[PlayerAudioSupervisor.HardCap];
+            var tmpPlayerIds = new int[PlayerAudioSupervisor.HardCap];
             var tmpCount = 0;
             for (int i = 0; i < players.Length; i++)
             {
                 if (!Utilities.IsValid(players[i])) { continue; }
 
                 var tmpPlayerId = players[i].playerId;
-                if (System.Array.IndexOf(_playerIdList, tmpPlayerId) > -1)
+                if (System.Array.IndexOf(_playerIds, tmpPlayerId) > -1)
                 {
-                    tmpPlayerIdList[tmpCount++] = tmpPlayerId;
+                    tmpPlayerIds[tmpCount++] = tmpPlayerId;
                 }
             }
-            tmpPlayerIdList.CopyTo(_playerIdList, 0);
+            tmpPlayerIds.CopyTo(_playerIds, 0);
             RequestSerialization();
         }
 
@@ -49,12 +51,12 @@ namespace MimyLab.FukuroUdon
             if (!Networking.IsOwner(this.gameObject)) { return false; }
 
             var playerId = target.playerId;
-            if (System.Array.IndexOf(_playerIdList, playerId) > -1) { return false; }
+            if (System.Array.IndexOf(_playerIds, playerId) > -1) { return false; }
 
-            var lastIndex = System.Array.IndexOf(_playerIdList, 0);
+            var lastIndex = System.Array.IndexOf(_playerIds, 0);
             if (lastIndex < 0) { return false; }
 
-            _playerIdList[lastIndex] = playerId;
+            _playerIds[lastIndex] = playerId;
             RequestSerialization();
 
             return true;
@@ -69,9 +71,9 @@ namespace MimyLab.FukuroUdon
 
             var playerId = target.playerId;
             int index;
-            while ((index = System.Array.IndexOf(_playerIdList, playerId)) > -1)
+            while ((index = System.Array.IndexOf(_playerIds, playerId)) > -1)
             {
-                _playerIdList[index] = 0;
+                _playerIds[index] = 0;
                 RequestSerialization();
             }
         }
@@ -83,13 +85,13 @@ namespace MimyLab.FukuroUdon
         {
             if (!Networking.IsOwner(this.gameObject)) { return; }
 
-            System.Array.Clear(_playerIdList, 0, _playerIdList.Length);
+            System.Array.Clear(_playerIds, 0, _playerIds.Length);
             RequestSerialization();
         }
 
         protected override bool CheckApplicableInternal(VRCPlayerApi target)
         {
-            return System.Array.IndexOf(_playerIdList, target.playerId) > -1;
+            return System.Array.IndexOf(_playerIds, target.playerId) > -1;
         }
     }
 }

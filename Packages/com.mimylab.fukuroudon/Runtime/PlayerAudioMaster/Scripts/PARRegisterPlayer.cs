@@ -12,6 +12,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Components;
 
     [Icon(ComponentIconPath.FukuroUdon)]
+    [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PAR Register Player")]
     [RequireComponent(typeof(VRCPlayerObject))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class PARRegisterPlayer : UdonSharpBehaviour
@@ -23,7 +24,7 @@ namespace MimyLab.FukuroUdon
 
         [UdonSynced, FieldChangeCallback(nameof(IsAssigned))]
         private bool _isAssigned = false;
-        internal bool IsAssigned
+        public bool IsAssigned
         {
             get => _isAssigned;
             set
@@ -33,6 +34,7 @@ namespace MimyLab.FukuroUdon
                 Initialize();
 
                 _isAssigned = value;
+                RequestSerialization();
 
                 if (value)
                 {
@@ -52,8 +54,11 @@ namespace MimyLab.FukuroUdon
 
             // PlayerObjectはオーナー不変なのでキャッシュ
             _owner = Networking.GetOwner(this.gameObject);
-
-            _parRegister.localParRegisterPlayer = this;
+            
+            if (_owner.isLocal)
+            {
+                _parRegister.localParRegisterPlayer = this;
+            }
 
             _initialized = true;
         }
