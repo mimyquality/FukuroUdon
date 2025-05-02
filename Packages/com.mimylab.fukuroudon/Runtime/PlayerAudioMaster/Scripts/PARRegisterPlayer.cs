@@ -34,7 +34,6 @@ namespace MimyLab.FukuroUdon
                 Initialize();
 
                 _isAssigned = value;
-                RequestSerialization();
 
                 if (value)
                 {

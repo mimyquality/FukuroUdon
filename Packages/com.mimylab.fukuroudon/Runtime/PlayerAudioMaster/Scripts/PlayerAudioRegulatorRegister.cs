@@ -43,11 +43,15 @@ namespace MimyLab.FukuroUdon
             tmpPlayerIds.CopyTo(_playerIds, 0);
         }
 
+        /// <summary>
+        /// Assign LocalPlayer to this PAR Register.
+        /// </summary>
         public bool AssignPlayer()
         {
             if (localParRegisterPlayer)
             {
                 localParRegisterPlayer.IsAssigned = true;
+                localParRegisterPlayer.RequestSerialization();
 
                 return true;
             }
@@ -55,11 +59,15 @@ namespace MimyLab.FukuroUdon
             return false;
         }
 
+        /// <summary>
+        /// Release LocalPlayer to this PAR Register.
+        /// </summary>
         public void ReleasePlayer()
         {
             if (localParRegisterPlayer)
             {
                 localParRegisterPlayer.IsAssigned = false;
+                localParRegisterPlayer.RequestSerialization();
             }
         }
 
