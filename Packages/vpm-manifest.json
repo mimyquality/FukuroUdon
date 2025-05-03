@@ -14,6 +14,12 @@
     },
     "net.ureishi.qvpen": {
       "version": "3.2.14"
+    },
+    "jp.lilxyzw.liltoon": {
+      "version": "1.9.0"
+    },
+    "jp.lilxyzw.editortoolbox": {
+      "version": "1.6.3"
     }
   },
   "locked": {
@@ -53,6 +59,14 @@
     },
     "com.vrchat.base": {
       "version": "3.8.1-beta.1",
+      "dependencies": {}
+    },
+    "jp.lilxyzw.liltoon": {
+      "version": "1.9.0",
+      "dependencies": {}
+    },
+    "jp.lilxyzw.editortoolbox": {
+      "version": "1.6.3",
       "dependencies": {}
     }
   }

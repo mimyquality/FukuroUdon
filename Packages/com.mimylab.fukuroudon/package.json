@@ -81,6 +81,11 @@
       "displayName": "Advanced World Settings",
       "description": "Joinしたプレイヤーの各種初期化処理ができるギミック",
       "path": "Samples/AdvancedWorldSettings"
+    },
+    {
+      "displayName": "Better Avatar Pedestal",
+      "description": "3Dモデルで展示できるアバターペデスタル",
+      "path": "Samples/BetterAvatarPedestal"
     }
   ]
 }
