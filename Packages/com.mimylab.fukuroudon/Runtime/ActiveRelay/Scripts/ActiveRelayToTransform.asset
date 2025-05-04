@@ -517,7 +517,7 @@ MonoBehaviour:
       Data: 34|UnityEngine.HeaderAttribute, UnityEngine.CoreModule
     - Name: header
       Entry: 1
-      Data: Additional Settings
+      Data: Advanced Settings
     - Name: 
       Entry: 8
       Data: 
