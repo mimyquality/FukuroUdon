@@ -8,8 +8,6 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
-    using VRC.Udon;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Canvas Distance Fade")]
@@ -38,13 +36,11 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
-        private void Start()
-        {
-            Initialize();
-        }
 
         public override void ReceiveViewPoint(Vector3 position, Quaternion rotation)
         {
+            Initialize();
+
             foreach (var canvasGroup in _canvasGroups)
             {
                 if (!canvasGroup) { continue; }

@@ -8,11 +8,12 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.Udon;
+    using VRC.SDK3.Rendering;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/General/ViewPoint Tracker")]
+    [DefaultExecutionOrder(-1000)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ViewPointTracker : UdonSharpBehaviour
     {
@@ -29,16 +30,15 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private UdonBehaviour[] _rotationReceiver = new UdonBehaviour[0];
 
-        private VRCPlayerApi _localPlayer;
+        private VRCCameraSettings _screenCamera;
         private Vector3 _prevViewPointPosition;
         private Quaternion _prevViewPointRotation;
 
-        private void Start()
+        private void OnEnable()
         {
-            _localPlayer = Networking.LocalPlayer;
-            var viewPoint = _localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
-            _prevViewPointPosition = viewPoint.position;
-            _prevViewPointRotation = viewPoint.rotation;
+            _screenCamera = VRCCameraSettings.ScreenCamera;
+            _prevViewPointPosition = _screenCamera.Position;
+            _prevViewPointRotation = _screenCamera.Rotation;
             this.transform.SetPositionAndRotation(_prevViewPointPosition, _prevViewPointRotation);
 
             foreach (var target in _viewPointReceiver)
@@ -53,9 +53,8 @@ namespace MimyLab.FukuroUdon
 
         public override void PostLateUpdate()
         {
-            var viewPoint = _localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
-            var viewPointPosition = viewPoint.position;
-            var viewPointRotation = viewPoint.rotation;
+            var viewPointPosition = _screenCamera.Position;
+            var viewPointRotation = _screenCamera.Rotation;
 
             var isMoved = viewPointPosition != _prevViewPointPosition;
             var isTurned = viewPointRotation != _prevViewPointRotation;
@@ -71,26 +70,26 @@ namespace MimyLab.FukuroUdon
                         target.OnViewPointChanged();
                     }
                 }
-            }
 
-            if (isMoved)
-            {
-                foreach (var target in _positionReceiver)
+                if (isMoved)
                 {
-                    if (target && target.gameObject.activeInHierarchy && target.enabled)
+                    foreach (var target in _positionReceiver)
                     {
-                        target.SetProgramVariable(ValNameViewPointPosition, viewPointPosition);
+                        if (target && target.gameObject.activeInHierarchy && target.enabled)
+                        {
+                            target.SetProgramVariable(ValNameViewPointPosition, viewPointPosition);
+                        }
                     }
                 }
-            }
 
-            if (isTurned)
-            {
-                foreach (var target in _rotationReceiver)
+                if (isTurned)
                 {
-                    if (target && target.gameObject.activeInHierarchy && target.enabled)
+                    foreach (var target in _rotationReceiver)
                     {
-                        target.SetProgramVariable(ValNameViewPointRotation, viewPointRotation);
+                        if (target && target.gameObject.activeInHierarchy && target.enabled)
+                        {
+                            target.SetProgramVariable(ValNameViewPointRotation, viewPointRotation);
+                        }
                     }
                 }
             }

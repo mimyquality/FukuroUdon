@@ -8,8 +8,6 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
-    //using VRC.Udon;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Area Culling")]
@@ -47,21 +45,16 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            CullingByViewPointPosition(position);
-        }
-
-        private void CullingByViewPointPosition(Vector3 vpPosition)
-        {
             var isIn = false;
             //var nearest = Vector3.positiveInfinity;
             foreach (var col in _area)
             {
                 if (!col) { continue; }
 
-                var point = col.ClosestPoint(vpPosition);
+                var point = col.ClosestPoint(position);
                 //nearest = (point - vpPosition).sqrMagnitude < (nearest - vpPosition).sqrMagnitude ? point : nearest;
 
-                if (point == vpPosition)
+                if (point == position)
                 {
                     isIn = true;
                     break;
