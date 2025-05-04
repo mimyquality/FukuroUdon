@@ -9,6 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
+    using VRC.SDK3.Rendering;
 
     [System.Flags]
     public enum AdvancedWorldSettingsInitializeEyeHeightType
@@ -67,8 +68,74 @@ namespace MimyLab.FukuroUdon
         [SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeightLowerLimit = 1.3f;
         [SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeightUpperLimit = 1.3f;
 
+        [Header("Screen Camera Settings")]
+        [SerializeField] private bool _initializeScreenCameraSettings = false;
+        [SerializeField] private bool _screenAllowHDR = false;
+        [SerializeField] private DepthTextureMode _screenDepthTextureMode = DepthTextureMode.None;
+        [SerializeField] private bool _screenUseOcclusionCulling = true;
+        [SerializeField] private bool _screenAllowMSAA = true;
+        [SerializeField] private CameraClearFlags _screenClearFlags = CameraClearFlags.Skybox;
+        [Tooltip("The color to use when ClearFlags is set to SolidColor.")]
+        [SerializeField] private Color _screenBackgroundColor = Color.black;
+        [SerializeField] private bool _screenLayerCullSpherical = false;
+        [Tooltip("A value of 0 for a layer means it will use the value of FarClipPlane.")]
+        [SerializeField] private float[] _screenLayerCullDistances = new float[32];
+
+        [Header("Photo Camera Settings")]
+        [SerializeField] private bool _initializePhotoCameraSettings = false;
+        [SerializeField] private bool _photoAllowHDR = false;
+        [SerializeField] private DepthTextureMode _photoDepthTextureMode = DepthTextureMode.None;
+        [SerializeField] private bool _photoUseOcclusionCulling = true;
+        [SerializeField] private bool _photoAllowMSAA = true;
+        [SerializeField] private CameraClearFlags _photoClearFlags = CameraClearFlags.Skybox;
+        [Tooltip("The color to use when ClearFlags is set to SolidColor.")]
+        [SerializeField] private Color _photoBackgroundColor = Color.black;
+        [SerializeField] private bool _photoLayerCullSpherical = false;
+        [Tooltip("A value of 0 for a layer means it will use the value of FarClipPlane.")]
+        [SerializeField] private float[] _photoLayerCullDistances = new float[32];
+
+        [Header("Quality Settings")]
+        [SerializeField] private bool _initializeQualitySettings = false;
+        [SerializeField][Range(0.1f, 10000f)] private float _shadowDistance = 50.0f;
+
+
         private bool _hasAvatarChanged = false;
         private bool _hasFirstAvatarChanged = false;
+
+        private void Start()
+        {
+            if (_initializeScreenCameraSettings)
+            {
+                var screenCamera = VRCCameraSettings.ScreenCamera;
+                screenCamera.AllowHDR = _screenAllowHDR;
+                screenCamera.DepthTextureMode = _screenDepthTextureMode;
+                screenCamera.UseOcclusionCulling = _screenUseOcclusionCulling;
+                screenCamera.AllowMSAA = _screenAllowMSAA;
+                screenCamera.ClearFlags = _screenClearFlags;
+                screenCamera.BackgroundColor = _screenBackgroundColor;
+                screenCamera.LayerCullSpherical = _screenLayerCullSpherical;
+                screenCamera.LayerCullDistances = _screenLayerCullDistances;
+            }
+
+            if (_initializePhotoCameraSettings &&
+                Utilities.IsValid(VRCCameraSettings.PhotoCamera))
+            {
+                var photoCamera = VRCCameraSettings.PhotoCamera;
+                photoCamera.AllowHDR = _photoAllowHDR;
+                photoCamera.DepthTextureMode = _photoDepthTextureMode;
+                photoCamera.UseOcclusionCulling = _photoUseOcclusionCulling;
+                photoCamera.AllowMSAA = _photoAllowMSAA;
+                photoCamera.ClearFlags = _photoClearFlags;
+                photoCamera.BackgroundColor = _photoBackgroundColor;
+                photoCamera.LayerCullSpherical = _photoLayerCullSpherical;
+                photoCamera.LayerCullDistances = _photoLayerCullDistances;
+            }
+
+            if (_initializeQualitySettings)
+            {
+                VRCQualitySettings.SetShadowDistance(_shadowDistance);
+            }
+        }
 
         public override void OnPlayerJoined(VRCPlayerApi player)
         {
@@ -124,7 +191,7 @@ namespace MimyLab.FukuroUdon
                 _hasAvatarChanged = true;
 
                 // 同じ目の高さのアバターに変更した場合はOnAvatarEyeHeightChanged()が発火しない
-                SendCustomEventDelayedSeconds(nameof(CloseAvatarChangeProcessing), 0.2f);
+                SendCustomEventDelayedSeconds(nameof(_CloseAvatarChangeProcessing), 0.2f);
             }
         }
 
@@ -150,10 +217,10 @@ namespace MimyLab.FukuroUdon
                 _hasFirstAvatarChanged = true;
             }
 
-            CloseAvatarChangeProcessing();
+            _CloseAvatarChangeProcessing();
         }
 
-        public void CloseAvatarChangeProcessing()
+        public void _CloseAvatarChangeProcessing()
         {
             _hasAvatarChanged = false;
         }
