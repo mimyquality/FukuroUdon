@@ -1,5 +1,5 @@
-/*
-Copyright (c) 2023 Mimy Quality
+﻿/*
+Copyright (c) 2025 Mimy Quality
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
@@ -11,20 +11,21 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
 
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator List")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-    public class PlayerAudioRegulatorList : IPlayerAudioRegulator
+    [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator Register")]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
+    public class PlayerAudioRegulatorRegister : IPlayerAudioRegulator
     {
-        [UdonSynced]
+        internal PARRegisterPlayer localParRegisterPlayer;
+
         private int[] _playerIds = new int[PlayerAudioSupervisor.HardCap];
 
         public int[] PlayerIds { get => _playerIds; }
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
-            SendCustomEventDelayedFrames(nameof(_RefreshPlayerList), 1);
+            SendCustomEventDelayedFrames(nameof(_RefreshPlayerIdList), 1);
         }
-        public void _RefreshPlayerList()
+        public void _RefreshPlayerIdList()
         {
             var players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()]);
             var tmpPlayerIds = new int[PlayerAudioSupervisor.HardCap];
@@ -40,53 +41,55 @@ namespace MimyLab.FukuroUdon
                 }
             }
             tmpPlayerIds.CopyTo(_playerIds, 0);
-            RequestSerialization();
         }
 
         /// <summary>
-        /// Need this gameObject ownership.
+        /// Assign LocalPlayer to this PAR Register.
         /// </summary>
-        public bool AssignPlayer(VRCPlayerApi target)
+        public bool AssignPlayer()
         {
-            if (!Networking.IsOwner(this.gameObject)) { return false; }
+            if (localParRegisterPlayer)
+            {
+                localParRegisterPlayer.IsAssigned = true;
+                localParRegisterPlayer.RequestSerialization();
 
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Release LocalPlayer to this PAR Register.
+        /// </summary>
+        public void ReleasePlayer()
+        {
+            if (localParRegisterPlayer)
+            {
+                localParRegisterPlayer.IsAssigned = false;
+                localParRegisterPlayer.RequestSerialization();
+            }
+        }
+
+        internal void _OnPlayerAssigned(VRCPlayerApi target)
+        {
             var playerId = target.playerId;
-            if (System.Array.IndexOf(_playerIds, playerId) > -1) { return false; }
+            if (System.Array.IndexOf(_playerIds, playerId) > -1) { return; }
 
             var lastIndex = System.Array.IndexOf(_playerIds, 0);
-            if (lastIndex < 0) { return false; }
+            if (lastIndex < 0) { return; }
 
             _playerIds[lastIndex] = playerId;
-            RequestSerialization();
-
-            return true;
         }
 
-        /// <summary>
-        /// Need this gameObject ownership.
-        /// </summary>
-        public void ReleasePlayer(VRCPlayerApi target)
+        internal void _OnPlayerReleased(VRCPlayerApi target)
         {
-            if (!Networking.IsOwner(this.gameObject)) { return; }
-
             var playerId = target.playerId;
             int index;
             while ((index = System.Array.IndexOf(_playerIds, playerId)) > -1)
             {
                 _playerIds[index] = 0;
-                RequestSerialization();
             }
-        }
-
-        /// <summary>
-        /// Need this gameObject ownership.
-        /// </summary>
-        public void ReleaseAllPlayer()
-        {
-            if (!Networking.IsOwner(this.gameObject)) { return; }
-
-            System.Array.Clear(_playerIds, 0, _playerIds.Length);
-            RequestSerialization();
         }
 
         protected override bool CheckApplicableInternal(VRCPlayerApi target)
