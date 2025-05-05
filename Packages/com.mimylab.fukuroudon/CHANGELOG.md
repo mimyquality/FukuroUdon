@@ -6,6 +6,21 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.4.0-beta.1]
+
+- **Added**
+  - Better AvatarPedestal 追加しました。 [#21](https://github.com/mimyquality/FukuroUdon/issues/21)
+    - アバターペデスタルをデフォルトのアバターサムネイル板ではなく3Dモデルとして展示するためのプレハブです。
+  - Advanced WorldSettings に VRCCameraSettings の初期設定を追加しました。 [#26](https://github.com/mimyquality/FukuroUdon/issues/26)
+  - PlayerAudio Master に PA Regulator Register を追加しました。 [#25](https://github.com/mimyquality/FukuroUdon/issues/25)
+    - Persistence 機能を使った、より安定して使える PA Regulator List として追加しました。
+    - VCメニューの構造もこれに合わせて変更したため、改変して設置している場合は再設定が必要です。
+
+- **Changed**
+  - AmbientEffect Assistant
+    - ViewPoint Tracker を `GetTrackingData()` 式から `screenCamera` 式に変更しました。 [#27](https://github.com/mimyquality/FukuroUdon/issues/27)
+  - ActiveRelay to Transform に Scale 操作を追加、Position, Rotation, Scale を選択的に指定できるよう変更しました。  [#24](https://github.com/mimyquality/FukuroUdon/issues/24)
+
 ## [3.3.0] - 2025/3/17
 
 - **Added**
@@ -611,6 +626,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.4.0-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.4.0-beta.1
 [3.3.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.3.0
 [3.2.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.2
 [3.2.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.1

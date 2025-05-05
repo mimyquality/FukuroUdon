@@ -13,7 +13,6 @@ namespace MimyLab.FukuroUdon
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/General/ViewPoint Tracker")]
-    [DefaultExecutionOrder(-1000)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ViewPointTracker : UdonSharpBehaviour
     {

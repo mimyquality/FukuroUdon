@@ -1,7 +1,7 @@
 {
   "name": "com.mimylab.fukuroudon",
   "displayName": "Fukuro Udon",
-  "version": "3.3.0",
+  "version": "3.4.0-beta.1",
   "description": "MimyLab's U# utilitiy pack for VPM.",
   "unity": "2022.3",
   "author": {
@@ -14,7 +14,7 @@
   "dependencies": {},
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.worlds": "^3.7.4"
+    "com.vrchat.worlds": "^3.8.1-beta.1"
   },
   "legacyFolders": {
     "Assets\\MimyLab/ActiveRelay": "",
@@ -73,9 +73,9 @@
       "path": "Samples/PlayerAudioMaster"
     },
     {
-      "displayName": "AmbientSound Assistant",
-      "description": "ワールドの環境音・効果音を補助するギミック",
-      "path": "Samples/AmbientSoundAssistant"
+      "displayName": "AmbientEffect Assistant",
+      "description": "ワールドの環境音や視覚効果を補助するギミック",
+      "path": "Samples/AmbientEffectAssistant"
     },
     {
       "displayName": "Advanced World Settings",
@@ -83,7 +83,7 @@
       "path": "Samples/AdvancedWorldSettings"
     },
     {
-      "displayName": "Better Avatar Pedestal",
+      "displayName": "Better AvatarPedestal",
       "description": "3Dモデルで展示できるアバターペデスタル",
       "path": "Samples/BetterAvatarPedestal"
     }
