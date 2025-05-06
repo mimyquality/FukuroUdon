@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2022 Mimy Quality
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
@@ -18,9 +18,9 @@ namespace MimyLab.FukuroUdon
     public class DustBox : UdonSharpBehaviour
     {
         [SerializeField]
-        ObjectPoolManager target = null;
+        private ObjectPoolManager target = null;
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (!target) { return; }
             if (!Utilities.IsValid(other)) { return; }
@@ -30,8 +30,8 @@ namespace MimyLab.FukuroUdon
 
             Networking.SetOwner(Networking.LocalPlayer, target.gameObject);
             GameObject pooledObject = _FindInParentPools(incommingObject);
-        	if (!Utilities.IsValid(pooledObject)) { return; }
-        	target.Return(pooledObject);
+            if (!Utilities.IsValid(pooledObject)) { return; }
+            target.Return(pooledObject);
         }
         
         // 自身や先祖がPoolにあればそれを返す

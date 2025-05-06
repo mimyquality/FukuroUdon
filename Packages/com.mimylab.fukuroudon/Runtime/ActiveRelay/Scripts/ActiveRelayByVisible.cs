@@ -18,6 +18,7 @@ namespace MimyLab.FukuroUdon
         BecameInvisible,
     }
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [RequireComponent(typeof(Renderer))]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Visible")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

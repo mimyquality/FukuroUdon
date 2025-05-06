@@ -10,6 +10,7 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     //using VRC.SDKBase;
     //using VRC.Udon;
+    using VRC.Udon.Common.Interfaces;
 
     public enum ObjectPoolControllerSwitchType
     {
@@ -46,30 +47,30 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        void Spawn()
+        private void Spawn()
         {
-            target.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, nameof(target.TryToSpawn));
+            target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(target.TryToSpawn));
         }
 
-        void RandomSpawn()
+        private void RandomSpawn()
         {
-            target.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, nameof(target.Shuffle));
-            target.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, nameof(target.TryToSpawn));
+            target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(target.Shuffle));
+            target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(target.TryToSpawn));
         }
 
-        void SpawnAll()
+        private void SpawnAll()
         {
-            target.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, nameof(target.SpawnAll));
+            target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(target.SpawnAll));
         }
 
-        void ReturnFirst()
+        private void ReturnFirst()
         {
-            target.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, nameof(target.Return));
+            target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(target.Return));
         }
 
-        void ReturnAll()
+        private void ReturnAll()
         {
-            target.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, nameof(target.ReturnAll));
+            target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(target.ReturnAll));
         }
     }
 }

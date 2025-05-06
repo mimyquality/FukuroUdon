@@ -10,13 +10,16 @@
       "version": "0.1.28"
     },
     "dev.onevr.vrworldtoolkit": {
-      "version": "3.0.1"
+      "version": "3.1.0"
     },
     "net.ureishi.qvpen": {
-      "version": "3.2.12"
+      "version": "3.2.14"
     },
-    "com.vrchat.worlds": {
-      "version": "3.5.2"
+    "jp.lilxyzw.liltoon": {
+      "version": "1.9.0"
+    },
+    "jp.lilxyzw.editortoolbox": {
+      "version": "1.6.3"
     }
   },
   "locked": {
@@ -39,23 +42,31 @@
       "dependencies": {}
     },
     "dev.onevr.vrworldtoolkit": {
-      "version": "3.2.0",
+      "version": "3.2.1",
       "dependencies": {}
     },
     "net.ureishi.qvpen": {
-      "version": "3.2.14",
+      "version": "3.3.6",
       "dependencies": {
-        "com.vrchat.worlds": "^3.4.0"
+        "com.vrchat.worlds": "^3.5.0"
       }
     },
     "com.vrchat.worlds": {
-      "version": "3.7.1-beta.2",
+      "version": "3.8.1-beta.1",
       "dependencies": {
-        "com.vrchat.base": "3.7.1-beta.2"
+        "com.vrchat.base": "3.8.1-beta.1"
       }
     },
     "com.vrchat.base": {
-      "version": "3.7.1-beta.2",
+      "version": "3.8.1-beta.1",
+      "dependencies": {}
+    },
+    "jp.lilxyzw.liltoon": {
+      "version": "1.9.0",
+      "dependencies": {}
+    },
+    "jp.lilxyzw.editortoolbox": {
+      "version": "1.6.3",
       "dependencies": {}
     }
   }

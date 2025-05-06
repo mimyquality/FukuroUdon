@@ -6,18 +6,122 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
-## [2.0.0-beta.2] - 2024/9/14
+## [3.4.0-beta.1]
+
+- **Added**
+  - Better AvatarPedestal 追加しました。 [#21](https://github.com/mimyquality/FukuroUdon/issues/21)
+    - アバターペデスタルをデフォルトのアバターサムネイル板ではなく3Dモデルとして展示するためのプレハブです。
+  - Advanced WorldSettings に VRCCameraSettings の初期設定を追加しました。 [#26](https://github.com/mimyquality/FukuroUdon/issues/26)
+  - PlayerAudio Master に PA Regulator Register を追加しました。 [#25](https://github.com/mimyquality/FukuroUdon/issues/25)
+    - Persistence 機能を使った、より安定して使える PA Regulator List として追加しました。
+    - VCメニューの構造もこれに合わせて変更したため、改変して設置している場合は再設定が必要です。
 
 - **Changed**
   - AmbientEffect Assistant
-    - 軽量化。これに伴い、ViewPoint Tracker自身がビューポイントと一致して動くようになりました。
+    - ViewPoint Tracker を `GetTrackingData()` 式から `screenCamera` 式に変更しました。 [#27](https://github.com/mimyquality/FukuroUdon/issues/27)
+  - ActiveRelay to Transform に Scale 操作を追加、Position, Rotation, Scale を選択的に指定できるよう変更しました。  [#24](https://github.com/mimyquality/FukuroUdon/issues/24)
 
-## [2.0.0-beta] - 2024/8/30
+## [3.3.0] - 2025/3/17
+
+- **Added**
+  - ActiveRelay
+    - ActiveRelay to Effect が AudioSource に対して Play()/Pause()/Stop() もできるオプションを追加
+    - ActiveRelay to Effect が ParticleSystem に対して Emission モジュールのオンオフと Emit() を個別に設定できるよう追加変更
+    - ActiveRelay to Transform を追加
+
+- **Fixed**
+  - PlayOneShot() を使った処理の音量が過剰に小さくなるのを修正
+  - Manual ObjectSync
+    - 非VRモードのプレイヤーがピックアップを掴んだ時の挙動を改善 [#23](https://github.com/mimyquality/FukuroUdon/pull/23)
+    - Persistence 対象にした時、位置情報が書き戻されるように修正
+
+## [3.2.2] - 2025/1/28
+
+- **Changed**
+  - AmbientEffect Assistant
+    - Flexible SpatialAudio は AudioSource の無効ではなく、 `AudioSource.Pause()` で再生を止めるようになりました。
+
+## [3.2.1] - 2025/1/4
+
+- **Fixed**
+  - AmbientEffec tAssistant
+    - Canvas DistanceFade のコンポーネント名を修正しました。
+
+## [3.2.0] - 2025/1/3
+
+- **Added**
+  - AmbientEffect Assistant
+    - Canvas DistanceFade を追加しました。 [#20](https://github.com/mimyquality/FukuroUdon/issues/20)
+
+- **Changed**
+  - ViewPoint Tracker は非アクティブor無効な Receiver を無視するようになりました。 [#20](https://github.com/mimyquality/FukuroUdon/issues/20)
+
+- **Fixed**
+  - Manual ObjectSync
+    - オーナーチェックを適宜実行するよう見直し
+
+## [3.1.1] - 2024/12/23
+
+- **Fixed**
+  - PlayerAudio Master
+    - VoiceChannel メニューで先にインスタンスに居る人のチャンネル所在表示が間違うバグを修正しました。
+
+## [3.1.0] - 2024/12/9
+
+- **Added**
+  - AmbientEffect Assistant
+    - Area Culling と Boundary Culling で有効無効を切り替えられる対象にゲームオブジェクトを追加しました。
+
+## [3.0.2] - 2024/11/24
+
+- **Fixed**
+  - Manual ObjectSync
+    - プレイヤーがピックアップしたまま退出した時の処理を再修正しました。 [#16](https://github.com/mimyquality/FukuroUdon/issues/16)
+
+## [3.0.1] - 2024/11/23
+
+- **Fixed**
+  - Manual ObjectSync
+    - プレイヤーがピックアップしたまま退出した時のリセット処理を見直し、インスタンスマスターがピックアップ状態になるバグを修正しました。 [#16](https://github.com/mimyquality/FukuroUdon/issues/16)
+
+## [3.0.0] - 2024/11/22
+
+- **Added**
+  - SwivelChair2
+    - Persistence 機能により、インスタンス越しに座位置を保存できるようになる AdjustmentSync プレハブを追加しました。  
+      既存の椅子にも後付けできます。
+    - SwivelChair2 コンポーネントは必須の参照を自動で子孫オブジェクトから探すようになりました。
+  - PlayerAudio Master
+    - PlayerAudioMaster_Channel_Sample プレハブが Persistence 機能を使うようになりました。また、チャンネルへの参加・退出時に効果音が鳴るようにしました。
+
+## [2.0.1] - 2024/10/27
+
+- **Fixed**
+  - PlayerAudio Master
+    - PA Regulator Areaの初期化処理を見直しました。
+  - GameObject Celler
+  - PlayerAudio Master
+    - 内部処理を一部最適化しました。
+
+## [2.0.0] - 2024/9/26
 
 - **Changed**
   - サポートバージョンをUnity2022.3、VRCSDK 3.5.0以上に引き上げました。
   - 全てのU#スクリプトの名前空間を `MimyLab` から `MimyLab.FukuroUdon` に変更しました。
-  - 全てのコンポーネントにアイコンを実装しました。
+  - 全てのコンポーネントにアイコンを実装しました🦉
+  - AmbientEffect Assistant
+    - 軽量化。これに伴い、ViewPoint Tracker自身がビューポイントと一致して動くようになりました。
+
+- **Fixed**
+  - ActiveRelay
+    - ActiveRelay to Componentに対象外のオブジェクト・コンポーネントをセットできなくなり、セットされていた場合除去されるようになりました。
+
+## [1.24.1] - 2024/9/16
+
+- **Fixed**
+  - Manual ObjectSync
+    - 複数のUdonコンポーネントが付いているオブジェクトに対して、Reset Switch for ObjectSync がManual ObjectSyncを見失わなくなりました。 [#15](https://github.com/mimyquality/FukuroUdon/pull/15)
+    - これに伴い、VRC ObjectSyncもManual ObjectSyncも付いていないオブジェクトに対しては、全てのUdonコンポーネントに対して `SendCustomEvent("Reset")` を実行するようになりました。
 
 ## [1.24.0] - 2024/8/3
 
@@ -197,19 +301,19 @@
 
 - **Changed**
   - Manual ObjectSync
-    - Owner権が移譲された際、Equipが強制的に外れるようにしました(1.12.4の内容が完全でなかったため) #[9]
+    - Owner権が移譲された際、Equipが強制的に外れるようにしました(1.12.4の内容が完全でなかったため) [#9](https://github.com/mimyquality/FukuroUdon/issues/9)
 
 ## [1.12.4] - 2024/2/1
 
 - **Fixed**
   - Manual ObjectSync
-    - オブジェクトをEquipしたプレイヤーがEquipしたまま退室した時にEquipが外れるようにしました。 #[9]
+    - オブジェクトをEquipしたプレイヤーがEquipしたまま退室した時にEquipが外れるようにしました。 [#9](https://github.com/mimyquality/FukuroUdon/issues/9)
 
 ## [1.12.3] - 2024/1/31
 
 - **Fixed**
   - Manual ObjectSync
-    - 初期状態が非アクティブまたはVRCObjectPoolなどでアクティブ状態を管理している場合に、later-joinerに初期位置が同期しないのを修正しました。 #[8]
+    - 初期状態が非アクティブまたはVRCObjectPoolなどでアクティブ状態を管理している場合に、later-joinerに初期位置が同期しないのを修正しました。 [#8](https://github.com/mimyquality/FukuroUdon/pull/8)
 
 ## [1.12.0] - 2024/1/26
 
@@ -522,8 +626,19 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
-[2.0.0-beta.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0-beta.2
-[2.0.0-beta]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0-beta
+[3.4.0-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.4.0-beta.1
+[3.3.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.3.0
+[3.2.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.2
+[3.2.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.1
+[3.2.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.0
+[3.1.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.1.1
+[3.1.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.1.0
+[3.0.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.2
+[3.0.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.1
+[3.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.0.0
+[2.0.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.1
+[2.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/2.0.0
+[1.24.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.24.1
 [1.24.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.24.0
 [1.23.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.23.0
 [1.22.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/1.22.1

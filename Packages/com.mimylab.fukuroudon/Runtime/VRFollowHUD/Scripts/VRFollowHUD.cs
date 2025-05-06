@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.Udon;
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/VR Follow HUD/VR Follow HUD")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class VRFollowHUD : LocalPlayerTrackingTracker

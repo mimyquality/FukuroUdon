@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2023 Mimy Quality
+Copyright (c) 2024 Mimy Quality
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
@@ -15,13 +15,11 @@ namespace MimyLab.FukuroUdon
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Swivel Chair 2/SC2 Input Manager")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class SC2InputManager : UdonSharpBehaviour
     {
-        [HideInInspector]
-        public SC2SeatAdjuster seatAdjuster;
-        [HideInInspector]
-        public SC2Caster caster;
+        internal SC2SeatAdjuster seatAdjuster;
+        internal SC2Caster caster;
 
         [SerializeField]
         [Tooltip("0 = PCVR \n1 = Desktop \n2 = Quest \n3 = Android")]
@@ -106,7 +104,6 @@ namespace MimyLab.FukuroUdon
 
         private void Update()
         {
-
             // ジャンプボタン長押し処理
             if (_isJump) { _inputJumpInterval += Time.deltaTime; }
             if (_inputJumpInterval > longPushDuration) { seatAdjuster.Exit(); }
@@ -241,7 +238,6 @@ namespace MimyLab.FukuroUdon
                 tmpInputMode = SwivelChairInputMode.Disable;
             }
             // 無効なモードがあればFix
-
 
             if (tmpInputMode != _inputMode)
             {

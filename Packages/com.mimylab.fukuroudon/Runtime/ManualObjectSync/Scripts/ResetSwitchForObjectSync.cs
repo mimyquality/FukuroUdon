@@ -11,7 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.Udon;
     using VRC.SDK3.Components;
-
+    
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Reset Switch for ObjectSync")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
@@ -25,7 +25,8 @@ namespace MimyLab.FukuroUdon
 
         private float _lastResetTime;
         private VRCObjectSync[] _objectSyncs_vrc;
-        private UdonBehaviour[] _objectSyncs_udon;
+        private ManualObjectSync[] _objectSyncs_mos;
+        private UdonBehaviour[][] _objectSyncs_udon;
 
         private bool _initialized = false;
         private void Initialize()
@@ -33,13 +34,15 @@ namespace MimyLab.FukuroUdon
             if (_initialized) { return; }
 
             _objectSyncs_vrc = new VRCObjectSync[resetObjects.Length];
-            _objectSyncs_udon = new UdonBehaviour[resetObjects.Length];
+            _objectSyncs_mos = new ManualObjectSync[resetObjects.Length];
+            _objectSyncs_udon = new UdonBehaviour[resetObjects.Length][];
             for (int i = 0; i < resetObjects.Length; i++)
             {
                 if (!resetObjects[i]) { continue; }
 
                 _objectSyncs_vrc[i] = resetObjects[i].GetComponent<VRCObjectSync>();
-                _objectSyncs_udon[i] = resetObjects[i].GetComponent<UdonBehaviour>();
+                _objectSyncs_mos[i] = resetObjects[i].GetComponent<ManualObjectSync>();
+                _objectSyncs_udon[i] = resetObjects[i].GetComponents<UdonBehaviour>();
             }
 
             _initialized = true;
@@ -76,10 +79,21 @@ namespace MimyLab.FukuroUdon
                     continue;
                 }
 
-                if (_objectSyncs_udon[i])
+                if (_objectSyncs_mos[i])
                 {
-                    _objectSyncs_udon[i].SendCustomEvent("Respawn");
+                    _objectSyncs_mos[i].Respawn();
                     continue;
+                }
+
+                if (_objectSyncs_udon[i] != null)
+                {
+                    for (int j = 0; j < _objectSyncs_udon[i].Length; j++)
+                    {
+                        if (_objectSyncs_udon[i][j])
+                        {
+                            _objectSyncs_udon[i][j].SendCustomEvent("Respawn");
+                        }
+                    }
                 }
             }
         }

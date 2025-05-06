@@ -8,9 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
-    //using VRC.Udon;
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Flexible Reverb Zone")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class FlexibleReverbZone : IViewPointReceiver
@@ -37,20 +36,15 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            SnapViewPointPosition(position);
-        }
-
-        private void SnapViewPointPosition(Vector3 vpPosition)
-        {
             var nearest = Vector3.positiveInfinity;
             foreach (var col in _area)
             {
                 if (!col) { continue; }
 
-                var point = col.ClosestPoint(vpPosition);
-                nearest = (point - vpPosition).sqrMagnitude < (nearest - vpPosition).sqrMagnitude ? point : nearest;
+                var point = col.ClosestPoint(position);
+                nearest = (point - position).sqrMagnitude < (nearest - position).sqrMagnitude ? point : nearest;
 
-                if (point == vpPosition) { break; }
+                if (point == position) { break; }
             }
             // positiveInfinityならコライダーが無かったと見なす。
             if (nearest.Equals(Vector3.positiveInfinity)) { Debug.LogWarning($"Flexible Spatial Audio in {this.gameObject.name} haven't Area Collider."); return; }

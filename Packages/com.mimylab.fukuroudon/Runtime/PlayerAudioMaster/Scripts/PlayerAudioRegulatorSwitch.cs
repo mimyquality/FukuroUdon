@@ -9,8 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.Udon;
-    //using VRC.SDK3.Components;
 
     public enum PlayerAudioRegulatorSwitchMode
     {
@@ -19,6 +17,7 @@ namespace MimyLab.FukuroUdon
         ButtonOFF
     }
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator Switch")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class PlayerAudioRegulatorSwitch : IPlayerAudioRegulator
@@ -27,7 +26,7 @@ namespace MimyLab.FukuroUdon
         public PlayerAudioRegulatorSwitchMode switchMode = default;
 
         [UdonSynced]
-        private int _assignedPlayerID = -1;
+        private int _assignedPlayerId = -1;
 
         private VRCPlayerApi _localPlayer;
 
@@ -53,11 +52,11 @@ namespace MimyLab.FukuroUdon
 
             if (switchMode == PlayerAudioRegulatorSwitchMode.Toggle)
             {
-                if (_assignedPlayerID == _localPlayer.playerId)
+                if (_assignedPlayerId == _localPlayer.playerId)
                 {
                     ReleasePlayer();
                 }
-                else if (_assignedPlayerID > 0)
+                else if (_assignedPlayerId > 0)
                 {
                     AssignPlayer(_localPlayer);
                 }
@@ -81,7 +80,7 @@ namespace MimyLab.FukuroUdon
 
             if (!_localPlayer.IsOwner(this.gameObject)) { return; }
 
-            _assignedPlayerID = target.playerId;
+            _assignedPlayerId = target.playerId;
             RequestSerialization();
 
         }
@@ -95,13 +94,13 @@ namespace MimyLab.FukuroUdon
 
             if (!_localPlayer.IsOwner(this.gameObject)) { return; }
 
-            _assignedPlayerID = -1;
+            _assignedPlayerId = -1;
             RequestSerialization();
         }
 
         protected override bool CheckApplicableInternal(VRCPlayerApi target)
         {
-            return target.playerId == _assignedPlayerID;
+            return target.playerId == _assignedPlayerId;
         }
     }
 }

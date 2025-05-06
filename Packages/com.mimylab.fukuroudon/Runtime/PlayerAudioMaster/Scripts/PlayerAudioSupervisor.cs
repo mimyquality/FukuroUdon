@@ -9,8 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.Udon;
-    //using VRC.SDK3.Components;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Supervisor")]
@@ -59,8 +57,8 @@ namespace MimyLab.FukuroUdon
 
         private void Update()
         {
-            var selecter = _players[Time.frameCount % Mathf.Max(_playerCount, 1)];
-            if (!Utilities.IsValid(selecter)) { return; }
+            var chosenPlayer = _players[Time.frameCount % _playerCount];
+            if (!Utilities.IsValid(chosenPlayer)) { return; }
 
             var channel = TagIsEmpty;
             var overrideNumber = TagIsEmpty;
@@ -68,7 +66,7 @@ namespace MimyLab.FukuroUdon
             for (int i = 0; i < playerAudioRegulators.Length; i++)
             {
                 if (!playerAudioRegulators[i]) { continue; }
-                if (!playerAudioRegulators[i].CheckApplicable(selecter)) { continue; }
+                if (!playerAudioRegulators[i].CheckApplicable(chosenPlayer)) { continue; }
 
                 if (!playerAudioRegulators[i].enableChannelMode)
                 {
@@ -79,7 +77,7 @@ namespace MimyLab.FukuroUdon
                 // ここからチャンネル処理
 
                 channel = playerAudioRegulators[i].channel.ToString();
-                if (selecter.isLocal) { break; }
+                if (chosenPlayer.isLocal) { break; }
 
                 if (Networking.LocalPlayer.GetPlayerTag(PlayerAudioChannelTagName) == channel)
                 {
@@ -99,21 +97,25 @@ namespace MimyLab.FukuroUdon
                     case PlayerAudioRegulatorChannelUncmatchMode.Passthrough:
                         channel = TagIsEmpty;
                         continue;
+                    case PlayerAudioRegulatorChannelUncmatchMode.Pretend:
+                        overrideNumber = i.ToString();
+                        overrideRegulator = playerAudioRegulators[i];
+                        break;
                     default:
                         break;
                 }
                 break;
             }
 
-            if (selecter.GetPlayerTag(PlayerAudioChannelTagName) != channel)
+            if (chosenPlayer.GetPlayerTag(PlayerAudioChannelTagName) != channel)
             {
-                selecter.SetPlayerTag(PlayerAudioChannelTagName, channel);
+                chosenPlayer.SetPlayerTag(PlayerAudioChannelTagName, channel);
             }
 
             var executeOverride = overrideRegulator && overrideRegulator.NeedRealtimeOverride;
-            if (selecter.GetPlayerTag(PlayerAudioOverrideTagName) != overrideNumber)
+            if (chosenPlayer.GetPlayerTag(PlayerAudioOverrideTagName) != overrideNumber)
             {
-                selecter.SetPlayerTag(PlayerAudioOverrideTagName, overrideNumber);
+                chosenPlayer.SetPlayerTag(PlayerAudioOverrideTagName, overrideNumber);
                 executeOverride = true;
             }
 
@@ -121,19 +123,19 @@ namespace MimyLab.FukuroUdon
             {
                 if (overrideNumber == TagIsEmpty)
                 {
-                    SetDefaultPlayerVoice(selecter);
-                    SetDefaultAvatarAudio(selecter);
+                    SetDefaultPlayerVoice(chosenPlayer);
+                    SetDefaultAvatarAudio(chosenPlayer);
                     return;
                 }
 
-                if (!overrideRegulator.OverridePlayerVoice(selecter))
+                if (!overrideRegulator.OverridePlayerVoice(chosenPlayer))
                 {
-                    SetDefaultPlayerVoice(selecter);
+                    SetDefaultPlayerVoice(chosenPlayer);
                 }
 
-                if (!overrideRegulator.OverrideAvatarAudio(selecter))
+                if (!overrideRegulator.OverrideAvatarAudio(chosenPlayer))
                 {
-                    SetDefaultAvatarAudio(selecter);
+                    SetDefaultAvatarAudio(chosenPlayer);
                 }
             }
         }

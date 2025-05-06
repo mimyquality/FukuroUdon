@@ -8,9 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
-    //using VRC.Udon;
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Flexible Transform")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class FlexibleTransform : IViewPointReceiver
@@ -30,11 +29,6 @@ namespace MimyLab.FukuroUdon
 
         public override void ReceiveViewPoint(Vector3 position, Quaternion rotation)
         {
-            SnapViewPoint(position, rotation);
-        }
-
-        private void SnapViewPoint(Vector3 vpPosition, Quaternion vpRotation)
-        {
             if (!_target) { return; }
 
             var nearest = Vector3.positiveInfinity;
@@ -42,10 +36,10 @@ namespace MimyLab.FukuroUdon
             {
                 if (!col) { continue; }
 
-                var point = col.ClosestPoint(vpPosition);
-                nearest = (point - vpPosition).sqrMagnitude < (nearest - vpPosition).sqrMagnitude ? point : nearest;
+                var point = col.ClosestPoint(position);
+                nearest = (point - position).sqrMagnitude < (nearest - position).sqrMagnitude ? point : nearest;
 
-                if (point == vpPosition) { break; }
+                if (point == position) { break; }
             }
             // positiveInfinityならコライダーが無かったと見なす。
             if (nearest.Equals(Vector3.positiveInfinity)) { Debug.LogWarning($"Flexible Spatial Audio in {this.gameObject.name} haven't Area Collider."); return; }
@@ -56,12 +50,12 @@ namespace MimyLab.FukuroUdon
             }
             else
             {
-                _target.SetPositionAndRotation(nearest, vpRotation);
+                _target.SetPositionAndRotation(nearest, rotation);
             }
 
             if (_inactiveOutOfRange)
             {
-                var isInRange = (vpPosition - nearest).sqrMagnitude <= (_activeRange * _activeRange);
+                var isInRange = (position - nearest).sqrMagnitude <= (_activeRange * _activeRange);
                 if (_target.gameObject.activeSelf != isInRange) { _target.gameObject.SetActive(isInRange); }
             }
         }

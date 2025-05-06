@@ -8,10 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
-    //using VRC.Udon;
 
-
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Area Culling")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class AreaCulling : IViewPointReceiver
@@ -19,6 +17,8 @@ namespace MimyLab.FukuroUdon
         [Header("Targets")]
         [SerializeField]
         private Renderer[] _renderers = new Renderer[0];
+        [SerializeField]
+        private GameObject[] _gameObjects = new GameObject[0];
 
         [Space]
         [SerializeField]
@@ -45,21 +45,16 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            CullingByViewPointPosition(position);
-        }
-
-        private void CullingByViewPointPosition(Vector3 vpPosition)
-        {
             var isIn = false;
             //var nearest = Vector3.positiveInfinity;
             foreach (var col in _area)
             {
                 if (!col) { continue; }
 
-                var point = col.ClosestPoint(vpPosition);
+                var point = col.ClosestPoint(position);
                 //nearest = (point - vpPosition).sqrMagnitude < (nearest - vpPosition).sqrMagnitude ? point : nearest;
 
-                if (point == vpPosition)
+                if (point == position)
                 {
                     isIn = true;
                     break;
@@ -71,14 +66,18 @@ namespace MimyLab.FukuroUdon
 
         private void ToggleTargetsEnabled(bool value)
         {
-            if (value != _prevEnabled)
+            if (value == _prevEnabled) { return; }
+
+            foreach (var target in _renderers)
             {
-                foreach (var target in _renderers)
-                {
-                    if (target) { target.enabled = value; }
-                }
-                _prevEnabled = value;
+                if (target) { target.enabled = value; }
             }
+            foreach (var target in _gameObjects)
+            {
+                if (target) { target.SetActive(value); }
+            }
+
+            _prevEnabled = value;
         }
     }
 }

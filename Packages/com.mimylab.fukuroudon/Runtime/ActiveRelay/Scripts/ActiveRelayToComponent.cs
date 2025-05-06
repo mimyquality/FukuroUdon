@@ -25,6 +25,23 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private bool _invert = false;
 
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
+        private void OnValidate()
+        {
+            var count = 0;
+            var tmp = new Object[_components.Length];
+            foreach (var component in _components)
+            {
+                if (ValidateComponentType(component))
+                {
+                    tmp[count++] = component;
+                }
+            }
+            System.Array.Resize(ref tmp, count);
+            _components = tmp;
+        }
+#endif
+
         private void OnEnable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
@@ -43,6 +60,41 @@ namespace MimyLab.FukuroUdon
             }
         }
 
+        private bool ValidateComponentType(Object component)
+        {
+            if (!component) { return false; }
+
+            var type = component.GetType();
+            if (type == typeof(GameObject)) { return false; }
+            // Collider
+            else if (type == typeof(BoxCollider)) { return true; }
+            else if (type == typeof(SphereCollider)) { return true; }
+            else if (type == typeof(CapsuleCollider)) { return true; }
+            else if (type == typeof(MeshCollider)) { return true; }
+            else if (type == typeof(WheelCollider)) { return true; }
+            //else if (type == typeof(TerrainCollider)) { return true; }
+            // Renderer
+            else if (type == typeof(MeshRenderer)) { return true; }
+            else if (type == typeof(SkinnedMeshRenderer)) { return true; }
+            else if (type == typeof(LineRenderer)) { return true; }
+            else if (type == typeof(TrailRenderer)) { return true; }
+            else if (type == typeof(BillboardRenderer)) { return true; }
+            else if (type == typeof(SpriteRenderer)) { return true; }
+            //else if (type == typeof(UnityEngine.Tilemaps.TilemapRenderer)) { return true; }
+            else if (type == typeof(OcclusionPortal)) { return true; }
+            // Constraint
+            else if (type == typeof(AimConstraint)) { return true; }
+            else if (type == typeof(LookAtConstraint)) { return true; }
+            else if (type == typeof(ParentConstraint)) { return true; }
+            else if (type == typeof(PositionConstraint)) { return true; }
+            else if (type == typeof(RotationConstraint)) { return true; }
+            else if (type == typeof(ScaleConstraint)) { return true; }
+            // Camera
+            else if (type == typeof(Camera)) { return true; }
+
+            return false;
+        }
+
         private void ToggleComponents(bool value)
         {
             foreach (var component in _components)
@@ -50,7 +102,6 @@ namespace MimyLab.FukuroUdon
                 if (!component) continue;
 
                 var type = component.GetType();
-                //if (type == typeof(GameObject)) { var downCasted = (GameObject)component; downCasted.SetActive(value); }
                 if (type == typeof(GameObject)) { return; }
                 // Collider
                 else if (type == typeof(BoxCollider)) { var downCasted = (BoxCollider)component; downCasted.enabled = value; }

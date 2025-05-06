@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2023 Mimy Quality
+Copyright (c) 2024 Mimy Quality
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
@@ -30,15 +30,12 @@ namespace MimyLab.FukuroUdon
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Swivel Chair 2/Swivel Chair 2")]
-    [DefaultExecutionOrder(-1000)]
+    [DefaultExecutionOrder(-100)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class SwivelChair2 : UdonSharpBehaviour
     {
-        [Header("Require References")]
-        [SerializeField]
-        private SC2SeatAdjuster _seatAdjuster;
-        [SerializeField]
-        private SC2InputManager _inputManager;
+        internal SC2SeatAdjuster seatAdjuster;
+        internal SC2InputManager inputManager;
 
         [Header("Additional Settings")]
         [SerializeField]
@@ -53,14 +50,14 @@ namespace MimyLab.FukuroUdon
         {
             if (_initialized) { return; }
 
-            if (!_seatAdjuster) { _seatAdjuster = GetComponentInChildren<SC2SeatAdjuster>(true); }
-            if (!_inputManager) { _inputManager = GetComponentInChildren<SC2InputManager>(true); }
+            seatAdjuster = GetComponentInChildren<SC2SeatAdjuster>(true);
+            inputManager = GetComponentInChildren<SC2InputManager>(true);
             if (!_pickup) { _pickup = GetComponentInParent<VRCPickup>(); }
             if (!_caster) { _caster = GetComponentInChildren<SC2Caster>(true); }
 
-            _seatAdjuster.swivelChair2 = this;
-            _inputManager.seatAdjuster = _seatAdjuster;
-            _inputManager.caster = _caster;
+            seatAdjuster.swivelChair2 = this;
+            inputManager.seatAdjuster = seatAdjuster;
+            inputManager.caster = _caster;
 
             _initialized = true;
         }
@@ -68,12 +65,12 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            _inputManager.enabled = false;
+            inputManager.enabled = false;
         }
 
         public override void OnPickup()
         {
-            _seatAdjuster.DisableInteractive = true;
+            seatAdjuster.DisableInteractive = true;
 
             if (_caster)
             {
@@ -83,11 +80,11 @@ namespace MimyLab.FukuroUdon
 
         public override void OnDrop()
         {
-            if (!_isSit) { _seatAdjuster.DisableInteractive = false; }
+            if (!_isSit) { seatAdjuster.DisableInteractive = false; }
 
             if (_caster)
             {
-                var stationOwner = Networking.GetOwner(_seatAdjuster.gameObject);
+                var stationOwner = Networking.GetOwner(seatAdjuster.gameObject);
                 Networking.SetOwner(stationOwner, _caster.gameObject);
             }
         }
@@ -95,8 +92,8 @@ namespace MimyLab.FukuroUdon
         public void OnSitDown()
         {
             _isSit = true;
-            _seatAdjuster.DisableInteractive = true;
-            _inputManager.enabled = true;
+            seatAdjuster.DisableInteractive = true;
+            inputManager.enabled = true;
             if (_pickup) { _pickup.pickupable = false; }
             if (_caster) { Networking.SetOwner(Networking.LocalPlayer, _caster.gameObject); }
         }
@@ -104,8 +101,8 @@ namespace MimyLab.FukuroUdon
         public void OnStandUp()
         {
             _isSit = false;
-            _seatAdjuster.DisableInteractive = false;
-            _inputManager.enabled = false;
+            seatAdjuster.DisableInteractive = false;
+            inputManager.enabled = false;
             if (_pickup) { _pickup.pickupable = true; }
         }
     }

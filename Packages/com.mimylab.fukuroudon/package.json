@@ -1,7 +1,7 @@
 {
   "name": "com.mimylab.fukuroudon",
   "displayName": "Fukuro Udon",
-  "version": "2.0.0-beta.2",
+  "version": "3.4.0-beta.1",
   "description": "MimyLab's U# utilitiy pack for VPM.",
   "unity": "2022.3",
   "author": {
@@ -9,10 +9,12 @@
     "url": "https://github.com/mimyquality"
   },
   "documentationUrl": "https://github.com/mimyquality/FukuroUdon/wiki",
+  "changelogUrl": "https://github.com/mimyquality/FukuroUdon/blob/main/Packages/com.mimylab.fukuroudon/CHANGELOG.md",
+  "licensesUrl": "https://github.com/mimyquality/FukuroUdon/blob/main/Packages/com.mimylab.fukuroudon/LICENSE.md",
   "dependencies": {},
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.worlds": "^3.5.0"
+    "com.vrchat.worlds": "^3.8.1-beta.1"
   },
   "legacyFolders": {
     "Assets\\MimyLab/ActiveRelay": "",
@@ -71,14 +73,19 @@
       "path": "Samples/PlayerAudioMaster"
     },
     {
-      "displayName": "AmbientSound Assistant",
-      "description": "ワールドの環境音・効果音を補助するギミック",
-      "path": "Samples/AmbientSoundAssistant"
-    },    
+      "displayName": "AmbientEffect Assistant",
+      "description": "ワールドの環境音や視覚効果を補助するギミック",
+      "path": "Samples/AmbientEffectAssistant"
+    },
     {
       "displayName": "Advanced World Settings",
       "description": "Joinしたプレイヤーの各種初期化処理ができるギミック",
       "path": "Samples/AdvancedWorldSettings"
+    },
+    {
+      "displayName": "Better AvatarPedestal",
+      "description": "3Dモデルで展示できるアバターペデスタル",
+      "path": "Samples/BetterAvatarPedestal"
     }
   ]
 }

@@ -22,6 +22,7 @@ namespace MimyLab.FukuroUdon
         LocalPlayerExit,
     }
 
+    [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Station")]
     [RequireComponent(typeof(VRCStation))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

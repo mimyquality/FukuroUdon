@@ -35,7 +35,7 @@
       }
     },
     "com.unity.ads": {
-      "version": "4.4.2",
+      "version": "4.12.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -44,7 +44,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ai.navigation": {
-      "version": "1.1.5",
+      "version": "1.1.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -57,8 +57,8 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.services.analytics": "1.0.4",
-        "com.unity.ugui": "1.0.0"
+        "com.unity.ugui": "1.0.0",
+        "com.unity.services.analytics": "1.0.4"
       },
       "url": "https://packages.unity.com"
     },
@@ -87,8 +87,8 @@
       "source": "registry",
       "dependencies": {
         "com.unity.burst": "1.8.4",
-        "com.unity.modules.unityanalytics": "1.0.0",
-        "com.unity.nuget.mono-cecil": "1.11.4"
+        "com.unity.nuget.mono-cecil": "1.11.4",
+        "com.unity.modules.unityanalytics": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -100,19 +100,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.22",
+      "version": "2.0.23",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.test-framework": "1.1.9"
       },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.ide.vscode": {
-      "version": "1.2.5",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
@@ -155,15 +148,15 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.purchasing": {
-      "version": "4.11.0",
+      "version": "4.12.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.ugui": "1.0.0",
-        "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.services.core": "1.12.5",
         "com.unity.modules.androidjni": "1.0.0",
-        "com.unity.services.core": "1.8.2"
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -173,19 +166,19 @@
       "source": "registry",
       "dependencies": {
         "com.unity.ugui": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0",
-        "com.unity.services.core": "1.10.1"
+        "com.unity.services.core": "1.10.1",
+        "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.services.core": {
-      "version": "1.12.4",
+      "version": "1.12.5",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.modules.androidjni": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.2.1",
-        "com.unity.modules.androidjni": "1.0.0"
+        "com.unity.modules.unitywebrequest": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -201,7 +194,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {
-      "version": "3.0.8",
+      "version": "3.0.9",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -210,13 +203,13 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.7.6",
+      "version": "1.7.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -245,9 +238,9 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.subsystems": "1.0.0",
         "com.unity.modules.vr": "1.0.0",
         "com.unity.modules.xr": "1.0.0",
+        "com.unity.modules.subsystems": "1.0.0",
         "com.unity.xr.legacyinputhelpers": "2.1.7"
       },
       "url": "https://packages.unity.com"
@@ -273,7 +266,8 @@
         "com.unity.timeline": "1.7.6",
         "com.unity.xr.management": "4.3.3",
         "com.unity.xr.oculus": "4.0.0",
-        "com.unity.postprocessing": "3.2.2"
+        "com.unity.postprocessing": "3.2.2",
+        "com.unity.ugui": "1.0.0"
       }
     },
     "com.vrchat.core.bootstrap": {
@@ -300,8 +294,7 @@
         "com.unity.cinemachine": "2.9.7",
         "com.unity.textmeshpro": "3.0.6",
         "com.unity.inputsystem": "1.2.0",
-        "com.unity.ai.navigation": "1.1.5",
-        "com.unity.ugui": "1.0.0"
+        "com.unity.ai.navigation": "1.1.5"
       }
     },
     "dev.onevr.vrworldtoolkit": {
@@ -312,8 +305,26 @@
         "com.unity.postprocessing": "3.1.1"
       }
     },
+    "jp.lilxyzw.editortoolbox": {
+      "version": "file:jp.lilxyzw.editortoolbox",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "jp.lilxyzw.liltoon": {
+      "version": "file:jp.lilxyzw.liltoon",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "net.kaikoga.pen": {
       "version": "file:net.kaikoga.pen",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "net.narazaka.vrchat.tmp-fallback-fonts-jp": {
+      "version": "file:net.narazaka.vrchat.tmp-fallback-fonts-jp",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
