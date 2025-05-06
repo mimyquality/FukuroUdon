@@ -20,9 +20,6 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         ObjectPoolManager target = null;
 
-        [Tooltip("Set a value upper than world Respawn Hight Y.")]
-        public Vector3 respawnPoint = new Vector3(0f, -99f, 0f);
-
         void OnTriggerEnter(Collider other)
         {
             if (!target) { return; }
@@ -32,22 +29,28 @@ namespace MimyLab.FukuroUdon
             if (!Networking.IsOwner(incommingObject)) { return; }
 
             Networking.SetOwner(Networking.LocalPlayer, target.gameObject);
-            var pool = target.Pool;
-            for (int i = 0; i < pool.Length; i++)
-            {
-                if (incommingObject == pool[i])
-                {
-                    var pickup = incommingObject.GetComponent<VRCPickup>();
-                    var objectSync = incommingObject.GetComponent<VRCObjectSync>();
-                    if (pickup) { pickup.Drop(); }
-                    if (objectSync) { objectSync.FlagDiscontinuity(); }
-
-                    incommingObject.transform.position = respawnPoint;
-                    target.Return(incommingObject);
-
-                    break;
-                }
-            }
+            GameObject pooledObject = _FindInParentPools(incommingObject);
+        	if (!Utilities.IsValid(pooledObject)) { return; }
+        	target.Return(pooledObject);
         }
+        
+        // 自身や先祖がPoolにあればそれを返す
+	    private GameObject _FindInParentPools(GameObject current)
+	    {
+	        while (current != null)
+	        {
+	            foreach (GameObject pooledObject in target.Pool)
+	            {
+	                if (current == pooledObject)
+	                {
+	                    return pooledObject;
+	                }
+	            }
+	            Transform parentTransform = current.transform.parent;
+	            if (parentTransform == null) { return null; }
+	            current = parentTransform.gameObject;
+	        }
+	        return null;
+	    }
     }
 }

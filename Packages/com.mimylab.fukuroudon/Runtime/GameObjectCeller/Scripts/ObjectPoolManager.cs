@@ -18,6 +18,9 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class ObjectPoolManager : UdonSharpBehaviour
     {
+        [Tooltip("Set a value upper than world Respawn Hight Y.")]
+        public Vector3 respawnPoint = new Vector3(0f, -101f, 0f);
+        
         VRCObjectPool _objectPool;
         GameObject[] _pool;
         GameObject _lastSpawnedObject = null;
@@ -127,7 +130,7 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            _objectPool.Return(gameObject);
+            _ReturnAndAllPickupObjectRespawn(gameObject);
         }
 
         public void Shuffle()
@@ -172,7 +175,7 @@ namespace MimyLab.FukuroUdon
             {
                 if (_pool[i].activeSelf)
                 {
-                    _objectPool.Return(_pool[i]);
+                    _ReturnAndAllPickupObjectRespawn(_pool[i]);
                     break;
                 }
             }
@@ -182,7 +185,7 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            _objectPool.Return(_pool[index]);
+            _ReturnAndAllPickupObjectRespawn(_pool[index]);
         }
 
         public void ReturnAll()
@@ -191,8 +194,42 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _pool.Length; i++)
             {
-                _objectPool.Return(_pool[i]);
+                _ReturnAndAllPickupObjectRespawn(_pool[i]);
             }
+        }
+        
+        private void _ReturnAndAllPickupObjectRespawn(GameObject obj)
+        {
+            if (!Utilities.IsValid(obj)) { return; }
+
+            // 子孫オブジェクト(VRCPickup)の位置をリセットする
+            VRCPickup[] childrenPickup = obj.GetComponentsInChildren<VRCPickup>(true);
+            foreach (VRCPickup childPickup in childrenPickup)
+            {
+                _Respawn(childPickup.gameObject);
+            }
+
+            // objの位置をリセットする
+            _Respawn(obj);
+
+            // objを非表示にする
+            _objectPool.Return(obj);
+
+        }
+
+        private void _Respawn(GameObject obj)
+        {
+            var objPickup = obj.GetComponent<VRCPickup>();
+            var objObjectSync = obj.GetComponent<VRCObjectSync>();
+            var objRigidBody = obj.GetComponent<Rigidbody>();
+            if (objPickup) { objPickup.Drop(); }
+            if (objObjectSync) { objObjectSync.FlagDiscontinuity(); }
+            if (objRigidBody)
+            {
+                objRigidBody.velocity = Vector3.zero;
+                objRigidBody.angularVelocity = Vector3.zero;
+            }
+            obj.transform.position = respawnPoint;
         }
     }
 }
