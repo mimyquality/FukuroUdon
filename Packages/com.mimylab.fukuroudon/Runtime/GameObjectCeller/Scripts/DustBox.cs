@@ -9,7 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.Udon;
     using VRC.SDK3.Components;
 
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -20,28 +19,42 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private ObjectPoolManager target = null;
 
-        [Tooltip("Set a value upper than world Respawn Hight Y.")]
-        public Vector3 respawnPoint = new Vector3(0f, -99f, 0f);
-
         private void OnTriggerEnter(Collider other)
         {
             if (!target) { return; }
+
             if (!Utilities.IsValid(other)) { return; }
-
             var incommingObject = other.gameObject;
-            if (!Networking.IsOwner(incommingObject)) { return; }
+            var index = System.Array.IndexOf(target.Pool, incommingObject);
+            if (index < 0) { return; }
 
-            if (System.Array.IndexOf(target.Pool, incommingObject) > -1)
+            var pickup = incommingObject.GetComponent<VRCPickup>();
+            if (pickup) { pickup.Drop(); }
+
+            // リターン前に位置リセットしておく
+            var objectSync = incommingObject.GetComponent<VRCObjectSync>();
+            var rigidbody = incommingObject.GetComponent<Rigidbody>();
+            if (objectSync)
             {
-                var pickup = incommingObject.GetComponent<VRCPickup>();
-                var objectSync = incommingObject.GetComponent<VRCObjectSync>();
-                if (pickup) { pickup.Drop(); }
-                if (objectSync) { objectSync.FlagDiscontinuity(); }
-                incommingObject.transform.position = respawnPoint;
-
-                Networking.SetOwner(Networking.LocalPlayer, target.gameObject);
-                target.Return(incommingObject);
+                if (Networking.IsOwner(incommingObject))
+                {
+                    objectSync.Respawn();
+                }
             }
+            else if (rigidbody)
+            {
+                rigidbody.position = target.StartPositions[index];
+                rigidbody.rotation = target.StartRotations[index];
+                rigidbody.velocity = Vector3.zero;
+                rigidbody.angularVelocity = Vector3.zero;
+                rigidbody.Sleep();
+            }
+            else
+            {
+                incommingObject.transform.SetPositionAndRotation(target.StartPositions[index], target.StartRotations[index]);
+            }
+
+            target.Return(incommingObject);
         }
     }
 }

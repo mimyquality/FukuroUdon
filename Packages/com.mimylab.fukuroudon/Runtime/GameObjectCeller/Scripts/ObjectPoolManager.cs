@@ -8,9 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
+    using VRC.SDKBase;
     using VRC.SDK3.Components;
-    //using VRC.Udon;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/GameObject Celler/ObjectPool Manager")]
@@ -20,6 +19,8 @@ namespace MimyLab.FukuroUdon
     {
         private VRCObjectPool _objectPool;
         private GameObject[] _pool;
+        private Vector3[] _startPositions;
+        private Quaternion[] _startRotations;
         private GameObject _lastSpawnedObject = null;
 
         private bool _initialized = false;
@@ -29,6 +30,14 @@ namespace MimyLab.FukuroUdon
 
             _objectPool = GetComponent<VRCObjectPool>();
             _pool = _objectPool.Pool;
+            // VRCObjectPoolのStartPositions, StartRotationsがバグってるので自前で初期化
+            _startPositions = new Vector3[_pool.Length];
+            _startRotations = new Quaternion[_pool.Length];
+            for (int i = 0; i < _pool.Length; i++)
+            {
+                _startPositions[i] = _pool[i].transform.position;
+                _startRotations[i] = _pool[i].transform.rotation;
+            }
 
             _initialized = true;
         }
@@ -46,7 +55,7 @@ namespace MimyLab.FukuroUdon
             {
                 Initialize();
 
-                return _objectPool.Pool;
+                return _pool;
             }
         }
         public Vector3[] StartPositions
@@ -55,7 +64,7 @@ namespace MimyLab.FukuroUdon
             {
                 Initialize();
 
-                return _objectPool.StartPositions;
+                return _startPositions;
             }
         }
         public Quaternion[] StartRotations
@@ -64,7 +73,7 @@ namespace MimyLab.FukuroUdon
             {
                 Initialize();
 
-                return _objectPool.StartRotations;
+                return _startRotations;
             }
         }
 
@@ -125,6 +134,8 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
+            if (!Networking.IsOwner(this.gameObject)) { return null; }
+
             var resultObject = _objectPool.TryToSpawn();
             if (resultObject) { _lastSpawnedObject = resultObject; }
 
@@ -134,6 +145,8 @@ namespace MimyLab.FukuroUdon
         public void Return(GameObject gameObject)
         {
             Initialize();
+
+            if (!Networking.IsOwner(this.gameObject)) { return; }
 
             _objectPool.Return(gameObject);
         }
@@ -151,6 +164,8 @@ namespace MimyLab.FukuroUdon
         public GameObject[] SpawnAll()
         {
             Initialize();
+
+            if (!Networking.IsOwner(this.gameObject)) { return new GameObject[0]; }
 
             var spawnObjects = new GameObject[_pool.Length];
             var spawnCount = 0;
@@ -175,6 +190,8 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
+            if (!Networking.IsOwner(this.gameObject)) { return; }
+
             for (int i = 0; i < _pool.Length; i++)
             {
                 if (_pool[i].activeSelf)
@@ -189,12 +206,16 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
+            if (!Networking.IsOwner(this.gameObject)) { return; }
+
             _objectPool.Return(_pool[index]);
         }
 
         public void ReturnAll()
         {
             Initialize();
+
+            if (!Networking.IsOwner(this.gameObject)) { return; }
 
             for (int i = 0; i < _pool.Length; i++)
             {
