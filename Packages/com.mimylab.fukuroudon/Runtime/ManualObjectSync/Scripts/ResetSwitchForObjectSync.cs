@@ -11,7 +11,8 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.Udon;
     using VRC.SDK3.Components;
-    
+    using VRC.SDK3.UdonNetworkCalling;
+
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Reset Switch for ObjectSync")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
@@ -60,6 +61,7 @@ namespace MimyLab.FukuroUdon
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(ResetObjectsPosition));
         }
 
+        [NetworkCallable]
         public void ResetObjectsPosition()
         {
             Initialize();
