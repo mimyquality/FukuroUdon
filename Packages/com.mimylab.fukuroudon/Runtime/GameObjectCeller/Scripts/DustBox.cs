@@ -10,10 +10,13 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
     using VRC.SDK3.Components;
+    using VRC.SDK3.UdonNetworkCalling;
+    using VRC.Udon.Common.Interfaces;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/GameObject Celler/Dust Box")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
+    [RequireComponent(typeof(Collider))]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class DustBox : UdonSharpBehaviour
     {
         [SerializeField]
@@ -26,22 +29,24 @@ namespace MimyLab.FukuroUdon
             if (!Utilities.IsValid(other)) { return; }
             var incommingObject = other.gameObject;
             var index = System.Array.IndexOf(target.Pool, incommingObject);
-            if (index < 0) { return; }
+            if (index < 0)
+            {
+                var returnEventTrigger = incommingObject.GetComponent<DustBoxReturnTrigger>();
+                if (!returnEventTrigger) { return; }
+
+                incommingObject = returnEventTrigger.returnTarget;
+                if (!incommingObject) { return; }
+
+                index = System.Array.IndexOf(target.Pool, incommingObject);
+                if (index < 0) { return; }
+            }
 
             var pickup = incommingObject.GetComponent<VRCPickup>();
             if (pickup) { pickup.Drop(); }
 
-            // リターン前に位置リセットしておく
-            var objectSync = incommingObject.GetComponent<VRCObjectSync>();
+            // リターン前にオブジェクトの位置を戻しておく
             var rigidbody = incommingObject.GetComponent<Rigidbody>();
-            if (objectSync)
-            {
-                if (Networking.IsOwner(incommingObject))
-                {
-                    objectSync.Respawn();
-                }
-            }
-            else if (rigidbody)
+            if (rigidbody)
             {
                 rigidbody.position = target.StartPositions[index];
                 rigidbody.rotation = target.StartRotations[index];
@@ -54,7 +59,19 @@ namespace MimyLab.FukuroUdon
                 incommingObject.transform.SetPositionAndRotation(target.StartPositions[index], target.StartRotations[index]);
             }
 
-            target.Return(incommingObject);
+            if (Networking.IsOwner(incommingObject))
+            {
+                var objectSync = incommingObject.GetComponent<VRCObjectSync>();
+                if (objectSync) { objectSync.Respawn(); }
+
+                SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(ReturnPoolObject), index);
+            }
+        }
+
+        [NetworkCallable]
+        public void ReturnPoolObject(int index)
+        {
+            target.Return(target.Pool[index]);
         }
     }
 }
