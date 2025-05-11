@@ -56,6 +56,8 @@ namespace MimyLab.FukuroUdon
             {
                 _registeredPlayerIds[i] = _targetRegulator[i] ? _targetRegulator[i].PlayerIds : new int[0];
             }
+            
+            SendCustomEventDelayedFrames(nameof(_RefreshPlayers), 1);
         }
 
         private void Update()
@@ -83,8 +85,6 @@ namespace MimyLab.FukuroUdon
 
         public override void OnPlayerJoined(VRCPlayerApi player)
         {
-            if (player.playerId < Networking.LocalPlayer.playerId) { return; }
-
             SendCustomEventDelayedFrames(nameof(_RefreshPlayers), 1);
         }
 

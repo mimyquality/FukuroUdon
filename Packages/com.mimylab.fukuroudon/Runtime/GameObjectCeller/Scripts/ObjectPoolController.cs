@@ -8,8 +8,6 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDK3.UdonNetworkCalling;
-    using VRC.SDKBase;
     using VRC.Udon.Common.Interfaces;
 
     public enum ObjectPoolControllerSwitchType
@@ -23,7 +21,7 @@ namespace MimyLab.FukuroUdon
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/GameObject Celler/ObjectPool Controller")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ObjectPoolController : UdonSharpBehaviour
     {
         [SerializeField]
@@ -37,32 +35,23 @@ namespace MimyLab.FukuroUdon
         {
             if (!target) { return; }
 
-            SendCustomNetworkEvent(NetworkEventTarget.All, nameof(ExecuteObjectPoolEvent));
-        }
-
-        [NetworkCallable]
-        public void ExecuteObjectPoolEvent()
-        {
-            if (!target) { return; }
-            if (!Networking.IsOwner(target.gameObject)) { return; }
-
             switch (switchType)
             {
                 case ObjectPoolControllerSwitchType.Spawn:
-                    target.TryToSpawn();
+                    target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(ObjectPoolManager.CallTryToSpawn));
                     break;
                 case ObjectPoolControllerSwitchType.RandomSpawn:
-                    target.Shuffle();
-                    target.TryToSpawn();
+                    target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(ObjectPoolManager.CallShuffle));
+                    target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(ObjectPoolManager.CallTryToSpawn));
                     break;
                 case ObjectPoolControllerSwitchType.SpawnAll:
-                    target.SpawnAll();
+                    target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(ObjectPoolManager.CallSpawnAll));
                     break;
                 case ObjectPoolControllerSwitchType.Return:
-                    target.Return();
+                    target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(ObjectPoolManager.CallReturnFirst));
                     break;
                 case ObjectPoolControllerSwitchType.ReturnAll:
-                    target.ReturnAll();
+                    target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(ObjectPoolManager.CallReturnAll));
                     break;
             }
         }

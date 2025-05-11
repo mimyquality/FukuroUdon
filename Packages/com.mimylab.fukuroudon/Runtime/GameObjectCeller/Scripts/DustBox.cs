@@ -10,13 +10,12 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
     using VRC.SDK3.Components;
-    using VRC.SDK3.UdonNetworkCalling;
     using VRC.Udon.Common.Interfaces;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/GameObject Celler/Dust Box")]
     [RequireComponent(typeof(Collider))]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class DustBox : UdonSharpBehaviour
     {
         [SerializeField]
@@ -64,14 +63,8 @@ namespace MimyLab.FukuroUdon
                 var objectSync = incommingObject.GetComponent<VRCObjectSync>();
                 if (objectSync) { objectSync.Respawn(); }
 
-                SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(ReturnPoolObject), index);
+                target.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(ObjectPoolManager.CallReturn), index);
             }
-        }
-
-        [NetworkCallable]
-        public void ReturnPoolObject(int index)
-        {
-            target.Return(target.Pool[index]);
         }
     }
 }

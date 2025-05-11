@@ -12,7 +12,7 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
     using VRC.SDK3.Components;
-    //using VRC.Udon;
+    using VRC.SDK3.UdonNetworkCalling;
 
 #if UNITY_EDITOR
     using UnityEditor;
@@ -382,6 +382,10 @@ namespace MimyLab.FukuroUdon
             transform.hasChanged = false;
         }
 
+        /******************************
+         public Method
+         ******************************/
+        [NetworkCallable(1)]
         public void Respawn()
         {
             Initialize();
@@ -415,6 +419,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
+        [NetworkCallable(1)]
         public void ResetScale()
         {
             Initialize();
@@ -446,6 +451,7 @@ namespace MimyLab.FukuroUdon
 
             RequestSerialization();
         }
+
         public void Unequip()
         {
             if (Networking.IsOwner(this.gameObject)) { IsEquiped = false; }
@@ -455,10 +461,32 @@ namespace MimyLab.FukuroUdon
         {
             if (Networking.IsOwner(this.gameObject)) { IsAttached = true; }
         }
+
         public void Detach()
         {
             if (Networking.IsOwner(this.gameObject)) { IsAttached = false; }
         }
+
+        /******************************
+         For SendCustomnetworkEvent Method
+         ******************************/
+        [NetworkCallable(1)]
+        public void CallEquip(int targetBone)
+        {
+            if (0 <= targetBone && targetBone < (int)HumanBodyBones.LastBone)
+            {
+                Equip((HumanBodyBones)targetBone);
+            }
+        }
+
+        [NetworkCallable(1)]
+        public void CallUnequip() { Unequip(); }
+
+        [NetworkCallable(1)]
+        public void CallAttach() { Attach(); }
+
+        [NetworkCallable(1)]
+        public void CallDetach() { Detach(); }
 
         private bool TransformMoveCheck()
         {

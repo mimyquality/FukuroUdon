@@ -10,6 +10,7 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
     using VRC.SDK3.Components;
+    using VRC.SDK3.UdonNetworkCalling;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/GameObject Celler/ObjectPool Manager")]
@@ -155,6 +156,8 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
+            if (!Networking.IsOwner(this.gameObject)) { return; }
+
             _objectPool.Shuffle();
         }
 
@@ -222,5 +225,26 @@ namespace MimyLab.FukuroUdon
                 _objectPool.Return(_pool[i]);
             }
         }
+
+        /******************************
+         For SendCustomnetworkEvent Method
+         ******************************/
+        [NetworkCallable]
+        public void CallTryToSpawn() { TryToSpawn(); }
+
+        [NetworkCallable]
+        public void CallReturnFirst() { Return(); }
+
+        [NetworkCallable]
+        public void CallReturn(int index) { Return(index); }
+
+        [NetworkCallable]
+        public void CallShuffle() { Shuffle(); }
+
+        [NetworkCallable]
+        public void CallSpawnAll() { SpawnAll(); }
+
+        [NetworkCallable]
+        public void CallReturnAll() { ReturnAll(); }
     }
 }

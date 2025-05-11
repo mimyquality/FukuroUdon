@@ -10,7 +10,6 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
     using VRC.SDK3.Components;
-    using VRC.SDK3.UdonNetworkCalling;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Equip with MOS")]
@@ -41,7 +40,7 @@ namespace MimyLab.FukuroUdon
         {
             if (!target) { return; }
 
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(ForceUnequip));
+            target.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(ManualObjectSync.CallUnequip));
         }
 
         public override void OnPickupUseDown()
@@ -54,12 +53,6 @@ namespace MimyLab.FukuroUdon
             if (mostNearBone == HumanBodyBones.LastBone) { return; }
 
             target.Equip(mostNearBone);
-        }
-
-        [NetworkCallable(1)]
-        public void ForceUnequip()
-        {
-            if (target) { target.Unequip(); }
         }
 
         private HumanBodyBones MostNearBone(VRCPlayerApi pl)
