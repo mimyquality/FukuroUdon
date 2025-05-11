@@ -12,7 +12,6 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/GameObject Celler/Dust Box Return Trigger")]
     [RequireComponent(typeof(Collider))]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class DustBoxReturnTrigger : UdonSharpBehaviour
     {
         public GameObject returnTarget = null;
