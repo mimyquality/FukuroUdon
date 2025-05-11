@@ -402,6 +402,7 @@ namespace MimyLab.FukuroUdon
                     _rigidbody.angularVelocity = Vector3.zero;
                     _rigidbody.position = _startPosition;
                     _rigidbody.rotation = _startRotation;
+                    _rigidbody.transform.SetPositionAndRotation(_startPosition, _startRotation);
                 }
                 else
                 {
