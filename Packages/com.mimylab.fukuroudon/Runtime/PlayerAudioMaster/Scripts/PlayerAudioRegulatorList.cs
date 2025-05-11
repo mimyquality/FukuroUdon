@@ -8,6 +8,7 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
+    using VRC.SDK3.UdonNetworkCalling;
     using VRC.SDKBase;
 
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -43,44 +44,51 @@ namespace MimyLab.FukuroUdon
             RequestSerialization();
         }
 
-        /// <summary>
-        /// Need this gameObject ownership.
-        /// </summary>
+        /******************************
+         public Method
+         ******************************/
         public bool AssignPlayer(VRCPlayerApi target)
         {
             if (!Networking.IsOwner(this.gameObject)) { return false; }
+            if (!Utilities.IsValid(target)) { return false; }
 
-            var playerId = target.playerId;
-            if (System.Array.IndexOf(_playerIds, playerId) > -1) { return false; }
+            return AssignPlayer(target.playerId);
+        }
+
+        public bool AssignPlayer(int targetPlayerId)
+        {
+            if (!Networking.IsOwner(this.gameObject)) { return false; }
+            if (System.Array.IndexOf(_playerIds, targetPlayerId) > -1) { return false; }
 
             var lastIndex = System.Array.IndexOf(_playerIds, 0);
             if (lastIndex < 0) { return false; }
 
-            _playerIds[lastIndex] = playerId;
+            _playerIds[lastIndex] = targetPlayerId;
             RequestSerialization();
 
             return true;
         }
 
-        /// <summary>
-        /// Need this gameObject ownership.
-        /// </summary>
         public void ReleasePlayer(VRCPlayerApi target)
         {
             if (!Networking.IsOwner(this.gameObject)) { return; }
+            if (!Utilities.IsValid(target)) { return; }
 
-            var playerId = target.playerId;
+            ReleasePlayer(target.playerId);
+        }
+
+        public void ReleasePlayer(int targetPlayerId)
+        {
+            if (!Networking.IsOwner(this.gameObject)) { return; }
+
             int index;
-            while ((index = System.Array.IndexOf(_playerIds, playerId)) > -1)
+            while ((index = System.Array.IndexOf(_playerIds, targetPlayerId)) > -1)
             {
                 _playerIds[index] = 0;
                 RequestSerialization();
             }
         }
 
-        /// <summary>
-        /// Need this gameObject ownership.
-        /// </summary>
         public void ReleaseAllPlayer()
         {
             if (!Networking.IsOwner(this.gameObject)) { return; }
@@ -88,6 +96,15 @@ namespace MimyLab.FukuroUdon
             System.Array.Clear(_playerIds, 0, _playerIds.Length);
             RequestSerialization();
         }
+
+        /******************************
+         For SendCustomnetworkEvent Method
+         ******************************/
+        [NetworkCallable]
+        public void CallAssignPlayer(int targetPlayerId) { AssignPlayer(targetPlayerId); }
+
+        [NetworkCallable]
+        public void CallReleasePlayer(int targetPlayerId) { ReleasePlayer(targetPlayerId); }
 
         protected override bool CheckApplicableInternal(VRCPlayerApi target)
         {
