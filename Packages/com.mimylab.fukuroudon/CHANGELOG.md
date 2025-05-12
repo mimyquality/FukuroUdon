@@ -6,6 +6,15 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.4.0-beta.4]
+
+- **Added**
+  - PlayerAudio Regulator List に 新 SendCustomNetworkEvent 対応メソッドを追加しました。
+
+- **Fixed**
+  - GameObject Celler
+    - DustBox Return Trigger が同期オブジェクトに後付けできなかったのを修正しました。
+
 ## [3.4.0-beta.3]
 
 - **Added**
@@ -640,6 +649,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.4.0-beta.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.4.0-beta.4
 [3.4.0-beta.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.4.0-beta.3
 [3.4.0-beta.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.4.0-beta.2
 [3.4.0-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.4.0-beta.1
