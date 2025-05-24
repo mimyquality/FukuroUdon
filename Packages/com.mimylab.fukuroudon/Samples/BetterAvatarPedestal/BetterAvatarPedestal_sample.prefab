@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3817671256627090940, guid: 7784c0f703c3be641a25ac9a03421427, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3817671256627090940, guid: 7784c0f703c3be641a25ac9a03421427, type: 3}
     - target: {fileID: 4233365983690331499, guid: 7784c0f703c3be641a25ac9a03421427, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -60,6 +64,10 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 5986471939972838213, guid: 7784c0f703c3be641a25ac9a03421427, type: 3}
+    - target: {fileID: 6602128782304092168, guid: 7784c0f703c3be641a25ac9a03421427, type: 3}
+      propertyPath: _syncMethod
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6908572011186528731, guid: 7784c0f703c3be641a25ac9a03421427, type: 3}
       propertyPath: _syncMethod
       value: 1
