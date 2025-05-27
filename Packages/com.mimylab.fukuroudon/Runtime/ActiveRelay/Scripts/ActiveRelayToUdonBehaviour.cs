@@ -8,14 +8,17 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
     using VRC.Udon;
+    using VRC.Udon.Common.Interfaces;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to UdonBehaviour")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToUdonBehaviour : UdonSharpBehaviour
     {
+        [SerializeField]
+        private NetworkEventTarget _networkEventTarget = NetworkEventTarget.Self;
+
         [Header("Settings when active")]
         [SerializeField]
         private UdonBehaviour[] _udonBehaviourForActive = new UdonBehaviour[0];
@@ -30,23 +33,47 @@ namespace MimyLab.FukuroUdon
 
         private void OnEnable()
         {
-            if (_customEventNameForActive != "")
+            if (_customEventNameForActive == "") { return; }
+
+            switch (_networkEventTarget)
             {
-                foreach (var ub in _udonBehaviourForActive)
-                {
-                    if (ub) { ub.SendCustomEvent(_customEventNameForActive); }
-                }
+                case NetworkEventTarget.All:
+                case NetworkEventTarget.Owner:
+                case NetworkEventTarget.Others:
+                    foreach (var ub in _udonBehaviourForActive)
+                    {
+                        if (ub) { ub.SendCustomNetworkEvent(_networkEventTarget, _customEventNameForActive); }
+                    }
+                    break;
+                default:
+                    foreach (var ub in _udonBehaviourForActive)
+                    {
+                        if (ub) { ub.SendCustomEvent(_customEventNameForActive); }
+                    }
+                    break;
             }
         }
 
         private void OnDisable()
         {
-            if (_customEventNameForInactive != "")
+            if (_customEventNameForInactive == "") { return; }
+
+            switch (_networkEventTarget)
             {
-                foreach (var ub in _udonBehaviourForInactive)
-                {
-                    if (ub) { ub.SendCustomEvent(_customEventNameForInactive); }
-                }
+                case NetworkEventTarget.All:
+                case NetworkEventTarget.Owner:
+                case NetworkEventTarget.Others:
+                    foreach (var ub in _udonBehaviourForInactive)
+                    {
+                        if (ub) { ub.SendCustomNetworkEvent(_networkEventTarget, _customEventNameForInactive); }
+                    }
+                    break;
+                default:
+                    foreach (var ub in _udonBehaviourForInactive)
+                    {
+                        if (ub) { ub.SendCustomEvent(_customEventNameForInactive); }
+                    }
+                    break;
             }
         }
     }

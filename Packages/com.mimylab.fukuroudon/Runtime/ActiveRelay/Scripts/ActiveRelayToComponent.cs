@@ -9,9 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using UnityEngine.Animations;
-    //using VRC.SDKBase;
-    //using VRC.SDK3.Components;
-    //using VRC.Udon;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Component")]

@@ -9,7 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.Udon;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Player Respawn")]
@@ -28,7 +27,7 @@ namespace MimyLab.FukuroUdon
         {
             if (_localOnly && !player.isLocal) { return; }
 
-            DoAction();
+            DoAction(player);
         }
     }
 }

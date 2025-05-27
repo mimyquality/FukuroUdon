@@ -27,7 +27,7 @@ namespace MimyLab.FukuroUdon
         public PlayerAudioRegulatorChannelUncmatchMode channelUnmatchMode = default;
         public IPlayerAudioRegulator unmatchFallback = null;
         [Space]
-        public string[] whiteListPlayerName = new string[0];
+        public string[] allowedPlayerNameList = new string[0];
 
         [Header("Player Voice Settings")]
         public bool enablePlayerVoiceOverride = true;
@@ -96,19 +96,11 @@ namespace MimyLab.FukuroUdon
 
             return enableAvatarAudioOverride;
         }
-        
+
         protected bool EligiblePlayer(VRCPlayerApi target)
         {
-            if (whiteListPlayerName.Length == 0) { return true; }
-
-            var targetPlayerName = target.displayName;
-            for (int i = 0; i < whiteListPlayerName.Length; i++)
-            {
-                if (whiteListPlayerName[i] == targetPlayerName)
-                {
-                    return true;
-                }
-            }
+            if (allowedPlayerNameList.Length == 0) { return true; }
+            if (System.Array.IndexOf(allowedPlayerNameList, target.displayName) > -1) { return true; }
 
             return false;
         }

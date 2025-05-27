@@ -8,9 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
-    //using VRC.Udon;
-
+    using VRC.SDKBase;
+    
     public enum ActiveRelayVisibleType
     {
         BecameVisibleAndInvisible,
@@ -19,8 +18,8 @@ namespace MimyLab.FukuroUdon
     }
 
     [Icon(ComponentIconPath.FukuroUdon)]
-    [RequireComponent(typeof(Renderer))]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Visible")]
+    [RequireComponent(typeof(Renderer))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayByVisible : ActiveRelayBy
     {
@@ -47,7 +46,7 @@ namespace MimyLab.FukuroUdon
             {
                 case ActiveRelayVisibleType.BecameVisibleAndInvisible:
                 case ActiveRelayVisibleType.BecameVisible:
-                    DoAction();
+                    DoAction(Networking.LocalPlayer);
                     break;
             }
         }
@@ -58,7 +57,7 @@ namespace MimyLab.FukuroUdon
             {
                 case ActiveRelayVisibleType.BecameVisibleAndInvisible:
                 case ActiveRelayVisibleType.BecameInvisible:
-                    DoAction();
+                    DoAction(Networking.LocalPlayer);
                     break;
             }
         }

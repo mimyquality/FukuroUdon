@@ -8,10 +8,9 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
+    using VRC.SDK3.Rendering;
     using VRC.SDKBase;
-    //using VRC.Udon;
     using VRC.Udon.Common;
-    //using VRC.SDK3.Components;
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Swivel Chair 2/SC2 Input Manager")]
@@ -45,6 +44,9 @@ namespace MimyLab.FukuroUdon
         private int _param_OnModeChange = Animator.StringToHash("OnModeChange");
         private int _param_InputMode = Animator.StringToHash("InputMode");
 
+        private VRCCameraSettings _photoCamera;
+        private bool _existPhotoCamera = false;
+
         private bool _initialized = false;
         private void Initialize()
         {
@@ -64,6 +66,9 @@ namespace MimyLab.FukuroUdon
             {
                 _tooltipAnimator[i] = _tooltip[i] ? _tooltip[i].GetComponentInChildren<Animator>(true) : null;
             }
+
+            _photoCamera = VRCCameraSettings.PhotoCamera;
+            _existPhotoCamera = Utilities.IsValid(_photoCamera);
 
             _initialized = true;
         }
@@ -111,6 +116,9 @@ namespace MimyLab.FukuroUdon
             // ジャンプボタン二度押し処理
             if (!_isJump && _inputDoubleJumpInterval < doubleTapDuration) { _inputDoubleJumpInterval += Time.deltaTime; }
 
+            // カメラを出してる間は動かさない
+            if (_existPhotoCamera && _photoCamera.Active) { return; }
+
             // 入力値を各種操作に反映
             if (_turnValue != 0.0f || _prevTurnValue != 0.0f)
             {
@@ -148,6 +156,9 @@ namespace MimyLab.FukuroUdon
         {
             if (!_casterRigidbody) { return; }
             if (_inputMode != SwivelChairInputMode.CasterMove) { return; }
+
+            // カメラを出してる間は動かさない
+            if (_existPhotoCamera && _photoCamera.Active) { return; }
 
             // 入力値を各種操作に反映
             if (_turnValue != 0.0f || _prevTurnValue != 0.0f)

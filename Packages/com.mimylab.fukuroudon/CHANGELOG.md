@@ -6,6 +6,22 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.5.0] - 2025/5/27
+
+- **Added**
+  - 全ての ActiveRelay by シリーズは Allowed Player Name List で実行可能なプレイヤーをフィルターできるようになりました。
+  - ActiveRelay by JoinLeave を追加しました。
+  - ActiveRelay to UdonBehaviour がネットワークイベントも送信できるようになりました。(引数には対応しません) [#30](https://github.com/mimyquality/FukuroUdon/issues/30)
+
+- **Changed**
+  - ActiveRelay by Trigger, ActiveRelay by Collision, ActiveRelay by Station はイベントを実行したプレイヤーの種類に応じて実行をフィルターできるようになりました。
+    - この変更により、Event Type に LocalPlayer～ を選択していたものは設定がリセットされます。再設定してください。
+  - PlayerAudio Regulator シリーズの `White List Player Name` は `Allowed Player Name List` に改められました。
+    - この変更により、内容がリセットされます。再設定してください。
+
+- **Fixed**
+  - SwivelChair2 はカメラやドローンカメラ起動中に動かなくなりました。(降りることはできます)  [#31](https://github.com/mimyquality/FukuroUdon/issues/31)
+
 ## [3.4.0] - 2025/5/24
 
 - **Added**
@@ -638,6 +654,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.5.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.5.0
 [3.4.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.4.0
 [3.3.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.3.0
 [3.2.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.2.2

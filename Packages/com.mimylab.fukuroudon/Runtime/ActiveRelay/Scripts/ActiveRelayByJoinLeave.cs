@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2024 Mimy Quality
+Copyright (c) 2025 Mimy Quality
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
@@ -10,27 +10,18 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
     using VRC.Udon.Common.Interfaces;
-    using VRCStation = VRC.SDK3.Components.VRCStation;
-
-    public enum ActiveRelayPlayerEventType
-    {
-        PlayerEnterAndExit,
-        PlayerEnter,
-        PlayerExit
-    }
 
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Station")]
-    [RequireComponent(typeof(VRCStation))]
+    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Join Leave")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ActiveRelayByStation : ActiveRelayBy
+    public class ActiveRelayByJoinLeave : ActiveRelayBy
     {
         [SerializeField]
         private ActiveRelayPlayerEventType _eventType = default;
         [SerializeField]
         private NetworkEventTarget _acceptPlayerType = NetworkEventTarget.All;
 
-        public override void OnStationEntered(VRCPlayerApi player)
+        public override void OnPlayerJoined(VRCPlayerApi player)
         {
             switch (_eventType)
             {
@@ -41,7 +32,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        public override void OnStationExited(VRCPlayerApi player)
+        public override void OnPlayerLeft(VRCPlayerApi player)
         {
             switch (_eventType)
             {

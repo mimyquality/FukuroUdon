@@ -9,8 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.Udon;
-    //using VRC.SDK3.Components;
+    using VRC.SDK3.Components;
 
     public enum ActiveRelayPickupEventType
     {
@@ -22,6 +21,7 @@ namespace MimyLab.FukuroUdon
 
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Pickup")]
+    [RequireComponent(typeof(VRCPickup))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
     public class ActiveRelayByPickup : ActiveRelayBy
     {
@@ -67,8 +67,10 @@ namespace MimyLab.FukuroUdon
         {
             if (_eventType == ActiveRelayPickupEventType.Pickup)
             {
-                DoAction();
-                Sync();
+                if (DoAction(Networking.LocalPlayer))
+                {
+                    Sync();
+                }
             }
         }
 
@@ -76,8 +78,10 @@ namespace MimyLab.FukuroUdon
         {
             if (_eventType == ActiveRelayPickupEventType.PickupUseDown)
             {
-                DoAction();
-                Sync();
+                if (DoAction(Networking.LocalPlayer))
+                {
+                    Sync();
+                }
             }
         }
 
@@ -85,8 +89,10 @@ namespace MimyLab.FukuroUdon
         {
             if (_eventType == ActiveRelayPickupEventType.PickupUseUp)
             {
-                DoAction();
-                Sync();
+                if (DoAction(Networking.LocalPlayer))
+                {
+                    Sync();
+                }
             }
         }
 
@@ -94,8 +100,10 @@ namespace MimyLab.FukuroUdon
         {
             if (_eventType == ActiveRelayPickupEventType.Drop)
             {
-                DoAction();
-                Sync();
+                if (DoAction(Networking.LocalPlayer))
+                {
+                    Sync();
+                }
             }
         }
 

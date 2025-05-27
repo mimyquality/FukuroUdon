@@ -8,8 +8,7 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
-    //using VRC.Udon;
+    using VRC.SDKBase;
 
     public enum ActiveRelayActivateType
     {
@@ -21,19 +20,31 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayBy : UdonSharpBehaviour
     {
+        public string[] allowedPlayerNameList = new string[0];
+
         [SerializeField]
         protected GameObject[] _gameObjects = new GameObject[0];
         [SerializeField]
         protected ActiveRelayActivateType _actionType = default;
 
-        public void DoAction()
+        public bool DoAction(VRCPlayerApi player)
         {
+            if (allowedPlayerNameList.Length > 0)
+            {
+                if (System.Array.IndexOf(allowedPlayerNameList, player.displayName) < 0)
+                {
+                    return false;
+                }
+            }
+
             switch (_actionType)
             {
                 case ActiveRelayActivateType.ToggleActive: ToggleActive(); break;
                 case ActiveRelayActivateType.Activate: SetActive(true); break;
                 case ActiveRelayActivateType.Inactivate: SetActive(false); break;
             }
+
+            return true;
         }
 
         protected void ToggleActive()
