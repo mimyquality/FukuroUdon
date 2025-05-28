@@ -9,6 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDK3.Components;
+    using VRC.Udon;
     using VRCStation = VRC.SDK3.Components.VRCStation;
 
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -24,6 +25,8 @@ namespace MimyLab.FukuroUdon
         private VRCPickup[] _pickups = new VRCPickup[0];
         [SerializeField, Tooltip("Toggle disableStationExit")]
         private VRCStation[] _stations = new VRCStation[0];
+        [SerializeField, Tooltip("Toggle \"DisableInteractive\" bool value")]
+        private UdonBehaviour[] _udonBehaviours = new UdonBehaviour[0];
         [SerializeField]
         private bool _invert = false;
 
@@ -66,6 +69,13 @@ namespace MimyLab.FukuroUdon
                 if (!_stations[i]) { continue; }
 
                 _stations[i].disableStationExit = value;
+            }
+
+            for (int i = 0; i < _udonBehaviours.Length; i++)
+            {
+                if (!_udonBehaviours[i]) { continue; }
+
+                _udonBehaviours[i].DisableInteractive = value;
             }
         }
     }

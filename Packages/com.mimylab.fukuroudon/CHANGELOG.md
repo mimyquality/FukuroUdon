@@ -6,6 +6,13 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.6.0] - 2025/5/28
+
+- **Added**
+  - ActiveRelay to VRC Component の対象に UdonBehaviour.DisableInteractive を追加しました。
+  - ActiveRelay to Component の対象に Light, Animator, CanvasGroup.interactable を追加しました。
+  - Better AvatarPedestal はダイアログ表示中にインタラクト判定が一時無効になるようになりました。
+
 ## [3.5.0] - 2025/5/27
 
 - **Added**
@@ -654,6 +661,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.6.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.6.0
 [3.5.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.5.0
 [3.4.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.4.0
 [3.3.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.3.0

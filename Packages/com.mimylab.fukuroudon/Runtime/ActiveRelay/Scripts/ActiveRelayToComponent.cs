@@ -78,7 +78,6 @@ namespace MimyLab.FukuroUdon
             else if (type == typeof(BillboardRenderer)) { return true; }
             else if (type == typeof(SpriteRenderer)) { return true; }
             //else if (type == typeof(UnityEngine.Tilemaps.TilemapRenderer)) { return true; }
-            else if (type == typeof(OcclusionPortal)) { return true; }
             // Constraint
             else if (type == typeof(AimConstraint)) { return true; }
             else if (type == typeof(LookAtConstraint)) { return true; }
@@ -86,8 +85,13 @@ namespace MimyLab.FukuroUdon
             else if (type == typeof(PositionConstraint)) { return true; }
             else if (type == typeof(RotationConstraint)) { return true; }
             else if (type == typeof(ScaleConstraint)) { return true; }
-            // Camera
+            // Behaviour
+            else if (type == typeof(Light)) { return true; }
             else if (type == typeof(Camera)) { return true; }
+            else if (type == typeof(Animator)) { return true; }
+            // Extra
+            else if (type == typeof(OcclusionPortal)) { return true; }
+            else if (type == typeof(CanvasGroup)) { return true; }
 
             return false;
         }
@@ -115,8 +119,6 @@ namespace MimyLab.FukuroUdon
                 else if (type == typeof(BillboardRenderer)) { var downCasted = (BillboardRenderer)component; downCasted.enabled = value; }
                 else if (type == typeof(SpriteRenderer)) { var downCasted = (SpriteRenderer)component; downCasted.enabled = value; }
                 //else if (type == typeof(UnityEngine.Tilemaps.TilemapRenderer)) { var downCasted = (UnityEngine.Tilemaps.TilemapRenderer)component; downCasted.enabled = enabled; }
-                // 用途的に、アクティブならClose・非アクティブならOpenのが都合が良さそうなので反転
-                else if (type == typeof(OcclusionPortal)) { var downCasted = (OcclusionPortal)component; downCasted.open = !value; }
                 // Constraint
                 else if (type == typeof(AimConstraint)) { var downCasted = (AimConstraint)component; downCasted.enabled = value; }
                 else if (type == typeof(LookAtConstraint)) { var downCasted = (LookAtConstraint)component; downCasted.enabled = value; }
@@ -124,8 +126,14 @@ namespace MimyLab.FukuroUdon
                 else if (type == typeof(PositionConstraint)) { var downCasted = (PositionConstraint)component; downCasted.enabled = value; }
                 else if (type == typeof(RotationConstraint)) { var downCasted = (RotationConstraint)component; downCasted.enabled = value; }
                 else if (type == typeof(ScaleConstraint)) { var downCasted = (ScaleConstraint)component; downCasted.enabled = value; }
-                // Camera
+                // Behaviour
+                else if (type == typeof(Light)) { var downCasted = (Light)component; downCasted.enabled = value; }
                 else if (type == typeof(Camera)) { var downCasted = (Camera)component; downCasted.enabled = value; }
+                else if (type == typeof(Animator)) { var downCasted = (Animator)component; downCasted.enabled = value; }
+                // Extra
+                // 用途的に、アクティブならClose・非アクティブならOpenのが都合が良さそうなので反転
+                else if (type == typeof(OcclusionPortal)) { var downCasted = (OcclusionPortal)component; downCasted.open = !value; }
+                else if (type == typeof(CanvasGroup)) { var downCasted = (CanvasGroup)component; downCasted.interactable = value; }
             }
         }
     }
