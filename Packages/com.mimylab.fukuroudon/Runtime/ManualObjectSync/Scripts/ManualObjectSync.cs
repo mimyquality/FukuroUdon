@@ -13,6 +13,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.SDK3.Components;
     using VRC.SDK3.UdonNetworkCalling;
+    using VRC.Udon;
 
 #if UNITY_EDITOR
     using UnityEditor;
@@ -25,6 +26,11 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class ManualObjectSync : UdonSharpBehaviour
     {
+        private const string EventName_Equip = "OnEquip";
+        private const string EventName_Unequip = "OnUnequip";
+        private const string EventName_Attach = "OnAttach";
+        private const string EventName_Detach = "OnDetach";
+
         [Header("Settings")]
         [Tooltip("The tick rate depends on the fps of this game object owner's client.")]
         [Min(2)]
@@ -77,6 +83,8 @@ namespace MimyLab.FukuroUdon
         private bool _reservedInterval = false;
         private bool _syncHasChanged = false;
 
+        private UdonBehaviour[] _eventReceivers;
+
         public bool UseGravity  // Rigidbody.useGravity同期用
         {
             get => _useGravity;
@@ -121,16 +129,22 @@ namespace MimyLab.FukuroUdon
             {
                 Initialize();
 
+                var unequipFlag = false;
+                var detachFlag = false;
+
                 _isHeld = value;
                 if (value)
                 {
-                    _isEquiped = false;
-                    _isAttached = false;
+                    if (unequipFlag = _isEquiped) { _isEquiped = false; }
+                    if (detachFlag = _isAttached) { _isAttached = false; }
                     _updateManager.EnablePostLateUpdate(this);
                 }
                 if (_pickup) { Pickupable = Pickupable; }
                 if (_rigidbody) { IsKinematic = IsKinematic; }
                 RequestSerialization();
+
+                if (unequipFlag) { SendUnequipEvent(); }
+                if (detachFlag) { SendDetachEvent(); }
             }
         }
 
@@ -154,15 +168,23 @@ namespace MimyLab.FukuroUdon
             {
                 Initialize();
 
+                var detachFlag = false;
+                var equipFlag = !_isEquiped & value;
+                var unequipFlag = _isEquiped & !value;
+
                 _isEquiped = value;
                 if (value)
                 {
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
-                    _isAttached = false;
+                    if (detachFlag = _isAttached) { _isAttached = false; }
                     _updateManager.EnablePostLateUpdate(this);
                 }
                 if (_rigidbody) { IsKinematic = IsKinematic; }
                 RequestSerialization();
+
+                if (detachFlag) { SendDetachEvent(); }
+                if (equipFlag) { SendEquipEvent(); }
+                if (unequipFlag) { SendUnequipEvent(); }
             }
         }
 
@@ -173,15 +195,23 @@ namespace MimyLab.FukuroUdon
             {
                 Initialize();
 
+                var unequipFlag = false;
+                var attachFlag = !_isAttached & value;
+                var detachFlag = _isAttached & !value;
+
                 _isAttached = value;
                 if (value)
                 {
                     if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
-                    _isEquiped = false;
+                    if (unequipFlag = _isEquiped) { _isEquiped = false; }
                     _updateManager.EnablePostLateUpdate(this);
                 }
                 if (_rigidbody) { IsKinematic = IsKinematic; }
                 RequestSerialization();
+
+                if (unequipFlag) { SendUnequipEvent(); }
+                if (attachFlag) { SendAttachEvent(); }
+                if (detachFlag) { SendDetachEvent(); }
             }
         }
 
@@ -274,6 +304,24 @@ namespace MimyLab.FukuroUdon
                 _syncPosition = _startPosition;
                 _syncRotation = _startRotation;
                 _syncScale = _startScale;
+            }
+
+            _eventReceivers = GetComponents<UdonBehaviour>();
+            if (_eventReceivers == null)
+            {
+                _eventReceivers = new UdonBehaviour[0];
+            }
+            else
+            {
+                var index = System.Array.IndexOf(_eventReceivers, this);
+                if (index > -1)
+                {
+                    // 自分自身を除外
+                    var newReceivers = new UdonBehaviour[_eventReceivers.Length - 1];
+                    if (index > 0) { System.Array.Copy(_eventReceivers, 0, newReceivers, 0, index); }
+                    if (index < newReceivers.Length) { System.Array.Copy(_eventReceivers, index + 1, newReceivers, index, newReceivers.Length - index); }
+                    _eventReceivers = newReceivers;
+                }
             }
 
             _initialized = true;
@@ -441,7 +489,7 @@ namespace MimyLab.FukuroUdon
         {
             if (!Networking.IsOwner(this.gameObject)) { return; }
 
-            IsEquiped = true;
+            if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
 
             _equipBone = (byte)targetBone;
             var bonePosition = _localPlayer.GetBonePosition(targetBone);
@@ -450,6 +498,8 @@ namespace MimyLab.FukuroUdon
             _syncRotation = boneRotation.Equals(Quaternion.identity) ? Quaternion.identity : (Quaternion.Inverse(boneRotation) * transform.rotation);
 
             RequestSerialization();
+
+            IsEquiped = true;
         }
 
         public void Unequip()
@@ -656,6 +706,38 @@ namespace MimyLab.FukuroUdon
             _syncHasChanged = false;
 
             return true;
+        }
+
+        private void SendEquipEvent()
+        {
+            for (int i = 0; i < _eventReceivers.Length; i++)
+            {
+                _eventReceivers[i].SendCustomEvent(EventName_Equip);
+            }
+        }
+
+        private void SendUnequipEvent()
+        {
+            for (int i = 0; i < _eventReceivers.Length; i++)
+            {
+                _eventReceivers[i].SendCustomEvent(EventName_Unequip);
+            }
+        }
+
+        private void SendAttachEvent()
+        {
+            for (int i = 0; i < _eventReceivers.Length; i++)
+            {
+                _eventReceivers[i].SendCustomEvent(EventName_Attach);
+            }
+        }
+
+        private void SendDetachEvent()
+        {
+            for (int i = 0; i < _eventReceivers.Length; i++)
+            {
+                _eventReceivers[i].SendCustomEvent(EventName_Detach);
+            }
         }
     }
 }

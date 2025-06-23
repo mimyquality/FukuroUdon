@@ -6,6 +6,11 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.7.0] - 2025/6/23
+
+- **Added**
+  - Manual ObjectSync に OnEquip/OnUnequip/OnAttach/OnDetach イベントを追加しました。 [#32](https://github.com/mimyquality/FukuroUdon/issues/32)
+
 ## [3.6.0] - 2025/5/28
 
 - **Added**
@@ -661,6 +666,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.7.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.7.0
 [3.6.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.6.0
 [3.5.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.5.0
 [3.4.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.4.0
