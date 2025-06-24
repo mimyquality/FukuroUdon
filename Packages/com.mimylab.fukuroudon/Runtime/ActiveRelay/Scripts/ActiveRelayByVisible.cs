@@ -25,7 +25,7 @@ namespace MimyLab.FukuroUdon
     {
         [SerializeField]
         private ActiveRelayVisibleType _eventType = default;
-
+/* 
 // OnBecameVisible/Invisible がクライアント上で動かないので代わりに叩く
 // CliendSim上だと動くので無効
 #if COMPILER_UDONSHARP && !UNITY_EDITOR
@@ -39,7 +39,7 @@ namespace MimyLab.FukuroUdon
             OnBecameInvisible();
         }
 #endif
-
+ */
         private void OnBecameVisible()
         {
             switch (_eventType)

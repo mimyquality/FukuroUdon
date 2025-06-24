@@ -6,6 +6,10 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.7.1-beta.1] -2025/6/24
+
+- VRCSDK 3.8.2-beta.1 にて ActiveRelay by Visible がビルド時にエラーを起こす問題に対処しました
+
 ## [3.7.0] - 2025/6/23
 
 - **Added**
@@ -666,6 +670,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.7.1-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.7.1-beta.1
 [3.7.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.7.0
 [3.6.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.6.0
 [3.5.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.5.0
