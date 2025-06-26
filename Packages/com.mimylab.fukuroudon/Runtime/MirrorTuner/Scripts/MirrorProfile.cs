@@ -19,7 +19,7 @@ namespace MimyLab.FukuroUdon
     {
         public bool disablePixelLights = true;
         public bool turnOffMirrorOcclusion = true;
-        public LayerMask reflectLayers = 0b01111111110001100010101100000001;
+        public LayerMask reflectLayers = 0b01111111110001100010101100001001;
         public Material customMaterial = null;
         public MirrorClearFlags cameraClearFlags = default;
         public Material customSkybox = null;
