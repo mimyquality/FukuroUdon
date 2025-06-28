@@ -27,6 +27,7 @@ namespace MimyLab.FukuroUdon
         public PlayerAudioRegulatorChannelUncmatchMode channelUnmatchMode = default;
         public IPlayerAudioRegulator unmatchFallback = null;
         [Space]
+        public bool othersOnly = false;
         public string[] allowedPlayerNameList = new string[0];
 
         [Header("Player Voice Settings")]
@@ -63,6 +64,7 @@ namespace MimyLab.FukuroUdon
         public bool CheckApplicable(VRCPlayerApi target)
         {
             if (!enabled || !gameObject.activeInHierarchy) { return false; }
+            if (othersOnly && target.isLocal) { return false; }
             if (!EligiblePlayer(target)) { return false; }
 
             return CheckApplicableInternal(target);
