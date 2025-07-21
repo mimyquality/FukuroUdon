@@ -77,7 +77,6 @@ namespace MimyLab.FukuroUdon
                 // ここからチャンネル処理
 
                 channel = playerAudioRegulators[i].channel.ToString();
-                if (chosenPlayer.isLocal) { break; }
 
                 if (Networking.LocalPlayer.GetPlayerTag(PlayerAudioChannelTagName) == channel)
                 {
