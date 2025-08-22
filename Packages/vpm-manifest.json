@@ -31,7 +31,7 @@
       }
     },
     "com.mimylab.penoptimizationutility": {
-      "version": "1.0.2",
+      "version": "1.0.4",
       "dependencies": {
         "com.vrchat.worlds": "^3.4.2",
         "net.ureishi.qvpen": "^3.2.6"
@@ -62,11 +62,11 @@
       "dependencies": {}
     },
     "jp.lilxyzw.liltoon": {
-      "version": "1.10.3",
+      "version": "2.1.10",
       "dependencies": {}
     },
     "jp.lilxyzw.editortoolbox": {
-      "version": "1.8.0",
+      "version": "1.9.1",
       "dependencies": {}
     }
   }
