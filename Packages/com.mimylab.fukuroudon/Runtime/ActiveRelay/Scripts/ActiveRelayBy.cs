@@ -14,7 +14,7 @@ namespace MimyLab.FukuroUdon
     {
         ToggleActive,
         Activate,
-        Inactivate
+        Deactivate
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
@@ -41,7 +41,7 @@ namespace MimyLab.FukuroUdon
             {
                 case ActiveRelayActivateType.ToggleActive: ToggleActive(); break;
                 case ActiveRelayActivateType.Activate: SetActive(true); break;
-                case ActiveRelayActivateType.Inactivate: SetActive(false); break;
+                case ActiveRelayActivateType.Deactivate: SetActive(false); break;
             }
 
             return true;
