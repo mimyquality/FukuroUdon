@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.Udon;
     using VRC.Udon.Common.Interfaces;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-udonbehaviour")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to UdonBehaviour")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

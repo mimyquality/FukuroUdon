@@ -12,6 +12,7 @@ namespace MimyLab.FukuroUdon
     //using VRC.Udon;
     //using VRC.SDK3.Components;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/VR-Follow-HUD#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/General/LocalPlayer Tracking Tracker")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

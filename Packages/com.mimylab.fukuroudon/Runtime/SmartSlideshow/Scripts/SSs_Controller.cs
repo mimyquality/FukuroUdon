@@ -13,6 +13,7 @@ namespace MimyLab.FukuroUdon
     //using VRC.Udon;
     using TMPro;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Smart-Slideshow#sss_controller")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Smart Slideshow/SSs Controller")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

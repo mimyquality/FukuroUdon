@@ -13,6 +13,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Components;
     using VRC.SDK3.UdonNetworkCalling;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#resetswitch-for-objectsync")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Reset Switch for ObjectSync")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]

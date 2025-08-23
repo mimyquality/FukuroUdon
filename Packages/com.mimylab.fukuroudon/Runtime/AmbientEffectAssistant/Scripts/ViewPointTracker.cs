@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.Udon;
     using VRC.SDK3.Rendering;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Ambient-Effect-Assistant#viewpoint-tracker")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/General/ViewPoint Tracker")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

@@ -12,6 +12,7 @@ namespace MimyLab.FukuroUdon
     //using VRC.Udon;
     using VRC.Udon.Common;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Input-Flying-System#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/General/Input Flying System")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

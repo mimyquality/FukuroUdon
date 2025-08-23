@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.SDK3.Components;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#par-register-player")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PAR Register Player")]
     [RequireComponent(typeof(VRCPlayerObject))]
@@ -53,7 +54,7 @@ namespace MimyLab.FukuroUdon
 
             // PlayerObjectはオーナー不変なのでキャッシュ
             _owner = Networking.GetOwner(this.gameObject);
-            
+
             if (_owner.isLocal)
             {
                 _parRegister.localParRegisterPlayer = this;

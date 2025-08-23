@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.UdonNetworkCalling;
     using VRC.SDKBase;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#pa-regulator-list")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator List")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]

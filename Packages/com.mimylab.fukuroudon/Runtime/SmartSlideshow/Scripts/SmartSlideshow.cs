@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     //using VRC.Udon;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Smart-Slideshow#smart-slideshow")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Smart Slideshow/Smart Slideshow")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]

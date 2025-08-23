@@ -24,6 +24,7 @@ namespace MimyLab.FukuroUdon
         Disable
     }
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-effect")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Effect")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

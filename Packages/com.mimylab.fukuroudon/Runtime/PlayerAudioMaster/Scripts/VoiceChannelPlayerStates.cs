@@ -12,6 +12,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Components;
     using TMPro;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#voicechannel-player-states")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [RequireComponent(typeof(VRCPlayerObject))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

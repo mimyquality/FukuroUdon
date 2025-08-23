@@ -7,6 +7,7 @@ https://opensource.org/licenses/mit-license.php
 namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
+    using UnityEditor;
     using UnityEngine;
     using VRC.SDKBase;
 
@@ -17,6 +18,7 @@ namespace MimyLab.FukuroUdon
         ReleaseAll
     }
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#par-list-controller")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PAR List Controller")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

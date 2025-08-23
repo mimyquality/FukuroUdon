@@ -12,6 +12,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Components;
     using VRC.SDK3.UdonNetworkCalling;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/GameObject-Celler#objectpool-manager")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/GameObject Celler/ObjectPool Manager")]
     [RequireComponent(typeof(VRCObjectPool))]

@@ -17,6 +17,7 @@ namespace MimyLab.FukuroUdon
         ButtonOFF
     }
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#pa-regulator-switch")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator Switch")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]

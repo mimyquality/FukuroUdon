@@ -16,6 +16,7 @@ namespace MimyLab.FukuroUdon
         ActiveAndInactive,
     }
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-animator")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Animator")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

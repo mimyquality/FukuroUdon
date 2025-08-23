@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.SDK3.Components;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Better-AvatarPedestal#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/General/AvatarPedestal Switch")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

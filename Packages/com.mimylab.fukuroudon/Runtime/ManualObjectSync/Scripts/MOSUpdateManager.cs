@@ -17,6 +17,7 @@ namespace MimyLab.FukuroUdon
     //using UdonSharpEditor;
 #endif
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#%E6%9B%B4%E6%96%B0%E7%AE%A1%E7%90%86%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MOSUpdateManager : UdonSharpBehaviour

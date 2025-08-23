@@ -19,6 +19,7 @@ namespace MimyLab.FukuroUdon
         PlayerExit
     }
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-station")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Station")]
     [RequireComponent(typeof(VRCStation))]

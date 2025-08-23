@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     //using VRC.SDKBase;
     //using VRC.Udon;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grab-SlideDoor#limited-position-constraint")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Limited Constraint/Limited Position Constraint")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

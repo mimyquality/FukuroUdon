@@ -6,21 +6,27 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.9.0] - 2025/8/24
+
+- **Added**
+  - ActiveRelay by Collision と ActiveRelay by Trigger を追加しました。
+  - 全てのスクリプトにヘルプURLを追加しました。
+
 ## [3.8.1] - 2025/7/21
 
-- Fixed
-  - PlayerAudio Master: 自分自身のチャットボックス表示とアバター音量がデフォルト値固定になっていたのを修正 [#33](https://github.com/mimyquality/FukuroUdon/issues/33)
+- **Fixed**
+  - PlayerAudio Master: 自分自身のチャットボックス表示とアバター音量がデフォルト値固定になっていたのを修正しました。 [#33](https://github.com/mimyquality/FukuroUdon/issues/33)
 
 ## [3.8.0] - 2025/6/28
 
 - **Added**
-  - PlayerAudio Regulator に `othersOnly` 設定を追加しました
+  - PlayerAudio Regulator に `othersOnly` 設定を追加しました。
 
 ## [3.7.1] -2025/6/26
 
 - **Fixed**
-  - VRCSDK 3.8.2 にて ActiveRelay by Visible がビルド時にエラーを起こす問題に対処しました
-  - Mirror Tuner の各種プレハブのミラーに Item が映るようにしました
+  - VRCSDK 3.8.2 にて ActiveRelay by Visible がビルド時にエラーを起こす問題に対処しました。
+  - Mirror Tuner の各種プレハブのミラーに Item が映るようにしました。
 
 ## [3.7.0] - 2025/6/23
 
@@ -682,6 +688,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.9.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.9.0
 [3.8.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.8.1
 [3.8.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.8.0
 [3.7.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.7.1

@@ -17,6 +17,7 @@ namespace MimyLab.FukuroUdon
         Exit
     }
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-collision")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Collision")]
     [RequireComponent(typeof(Collider))]

@@ -12,6 +12,7 @@ namespace MimyLab.FukuroUdon
     //using VRC.SDKBase;
     //using VRC.Udon;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Smart-Slideshow#literature")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Smart Slideshow/Literature")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

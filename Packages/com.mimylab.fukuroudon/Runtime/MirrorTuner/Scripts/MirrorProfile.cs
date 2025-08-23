@@ -12,6 +12,7 @@ namespace MimyLab.FukuroUdon
     //using VRC.Udon;
     using VRC.SDK3.Components;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Mirror-Tuner#mirror-profile")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Mirror Tuner/Mirror Profile")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

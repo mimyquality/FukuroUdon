@@ -19,6 +19,7 @@ namespace MimyLab.FukuroUdon
         Drop
     }
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-pickup")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Pickup")]
     [RequireComponent(typeof(VRCPickup))]

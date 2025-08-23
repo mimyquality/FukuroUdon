@@ -11,7 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.Udon;
     //using VRC.SDK3.Components;
 
-
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#pickupevent-transfer")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Pickup Event Transfer")]
     //[RequireComponent(typeof(VRCPickup))]

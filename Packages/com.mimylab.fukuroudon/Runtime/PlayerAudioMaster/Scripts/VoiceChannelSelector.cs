@@ -10,6 +10,7 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#voicechannel-selector")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class VoiceChannelSelector : UdonSharpBehaviour
@@ -56,7 +57,7 @@ namespace MimyLab.FukuroUdon
             {
                 _registeredPlayerIds[i] = _targetRegulator[i] ? _targetRegulator[i].PlayerIds : new int[0];
             }
-            
+
             SendCustomEventDelayedFrames(nameof(_RefreshPlayers), 1);
         }
 

@@ -16,6 +16,7 @@ namespace MimyLab.FukuroUdon
         Inactive,
     }
 
+[HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-gameobject")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to GameObject")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

@@ -9,6 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Ambient-Effect-Assistant#flexible-spatial-audio")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Flexible Spatial Audio")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
@@ -42,7 +43,7 @@ namespace MimyLab.FukuroUdon
         public override void ReceiveViewPoint(Vector3 position, Quaternion rotation)
         {
             Initialize();
-            
+
             var nearest = Vector3.positiveInfinity;
             var isIn = false;
             foreach (var col in _area)

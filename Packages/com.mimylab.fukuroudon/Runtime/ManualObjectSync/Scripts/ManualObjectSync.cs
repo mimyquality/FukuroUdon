@@ -21,6 +21,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharpEditor;
 #endif
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#manual-objectsync")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Manual ObjectSync")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]

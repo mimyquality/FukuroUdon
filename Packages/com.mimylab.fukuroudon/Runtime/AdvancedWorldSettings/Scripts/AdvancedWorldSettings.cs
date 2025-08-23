@@ -18,6 +18,7 @@ namespace MimyLab.FukuroUdon
         AvatarChange = 1 << 1
     }
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Advanced-World-Settings#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/General/Advanced World Settings")]
     [DefaultExecutionOrder(-1000)]

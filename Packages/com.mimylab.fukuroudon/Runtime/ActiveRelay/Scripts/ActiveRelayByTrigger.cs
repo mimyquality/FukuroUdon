@@ -10,6 +10,7 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-trigger")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Trigger")]
     [RequireComponent(typeof(Collider))]
@@ -50,7 +51,7 @@ namespace MimyLab.FukuroUdon
         private bool CheckAccept(Collider collider)
         {
             if (_reactiveColliders.Length < 1) { return false; }
-            
+
             return System.Array.IndexOf(_reactiveColliders, collider) > -1;
         }
     }

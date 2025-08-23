@@ -24,6 +24,7 @@ namespace MimyLab.FukuroUdon
         Vertical     // 2:座高(上下)
     }
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Swivel-Chair#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Swivel Chair/Swivel Chair")]
     [RequireComponent(typeof(SCKeyInputManager), typeof(VRCStation))]

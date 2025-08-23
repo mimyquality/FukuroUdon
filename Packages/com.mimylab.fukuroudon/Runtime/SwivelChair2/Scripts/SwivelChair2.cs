@@ -27,6 +27,7 @@ namespace MimyLab.FukuroUdon
         CasterMove
     }
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Swivel-Chair-2#swivel-chair2")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Swivel Chair 2/Swivel Chair 2")]
     [DefaultExecutionOrder(-100)]

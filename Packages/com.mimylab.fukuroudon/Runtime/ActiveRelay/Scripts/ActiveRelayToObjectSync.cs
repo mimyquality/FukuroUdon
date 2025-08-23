@@ -19,6 +19,7 @@ namespace MimyLab.FukuroUdon
         Invert
     }
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-objectsync")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to ObjectSync")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]

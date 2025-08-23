@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.SDK3.Components;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Swivel-Chair-2#%E5%BA%A7%E4%BD%8D%E7%BD%AE%E4%BF%9D%E5%AD%98%E6%A9%9F%E8%83%BD-ver300-%E4%BB%A5%E9%99%8D")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Swivel Chair 2/SC2 Adjustment Sync")]
     [RequireComponent(typeof(VRCPlayerObject), typeof(VRCEnablePersistence))]

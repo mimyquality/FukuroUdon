@@ -12,6 +12,7 @@ namespace MimyLab.FukuroUdon
     using VRC.Udon;
     using VRCStation = VRC.SDK3.Components.VRCStation;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-vrccomponent")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to VRCComponent")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

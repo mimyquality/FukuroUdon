@@ -8,10 +8,11 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
+    //using VRC.SDKBase;
     using VRC.SDK3.Components;
     using VRC.Udon;
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grab-SlideDoor#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/General/Pickup Handle")]
     [RequireComponent(typeof(VRCPickup))]
