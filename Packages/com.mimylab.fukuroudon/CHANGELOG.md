@@ -6,6 +6,22 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.10.0] - 2025/8/25
+
+- **Added**
+  - ActiveRelay に以下を追加しました。
+    - ActiveRelay to Player Teleport
+    - ActiveRelay to Player Mobility
+    - ActiveRelay to AvatarScaling
+    - ActiveRelay to Drone
+    - ActiveRelay by PlayerParticleCollision
+    - ActiveRelay by DroneTrigger
+    - ActiveRelay by ParticleCollision
+
+- **Fixed**
+  - InputFlySystem が飛行中に非アクティブまたは無効になった場合に、飛行状態が解除されるようになりました。
+  - InputFlySystem が不要なタイミングに飛行解除処理をしていたのを無くしました。
+
 ## [3.9.0] - 2025/8/24
 
 - **Added**
@@ -688,6 +704,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.10.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.10.0
 [3.9.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.9.0
 [3.8.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.8.1
 [3.8.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.8.0

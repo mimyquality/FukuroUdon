@@ -735,7 +735,13 @@ MonoBehaviour:
       Entry: 1
       Data: _immobilize
     - Name: <UserType>k__BackingField
-      Entry: 6
+      Entry: 7
+      Data: 45|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: MimyLab.FukuroUdon.ActiveRelayToPlayerMobilityImmobilizeState, FukuroUdon
+    - Name: 
+      Entry: 8
       Data: 
     - Name: <SystemType>k__BackingField
       Entry: 9
@@ -754,13 +760,13 @@ MonoBehaviour:
       Data: true
     - Name: _fieldAttributes
       Entry: 7
-      Data: 45|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 46|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 46|UnityEngine.SerializeField, UnityEngine.CoreModule
+      Data: 47|UnityEngine.SerializeField, UnityEngine.CoreModule
     - Name: 
       Entry: 8
       Data: 

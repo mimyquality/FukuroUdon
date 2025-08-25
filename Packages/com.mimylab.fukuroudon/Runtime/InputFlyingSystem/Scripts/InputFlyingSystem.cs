@@ -21,14 +21,18 @@ namespace MimyLab.FukuroUdon
         [Header("General Settings")]
         [SerializeField]
         [FieldChangeCallback(nameof(EnableFlight))]
-        bool _enableFlight = true;
+        private bool _enableFlight = true;
         public bool EnableFlight    // 飛行システムを有効化する
         {
             get => _enableFlight;
             set
             {
                 _enableFlight = value;
-                if (!value) Fly(false);
+
+                if (!value && _isFly)
+                {
+                    Fly(false);
+                }
             }
         }
 
@@ -47,42 +51,47 @@ namespace MimyLab.FukuroUdon
 
         [Header("Input config for desktop")]
         [SerializeField]
-        KeyCode riseKeyCode = KeyCode.E;    // 上昇
+        private KeyCode riseKeyCode = KeyCode.E;    // 上昇
         [SerializeField]
-        KeyCode fallKeyCode = KeyCode.Q;    // 下降
+        private KeyCode fallKeyCode = KeyCode.Q;    // 下降
 
         // 計算用
-        VRCPlayerApi _lPlayer = null;
-        float _defaultGravity, _elapsedTime;
-        bool _isFly, _dampInput;
-        Vector3 _inputDirection = Vector3.zero;
-        Vector3 _direction, _velocity, _dampVelocity;
+        private VRCPlayerApi _localPlayer = null;
+        private float _defaultGravity, _elapsedTime;
+        private bool _isFly, _dampInput;
+        private Vector3 _inputDirection = Vector3.zero;
+        private Vector3 _direction, _velocity, _dampVelocity;
 
-        void Start()
+        private void Start()
         {
-            _lPlayer = Networking.LocalPlayer;
+            _localPlayer = Networking.LocalPlayer;
         }
 
-        void Update()
+        private void OnDisable()
         {
-            if (!Utilities.IsValid(_lPlayer)) { return; }
+            if (_isFly) { Fly(false); }
+        }
+
+        private void Update()
+        {
+            if (!Utilities.IsValid(_localPlayer)) { return; }
 
             // 非VRのみキーボード入力受付
-            if (!_lPlayer.IsUserInVR()) { InputKeyboard(); }
+            if (!_localPlayer.IsUserInVR()) { InputKeyboard(); }
 
             // 着地したら移動制御を返す
-            if (_isFly && _lPlayer.IsPlayerGrounded())
+            if (_isFly && _localPlayer.IsPlayerGrounded())
             {
                 Fly(false);
             }
         }
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
-            if (!Utilities.IsValid(_lPlayer)) { return; }
+            if (!Utilities.IsValid(_localPlayer)) { return; }
 
             // 飛行処理
-            if (EnableFlight && _isFly)
+            if (_enableFlight && _isFly)
             {
                 Flight();
             }
@@ -91,17 +100,17 @@ namespace MimyLab.FukuroUdon
         /******************************
          Input処理
         ******************************/
-        void InputKeyboard()
+        private void InputKeyboard()
         {
             if (Input.GetKeyDown(fallKeyCode))
             {
                 // 下降
-                _inputDirection.y = (flipInput) ? 1.0f : -1.0f;
+                _inputDirection.y = flipInput ? 1.0f : -1.0f;
             }
             if (Input.GetKeyDown(riseKeyCode))
             {
                 // 上昇
-                _inputDirection.y = (flipInput) ? -1.0f : 1.0f;
+                _inputDirection.y = flipInput ? -1.0f : 1.0f;
             }
             if (Input.GetKeyUp(fallKeyCode) && !Input.GetKey(riseKeyCode)
              || Input.GetKeyUp(riseKeyCode) && !Input.GetKey(fallKeyCode))
@@ -124,23 +133,23 @@ namespace MimyLab.FukuroUdon
         public override void InputLookVertical(float value, UdonInputEventArgs args)
         {
             // 非VRは無効
-            if (!_lPlayer.IsUserInVR()) { return; }
+            if (!_localPlayer.IsUserInVR()) { return; }
 
-            _inputDirection.y = (Mathf.Abs(value) >= deadZone) ? (flipInput) ? -value : value : 0.0f;
+            _inputDirection.y = (Mathf.Abs(value) >= deadZone) ? flipInput ? -value : value : 0.0f;
         }
 
         public override void InputJump(bool value, UdonInputEventArgs args)
         {
             // 飛行モードへの移行判定
             if (!EnableFlight) { return; }
-            if (!Utilities.IsValid(_lPlayer)) { return; }
+            if (!Utilities.IsValid(_localPlayer)) { return; }
 
             if (_isFly)
             {
                 // 飛行モード中ならジャンプ中上昇
-                _inputDirection.y = (value) ? 1.0f : 0.0f;
+                _inputDirection.y = value ? 1.0f : 0.0f;
             }
-            else if (value && !_lPlayer.IsPlayerGrounded())
+            else if (value && !_localPlayer.IsPlayerGrounded())
             {
                 // 空中でジャンプしたら飛行モードに移行、移動制御を奪う
                 Fly(true);
@@ -150,14 +159,14 @@ namespace MimyLab.FukuroUdon
         /******************************
          FlySystem処理
         ******************************/
-        void Fly(bool mode)
+        private void Fly(bool mode)
         {
             _isFly = mode;
-            _lPlayer.Immobilize(mode);
+            _localPlayer.Immobilize(mode);
             if (mode)
             {
-                _defaultGravity = _lPlayer.GetGravityStrength();
-                _lPlayer.SetGravityStrength(flightGravity);
+                _defaultGravity = _localPlayer.GetGravityStrength();
+                _localPlayer.SetGravityStrength(flightGravity);
 
                 // 飛行計算用変数の初期化
                 _dampInput = false;
@@ -166,11 +175,11 @@ namespace MimyLab.FukuroUdon
             }
             else
             {
-                _lPlayer.SetGravityStrength(_defaultGravity);
+                _localPlayer.SetGravityStrength(_defaultGravity);
             }
         }
 
-        void Flight()
+        private void Flight()
         {
             // インプットの正規化
             _direction = Vector3.ClampMagnitude(_inputDirection, 1.0f);
@@ -183,19 +192,19 @@ namespace MimyLab.FukuroUdon
                     _dampInput = true;
 
                     // 昇降中は重力を切る
-                    _lPlayer.SetGravityStrength(0.0f);
+                    _localPlayer.SetGravityStrength(0.0f);
                 }
 
                 _elapsedTime = 0.0f;
-                _velocity = _lPlayer.GetRotation() * _direction * flightSpeed;
-                _lPlayer.SetVelocity(_velocity);
+                _velocity = _localPlayer.GetRotation() * _direction * flightSpeed;
+                _localPlayer.SetVelocity(_velocity);
             }
             else if (_dampInput)
             {
                 // 最後に入力された速度から徐々に減衰
                 _elapsedTime = Mathf.Clamp01(_elapsedTime + Time.deltaTime);
                 _dampVelocity = Vector3.Lerp(_velocity, Vector3.zero, _elapsedTime / dampTime);
-                _lPlayer.SetVelocity(_dampVelocity);
+                _localPlayer.SetVelocity(_dampVelocity);
 
                 if (_elapsedTime >= 1.0f)
                 {
@@ -203,7 +212,7 @@ namespace MimyLab.FukuroUdon
                     _dampInput = false;
 
                     // 入力が無くなったので飛行中重力に戻す
-                    _lPlayer.SetGravityStrength(flightGravity);
+                    _localPlayer.SetGravityStrength(flightGravity);
                 }
             }
         }
