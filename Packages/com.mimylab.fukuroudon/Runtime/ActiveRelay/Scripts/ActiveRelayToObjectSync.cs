@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.Udon.Common.Interfaces;
     using VRC.SDK3.Components;
+    using VRC.SDK3.UdonNetworkCalling;
 
     public enum ActiveRelayActionType
     {
@@ -22,7 +23,7 @@ namespace MimyLab.FukuroUdon
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-objectsync")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to ObjectSync")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class ActiveRelayToObjectSync : UdonSharpBehaviour
     {
         [SerializeField]
@@ -98,6 +99,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
+        [NetworkCallable(1)]
         public void SetKinematicEnable()
         {
             for (int i = 0; i < _vrcObjectSyncs.Length; i++)
@@ -117,6 +119,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
+        [NetworkCallable(1)]
         public void SetKinematicDisable()
         {
             for (int i = 0; i < _vrcObjectSyncs.Length; i++)
@@ -136,6 +139,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
+        [NetworkCallable(1)]
         public void SetGravityEnable()
         {
             for (int i = 0; i < _vrcObjectSyncs.Length; i++)
@@ -155,6 +159,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
+        [NetworkCallable(1)]
         public void SetGravityDisable()
         {
             for (int i = 0; i < _vrcObjectSyncs.Length; i++)
@@ -174,6 +179,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
+        [NetworkCallable(1)]
         public void DoRespawn()
         {
             for (int i = 0; i < _vrcObjectSyncs.Length; i++)

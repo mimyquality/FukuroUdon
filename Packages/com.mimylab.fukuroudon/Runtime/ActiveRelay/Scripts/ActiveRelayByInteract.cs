@@ -22,36 +22,33 @@ namespace MimyLab.FukuroUdon
         [UdonSynced]
         private bool[] sync_objectsActive = new bool[0];
 
-        private void Start()
-        {
-            sync_objectsActive = new bool[_gameObjects.Length];
-            for (int i = 0; i < sync_objectsActive.Length; i++)
-            {
-                sync_objectsActive[i] = _gameObjects[i].activeSelf;
-            }
-        }
-
         public override void OnPreSerialization()
         {
+            if (sync_objectsActive.Length != _gameObjects.Length)
+            {
+                sync_objectsActive = new bool[_gameObjects.Length];
+            }
             for (int i = 0; i < sync_objectsActive.Length; i++)
             {
-                sync_objectsActive[i] = _gameObjects[i].activeSelf;
+                sync_objectsActive[i] = _gameObjects[i] && _gameObjects[i].activeSelf;
             }
         }
 
         public override void OnDeserialization()
         {
             if (_localOnly) { return; }
+            if (_gameObjects.Length != sync_objectsActive.Length) { return; }
 
             for (int i = 0; i < _gameObjects.Length; i++)
             {
+                if (!_gameObjects[i]) { continue; }
+
                 if (_gameObjects[i].activeSelf != sync_objectsActive[i])
                 {
                     _gameObjects[i].SetActive(sync_objectsActive[i]);
                 }
             }
         }
-
 
         public override void Interact()
         {

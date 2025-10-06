@@ -24,9 +24,10 @@ namespace MimyLab.FukuroUdon
         public bool syncPosition = true;  // 位置同期
         [Range(0.0f, 1.0f)]
         public float followMoveSpeed = 0.1f;   // 追跡速度
+        [Min(0.0f)]
         public float distanceRange = 1.0f; // 最大離散距離
+        [Min(0.0f)]
         public float moveThreshold = 0.0f;  // 追跡開始閾値
-        private float pauseThreshold; // 追跡終了閾値、追跡開始閾値の5%を使う
 
         [Header("Rotation Settings")]
         public bool syncRotation = false;   // 回転同期
@@ -35,119 +36,121 @@ namespace MimyLab.FukuroUdon
         [Range(0.0f, 180.0f)]
         public float angleRange = 60.0f;  // 回転速度の加速閾値
         [Range(0.0f, 180.0f)]
-        public float RotateThreshold = 0.0f; // 追跡回転開始閾値
-        [Range(0.0f, 180.0f)]
-        private float restThreshold;  // 追跡回転終了閾値、追跡回転開始閾値の5%を使う
+        public float rotateThreshold = 0.0f; // 追跡回転開始閾値        
         public bool lockRoll = true, lockPitch = false, lockYaw = false;   // 遅延せず回転同期(軸毎)
 
         // 計算用
-        private float _distance, _angle;
+        private float pauseThreshold; // 追跡終了閾値、追跡開始閾値の5%を使う
+        private float restThreshold;  // 追跡回転終了閾値、追跡回転開始閾値の5%を使う
         private bool _isPause, _isRest;
 
         protected override Vector3 GetTrackingPosition(VRCPlayerApi.TrackingDataType trackingTarget)
         {
-            if (!vROnly || _isVR)
+            if (syncPosition)
             {
-                if (!syncPosition)
-                {
-                    return GetFollowPosition(_lPlayer.GetTrackingData(trackingPoint).position);
-                }
+                return base.GetTrackingPosition(trackingTarget);
             }
 
-            return base.GetTrackingPosition(trackingTarget);
+            if (vROnly && !_localPlayer.IsUserInVR())
+            {
+                return base.GetTrackingPosition(trackingTarget);
+            }
+
+            return GetFollowPosition(_localPlayer.GetTrackingData(trackingPoint).position);
         }
 
         protected override Quaternion GetTrackingRotation(VRCPlayerApi.TrackingDataType trackingTarget)
         {
-            if (!vROnly || _isVR)
+            if (syncRotation)
             {
-                if (!syncRotation)
-                {
-                    return GetFollowRotation(_lPlayer.GetTrackingData(trackingPoint).rotation);
-                }
+                return base.GetTrackingRotation(trackingTarget);
+            }
+            if (vROnly && !_localPlayer.IsUserInVR())
+            {
+                return base.GetTrackingRotation(trackingTarget);
             }
 
-            return base.GetTrackingRotation(trackingTarget);
+            return GetFollowRotation(_localPlayer.GetTrackingData(trackingPoint).rotation);
         }
 
 
         // 位置の遅延追従
         private Vector3 GetFollowPosition(Vector3 targetPosition)
         {
-            var selfPos = _selfTransform.position;
+            var pos = transform.position;
 
             // moveThresholdの5%を閾値に使う
             pauseThreshold = moveThreshold * 0.05f;
 
             // 相対距離を算出
-            _distance = (selfPos - targetPosition).sqrMagnitude;
+            var distance = (pos - targetPosition).sqrMagnitude;
 
             // 閾値判定
-            if (_distance >= moveThreshold * moveThreshold)
+            if (distance >= moveThreshold * moveThreshold)
             {
                 _isPause = false;
             }
-            else if (_distance < pauseThreshold * pauseThreshold)
+            else if (distance < pauseThreshold * pauseThreshold)
             {
                 _isPause = true;
             }
 
-            if (_distance > distanceRange * distanceRange)
+            if (distance > distanceRange * distanceRange)
             {
                 // 離散距離の制限
-                selfPos = Vector3.MoveTowards(targetPosition, selfPos, Mathf.Abs(distanceRange));
+                pos = Vector3.MoveTowards(targetPosition, pos, Mathf.Abs(distanceRange));
             }
             else if (!_isPause)
             {
                 // 位置を遅延追従
-                selfPos = Vector3.Lerp(selfPos, targetPosition, followMoveSpeed);
+                pos = Vector3.Lerp(pos, targetPosition, followMoveSpeed);
             }
 
-            return selfPos;
+            return pos;
         }
 
         // 回転の遅延追従
         private Quaternion GetFollowRotation(Quaternion targetRotation)
         {
-            var selfRot = _selfTransform.rotation;
+            var rot = transform.rotation;
 
             angleRange = Mathf.Clamp(angleRange, 0.0f, 180.0f);
-            RotateThreshold = Mathf.Clamp(RotateThreshold, 0.0f, 180.0f);
-            restThreshold = RotateThreshold * 0.05f; // angleThresholdの5%を閾値に使う
+            rotateThreshold = Mathf.Clamp(rotateThreshold, 0.0f, 180.0f);
+            restThreshold = rotateThreshold * 0.05f; // RotateThresholdの5%を閾値に使う
 
             // 相対角度を算出
-            _angle = Quaternion.Angle(selfRot, targetRotation);
+            var angle = Quaternion.Angle(rot, targetRotation);
 
             // 閾値判定
-            if (_angle >= RotateThreshold)
+            if (angle >= rotateThreshold)
             {
                 _isRest = false;
             }
-            else if (_angle < restThreshold)
+            else if (angle < restThreshold)
             {
                 _isRest = true;
             }
 
             // 軸毎に遅延しない追従を追加処理
-            if (lockRoll) { selfRot = Quaternion.LookRotation(selfRot * Vector3.forward, targetRotation * Vector3.up); }
-            if (lockPitch) { selfRot = Quaternion.LookRotation(Vector3.ProjectOnPlane(selfRot * Vector3.forward, targetRotation * Vector3.up), selfRot * Vector3.up); }
-            if (lockYaw) { selfRot = Quaternion.LookRotation(Vector3.ProjectOnPlane(selfRot * Vector3.forward, targetRotation * Vector3.right), selfRot * Vector3.up); }
+            if (lockRoll) { rot = Quaternion.LookRotation(rot * Vector3.forward, targetRotation * Vector3.up); }
+            if (lockPitch) { rot = Quaternion.LookRotation(Vector3.ProjectOnPlane(rot * Vector3.forward, targetRotation * Vector3.up), rot * Vector3.up); }
+            if (lockYaw) { rot = Quaternion.LookRotation(Vector3.ProjectOnPlane(rot * Vector3.forward, targetRotation * Vector3.right), rot * Vector3.up); }
 
             if (!_isRest)
             {
-                if (_angle > angleRange)
+                if (angle > angleRange)
                 {
                     // 距離が遠いので加速して回転を遅延追従
-                    selfRot = Quaternion.Lerp(selfRot, targetRotation, followRotateSpeed * 4);
+                    rot = Quaternion.Lerp(rot, targetRotation, followRotateSpeed * 4);
                 }
                 else
                 {
                     // 回転を遅延追従
-                    selfRot = Quaternion.Lerp(selfRot, targetRotation, followRotateSpeed);
+                    rot = Quaternion.Lerp(rot, targetRotation, followRotateSpeed);
                 }
             }
 
-            return selfRot;
+            return rot;
         }
     }
 }

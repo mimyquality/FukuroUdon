@@ -6,6 +6,25 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.11.0-beta.1] - 2025/9/21
+
+- **Added**
+  - ActiveRelay with Delay と ActiveRelay with Return を追加しました。
+    - それぞれ ActiveRelay to GameObject, ActiveRelay to Transform で同じ事ができますが、用途を特化させることで設定項目を簡略化したものになります。
+  - ActiveRelay to GameObject に Delay Latest Only プロパティを追加しました。
+  - Advanced WorldSettings にVRCSDK 3.9.0 から増えた項目を追加しました。
+
+- **Changed**
+  - Input Flying System が非VR(デスクトップ、スマホ)では視線方向基準に飛行するようになりました。
+    - 顔を上に向けて前進すれば上昇、下に向けて前進すれば下降していく、という事です。
+    - この変更に合わせて、ジャンプボタンによる上昇効果を無くしました。
+  
+  - **Fixed**
+    - ActiveRelay to Transform が特定の条件下で実行すると異常終了を引き起こす可能性があるのを修正しました。
+    - ActiveRelay to Transform は実行時にピックアップを強制ドロップしてから操作するようになりました。
+      - スケールだけ操作する場合は強制ドロップしません。
+    - Input Flying System が飛行モードに入った直後だけ制動しなかったのを修正しました。 [#37](https://github.com/mimyquality/FukuroUdon/issues/37)
+
 ## [3.10.1] - 2025/9/19
 
 - **Fixed**
@@ -710,6 +729,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.11.0-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.11.0-beta.1
 [3.10.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.10.1
 [3.10.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.10.0
 [3.9.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.9.0

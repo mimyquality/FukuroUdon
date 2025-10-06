@@ -27,12 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 612965156683835089}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3961908359326141641
 MonoBehaviour:
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawns:
   - {fileID: 84871898264722817}
+  spawnRadius: 0
   spawnOrder: 0
   spawnOrientation: 0
   ReferenceCamera: {fileID: 0}
@@ -65,6 +67,7 @@ MonoBehaviour:
   contentOther: 0
   releasePublic: 0
   unityVersion: 
+  udonProducts: []
   Name: 
   NSFW: 0
   SpawnPosition: {x: 0, y: 0, z: 0}
@@ -128,6 +131,8 @@ MonoBehaviour:
   NetworkIDs: []
   portraitCameraPositionOffset: {x: 0, y: 0, z: 0}
   portraitCameraRotationOffset: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  PlayerPersistence: []
+  NavigationAreas: []
 --- !u!114 &810031503697448175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +183,7 @@ MonoBehaviour:
   _initializePickups: 1
   _enablePickups: 1
   _initializePlayerVoice: 1
-  _voiceGain: 15
+  _voiceGain: 0
   _voiceDistanceNear: 0
   _voiceDistanceFar: 25
   _voiceVolumetricRadius: 0
@@ -197,6 +202,93 @@ MonoBehaviour:
   _initializeAvatarEyeHight: 0
   _avatarEyeHeightLowerLimit: 1.3
   _avatarEyeHeightUpperLimit: 1.3
+  _initializeScreenCameraSettings: 0
+  _screenAllowHDR: 0
+  _screenDepthTextureMode: 0
+  _screenUseOcclusionCulling: 1
+  _screenAllowMSAA: 1
+  _screenCullingMask:
+    serializedVersion: 2
+    m_Bits: 4294705151
+  _screenClearFlags: 1
+  _screenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
+  _screenLayerCullSpherical: 0
+  _screenLayerCullDistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  _initializePhotoCameraSettings: 0
+  _photoAllowHDR: 0
+  _photoDepthTextureMode: 1
+  _photoUseOcclusionCulling: 1
+  _photoAllowMSAA: 1
+  _photoClearFlags: 1
+  _photoBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
+  _photoLayerCullSpherical: 0
+  _photoLayerCullDistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  _initializeQualitySettings: 0
+  _shadowDistance: 50
 --- !u!114 &4847006719195930141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,8 +309,7 @@ MonoBehaviour:
   AllowCollisionOwnershipTransfer: 0
   Reliable: 0
   _syncMethod: 1
-  serializedProgramAsset: {fileID: 11400000, guid: 11bce350d763cd047aaca91623b55b11,
-    type: 2}
+  serializedProgramAsset: {fileID: 11400000, guid: 11bce350d763cd047aaca91623b55b11, type: 2}
   programSource: {fileID: 11400000, guid: 0ea91b1b4f1da014a9ff949f9910f03d, type: 2}
   serializedPublicVariablesBytesString: Ai8AAAAAATIAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAFQAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AAAAAAAYBAAAAAAAAACcBBAAAAHQAeQBwAGUAAWgAAABTAHkAcwB0AGUAbQAuAEMAbwBsAGwAZQBjAHQAaQBvAG4AcwAuAEcAZQBuAGUAcgBpAGMALgBMAGkAcwB0AGAAMQBbAFsAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4ALgBJAG4AdABlAHIAZgBhAGMAZQBzAC4ASQBVAGQAbwBuAFYAYQByAGkAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AXQBdACwAIABtAHMAYwBvAHIAbABpAGIAAQEJAAAAVgBhAHIAaQBhAGIAbABlAHMALwEAAAABaAAAAFMAeQBzAHQAZQBtAC4AQwBvAGwAbABlAGMAdABpAG8AbgBzAC4ARwBlAG4AZQByAGkAYwAuAEwAaQBzAHQAYAAxAFsAWwBWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAEkAbgB0AGUAcgBmAGEAYwBlAHMALgBJAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlACwAIABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgBdAF0ALAAgAG0AcwBjAG8AcgBsAGkAYgABAAAABgEAAAAAAAAAAi8CAAAAAUkAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAGAAMQBbAFsAUwB5AHMAdABlAG0ALgBJAG4AdAAzADIALAAgAG0AcwBjAG8AcgBsAGkAYgBdAF0ALAAgAFYAUgBDAC4AVQBkAG8AbgAuAEMAbwBtAG0AbwBuAAIAAAAGAgAAAAAAAAAnAQQAAAB0AHkAcABlAAEXAAAAUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwAsACAAbQBzAGMAbwByAGwAaQBiACcBCgAAAFMAeQBtAGIAbwBsAE4AYQBtAGUAAR8AAABfAF8AXwBVAGQAbwBuAFMAaABhAHIAcABCAGUAaABhAHYAaQBvAHUAcgBWAGUAcgBzAGkAbwBuAF8AXwBfACcBBAAAAHQAeQBwAGUAARYAAABTAHkAcwB0AGUAbQAuAEkAbgB0ADMAMgAsACAAbQBzAGMAbwByAGwAaQBiABcBBQAAAFYAYQBsAHUAZQACAAAABwUHBQcF
   publicVariablesUnityEngineObjects: []

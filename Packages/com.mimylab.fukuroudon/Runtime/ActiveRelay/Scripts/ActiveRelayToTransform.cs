@@ -8,6 +8,7 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
+    using VRC.SDK3.Components;
 
     [System.Flags]
     public enum ActiveRelayToTransformChangeProperty
@@ -45,10 +46,35 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private Transform _referenceTransform = null;
 
+        private VRCPickup[] _pickups;
+
+        private bool _initialized = false;
+        private void Initialize()
+        {
+            if (_initialized) { return; }
+
+            _pickups = new VRCPickup[_transforms.Length];
+            var positionOrRotation =
+                (int)ActiveRelayToTransformChangeProperty.Position |
+                (int)ActiveRelayToTransformChangeProperty.Rotation;
+            var dropFlag = ((int)_changeProperty & positionOrRotation) > 0;
+            if (dropFlag)
+            {
+                for (int i = 0; i < _transforms.Length; i++)
+                {
+                    _pickups[i] = _transforms[i].GetComponent<VRCPickup>();
+                }
+            }
+
+            _initialized = true;
+        }
+
         private void OnEnable()
         {
-            if (_eventType == ActiveRelayEventType.ActiveAndInactive
-             || _eventType == ActiveRelayEventType.Active)
+            Initialize();
+
+            if (_eventType == ActiveRelayEventType.ActiveAndInactive ||
+                _eventType == ActiveRelayEventType.Active)
             {
                 switch (_relativeTo)
                 {
@@ -60,8 +86,8 @@ namespace MimyLab.FukuroUdon
 
         private void OnDisable()
         {
-            if (_eventType == ActiveRelayEventType.ActiveAndInactive
-             || _eventType == ActiveRelayEventType.Inactive)
+            if (_eventType == ActiveRelayEventType.ActiveAndInactive ||
+                _eventType == ActiveRelayEventType.Inactive)
             {
                 switch (_relativeTo)
                 {
@@ -79,6 +105,11 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _transforms.Length; i++)
             {
+                if (_pickups[i])
+                {
+                    _pickups[i].Drop();
+                }
+
                 if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Position) > 0)
                 {
                     _transforms[i].position = position;
@@ -94,9 +125,9 @@ namespace MimyLab.FukuroUdon
                     var parentScale = parent ? parent.lossyScale : Vector3.one;
                     _transforms[i].localScale = new Vector3
                     (
-                        scale.x / parentScale.x,
-                        scale.y / parentScale.y,
-                        scale.z / parentScale.z
+                        Mathf.Approximately(parentScale.x, 0.0f) ? scale.x : scale.x / parentScale.x,
+                        Mathf.Approximately(parentScale.y, 0.0f) ? scale.y : scale.y / parentScale.y,
+                        Mathf.Approximately(parentScale.z, 0.0f) ? scale.z : scale.z / parentScale.z
                     );
                 }
             }
@@ -110,6 +141,11 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _transforms.Length; i++)
             {
+                if (_pickups[i])
+                {
+                    _pickups[i].Drop();
+                }
+
                 if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Position) > 0)
                 {
                     _transforms[i].localPosition = position;

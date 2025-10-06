@@ -32,7 +32,7 @@ namespace MimyLab.FukuroUdon
 
             _objectPool = GetComponent<VRCObjectPool>();
             _pool = _objectPool.Pool;
-            // VRCObjectPoolのStartPositions, StartRotationsがバグってるので自前で初期化
+            // VRCObjectPool の StartPositions, StartRotations は使えないので自前で初期化
             _startPositions = new Vector3[_pool.Length];
             _startRotations = new Quaternion[_pool.Length];
             for (int i = 0; i < _pool.Length; i++)

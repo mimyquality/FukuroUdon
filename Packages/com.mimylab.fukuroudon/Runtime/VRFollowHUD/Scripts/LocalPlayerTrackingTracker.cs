@@ -24,33 +24,29 @@ namespace MimyLab.FukuroUdon
         public bool enableRotation = true;
 
         // Updateで使う変数キャッシュ用
-        protected VRCPlayerApi _lPlayer;
-        protected bool _isVR;
-        protected Transform _selfTransform;
+        protected VRCPlayerApi _localPlayer;
 
         private void OnEnable()
         {
-            _selfTransform = transform;
             if (Utilities.IsValid(Networking.LocalPlayer))
             {
-                _lPlayer = Networking.LocalPlayer;
-                _isVR = _lPlayer.IsUserInVR();
+                _localPlayer = Networking.LocalPlayer;
 
                 // 初期位置にリセット
-                var selfPos = enablePosition ? _lPlayer.GetTrackingData(trackingPoint).position : _selfTransform.position;
-                var selfRot = enableRotation ? _lPlayer.GetTrackingData(trackingPoint).rotation : _selfTransform.rotation;
-                _selfTransform.SetPositionAndRotation(selfPos, selfRot);
+                var pos = enablePosition ? _localPlayer.GetTrackingData(trackingPoint).position : transform.position;
+                var rot = enableRotation ? _localPlayer.GetTrackingData(trackingPoint).rotation : transform.rotation;
+                transform.SetPositionAndRotation(pos, rot);
             }
         }
 
         public override void PostLateUpdate()
         {
             if (!enablePosition & !enableRotation) { return; }
-            if (!Utilities.IsValid(_lPlayer)) { return; }
+            if (!Utilities.IsValid(_localPlayer)) { return; }
 
-            var selfPos = enablePosition ? GetTrackingPosition(trackingPoint) : _selfTransform.position;
-            var selfRot = enableRotation ? GetTrackingRotation(trackingPoint) : _selfTransform.rotation;
-            _selfTransform.SetPositionAndRotation(selfPos, selfRot);
+            var pos = enablePosition ? GetTrackingPosition(trackingPoint) : transform.position;
+            var rot = enableRotation ? GetTrackingRotation(trackingPoint) : transform.rotation;
+            transform.SetPositionAndRotation(pos, rot);
         }
 
         public void TrackingHead() { trackingPoint = VRCPlayerApi.TrackingDataType.Head; }
@@ -61,12 +57,12 @@ namespace MimyLab.FukuroUdon
 
         protected virtual Vector3 GetTrackingPosition(VRCPlayerApi.TrackingDataType trackingTarget)
         {
-            return _lPlayer.GetTrackingData(trackingTarget).position;
+            return _localPlayer.GetTrackingData(trackingTarget).position;
         }
 
         protected virtual Quaternion GetTrackingRotation(VRCPlayerApi.TrackingDataType trackingTarget)
         {
-            return _lPlayer.GetTrackingData(trackingTarget).rotation;
+            return _localPlayer.GetTrackingData(trackingTarget).rotation;
         }
     }
 }

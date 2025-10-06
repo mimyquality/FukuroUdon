@@ -25,6 +25,11 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class AdvancedWorldSettings : UdonSharpBehaviour
     {
+        // 6: reserved6, 7: reserved7, 19: InternalUI, 31: prohibited
+        private const int ForceScreenVisible = 0b0010000000000011000000 | (1 << 31);
+        // 18: MirrorReflection
+        private const int ForceScreenInvisible = 0b0001000000000000000000;
+
         [Header("Movement")]
         [SerializeField] private bool _initializeMovement = true;
         [SerializeField][Range(0f, 5f)] private float _walkSpeed = 2f;
@@ -75,6 +80,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField] private DepthTextureMode _screenDepthTextureMode = DepthTextureMode.None;
         [SerializeField] private bool _screenUseOcclusionCulling = true;
         [SerializeField] private bool _screenAllowMSAA = true;
+        [SerializeField] private LayerMask _screenCullingMask = ~ForceScreenInvisible;
         [SerializeField] private CameraClearFlags _screenClearFlags = CameraClearFlags.Skybox;
         [Tooltip("The color to use when ClearFlags is set to SolidColor.")]
         [SerializeField] private Color _screenBackgroundColor = Color.black;
@@ -85,7 +91,8 @@ namespace MimyLab.FukuroUdon
         [Header("Photo Camera Settings")]
         [SerializeField] private bool _initializePhotoCameraSettings = false;
         [SerializeField] private bool _photoAllowHDR = false;
-        [SerializeField] private DepthTextureMode _photoDepthTextureMode = DepthTextureMode.None;
+        [Tooltip("Depth must always be enabled")]
+        [SerializeField] private DepthTextureMode _photoDepthTextureMode = DepthTextureMode.Depth;
         [SerializeField] private bool _photoUseOcclusionCulling = true;
         [SerializeField] private bool _photoAllowMSAA = true;
         [SerializeField] private CameraClearFlags _photoClearFlags = CameraClearFlags.Skybox;
@@ -98,10 +105,32 @@ namespace MimyLab.FukuroUdon
         [Header("Quality Settings")]
         [SerializeField] private bool _initializeQualitySettings = false;
         [SerializeField][Range(0.1f, 10000f)] private float _shadowDistance = 50.0f;
-
+        [SerializeField][Range(0.0f, 1.0f)] private float _shadowCascade2Split = 1.0f / 3.0f;
+        [SerializeField][Range(0.0f, 1.0f)] private float _shadowCascade4Split0 = 2f / 30f;
+        [SerializeField][Range(0.0f, 1.0f)] private float _shadowCascade4Split1 = 6f / 30f;
+        [SerializeField][Range(0.0f, 1.0f)] private float _shadowCascade4Split2 = 14f / 30f;
 
         private bool _hasAvatarChanged = false;
         private bool _hasFirstAvatarChanged = false;
+
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
+        private void OnValidate()
+        {
+            if ((_screenCullingMask & ForceScreenVisible) != ForceScreenVisible)
+            {
+                _screenCullingMask |= ForceScreenVisible;
+            }
+            if ((_screenCullingMask & ForceScreenInvisible) > 0)
+            {
+                _screenCullingMask &= ~ForceScreenInvisible;
+            }
+
+            if ((_photoDepthTextureMode & DepthTextureMode.Depth) != DepthTextureMode.Depth)
+            {
+                _photoDepthTextureMode |= DepthTextureMode.Depth;
+            }
+        }
+#endif
 
         private void Start()
         {
@@ -112,6 +141,7 @@ namespace MimyLab.FukuroUdon
                 screenCamera.DepthTextureMode = _screenDepthTextureMode;
                 screenCamera.UseOcclusionCulling = _screenUseOcclusionCulling;
                 screenCamera.AllowMSAA = _screenAllowMSAA;
+                screenCamera.CullingMask = _screenCullingMask;
                 screenCamera.ClearFlags = _screenClearFlags;
                 screenCamera.BackgroundColor = _screenBackgroundColor;
                 screenCamera.LayerCullSpherical = _screenLayerCullSpherical;
@@ -135,6 +165,8 @@ namespace MimyLab.FukuroUdon
             if (_initializeQualitySettings)
             {
                 VRCQualitySettings.SetShadowDistance(_shadowDistance);
+                VRCQualitySettings.ShadowCascade2Split = _shadowCascade2Split;
+                VRCQualitySettings.ShadowCascade4Split = new Vector3(_shadowCascade4Split0, _shadowCascade4Split1, _shadowCascade4Split2);
             }
         }
 
