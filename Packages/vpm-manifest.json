@@ -52,13 +52,13 @@
       }
     },
     "com.vrchat.worlds": {
-      "version": "3.9.0-beta.1",
+      "version": "3.9.0",
       "dependencies": {
-        "com.vrchat.base": "3.9.0-beta.1"
+        "com.vrchat.base": "3.9.0"
       }
     },
     "com.vrchat.base": {
-      "version": "3.9.0-beta.1",
+      "version": "3.9.0",
       "dependencies": {}
     },
     "jp.lilxyzw.liltoon": {
@@ -66,7 +66,7 @@
       "dependencies": {}
     },
     "jp.lilxyzw.editortoolbox": {
-      "version": "1.10.1",
+      "version": "1.11.0",
       "dependencies": {}
     }
   }
