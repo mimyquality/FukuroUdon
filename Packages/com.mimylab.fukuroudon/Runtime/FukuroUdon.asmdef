@@ -6,7 +6,8 @@
         "VRC.Udon",
         "VRC.Udon.Serialization.OdinSerializer",
         "UdonSharp.Runtime",
-        "UdonSharp.Editor"
+        "UdonSharp.Editor",
+        ""
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
