@@ -241,7 +241,7 @@ MonoBehaviour:
       Data: 15|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.ActiveRelayVisibleType, FukuroUdon
+      Data: MimyLab.FukuroUdon.ActiveRelayVisibleEventType, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

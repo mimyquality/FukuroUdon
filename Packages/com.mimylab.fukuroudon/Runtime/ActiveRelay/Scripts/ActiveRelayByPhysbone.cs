@@ -9,28 +9,95 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    using VRC.Udon;
-    using VRC.SDK3.Components;
+    using VRC.Udon.Common.Interfaces;
+    using VRC.Dynamics;
+    using VRC.SDK3.Dynamics.PhysBone.Components;
 
-    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-    public class ActiveRelayByPhysbone : UdonSharpBehaviour
+    public enum ActiveRelayByPhysboneType
     {
+        PhysboneGrabAndRelease,
+        PhysboneGrab,
+        PhysboneRelease,
+        PhysbonePoseAndUnpose,
+        PhysbonePose,
+        PhysboneUnpose
+    }
 
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-physbone")]
+    [Icon(ComponentIconPath.FukuroUdon)]
+    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Physbone")]
+    [RequireComponent(typeof(VRCPhysBone))]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
+    public class ActiveRelayByPhysbone : ActiveRelayBy
+    {
+        [SerializeField]
+        private ActiveRelayByPhysboneType _eventType = default;
+        [SerializeField]
+        private NetworkEventTarget _acceptPlayerType = NetworkEventTarget.All;
 
-        private bool _initialized = false;
-        private void Initialize()
+        public override void OnPhysBoneGrabbed(PhysBoneGrabbedInfo physBoneInfo)
         {
-            if (_initialized) { return; }
-
-
-
-            _initialized = true;
+            switch (_eventType)
+            {
+                case ActiveRelayByPhysboneType.PhysboneGrabAndRelease:
+                case ActiveRelayByPhysboneType.PhysboneGrab:
+                    var player = physBoneInfo.player;
+                    if (CheckAccept(player)) { DoAction(player); }
+                    break;
+            }
         }
-        private void Start()
+
+        public override void OnPhysBoneReleased(PhysBoneReleasedInfo physBoneInfo)
         {
-            Initialize();
+            switch (_eventType)
+            {
+                case ActiveRelayByPhysboneType.PhysboneGrabAndRelease:
+                case ActiveRelayByPhysboneType.PhysboneRelease:
+                    var player = physBoneInfo.player;
+                    if (CheckAccept(player)) { DoAction(player); }
+                    break;
+            }
+        }
 
+        public override void OnPhysBonePosed(PhysBonePosedInfo physBoneInfo)
+        {
+            switch (_eventType)
+            {
+                case ActiveRelayByPhysboneType.PhysbonePoseAndUnpose:
+                case ActiveRelayByPhysboneType.PhysbonePose:
+                    var player = physBoneInfo.player;
+                    if (CheckAccept(player)) { DoAction(player); }
+                    break;
+            }
+        }
 
+        public override void OnPhysBoneUnPosed(PhysBoneUnPosedInfo physBoneInfo)
+        {
+            switch (_eventType)
+            {
+                case ActiveRelayByPhysboneType.PhysbonePoseAndUnpose:
+                case ActiveRelayByPhysboneType.PhysboneUnpose:
+                    var player = physBoneInfo.player;
+                    if (CheckAccept(player)) { DoAction(player); }
+                    break;
+            }
+        }
+
+        private bool CheckAccept(VRCPlayerApi player)
+        {
+            switch (_acceptPlayerType)
+            {
+                case NetworkEventTarget.All:
+                    return true;
+                case NetworkEventTarget.Owner:
+                    return player.IsOwner(this.gameObject);
+                case NetworkEventTarget.Others:
+                    return !player.isLocal;
+                case NetworkEventTarget.Self:
+                    return player.isLocal;
+                default:
+                    return false;
+            }
         }
     }
 }
