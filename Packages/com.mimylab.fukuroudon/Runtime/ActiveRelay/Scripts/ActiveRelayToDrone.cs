@@ -12,7 +12,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-drone")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Drone")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to Drone")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToDrone : UdonSharpBehaviour
     {

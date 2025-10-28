@@ -25,7 +25,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-physbone")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Physbone")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay by/ActiveRelay by Physbone")]
     [RequireComponent(typeof(VRCPhysBone))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayByPhysbone : ActiveRelayBy

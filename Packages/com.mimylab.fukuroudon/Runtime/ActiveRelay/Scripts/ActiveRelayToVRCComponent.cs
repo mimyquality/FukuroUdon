@@ -14,7 +14,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-vrccomponent")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to VRCComponent")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to VRCComponent")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToVRCComponent : UdonSharpBehaviour
     {

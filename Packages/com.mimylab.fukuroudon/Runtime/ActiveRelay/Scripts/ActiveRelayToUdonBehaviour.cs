@@ -13,7 +13,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-udonbehaviour")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to UdonBehaviour")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to UdonBehaviour")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToUdonBehaviour : UdonSharpBehaviour
     {

@@ -12,7 +12,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-with-return")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay with Return")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay with/ActiveRelay with Return")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayWithReturn : UdonSharpBehaviour
     {

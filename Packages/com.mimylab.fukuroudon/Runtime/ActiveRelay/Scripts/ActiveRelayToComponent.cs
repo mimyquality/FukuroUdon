@@ -12,14 +12,14 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-component")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Component")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to Component")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToComponent : UdonSharpBehaviour
     {
         [SerializeField]
         private ActiveRelayEventType _eventType = default;
         [SerializeField]
-        private Object[] _components = new Object[0];
+        private Component[] _components = new Component[0];
         [SerializeField]
         private bool _invert = false;
 
@@ -27,7 +27,7 @@ namespace MimyLab.FukuroUdon
         private void OnValidate()
         {
             var count = 0;
-            var tmp = new Object[_components.Length];
+            var tmp = new Component[_components.Length];
             foreach (var component in _components)
             {
                 if (ValidateComponentType(component))
@@ -37,6 +37,31 @@ namespace MimyLab.FukuroUdon
             }
             System.Array.Resize(ref tmp, count);
             _components = tmp;
+        }
+
+        private bool ValidateComponentType(Component component)
+        {
+            if (!component) { return false; }
+
+            if (component is Collider)
+            {
+                if (component.GetType() == typeof(TerrainCollider)) { return false; }
+                return true;
+            }
+            if (component is Renderer)
+            {
+                if (component.GetType() == typeof(UnityEngine.Tilemaps.TilemapRenderer)) { return false; }
+                return true;
+            }
+            if (component is Behaviour)
+            {
+                return true;
+            }
+            // Extra
+            if (component is OcclusionPortal) { return true; }
+            if (component is CanvasGroup) { return true; }
+
+            return false;
         }
 #endif
 
@@ -56,45 +81,6 @@ namespace MimyLab.FukuroUdon
             {
                 ToggleComponents(_invert);
             }
-        }
-
-        private bool ValidateComponentType(Object component)
-        {
-            if (!component) { return false; }
-
-            var type = component.GetType();
-            if (type == typeof(GameObject)) { return false; }
-            // Collider
-            else if (type == typeof(BoxCollider)) { return true; }
-            else if (type == typeof(SphereCollider)) { return true; }
-            else if (type == typeof(CapsuleCollider)) { return true; }
-            else if (type == typeof(MeshCollider)) { return true; }
-            else if (type == typeof(WheelCollider)) { return true; }
-            //else if (type == typeof(TerrainCollider)) { return true; }
-            // Renderer
-            else if (type == typeof(MeshRenderer)) { return true; }
-            else if (type == typeof(SkinnedMeshRenderer)) { return true; }
-            else if (type == typeof(LineRenderer)) { return true; }
-            else if (type == typeof(TrailRenderer)) { return true; }
-            else if (type == typeof(BillboardRenderer)) { return true; }
-            else if (type == typeof(SpriteRenderer)) { return true; }
-            //else if (type == typeof(UnityEngine.Tilemaps.TilemapRenderer)) { return true; }
-            // Constraint
-            else if (type == typeof(AimConstraint)) { return true; }
-            else if (type == typeof(LookAtConstraint)) { return true; }
-            else if (type == typeof(ParentConstraint)) { return true; }
-            else if (type == typeof(PositionConstraint)) { return true; }
-            else if (type == typeof(RotationConstraint)) { return true; }
-            else if (type == typeof(ScaleConstraint)) { return true; }
-            // Behaviour
-            else if (type == typeof(Light)) { return true; }
-            else if (type == typeof(Camera)) { return true; }
-            else if (type == typeof(Animator)) { return true; }
-            // Extra
-            else if (type == typeof(OcclusionPortal)) { return true; }
-            else if (type == typeof(CanvasGroup)) { return true; }
-
-            return false;
         }
 
         private void ToggleComponents(bool value)

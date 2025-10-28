@@ -19,7 +19,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-player-mobility")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Player Mobility")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to Player Mobility")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToPlayerMobility : UdonSharpBehaviour
     {

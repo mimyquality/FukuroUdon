@@ -20,7 +20,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-dronetrigger")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Drone Trigger")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay by/ActiveRelay by Drone Trigger")]
     [RequireComponent(typeof(Collider))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayByDroneTrigger : ActiveRelayBy

@@ -26,7 +26,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-effect")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Effect")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to Effect")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToEffect : UdonSharpBehaviour
     {

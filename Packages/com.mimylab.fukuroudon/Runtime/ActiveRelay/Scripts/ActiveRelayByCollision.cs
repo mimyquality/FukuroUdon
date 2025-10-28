@@ -19,7 +19,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-collision")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Collision")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay by/ActiveRelay by Collision")]
     [RequireComponent(typeof(Collider))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayByCollision : ActiveRelayBy

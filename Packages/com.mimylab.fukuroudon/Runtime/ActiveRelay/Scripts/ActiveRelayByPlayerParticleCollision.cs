@@ -13,7 +13,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-playerparticlecollision")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay by Player ParticleCollision")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay by/ActiveRelay by Player ParticleCollision")]
     [RequireComponent(typeof(ParticleSystem))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayByPlayerParticleCollision : ActiveRelayBy

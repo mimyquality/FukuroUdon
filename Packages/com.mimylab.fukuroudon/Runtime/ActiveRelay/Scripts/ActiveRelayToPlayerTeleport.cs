@@ -12,7 +12,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-player-teleport")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to Player Teleport")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to Player Teleport")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToPlayerTeleport : UdonSharpBehaviour
     {

@@ -11,7 +11,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-with-delay")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay with Delay")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay with/ActiveRelay with Delay")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayWithDelay : UdonSharpBehaviour
     {

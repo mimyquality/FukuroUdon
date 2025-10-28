@@ -18,7 +18,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-avatarscaling")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Active Relay/ActiveRelay to AvatarScaling")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to AvatarScaling")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToAvatarScaling : UdonSharpBehaviour
     {
