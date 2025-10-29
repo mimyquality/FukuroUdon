@@ -13,6 +13,13 @@
     - ActiveRelay to Physbone
     - ActiveRelay by Physbone
     - ActiveRelay by Contact
+  - ActiveRelay to Component で切り替えられるコンポーネントに以下を追加しました。
+    - UdonBehaviour
+    - U# コンポーネント(UdonSharpBehaviour を継承したもの)
+    - VRC Constraint
+    - VRC Physbone
+    - VRC Contact Sender
+    - VRC Contact Receiver
 
 ## [3.12.0] - 2025/10/26
 
