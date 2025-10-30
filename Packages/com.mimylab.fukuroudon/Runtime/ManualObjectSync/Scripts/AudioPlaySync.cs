@@ -11,7 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.Udon;
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#Audio-Play-Sync")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#audio-play-sync")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Audio Play Sync")]
     [RequireComponent(typeof(AudioSource))]
