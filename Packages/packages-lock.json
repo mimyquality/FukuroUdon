@@ -311,12 +311,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "jp.lilxyzw.liltoon": {
-      "version": "file:jp.lilxyzw.liltoon",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "net.kaikoga.pen": {
       "version": "file:net.kaikoga.pen",
       "depth": 0,
