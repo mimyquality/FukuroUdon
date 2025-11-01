@@ -13,7 +13,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Better-AvatarPedestal#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/General/AvatarPedestal Switch")]
+    [AddComponentMenu("Fukuro Udon/Better AvatarPedestal/AvatarPedestal Switch")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class AvatarPedestalSwitch : UdonSharpBehaviour
     {
