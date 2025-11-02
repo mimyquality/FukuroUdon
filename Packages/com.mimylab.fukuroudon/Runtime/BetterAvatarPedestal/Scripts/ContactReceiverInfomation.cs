@@ -21,14 +21,12 @@ namespace MimyLab.FukuroUdon
     {
         private const int MaxSenderCache = 128;
 
-        [SerializeField]
-        private string _parameter = "";
         [SerializeField, Min(0.0f), Tooltip("Minimum collision velocity to trigger OnEnter. m/s")]
         private float _minVelocity = 0.0f;
 
         private VRCContactReceiver _receiver;
         private ContactSenderProxy[] _senders = new ContactSenderProxy[MaxSenderCache];
-        private bool _isSenderStay = false;
+        private int _last = -1;
         private bool _isOnEnterFrame = false;
 
         private bool _initialized = false;
@@ -47,9 +45,17 @@ namespace MimyLab.FukuroUdon
 
         public override void OnContactEnter(ContactEnterInfo contactInfo)
         {
-            if (contactInfo.enterVelocity.sqrMagnitude < _minVelocity * _minVelocity) { return; }
+            if (contactInfo.enterVelocity.sqrMagnitude >= _minVelocity * _minVelocity)
+            {
+                _isOnEnterFrame = true;
+                SendCustomEventDelayedFrames(nameof(_CloseOnEnterFrame), 1);
+            }
 
             AddSender(contactInfo.contactSender);
+        }
+        public void _CloseOnEnterFrame()
+        {
+            _isOnEnterFrame = false;
         }
 
         public override void OnContactExit(ContactExitInfo contactInfo)
@@ -60,29 +66,40 @@ namespace MimyLab.FukuroUdon
         /******************************
          VRCContactReceiver Alies Property
          ******************************/
-        public ContactSenderProxy[] StaySenders { get => _senders; }
-        public bool Constant { get => _isSenderStay; } // 未実装
-        public bool OnEnter { get => _isOnEnterFrame; } // 未実装
+        public ContactSenderProxy[] Senders { get => _senders; }
+        public bool Constant { get => HasStayedSender(); }
+        public bool OnEnter { get => _isOnEnterFrame; }
         public float Proximity { get => CalculateProximity(); }
 
         /******************************
          VRCContactReceiver Alies Method
          ******************************/
+        public bool HasStayedSender()
+        {
+            Initialize();
+
+            var length = _last + 1;
+            for (int i = 0; i < length; i++)
+            {
+                if (Utilities.IsValid(_senders[i]) && _senders[i].isValid)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public float CalculateProximity()
         {
             Initialize();
 
             var result = 0.0f;
 
-            for (int i = 0; i < _senders.Length; i++)
+            var length = _last + 1;
+            for (int i = 0; i < length; i++)
             {
-                if (_senders[i] == null) { continue; }
-                if (!_senders[i].isValid)
-                {
-                    _senders[i] = null; continue;
-                }
-
-                var proximity = _receiver.CalculateProximity(_senders[i]);
+                var proximity = CalculateProximity(_senders[i]);
                 result = Mathf.Max(result, proximity);
             }
 
@@ -106,7 +123,6 @@ namespace MimyLab.FukuroUdon
             if (!contactSender.isValid) { return 0.0f; }
 
             return _receiver.CalculateProximity(contactSender);
-
         }
 
         /******************************
@@ -114,28 +130,45 @@ namespace MimyLab.FukuroUdon
          ******************************/
         private void AddSender(ContactSenderProxy sender)
         {
-            for (int i = 0; i < _senders.Length; i++)
-            {
-                if (!_senders[i].isValid)
-                {
-                    _senders[i] = null;
-                }
-            }
+            _last = ValidateStayedSenders();
 
             var index = System.Array.IndexOf(_senders, null);
             if (index > -1)
             {
                 _senders[index] = sender;
+                _last = Mathf.Max(_last, index);
             }
         }
 
         private void RemoveSender(ContactSenderProxy sender)
         {
             int index;
-            while ((index = System.Array.IndexOf(_senders, sender)) > -1)
+            while ((index = System.Array.LastIndexOf(_senders, sender)) > -1)
             {
                 _senders[index] = null;
+                _last += (_last == index) ? -1 : 0;
             }
+        }
+
+        private int ValidateStayedSenders()
+        {
+            var last = -1;
+
+            for (int i = 0; i < _senders.Length; i++)
+            {
+                if (Utilities.IsValid(_senders[i]))
+                {
+                    if (!_senders[i].isValid)
+                    {
+                        _senders[i] = null;
+                        continue;
+                    }
+
+                    last = i;
+                }
+            }
+
+            return last;
         }
     }
 }
