@@ -12,7 +12,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Dynamics.Contact.Components;
     using VRC.Dynamics;
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Better-AvatarPedestal#dynamics-parameter-transfer")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Better-AvatarPedestal#contact-receiver-infomation")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Better AvatarPedestal/Contact Receiver Infomation")]
     [RequireComponent(typeof(VRCContactReceiver))]

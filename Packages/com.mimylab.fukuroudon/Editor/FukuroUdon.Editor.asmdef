@@ -1,14 +1,14 @@
 {
-    "name": "FukuroUdon",
+    "name": "FukuroUdon.Editor",
     "rootNamespace": "",
     "references": [
-        "Unity.TextMeshPro",
-        "VRC.Udon",
-        "VRC.Udon.Serialization.OdinSerializer",
         "UdonSharp.Runtime",
-        "UdonSharp.Editor"
+        "UdonSharp.Editor",
+        "FukuroUdon"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
