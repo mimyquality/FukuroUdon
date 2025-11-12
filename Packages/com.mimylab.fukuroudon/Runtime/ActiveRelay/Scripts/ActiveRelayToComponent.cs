@@ -13,6 +13,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Dynamics.PhysBone.Components;
     using VRC.SDK3.Dynamics.Contact.Components;
     using VRC.Udon;
+    using VRC.Dynamics;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-component")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -43,7 +44,7 @@ namespace MimyLab.FukuroUdon
                 if (ValidateComponentType(component))
                 {
                     tmp_Components[componentCount++] = component;
-                    
+
                     if (component is UdonSharpBehaviour usb)
                     {
                         tmp_udonSharpBehaviours[usbCount++] = usb;
@@ -86,15 +87,9 @@ namespace MimyLab.FukuroUdon
             if (component is Animator) { return true; }
             if (component is UdonBehaviour) { return true; }
             if (component is UdonSharpBehaviour) { return true; }
-            if (component is VRCParentConstraint) { return true; }
-            if (component is VRCPositionConstraint) { return true; }
-            if (component is VRCRotationConstraint) { return true; }
-            if (component is VRCScaleConstraint) { return true; }
-            if (component is VRCAimConstraint) { return true; }
-            if (component is VRCLookAtConstraint) { return true; }
+            if (component is VRCConstraintBase) { return true; }
             if (component is VRCPhysBone) { return true; }
-            if (component is VRCContactSender) { return true; }
-            if (component is VRCContactReceiver) { return true; }
+            if (component is ContactBase) { return true; }
 
             return false;
         }

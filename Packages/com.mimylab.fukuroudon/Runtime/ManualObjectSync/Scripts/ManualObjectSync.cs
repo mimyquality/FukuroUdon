@@ -285,7 +285,7 @@ namespace MimyLab.FukuroUdon
             _localScale = transform.localScale;
 
             moveCheckTickRate = Mathf.Max(moveCheckTickRate, 2);
-            _firstCheckTiming = moveCheckTickRate + GetInstanceID() % moveCheckTickRate;
+            _firstCheckTiming = moveCheckTickRate + Mathf.Abs(GetInstanceID()) % moveCheckTickRate;
 
             if (_rigidbody)
             {
@@ -371,7 +371,10 @@ namespace MimyLab.FukuroUdon
         {
             if (_reservedInterval = Networking.IsOwner(this.gameObject))
             {
-                _updateManager.EnablePostLateUpdate(this);
+                if (!Networking.IsClogged)
+                {
+                    _updateManager.EnablePostLateUpdate(this);
+                }
                 SendCustomEventDelayedFrames(nameof(_IntervalPostLateUpdate), moveCheckTickRate);
             }
         }

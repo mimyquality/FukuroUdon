@@ -15,7 +15,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Better AvatarPedestal/Dynamics Parameter Transfer")]
     [RequireComponent(typeof(Animator))]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class DynamicsParameterTransfer : UdonSharpBehaviour
     {
         private Animator _animator;

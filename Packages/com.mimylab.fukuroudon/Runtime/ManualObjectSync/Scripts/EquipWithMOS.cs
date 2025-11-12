@@ -15,7 +15,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Equip with MOS")]
     [RequireComponent(typeof(VRCPickup))]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class EquipWithMOS : UdonSharpBehaviour
     {
         [SerializeField]

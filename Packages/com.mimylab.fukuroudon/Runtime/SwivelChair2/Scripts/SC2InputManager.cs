@@ -15,7 +15,7 @@ namespace MimyLab.FukuroUdon
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Swivel-Chair-2#sc2-input-manager")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Swivel Chair 2/SC2 Input Manager")]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class SC2InputManager : UdonSharpBehaviour
     {
         internal SC2SeatAdjuster seatAdjuster;

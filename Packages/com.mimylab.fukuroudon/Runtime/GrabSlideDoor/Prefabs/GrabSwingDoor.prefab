@@ -225,6 +225,7 @@ MonoBehaviour:
   currentlyHeldBy: {fileID: 0}
   pickupable: 1
   proximity: 0.5
+  version: 1
 --- !u!65 &9073934490770438892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -309,6 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllowCollisionOwnershipTransfer: 0
+  ForceKinematicOnRemote: 0
 --- !u!1 &8952000912424809162
 GameObject:
   m_ObjectHideFlags: 0

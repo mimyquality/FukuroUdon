@@ -25,6 +25,7 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class AnimatorParameterSync : UdonSharpBehaviour
     {
+        private const int ParameterCheckTickRate = 6;
         private const float SmoothingDuration = 0.2f;
 
         [SerializeField]
@@ -56,6 +57,8 @@ namespace MimyLab.FukuroUdon
         private int[] _floatParameterHashes = new int[0];
         private float[] _floatParameterValues = new float[0];
         private float _elapsedTime = SmoothingDuration;
+
+        private int _checkTiming;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnValidate()
@@ -109,6 +112,8 @@ namespace MimyLab.FukuroUdon
             _floatParameterValues = new float[floatCount];
             System.Array.Copy(tmp_floatParameterHashes, _floatParameterHashes, floatCount);
 
+            _checkTiming = Mathf.Abs(GetInstanceID()) % ParameterCheckTickRate;
+
             _initialized = true;
         }
         private void Start()
@@ -120,6 +125,9 @@ namespace MimyLab.FukuroUdon
         {
             if (Networking.IsOwner(this.gameObject))
             {
+                if (Time.frameCount % ParameterCheckTickRate != _checkTiming) { return; }
+                if (Networking.IsClogged) { return; }
+
                 if (CheckAnimatorParameterChange())
                 {
                     RequestSerialization();
@@ -224,21 +232,19 @@ namespace MimyLab.FukuroUdon
             for (int i = 0; i < _boolParameterHashes.Length; i++)
             {
                 var boolValue = _animator.GetBool(_boolParameterHashes[i]);
-                if (_boolParameterValues[i] != boolValue)
-                {
-                    _boolParameterValues[i] = boolValue;
-                    result = true;
-                }
+                if (_boolParameterValues[i] == boolValue) { continue; }
+
+                _boolParameterValues[i] = boolValue;
+                result = true;
             }
 
             for (int i = 0; i < _intParameterHashes.Length; i++)
             {
                 var intValue = _animator.GetInteger(_intParameterHashes[i]);
-                if (_intParameterValues[i] != intValue)
-                {
-                    _intParameterValues[i] = intValue;
-                    result = true;
-                }
+                if (_intParameterValues[i] == intValue) { continue; }
+
+                _intParameterValues[i] = intValue;
+                result = true;
             }
 
             for (int i = 0; i < _floatParameterHashes.Length; i++)

@@ -6,6 +6,14 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.13.0-beta.4] - 2025/11/12
+
+- **Added**
+  - ActiveRelay with Drop を追加しました。
+
+- **Fixed**
+  - Animator Parameter Sync を少し軽量化しました。
+
 ## [3.13.0-beta.3] - 2025/11/3
 
 - **Added**
@@ -764,6 +772,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.13.0-beta.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.4
 [3.13.0-beta.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.3
 [3.13.0-beta.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.2
 [3.13.0-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.1
