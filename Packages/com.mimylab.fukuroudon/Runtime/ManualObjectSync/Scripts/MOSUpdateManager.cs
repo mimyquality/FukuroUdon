@@ -79,28 +79,28 @@ namespace MimyLab.FukuroUdon
             this.enabled = true;
 
             var index = System.Array.IndexOf(_mosList, mos);
-            if (index >= 0) { return; }
+            if (index > -1) { return; }
 
             index = System.Array.IndexOf(_mosList, null);
-            if (index >= 0)
+            if (index > -1)
             {
                 _mosList[index] = mos;
             }
             else
             {
-                var tmp_MosList = new ManualObjectSync[_mosList.Length + 1];
-                tmp_MosList[0] = mos;
-                _mosList.CopyTo(tmp_MosList, 1);
-                _mosList = tmp_MosList;
+                var tmp_mosList = new ManualObjectSync[_mosList.Length + 1];
+                tmp_mosList[0] = mos;
+                _mosList.CopyTo(tmp_mosList, 1);
+                _mosList = tmp_mosList;
             }
         }
 
         public void DisablePostLateUpdate(ManualObjectSync mos)
         {
-            if (_mosList.Length <= 0) { return; }
+            if (_mosList.Length < 1) { return; }
 
             var index = System.Array.IndexOf(_mosList, mos);
-            if (index >= 0)
+            if (index > -1)
             {
                 _mosList[index] = null;
             }

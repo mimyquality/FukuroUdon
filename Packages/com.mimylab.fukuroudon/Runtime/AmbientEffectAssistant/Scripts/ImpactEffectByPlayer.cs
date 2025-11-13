@@ -18,7 +18,6 @@ namespace MimyLab.FukuroUdon
     {
         public override void OnPlayerTriggerEnter(VRCPlayerApi player)
         {
-            Debug.Log("On Impact Player");
             if (!Utilities.IsValid(player)) { return; }
 
             PlayEffect(player.GetPosition(), player.GetVelocity());

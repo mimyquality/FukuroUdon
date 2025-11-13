@@ -25,6 +25,8 @@ namespace MimyLab.FukuroUdon
         private Quaternion[] _startRotations;
         private GameObject _lastSpawnedObject = null;
 
+        private GameObject[] _gameObjectsEmpty = new GameObject[0];
+
         private bool _initialized = false;
         private void Initialize()
         {
@@ -169,24 +171,24 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (!Networking.IsOwner(this.gameObject)) { return new GameObject[0]; }
+            if (!Networking.IsOwner(this.gameObject)) { return _gameObjectsEmpty; }
 
             var spawnObjects = new GameObject[_pool.Length];
             var spawnCount = 0;
             for (int i = 0; i < _pool.Length; i++)
             {
-                var resultObject = _objectPool.TryToSpawn();
-                if (!resultObject) { break; }
+                var spawnObject = _objectPool.TryToSpawn();
+                if (!spawnObject) { break; }
 
-                _lastSpawnedObject = resultObject;
-                spawnObjects[spawnCount++] = resultObject;
+                _lastSpawnedObject = spawnObject;
+                spawnObjects[spawnCount++] = spawnObject;
             }
 
             // スポーンしたオブジェクトだけの配列を作る(色々と使えないので原始的にやる)
-            var returnObjects = new GameObject[spawnCount];
-            System.Array.Copy(spawnObjects, returnObjects, spawnCount);
+            var resultObjects = new GameObject[spawnCount];
+            System.Array.Copy(spawnObjects, resultObjects, spawnCount);
 
-            return returnObjects;
+            return resultObjects;
         }
 
         // Poolの頭の方から戻す
