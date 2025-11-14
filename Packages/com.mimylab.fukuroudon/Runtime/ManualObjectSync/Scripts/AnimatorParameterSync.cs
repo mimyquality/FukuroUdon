@@ -57,7 +57,6 @@ namespace MimyLab.FukuroUdon
         private int[] _floatParameterHashes = new int[0];
         private float[] _floatParameterValues = new float[0];
         private float _elapsedTime = SmoothingDuration;
-
         private float _checkTiming;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR

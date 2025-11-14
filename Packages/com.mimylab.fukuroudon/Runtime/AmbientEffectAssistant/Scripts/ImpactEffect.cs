@@ -37,8 +37,8 @@ namespace MimyLab.FukuroUdon
         private int[] _spawnedEffects = new int[0];
         private GameObject[] _effectPool = new GameObject[0];
         private GameObject[] _highEffectPool = new GameObject[0];
-        private Transform[] _effectsTransform = new Transform[0];
-        private Transform[] _highEffectsTransform = new Transform[0];
+        private Transform[] _effectTransforms = new Transform[0];
+        private Transform[] _highEffectTransforms = new Transform[0];
 
         private bool _isNormalCheck;
 
@@ -51,23 +51,23 @@ namespace MimyLab.FukuroUdon
 
             _spawnedEffects = new int[_poolSize];
             _effectPool = new GameObject[_poolSize];
-            _effectsTransform = new Transform[_poolSize];
+            _effectTransforms = new Transform[_poolSize];
             for (int i = 0; i < _effectPool.Length; i++)
             {
                 _effectPool[i] = Instantiate(_effectPrefab);
                 _effectPool[i].SetActive(false);
-                _effectsTransform[i] = _effectPool[i].transform;
+                _effectTransforms[i] = _effectPool[i].transform;
             }
 
             if (_highEffectPrefab)
             {
                 _highEffectPool = new GameObject[_poolSize];
-                _highEffectsTransform = new Transform[_poolSize];
+                _highEffectTransforms = new Transform[_poolSize];
                 for (int i = 0; i < _highEffectPool.Length; i++)
                 {
                     _highEffectPool[i] = Instantiate(_highEffectPrefab);
                     _highEffectPool[i].SetActive(false);
-                    _highEffectsTransform[i] = _highEffectPool[i].transform;
+                    _highEffectTransforms[i] = _highEffectPool[i].transform;
                 }
             }
 
@@ -117,7 +117,7 @@ namespace MimyLab.FukuroUdon
             _spawnCount = (_spawnCount < _poolSize) ? _spawnCount + 1 : 1;
             _spawnedEffects[index] = _spawnCount;
 
-            _effectsTransform[index].position = position;
+            _effectTransforms[index].position = position;
             _effectPool[index].SetActive(true);
 
             SendCustomEventDelayedSeconds(nameof(_ReturnEffect), _effectTime);
@@ -131,7 +131,7 @@ namespace MimyLab.FukuroUdon
             _spawnCount = (_spawnCount < _poolSize) ? _spawnCount + 1 : 1;
             _spawnedEffects[index] = _spawnCount;
 
-            _highEffectsTransform[index].position = position;
+            _highEffectTransforms[index].position = position;
             _highEffectPool[index].SetActive(true);
 
             SendCustomEventDelayedSeconds(nameof(_ReturnEffect), _effectTime);

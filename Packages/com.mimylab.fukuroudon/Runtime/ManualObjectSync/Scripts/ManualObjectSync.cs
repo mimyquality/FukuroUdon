@@ -669,9 +669,7 @@ namespace MimyLab.FukuroUdon
                 handRotation.Equals(Quaternion.identity))
             {
                 // ボーン情報の代わりにプレイヤー原点からの固定値
-                handPosition.x = (_equipBone == (byte)HumanBodyBones.LeftHand) ? -0.2f : 0.2f;
-                handPosition.y = 1.0f;
-                handPosition.z = 0.3f;
+                handPosition = new Vector3((_equipBone == (byte)HumanBodyBones.LeftHand) ? -0.2f : 0.2f, 1.0f, 0.3f);
                 _rigidbody.MovePosition(owner.GetPosition() + (owner.GetRotation() * handPosition));
                 _rigidbody.MoveRotation(owner.GetRotation());
             }

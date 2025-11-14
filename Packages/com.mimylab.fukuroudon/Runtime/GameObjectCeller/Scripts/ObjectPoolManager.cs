@@ -25,7 +25,7 @@ namespace MimyLab.FukuroUdon
         private Quaternion[] _startRotations;
         private GameObject _lastSpawnedObject = null;
 
-        private GameObject[] _gameObjectsEmpty = new GameObject[0];
+        private GameObject[] _emptyGameObjects = new GameObject[0];
 
         private bool _initialized = false;
         private void Initialize()
@@ -171,7 +171,7 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (!Networking.IsOwner(this.gameObject)) { return _gameObjectsEmpty; }
+            if (!Networking.IsOwner(this.gameObject)) { return _emptyGameObjects; }
 
             var spawnObjects = new GameObject[_pool.Length];
             var spawnCount = 0;
