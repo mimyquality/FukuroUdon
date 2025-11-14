@@ -25,7 +25,7 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class AnimatorParameterSync : UdonSharpBehaviour
     {
-        private const int ParameterCheckTickRate = 6;
+        private const float ParameterCheckTickRate = 0.1f;  // 10Hz
         private const float SmoothingDuration = 0.2f;
 
         [SerializeField]
@@ -58,7 +58,7 @@ namespace MimyLab.FukuroUdon
         private float[] _floatParameterValues = new float[0];
         private float _elapsedTime = SmoothingDuration;
 
-        private int _checkTiming;
+        private float _checkTiming;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnValidate()
@@ -112,7 +112,7 @@ namespace MimyLab.FukuroUdon
             _floatParameterValues = new float[floatCount];
             System.Array.Copy(tmp_floatParameterHashes, _floatParameterHashes, floatCount);
 
-            _checkTiming = Mathf.Abs(GetInstanceID()) % ParameterCheckTickRate;
+            _checkTiming = Time.time + ParameterCheckTickRate + (Random.value * ParameterCheckTickRate);
 
             _initialized = true;
         }
@@ -125,7 +125,9 @@ namespace MimyLab.FukuroUdon
         {
             if (Networking.IsOwner(this.gameObject))
             {
-                if (Time.frameCount % ParameterCheckTickRate != _checkTiming) { return; }
+                if (_checkTiming > Time.time) { return; }
+                _checkTiming = Time.time + ParameterCheckTickRate;
+
                 if (Networking.IsClogged) { return; }
 
                 if (CheckAnimatorParameterChange())
