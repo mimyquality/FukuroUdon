@@ -6,6 +6,16 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.13.0-beta.5] - 2025/11/22
+
+- **Added**
+  - ActiveRelay to GameObject in PlayerObject を追加しました。
+  - いくつかのインタラクトスイッチに public メソッドを追加しました。
+
+- **Fixed**
+  - Mirror Tuner の CustomMaterial がおかしくなるバグを修正しました。
+  - その他いくつかのコンポーネントのリファクタリングをしました。
+
 ## [3.13.0-beta.4] - 2025/11/12
 
 - **Added**
@@ -772,6 +782,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.13.0-beta.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.5
 [3.13.0-beta.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.4
 [3.13.0-beta.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.3
 [3.13.0-beta.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.2
