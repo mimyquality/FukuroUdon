@@ -57,13 +57,18 @@ namespace MimyLab.FukuroUdon
 
         public override void Interact()
         {
+            ResetObjectsPosition();
+        }
+
+        public void ResetObjectsPosition()
+        {
             if (Time.time < _lastResetTime + _interval) { return; }
 
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(ResetObjectsPosition));
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(CallResetObjectsPosition));
         }
 
         [NetworkCallable]
-        public void ResetObjectsPosition()
+        public void CallResetObjectsPosition()
         {
             Initialize();
 

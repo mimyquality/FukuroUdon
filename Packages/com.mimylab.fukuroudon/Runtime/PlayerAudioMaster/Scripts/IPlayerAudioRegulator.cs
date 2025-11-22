@@ -63,7 +63,8 @@ namespace MimyLab.FukuroUdon
 
         public bool CheckApplicable(VRCPlayerApi target)
         {
-            if (!enabled || !gameObject.activeInHierarchy) { return false; }
+            if (!this.enabled) { return false; }
+            if (!this.gameObject.activeInHierarchy) { return false; }
             if (othersOnly && target.isLocal) { return false; }
             if (!EligiblePlayer(target)) { return false; }
 

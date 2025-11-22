@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2024 Mimy Quality
+Copyright (c) 2025 Mimy Quality
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
@@ -8,23 +8,20 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
+    using VRC.SDKBase;
     using VRC.SDKBase.Editor.Attributes;
+    using VRC.Udon.Common.Interfaces;
 
-    public enum ActiveRelayEventType
-    {
-        ActiveAndInactive,
-        Active,
-        Inactive,
-    }
-
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-gameobject")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-gameobject-in-playerobject")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to GameObject")]
+    [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to GameObject in PlayerObject")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ActiveRelayToGameObject : UdonSharpBehaviour
+    public class ActiveRelayToGameObjectInPlayerObject : UdonSharpBehaviour
     {
         [SerializeField]
         private ActiveRelayEventType _eventType = default;
+        [SerializeField]
+        private NetworkEventTarget _acceptPlayerType = NetworkEventTarget.Self;
         [SerializeField]
         private GameObject[] _gameObjects = new GameObject[0];
         [SerializeField]
@@ -106,11 +103,43 @@ namespace MimyLab.FukuroUdon
 
         private void ToggleActive(bool value)
         {
-            foreach (var item in _gameObjects)
+            var othersOnly = false;
+            VRCPlayerApi[] players;
+            switch (_acceptPlayerType)
             {
-                if (!item) { continue; }
+                case NetworkEventTarget.All:
+                    VRCPlayerApi.GetPlayers(players = new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()]);
+                    break;
+                case NetworkEventTarget.Owner:
+                    players = new VRCPlayerApi[] { Networking.GetOwner(this.gameObject) };
+                    break;
+                case NetworkEventTarget.Others:
+                    VRCPlayerApi.GetPlayers(players = new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()]);
+                    othersOnly = true;
+                    break;
+                case NetworkEventTarget.Self:
+                    players = new VRCPlayerApi[] { Networking.LocalPlayer };
+                    break;
+                default:
+                    players = new VRCPlayerApi[0];
+                    break;
+            }
 
-                item.SetActive(value);
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (!Utilities.IsValid(players[i])) { continue; }
+
+                foreach (var reference in _gameObjects)
+                {
+                    if (!reference) { continue; }
+                    if (othersOnly && players[i].isLocal) { continue; }
+
+                    var target = (Transform)players[i].FindComponentInPlayerObjects(reference.transform);
+                    if (Utilities.IsValid(target))
+                    {
+                        target.gameObject.SetActive(value);
+                    }
+                }
             }
         }
     }

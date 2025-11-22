@@ -26,9 +26,15 @@ namespace MimyLab.FukuroUdon
 
         public override void Interact()
         {
-            if (!_mirrorTuner) { return; }
+            SetProfile();
+        }
 
-            _mirrorTuner.SetProfile(_targetNumber);
+        public void SetProfile()
+        {
+            if (_mirrorTuner)
+            {
+                _mirrorTuner.SetProfile(_targetNumber);
+            }
         }
     }
 }

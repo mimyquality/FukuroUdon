@@ -841,13 +841,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: _effectsTransform
+      Data: _effectTransforms
     - Name: $v
       Entry: 7
       Data: 51|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: _effectsTransform
+      Data: _effectTransforms
     - Name: <UserType>k__BackingField
       Entry: 7
       Data: 52|System.RuntimeType, mscorlib
@@ -895,13 +895,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: _highEffectsTransform
+      Data: _highEffectTransforms
     - Name: $v
       Entry: 7
       Data: 54|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: _highEffectsTransform
+      Data: _highEffectTransforms
     - Name: <UserType>k__BackingField
       Entry: 9
       Data: 52

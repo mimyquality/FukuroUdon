@@ -34,6 +34,11 @@ namespace MimyLab.FukuroUdon
 
         public override void Interact()
         {
+            Execute();
+        }
+
+        public void Execute()
+        {
             if (!target) { return; }
 
             switch (switchType)
