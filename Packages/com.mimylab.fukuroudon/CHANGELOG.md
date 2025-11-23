@@ -9,11 +9,11 @@
 ## [3.13.0-beta.5] - 2025/11/22
 
 - **Added**
-  - ActiveRelay to GameObject in PlayerObject を追加しました。
-  - いくつかのインタラクトスイッチに public メソッドを追加しました。
+  - ActiveRelay to GameObject in PlayerObject を追加しました。 [#40](https://github.com/mimyquality/FukuroUdon/issues/40)
+  - いくつかのインタラクトスイッチに public メソッドを追加しました。 [#39](https://github.com/mimyquality/FukuroUdon/issues/39)
 
 - **Fixed**
-  - Mirror Tuner の CustomMaterial がおかしくなるバグを修正しました。
+  - Mirror Tuner の CustomMaterial がおかしくなるバグを修正しました。 [#38](https://github.com/mimyquality/FukuroUdon/issues/38)
   - その他いくつかのコンポーネントのリファクタリングをしました。
 
 ## [3.13.0-beta.4] - 2025/11/12
