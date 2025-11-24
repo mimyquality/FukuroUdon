@@ -9,13 +9,12 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.Udon;
-    //using VRC.SDK3.Components;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/VR-Follow-HUD#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/General/LocalPlayer Tracking Tracker")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
+    [DefaultExecutionOrder(-1000)]
     public class LocalPlayerTrackingTracker : UdonSharpBehaviour
     {
         [Header("General Settings")]
@@ -26,17 +25,14 @@ namespace MimyLab.FukuroUdon
         // Updateで使う変数キャッシュ用
         protected VRCPlayerApi _localPlayer;
 
-        private void OnEnable()
+        protected void OnEnable()
         {
-            if (Utilities.IsValid(Networking.LocalPlayer))
-            {
-                _localPlayer = Networking.LocalPlayer;
+            _localPlayer = Networking.LocalPlayer;
 
-                // 初期位置にリセット
-                var pos = enablePosition ? _localPlayer.GetTrackingData(trackingPoint).position : transform.position;
-                var rot = enableRotation ? _localPlayer.GetTrackingData(trackingPoint).rotation : transform.rotation;
-                transform.SetPositionAndRotation(pos, rot);
-            }
+            // 初期位置にリセット
+            var pos = enablePosition ? _localPlayer.GetTrackingData(trackingPoint).position : transform.position;
+            var rot = enableRotation ? _localPlayer.GetTrackingData(trackingPoint).rotation : transform.rotation;
+            transform.SetPositionAndRotation(pos, rot);
         }
 
         public override void PostLateUpdate()

@@ -13,7 +13,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Ambient-Effect-Assistant#viewpoint-tracker")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/General/ViewPoint Tracker")]
+    [AddComponentMenu("Fukuro Udon/General/View Point Tracker (Obsolete)")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ViewPointTracker : UdonSharpBehaviour
     {

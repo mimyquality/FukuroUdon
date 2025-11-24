@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2022 Mimy Quality
+Copyright (c) 2025 Mimy Quality
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
@@ -9,13 +9,14 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
+    using VRC.SDK3.Rendering;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/VR-Follow-HUD#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/VR Follow HUD/Tracking Follow Tracker")]
+    [AddComponentMenu("Fukuro Udon/VR Follow HUD/Camera Follow Tracker")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     [DefaultExecutionOrder(-1000)]
-    public class VRFollowHUD : LocalPlayerTrackingTracker
+    public class CameraFollowTracker : LocalPlayerCameraTracker
     {
         [SerializeField]
         private bool vROnly = true; // VRモードでのみ有効
@@ -44,7 +45,14 @@ namespace MimyLab.FukuroUdon
         private float restThreshold;  // 追跡回転終了閾値、追跡回転開始閾値の5%を使う
         private bool _isPause, _isRest;
 
-        protected override Vector3 GetTrackingPosition(VRCPlayerApi.TrackingDataType trackingTarget)
+        private VRCPlayerApi _localPlayer;
+
+        private void Start()
+        {
+            _localPlayer = Networking.LocalPlayer;
+        }
+
+        protected override Vector3 GetTrackingPosition(VRCCameraSettings trackingTarget)
         {
             if (syncPosition)
             {
@@ -56,10 +64,10 @@ namespace MimyLab.FukuroUdon
                 return base.GetTrackingPosition(trackingTarget);
             }
 
-            return GetFollowPosition(_localPlayer.GetTrackingData(trackingPoint).position);
+            return GetFollowPosition(trackingTarget.Position);
         }
 
-        protected override Quaternion GetTrackingRotation(VRCPlayerApi.TrackingDataType trackingTarget)
+        protected override Quaternion GetTrackingRotation(VRCCameraSettings trackingTarget)
         {
             if (syncRotation)
             {
@@ -70,7 +78,7 @@ namespace MimyLab.FukuroUdon
                 return base.GetTrackingRotation(trackingTarget);
             }
 
-            return GetFollowRotation(_localPlayer.GetTrackingData(trackingPoint).rotation);
+            return GetFollowRotation(trackingTarget.Rotation);
         }
 
 
