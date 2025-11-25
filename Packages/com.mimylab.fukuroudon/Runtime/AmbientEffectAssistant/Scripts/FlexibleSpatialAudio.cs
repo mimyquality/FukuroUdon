@@ -8,12 +8,14 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
+    using VRC.SDKBase;
+    using VRC.SDK3.Rendering;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Ambient-Effect-Assistant#flexible-spatial-audio")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Flexible Spatial Audio")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class FlexibleSpatialAudio : IViewPointReceiver
+    public class FlexibleSpatialAudio : UdonSharpBehaviour
     {
         [SerializeField]
         private AudioSource _decaySound;
@@ -28,6 +30,7 @@ namespace MimyLab.FukuroUdon
 
         private Transform _decayTransform;
         private Transform _innerTransform;
+        private VRCCameraSettings _camera;
 
         private bool _initialized = false;
         private void Initialize()
@@ -36,21 +39,27 @@ namespace MimyLab.FukuroUdon
 
             if (_decaySound) { _decayTransform = _decaySound.transform; }
             if (_innerSound) { _innerTransform = _innerSound.transform; }
+            _camera = VRCCameraSettings.ScreenCamera;
 
             _initialized = true;
         }
-
-        public override void ReceiveViewPoint(Vector3 position, Quaternion rotation)
+        private void Start()
         {
             Initialize();
+        }
+
+        public override void PostLateUpdate()
+        {
+            if (!Utilities.IsValid(_camera)) { return; }
+            var position = _camera.Position;
 
             var nearest = Vector3.positiveInfinity;
             var isIn = false;
-            foreach (var col in _area)
+            foreach (var collider in _area)
             {
-                if (!col) { continue; }
+                if (!collider) { continue; }
 
-                var point = col.ClosestPoint(position);
+                var point = collider.ClosestPoint(position);
                 nearest = (point - position).sqrMagnitude < (nearest - position).sqrMagnitude ? point : nearest;
 
                 if (isIn = point == position) { break; }

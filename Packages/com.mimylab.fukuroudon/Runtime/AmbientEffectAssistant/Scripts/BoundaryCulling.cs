@@ -8,12 +8,14 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
+    using VRC.SDKBase;
+    using VRC.SDK3.Rendering;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Ambient-Effect-Assistant#boundary-culling")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Boundary Culling")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class BoundaryCulling : IViewPointReceiver
+    public class BoundaryCulling : UdonSharpBehaviour
     {
         [Header("Targets")]
         [SerializeField]
@@ -27,7 +29,8 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private Vector3 _normal = Vector3.up;
 
-        private bool _prevEnabled = true;
+        private VRCCameraSettings _camera;
+        private bool _wasIn = false;
 
         private bool _initialized = false;
         private void Initialize()
@@ -35,24 +38,35 @@ namespace MimyLab.FukuroUdon
             if (_initialized) { return; }
 
             if (!_point) _point = transform;
-            ToggleTargetsEnabled(!_prevEnabled);
+            _camera = VRCCameraSettings.ScreenCamera;
+
+            ToggleTargetsEnabled(_wasIn);
 
             _initialized = true;
         }
-
-        public override void ReceiveViewPoint(Vector3 position, Quaternion rotation)
+        private void Start()
         {
             Initialize();
+        }
+
+        public override void PostLateUpdate()
+        {
+            if (!Utilities.IsValid(_camera)) { return; }
+            var position = _camera.Position;
 
             var direction = position - _point.position;
             var borderNormal = _point.rotation * _normal;
-            ToggleTargetsEnabled(Vector3.Dot(borderNormal, direction) >= 0);
+            var isIn = Vector3.Dot(borderNormal, direction) >= 0.0f;
+
+            if (_wasIn != isIn)
+            {
+                ToggleTargetsEnabled(isIn);
+                _wasIn = isIn;
+            }
         }
 
         private void ToggleTargetsEnabled(bool value)
         {
-            if (value == _prevEnabled) { return; }
-
             foreach (var target in _renderers)
             {
                 if (target) { target.enabled = value; }
@@ -61,8 +75,6 @@ namespace MimyLab.FukuroUdon
             {
                 if (target) { target.SetActive(value); }
             }
-
-            _prevEnabled = value;
         }
     }
 }

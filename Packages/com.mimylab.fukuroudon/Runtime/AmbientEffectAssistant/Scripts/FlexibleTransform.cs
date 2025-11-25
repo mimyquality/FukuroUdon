@@ -8,12 +8,14 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
+    using VRC.SDKBase;
+    using VRC.SDK3.Rendering;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Ambient-Effect-Assistant#flexible-transform")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Flexible Transform")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class FlexibleTransform : IViewPointReceiver
+    public class FlexibleTransform : UdonSharpBehaviour
     {
         [SerializeField]
         private Transform _target;
@@ -28,16 +30,36 @@ namespace MimyLab.FukuroUdon
         [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
         private Collider[] _area = new Collider[0];
 
-        public override void ReceiveViewPoint(Vector3 position, Quaternion rotation)
+        private VRCCameraSettings _camera;
+
+        private bool _initialized = false;
+        private void Initialize()
         {
-            if (!_target) { return; }
+            if (_initialized) { return; }
+
+            if (!_target) { _target = this.transform; }
+            _camera = VRCCameraSettings.ScreenCamera;
+
+            if (_target == this.transform) { _inactiveOutOfRange = false; }
+
+            _initialized = true;
+        }
+        private void Start()
+        {
+            Initialize();
+        }
+
+        public override void PostLateUpdate()
+        {
+            if (!Utilities.IsValid(_camera)) { return; }
+            var position = _camera.Position;
 
             var nearest = Vector3.positiveInfinity;
-            foreach (var col in _area)
+            foreach (var collider in _area)
             {
-                if (!col) { continue; }
+                if (!collider) { continue; }
 
-                var point = col.ClosestPoint(position);
+                var point = collider.ClosestPoint(position);
                 nearest = (point - position).sqrMagnitude < (nearest - position).sqrMagnitude ? point : nearest;
 
                 if (point == position) { break; }
@@ -51,6 +73,7 @@ namespace MimyLab.FukuroUdon
             }
             else
             {
+                var rotation = _camera.Rotation;
                 _target.SetPositionAndRotation(nearest, rotation);
             }
 

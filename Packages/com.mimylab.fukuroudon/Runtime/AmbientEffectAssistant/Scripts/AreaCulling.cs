@@ -8,12 +8,14 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
+    using VRC.SDKBase;
+    using VRC.SDK3.Rendering;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Ambient-Effect-Assistant#area-culling")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Ambient Effect Assistant/Area Culling")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class AreaCulling : IViewPointReceiver
+    public class AreaCulling : UdonSharpBehaviour
     {
         [Header("Targets")]
         [SerializeField]
@@ -23,36 +25,43 @@ namespace MimyLab.FukuroUdon
 
         [Space]
         [SerializeField]
-        private bool _invert;
+        private bool _invert = false;
 
         [Header("Bound Settings")]
         [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
         private Collider[] _area = new Collider[0];
 
-        private bool _prevEnabled;
+        private VRCCameraSettings _camera;
+        private bool _wasIn = false;
 
         private bool _initialized = false;
         private void Initialize()
         {
             if (_initialized) { return; }
 
-            _prevEnabled = !_invert;
-            ToggleTargetsEnabled(!_prevEnabled);
+            _camera = VRCCameraSettings.ScreenCamera;
+
+            ToggleTargetsEnabled(_wasIn ^ _invert);
 
             _initialized = true;
         }
-
-        public override void ReceiveViewPoint(Vector3 position, Quaternion rotation)
+        private void Start()
         {
             Initialize();
+        }
+
+        public override void PostLateUpdate()
+        {
+            if (!Utilities.IsValid(_camera)) { return; }
+            var position = _camera.Position;
 
             var isIn = false;
             //var nearest = Vector3.positiveInfinity;
-            foreach (var col in _area)
+            foreach (var collider in _area)
             {
-                if (!col) { continue; }
+                if (!collider) { continue; }
 
-                var point = col.ClosestPoint(position);
+                var point = collider.ClosestPoint(position);
                 //nearest = (point - vpPosition).sqrMagnitude < (nearest - vpPosition).sqrMagnitude ? point : nearest;
 
                 if (point == position)
@@ -62,13 +71,15 @@ namespace MimyLab.FukuroUdon
                 }
             }
 
-            ToggleTargetsEnabled(isIn ^ _invert);
+            if (_wasIn != isIn)
+            {
+                ToggleTargetsEnabled(isIn ^ _invert);
+                _wasIn = isIn;
+            }
         }
 
         private void ToggleTargetsEnabled(bool value)
         {
-            if (value == _prevEnabled) { return; }
-
             foreach (var target in _renderers)
             {
                 if (target) { target.enabled = value; }
@@ -77,8 +88,6 @@ namespace MimyLab.FukuroUdon
             {
                 if (target) { target.SetActive(value); }
             }
-
-            _prevEnabled = value;
         }
     }
 }
