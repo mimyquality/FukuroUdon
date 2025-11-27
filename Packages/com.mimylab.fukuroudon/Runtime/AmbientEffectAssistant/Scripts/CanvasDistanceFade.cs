@@ -26,18 +26,18 @@ namespace MimyLab.FukuroUdon
         [SerializeField, Min(0.0f)]
         private float _fadeEnd = 7.0f;
 
-        private VRCCameraSettings _camera;
         private bool _enableFade;
         private AnimationCurve _fadeCurve;
+        private VRCCameraSettings _camera;
 
         private bool _initialized = false;
         private void Initialize()
         {
             if (_initialized) { return; }
 
-            _camera = VRCCameraSettings.ScreenCamera;
             _enableFade = !Mathf.Approximately(_fadeEnd - _fadeStart, 0.0f);
             _fadeCurve = AnimationCurve.Linear(_fadeStart, 1.0f, _fadeEnd, 0.0f);
+            _camera = VRCCameraSettings.ScreenCamera;
 
             _initialized = true;
         }

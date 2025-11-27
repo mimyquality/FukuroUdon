@@ -49,13 +49,13 @@
       }
     },
     "com.vrchat.worlds": {
-      "version": "3.10.0-beta.1",
+      "version": "3.10.0",
       "dependencies": {
-        "com.vrchat.base": "3.10.0-beta.1"
+        "com.vrchat.base": "3.10.0"
       }
     },
     "com.vrchat.base": {
-      "version": "3.10.0-beta.1",
+      "version": "3.10.0",
       "dependencies": {}
     },
     "jp.lilxyzw.editortoolbox": {

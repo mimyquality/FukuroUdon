@@ -31,6 +31,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
         private Collider[] _area = new Collider[0];
 
+        private Bounds _areaBounds;
         private VRCCameraSettings _camera;
         private bool _wasIn = false;
 
@@ -45,9 +46,10 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
-        private void Start()
+        private void OnEnable()
         {
             Initialize();
+            RecalculateAreaBounds();
         }
 
         public override void PostLateUpdate()
@@ -55,27 +57,56 @@ namespace MimyLab.FukuroUdon
             if (!Utilities.IsValid(_camera)) { return; }
             var position = _camera.Position;
 
-            var isIn = false;
-            //var nearest = Vector3.positiveInfinity;
-            foreach (var collider in _area)
-            {
-                if (!collider) { continue; }
-
-                var point = collider.ClosestPoint(position);
-                //nearest = (point - vpPosition).sqrMagnitude < (nearest - vpPosition).sqrMagnitude ? point : nearest;
-
-                if (point == position)
-                {
-                    isIn = true;
-                    break;
-                }
-            }
-
-            if (_wasIn != isIn)
+            var isIn = _areaBounds.Contains(position) && CheckInArea(position);
+            if (isIn != _wasIn)
             {
                 ToggleTargetsEnabled(isIn ^ _invert);
                 _wasIn = isIn;
             }
+        }
+
+        public void RecalculateAreaBounds()
+        {
+            var compoundMin = Vector3.positiveInfinity;
+            var compoundMax = Vector3.negativeInfinity;
+            foreach (var collider in _area)
+            {
+                if (!collider) { continue; }
+
+                var bounds = collider.bounds;
+                if (bounds.extents.Equals(Vector3.zero)) { continue; }
+
+                compoundMin = Vector3.Min(compoundMin, bounds.min);
+                compoundMax = Vector3.Max(compoundMax, bounds.max);
+            }
+
+            if (compoundMin.Equals(Vector3.positiveInfinity))
+            {
+                _areaBounds = new Bounds();
+                return;
+            }
+
+            var center = (compoundMin + compoundMax) / 2f;
+            var size = compoundMax - compoundMin;
+            _areaBounds = new Bounds(center, size);
+        }
+
+        private bool CheckInArea(Vector3 position)
+        {
+            foreach (var collider in _area)
+            {
+                if (!collider) { continue; }
+                if (!collider.enabled) { continue; }
+                if (!collider.gameObject.activeInHierarchy) { continue; }
+
+                var point = collider.ClosestPoint(position);
+                if (point == position)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void ToggleTargetsEnabled(bool value)

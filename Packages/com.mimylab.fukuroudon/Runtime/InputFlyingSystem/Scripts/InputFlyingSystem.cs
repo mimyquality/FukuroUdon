@@ -9,7 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.Udon;
+    using VRC.SDK3.Rendering;
     using VRC.Udon.Common;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Input-Flying-System#%E4%BD%BF%E3%81%84%E6%96%B9")]
@@ -22,22 +22,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         [FieldChangeCallback(nameof(EnableFlight))]
         private bool _enableFlight = true;
-        public bool EnableFlight    // 飛行システムを有効化する
-        {
-            get => _enableFlight;
-            set
-            {
-                _enableFlight = value;
-
-                if (!value && _isFlying)
-                {
-                    Fly(false);
-                }
-            }
-        }
-
         public bool flipInput = false;  // 上下入力を反転する
-
         [Range(0.0f, 10.0f)]
         public float flightSpeed = 6.0f;    // 飛行速度
         [Range(0.0f, 10.0f)]
@@ -55,8 +40,10 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private KeyCode fallKeyCode = KeyCode.Q;    // 下降
 
+        private VRCPlayerApi _localPlayer;
+        private VRCCameraSettings _camera;
+
         // 計算用
-        private VRCPlayerApi _localPlayer = null;
         private Vector3 _inputDirection = Vector3.zero;
         private bool _isFlying = false;
         private bool _ignoreGravity = false;
@@ -64,9 +51,24 @@ namespace MimyLab.FukuroUdon
         private Vector3 _velocity;
         private float _elapsedTime = 0.0f;
 
+        public bool EnableFlight    // 飛行システムを有効化する
+        {
+            get => _enableFlight;
+            set
+            {
+                _enableFlight = value;
+
+                if (!value && _isFlying)
+                {
+                    Fly(false);
+                }
+            }
+        }
+
         private void Start()
         {
             _localPlayer = Networking.LocalPlayer;
+            _camera = VRCCameraSettings.ScreenCamera;
         }
 
         private void OnDisable()
@@ -207,7 +209,7 @@ namespace MimyLab.FukuroUdon
                 }
 
                 _elapsedTime = 0.0f;
-                var rotation = _localPlayer.IsUserInVR() ? _localPlayer.GetRotation() : _localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).rotation;
+                var rotation = _localPlayer.IsUserInVR() ? _localPlayer.GetRotation() : _camera.Rotation;
                 _velocity = rotation * direction * flightSpeed;
                 _localPlayer.SetVelocity(_velocity);
 

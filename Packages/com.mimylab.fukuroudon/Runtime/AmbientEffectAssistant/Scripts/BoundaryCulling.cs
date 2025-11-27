@@ -10,6 +10,7 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
     using VRC.SDK3.Rendering;
+    using UnityEditor;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Ambient-Effect-Assistant#boundary-culling")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -31,6 +32,27 @@ namespace MimyLab.FukuroUdon
 
         private VRCCameraSettings _camera;
         private bool _wasIn = false;
+
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            var point = _point ? _point : this.transform;
+            var pos = point.position;
+            var normal = (_normal != Vector3.zero) ? _normal.normalized : Vector3.up;
+            var normalRotation = point.rotation * Quaternion.FromToRotation(Vector3.up, normal);
+            var size = HandleUtility.GetHandleSize(pos);
+            var plane = new Vector3[]
+            {
+                normalRotation * new Vector3(size, 0, size) + pos,
+                normalRotation * new Vector3(-size, 0, size) + pos,
+                normalRotation * new Vector3(-size, 0, -size) + pos,
+                normalRotation * new Vector3(size, 0, -size) + pos,
+            };
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(pos, normalRotation * Vector3.up * size + pos);
+            Gizmos.DrawLineStrip(plane, true);
+        }
+#endif
 
         private bool _initialized = false;
         private void Initialize()
