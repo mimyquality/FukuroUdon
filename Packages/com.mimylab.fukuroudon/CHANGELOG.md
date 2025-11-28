@@ -6,53 +6,51 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
-## [3.13.0-beta.5] - 2025/11/22
+## [3.13.0] - 2025/11/28
 
-- **Added**
-  - ActiveRelay to GameObject in PlayerObject を追加しました。 [#40](https://github.com/mimyquality/FukuroUdon/issues/40)
-  - いくつかのインタラクトスイッチに public メソッドを追加しました。 [#39](https://github.com/mimyquality/FukuroUdon/issues/39)
+**Added**  
 
-- **Fixed**
-  - Mirror Tuner の CustomMaterial がおかしくなるバグを修正しました。 [#38](https://github.com/mimyquality/FukuroUdon/issues/38)
-  - その他いくつかのコンポーネントのリファクタリングをしました。
+- ActiveRelay に以下を追加しました。
+  - ActiveRelay with Drop
+  - ActiveRelay to GameObject in PlayerObject [#40](https://github.com/mimyquality/FukuroUdon/issues/40)
+  - ActiveRelay to Physbone
+  - ActiveRelay by Physbone
+  - ActiveRelay by Contact
+- ActiveRelay to Component で切り替えられるコンポーネントに以下を追加しました。
+  - UdonBehaviour
+  - U# コンポーネント(UdonSharpBehaviour を継承したもの)
+  - VRC Constraint
+  - VRC Physbone
+  - VRC Contact Sender
+  - VRC Contact Receiver
+- Better AvatarPedestal に以下を追加しました。
+  - Dynamics Parameter Transfer
+    - Animator に付ける事で、子孫オブジェクトにある全ての Physbone と Contact Receiver Infomation を走査し、その状態を Animator にパラメーターとして渡せるコンポーネントです。
+    - 子孫にある全ての VRC Contact Receiver に Contact Receiver Infomation を追加するボタンがあります。
+  - Contact Receiver Infomation
+    - Dynamics Parameter Transfer から Contact Receiver の状態を読み取るための補助コンポーネントです。Contact Receiver にセットで付けます。
+- VR Follow HUD に正しく主観視点に追従する Camera Follow Tracker と LocalPlayer Camera Tracker を追加しました。
+  - これに伴い、VR Follow HUD コンポーネントは Tracking Follow Tracker に改名しました。
+- いくつかのインタラクトスイッチに public メソッドを追加しました。 [#39](https://github.com/mimyquality/FukuroUdon/issues/39)
 
-## [3.13.0-beta.4] - 2025/11/12
+**Changed**  
 
-- **Added**
-  - ActiveRelay with Drop を追加しました。
+- AmbientEffect Assistant を最適化しました。
+  - 全てのコンポーネントは Viewpoint Tracker が不要になりました。これにより、Viewpoint Tracker は廃止となります。代替として LocalPlayer Camera Tracker をご利用ください。
+  - 主観視点基準で判定するべきものは主観視点基準で判定するようになりました。
+  - 動的に Area 対象のコライダーを無効にしたり動かした後は RecalculateAreaBounds() を実行しないと正しく判定が取れません。
+  - Boundary Culling コンポーネントに境界面を示す Gizmo を追加しました。
+- SwivelChair2 の SC2 InputManager コンポーネントを単体オブジェクトとして切り離しました。
 
-- **Fixed**
-  - Animator Parameter Sync を少し軽量化しました。
+**Fixed**  
 
-## [3.13.0-beta.3] - 2025/11/3
+- Mirror Tuner の CustomMaterial がおかしくなるバグを修正しました。 [#38](https://github.com/mimyquality/FukuroUdon/issues/38)
+- Animator Parameter Sync を少し軽量化しました。
+- その他いくつかのコンポーネントのリファクタリングをしました。
 
-- **Added**
-  - Dynamics Parameter Transfer に [Setup Contacts in Children] ボタンを追加しました。
-    - 子孫にある全ての VRC Contact Receiver に Contact Receiver Infomation を追加するボタンです。
+**既知の問題**  
 
-## [3.13.0-beta.2] - 2025/11/2
-
-- **Added**
-  - Better AvatarPedestal に以下を追加しました。
-    - Dynamics Parameter Transfer
-      - Animator に付ける事で、子孫オブジェクトにある全ての Physbone と Contact Receiver Infomation を走査し、その状態を Animator にパラメーターとして渡せるコンポーネントです。
-    - Contact Receiver Infomation
-      - Dynamics Parameter Transfer から Contact Receiver の状態を読み取るための補助コンポーネントです。Contact Receiver にセットで付けます。
-
-## [3.13.0-beta.1] - 2025/10/28
-
-- **Added**
-  - ActiveRelay に以下を追加しました。
-    - ActiveRelay to Physbone
-    - ActiveRelay by Physbone
-    - ActiveRelay by Contact
-  - ActiveRelay to Component で切り替えられるコンポーネントに以下を追加しました。
-    - UdonBehaviour
-    - U# コンポーネント(UdonSharpBehaviour を継承したもの)
-    - VRC Constraint
-    - VRC Physbone
-    - VRC Contact Sender
-    - VRC Contact Receiver
+- Flexible SpatialAudio と Flexible ReverbZone は"耳"の位置を VRCカメラ・ドローン基準にすることができません。
 
 ## [3.12.0] - 2025/10/26
 
@@ -782,11 +780,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
-[3.13.0-beta.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.5
-[3.13.0-beta.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.4
-[3.13.0-beta.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.3
-[3.13.0-beta.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.2
-[3.13.0-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0-beta.1
+[3.13.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0
 [3.12.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.12.0
 [3.11.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.11.0
 [3.10.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.10.1

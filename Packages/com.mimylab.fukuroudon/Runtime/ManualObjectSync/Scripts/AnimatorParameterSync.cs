@@ -136,6 +136,8 @@ namespace MimyLab.FukuroUdon
             }
             else
             {
+                if (_smoothingMode == AnimatorParameterSyncSmoothingMode.None) { return; }
+
                 SmoothingFloat();
             }
         }
@@ -271,7 +273,7 @@ namespace MimyLab.FukuroUdon
                 var index = System.Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
                 if (index < 0) { continue; }
 
-                var currentFloatValue = _floatParameterValues[i];
+                float currentFloatValue;
                 switch (_smoothingMode)
                 {
                     case AnimatorParameterSyncSmoothingMode.Linear:
@@ -279,6 +281,9 @@ namespace MimyLab.FukuroUdon
                         break;
                     case AnimatorParameterSyncSmoothingMode.Smooth:
                         currentFloatValue = Mathf.SmoothStep(_floatParameterValues[i], sync_floatParameterValues[index], t);
+                        break;
+                    default:
+                        currentFloatValue = sync_floatParameterValues[index];
                         break;
                 }
                 _animator.SetFloat(_floatParameterHashes[i], currentFloatValue);

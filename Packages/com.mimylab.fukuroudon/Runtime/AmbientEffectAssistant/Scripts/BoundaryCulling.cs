@@ -10,7 +10,10 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
     using VRC.SDK3.Rendering;
+
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
     using UnityEditor;
+#endif
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Ambient-Effect-Assistant#boundary-culling")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -39,17 +42,17 @@ namespace MimyLab.FukuroUdon
             var point = _point ? _point : this.transform;
             var pos = point.position;
             var normal = (_normal != Vector3.zero) ? _normal.normalized : Vector3.up;
-            var normalRotation = point.rotation * Quaternion.FromToRotation(Vector3.up, normal);
+            var normalRotation = point.rotation * Quaternion.LookRotation(normal);
             var size = HandleUtility.GetHandleSize(pos);
             var plane = new Vector3[]
             {
-                normalRotation * new Vector3(size, 0, size) + pos,
-                normalRotation * new Vector3(-size, 0, size) + pos,
-                normalRotation * new Vector3(-size, 0, -size) + pos,
-                normalRotation * new Vector3(size, 0, -size) + pos,
+                normalRotation * new Vector3(size, size, 0) + pos,
+                normalRotation * new Vector3(-size, size, 0) + pos,
+                normalRotation * new Vector3(-size, -size, 0) + pos,
+                normalRotation * new Vector3(size, -size, 0) + pos,
             };
             Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(pos, normalRotation * Vector3.up * size + pos);
+            Gizmos.DrawLine(pos, normalRotation * Vector3.forward * size + pos);
             Gizmos.DrawLineStrip(plane, true);
         }
 #endif
@@ -77,7 +80,7 @@ namespace MimyLab.FukuroUdon
             var position = _camera.Position;
 
             var direction = position - _point.position;
-            var borderNormal = _point.rotation * _normal;
+            var borderNormal = (_normal != Vector3.zero) ? _point.rotation * _normal : Vector3.up;
             var isIn = Vector3.Dot(borderNormal, direction) >= 0.0f;
 
             if (_wasIn != isIn)

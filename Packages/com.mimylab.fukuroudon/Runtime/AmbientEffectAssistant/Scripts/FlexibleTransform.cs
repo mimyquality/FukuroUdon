@@ -24,12 +24,13 @@ namespace MimyLab.FukuroUdon
         private bool _positionOnly = false;
         [SerializeField]
         private bool _inactiveOutOfRange = false;
-        [SerializeField, Tooltip("meter")]
+        [SerializeField, Min(0.0f), Tooltip("meter")]
         private float _activeRange = 10.0f;
 
         [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
         private Collider[] _area = new Collider[0];
 
+        private Bounds _areaBounds;
         //private VRCCameraSettings _camera;
         private VRCPlayerApi _localPlayer;
 
@@ -46,9 +47,10 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
-        private void Start()
+        private void OnEnable()
         {
             Initialize();
+            RecalculateAreaBounds();
         }
 
         public override void PostLateUpdate()
@@ -56,6 +58,13 @@ namespace MimyLab.FukuroUdon
             //if (!Utilities.IsValid(_camera)) { return; }
             //var position = _camera.Position;
             var position = _localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).position;
+
+            if (_inactiveOutOfRange && !_areaBounds.Contains(position))
+            {
+                // 完全に _activeRange の範囲外にいる
+                if (_target.gameObject.activeSelf) { _target.gameObject.SetActive(false); }
+                return;
+            }
 
             Vector3 nearest;
             CheckInArea(position, out nearest);
@@ -79,6 +88,38 @@ namespace MimyLab.FukuroUdon
                 var rotation = _localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).rotation;
                 _target.SetPositionAndRotation(nearest, rotation);
             }
+        }
+
+        public void RecalculateAreaBounds()
+        {
+            var compoundMin = Vector3.positiveInfinity;
+            var compoundMax = Vector3.negativeInfinity;
+            foreach (var collider in _area)
+            {
+                if (!collider) { continue; }
+
+                var bounds = collider.bounds;
+                if (bounds.extents.Equals(Vector3.zero)) { continue; }
+
+                compoundMin = Vector3.Min(compoundMin, bounds.min);
+                compoundMax = Vector3.Max(compoundMax, bounds.max);
+            }
+
+            if (compoundMin.Equals(Vector3.positiveInfinity))
+            {
+                _areaBounds = new Bounds();
+                return;
+            }
+
+            // _activeRange の範囲も Bounds に含める
+            // マージンを足して、接近に対して早めに有効にする
+            var effectiveRange = (_activeRange + 1.0f) * Vector3.one;
+            compoundMin -= effectiveRange;
+            compoundMax += effectiveRange;
+
+            var center = (compoundMin + compoundMax) * 0.5f;
+            var size = compoundMax - compoundMin;
+            _areaBounds = new Bounds(center, size);
         }
 
         private bool CheckInArea(Vector3 position, out Vector3 nearest)
