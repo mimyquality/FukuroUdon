@@ -27,12 +27,15 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private bool _invert = false;
 
-        [Header("Bound Settings")]
+        [Header("Bounds Settings")]
         [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
         private Collider[] _area = new Collider[0];
+        [SerializeField, Tooltip("Include the VRC Camera and Drone for culling checks")]
+        private bool _includeVRCCamera = false;
 
         private Bounds _areaBounds;
-        private VRCCameraSettings _camera;
+        private VRCCameraSettings _screenCamera;
+        private VRCCameraSettings _photoCamera;
         private bool _wasIn = false;
 
         private bool _initialized = false;
@@ -40,7 +43,10 @@ namespace MimyLab.FukuroUdon
         {
             if (_initialized) { return; }
 
-            _camera = VRCCameraSettings.ScreenCamera;
+            _screenCamera = VRCCameraSettings.ScreenCamera;
+            _photoCamera = VRCCameraSettings.PhotoCamera;
+            // ClientSim 対策
+            if (_photoCamera == null) { _includeVRCCamera = false; }
 
             ToggleTargetsEnabled(_wasIn ^ _invert);
 
@@ -54,10 +60,17 @@ namespace MimyLab.FukuroUdon
 
         public override void PostLateUpdate()
         {
-            if (!Utilities.IsValid(_camera)) { return; }
-            var position = _camera.Position;
+            if (!Utilities.IsValid(_screenCamera)) { return; }
 
+            var position = _screenCamera.Position;
             var isIn = _areaBounds.Contains(position) && CheckInArea(position);
+
+            if (_includeVRCCamera && _photoCamera.Active && !isIn)
+            {
+                var photoPosition = _photoCamera.Position;
+                isIn = _areaBounds.Contains(photoPosition) && CheckInArea(photoPosition);
+            }
+
             if (isIn != _wasIn)
             {
                 ToggleTargetsEnabled(isIn ^ _invert);

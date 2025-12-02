@@ -27,13 +27,16 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private GameObject[] _gameObjects = new GameObject[0];
 
-        [Header("Bound Settings")]
+        [Header("Bounds Settings")]
         [SerializeField]
         private Transform _point;
         [SerializeField]
         private Vector3 _normal = Vector3.up;
+        [SerializeField, Tooltip("Include the VRC Camera and Drone for culling checks")]
+        private bool _includeVRCCamera = false;
 
-        private VRCCameraSettings _camera;
+        private VRCCameraSettings _screenCamera;
+        private VRCCameraSettings _photoCamera;
         private bool _wasIn = false;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
@@ -63,7 +66,10 @@ namespace MimyLab.FukuroUdon
             if (_initialized) { return; }
 
             if (!_point) _point = transform;
-            _camera = VRCCameraSettings.ScreenCamera;
+            _screenCamera = VRCCameraSettings.ScreenCamera;
+            _photoCamera = VRCCameraSettings.PhotoCamera;
+            // ClientSim 対策
+            if (_photoCamera == null) { _includeVRCCamera = false; }
 
             ToggleTargetsEnabled(_wasIn);
 
@@ -76,12 +82,17 @@ namespace MimyLab.FukuroUdon
 
         public override void PostLateUpdate()
         {
-            if (!Utilities.IsValid(_camera)) { return; }
-            var position = _camera.Position;
+            if (!Utilities.IsValid(_screenCamera)) { return; }
 
-            var direction = position - _point.position;
+            var direction = _screenCamera.Position - _point.position;
             var borderNormal = (_normal != Vector3.zero) ? _point.rotation * _normal : Vector3.up;
             var isIn = Vector3.Dot(borderNormal, direction) >= 0.0f;
+
+            if (_includeVRCCamera && _photoCamera.Active && !isIn)
+            {
+                direction = _photoCamera.Position - _point.position;
+                isIn = Vector3.Dot(borderNormal, direction) >= 0.0f;
+            }
 
             if (_wasIn != isIn)
             {
