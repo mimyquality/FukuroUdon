@@ -34,8 +34,8 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private AudioClip _channelLeaveSound;
 
-        private VRCPlayerApi[] _players = new VRCPlayerApi[PlayerAudioSupervisor.MaxPlayerCount];
-        private int[][] _registeredPlayerIds;
+        private int _playerCount = 1;
+        private VRCPlayerApi[] _players = new VRCPlayerApi[1];
         private VoiceChannelPlayerStates _localPlayerStates;
 
         private VoiceChannelPlayerStates _LocalPlayerStates { get => _localPlayerStates ? _localPlayerStates : _localPlayerStates = (VoiceChannelPlayerStates)Networking.LocalPlayer.FindComponentInPlayerObjects(_playerStates); }
@@ -52,18 +52,12 @@ namespace MimyLab.FukuroUdon
 
         private void OnEnable()
         {
-            _registeredPlayerIds = new int[_targetRegulator.Length][];
-            for (int i = 0; i < _targetRegulator.Length; i++)
-            {
-                _registeredPlayerIds[i] = _targetRegulator[i] ? _targetRegulator[i].PlayerIds : new int[0];
-            }
-
-            SendCustomEventDelayedFrames(nameof(_RefreshPlayers), 1);
+            _RefreshPlayers();
         }
 
         private void Update()
         {
-            var selectedPlayer = _players[Time.frameCount % _players.Length];
+            var selectedPlayer = _players[Time.frameCount % _playerCount];
             if (!Utilities.IsValid(selectedPlayer)) { return; }
 
             var channel = -1;
@@ -71,7 +65,7 @@ namespace MimyLab.FukuroUdon
             {
                 if (!_targetRegulator[i]) { continue; }
 
-                if (System.Array.IndexOf(_registeredPlayerIds[i], selectedPlayer.playerId) > -1)
+                if (System.Array.IndexOf(_targetRegulator[i].PlayerIds, selectedPlayer.playerId) > -1)
                 {
                     channel = i;
                     break;
@@ -86,7 +80,7 @@ namespace MimyLab.FukuroUdon
 
         public override void OnPlayerJoined(VRCPlayerApi player)
         {
-            SendCustomEventDelayedFrames(nameof(_RefreshPlayers), 1);
+            _RefreshPlayers();
         }
 
         public override void OnPlayerLeft(VRCPlayerApi player)
@@ -96,7 +90,8 @@ namespace MimyLab.FukuroUdon
 
         public void _RefreshPlayers()
         {
-            _players = VRCPlayerApi.GetPlayers(_players);
+            _playerCount = Mathf.Max(VRCPlayerApi.GetPlayerCount(), 1);
+            _players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[_playerCount]);
         }
 
         public void _OnPlayerStatesChange(VoiceChannelPlayerStates states)

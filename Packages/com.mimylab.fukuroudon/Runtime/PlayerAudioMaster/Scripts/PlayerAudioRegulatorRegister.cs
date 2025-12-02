@@ -16,33 +16,14 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerAudioRegulatorRegister : IPlayerAudioRegulator
     {
+        public const int MaxPlayerCount = 90;
+        public const int ExtendPlayerCount = 30;
+
         internal PARRegisterPlayer localParRegisterPlayer;
 
-        private int[] _playerIds = new int[PlayerAudioSupervisor.MaxPlayerCount];
+        private int[] _playerIds = new int[MaxPlayerCount];
 
         public int[] PlayerIds { get => _playerIds; }
-
-        public override void OnPlayerLeft(VRCPlayerApi player)
-        {
-            SendCustomEventDelayedFrames(nameof(_RefreshPlayerIdList), 1);
-        }
-        public void _RefreshPlayerIdList()
-        {
-            var players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()]);
-            var tmpPlayerIds = new int[PlayerAudioSupervisor.MaxPlayerCount];
-            var tmpCount = 0;
-            for (int i = 0; i < players.Length; i++)
-            {
-                if (!Utilities.IsValid(players[i])) { continue; }
-
-                var tmpPlayerId = players[i].playerId;
-                if (System.Array.IndexOf(_playerIds, tmpPlayerId) > -1)
-                {
-                    tmpPlayerIds[tmpCount++] = tmpPlayerId;
-                }
-            }
-            tmpPlayerIds.CopyTo(_playerIds, 0);
-        }
 
         /// <summary>
         /// Assign LocalPlayer to this PAR Register.
@@ -77,10 +58,30 @@ namespace MimyLab.FukuroUdon
             var playerId = target.playerId;
             if (System.Array.IndexOf(_playerIds, playerId) > -1) { return; }
 
-            var lastIndex = System.Array.IndexOf(_playerIds, 0);
-            if (lastIndex < 0) { return; }
+            var vacantIndex = System.Array.IndexOf(_playerIds, 0);
+            // 空きがないのでリフレッシュ
+            if (vacantIndex < 0)
+            {
+                for (int i = 0; i < _playerIds.Length; i++)
+                {
+                    if (!Utilities.IsValid(VRCPlayerApi.GetPlayerById(_playerIds[i])))
+                    {
+                        _playerIds[i] = 0;
+                    }
+                }
 
-            _playerIds[lastIndex] = playerId;
+                vacantIndex = System.Array.IndexOf(_playerIds, 0);
+                // それでも空きがないので拡張
+                if (vacantIndex < 0)
+                {
+                    vacantIndex = _playerIds.Length;
+                    var tmp_PlayerIds = new int[vacantIndex + ExtendPlayerCount];
+                    _playerIds.CopyTo(tmp_PlayerIds, 0);
+                    _playerIds = tmp_PlayerIds;
+                }
+            }
+
+            _playerIds[vacantIndex] = playerId;
         }
 
         internal void _OnPlayerReleased(VRCPlayerApi target)
