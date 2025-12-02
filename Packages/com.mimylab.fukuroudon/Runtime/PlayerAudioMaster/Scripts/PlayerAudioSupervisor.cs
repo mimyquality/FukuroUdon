@@ -16,7 +16,8 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerAudioSupervisor : UdonSharpBehaviour
     {
-        public const int HardCap = 90;
+        public const int MaxPlayerCount = 90;
+        public const int ExtendPlayerCount = 30;
         public const string PlayerAudioChannelTagName = "PlayerAudioChannel";
         public const string PlayerAudioOverrideTagName = "PlayerAudioOverride";
 
@@ -53,6 +54,7 @@ namespace MimyLab.FukuroUdon
         public bool defaultAvatarAudioCustomCurve = false;
 
         // キャッシュ用
+        private bool _isLocalPlayerJoined = false;
         private int _playerCount = 1;
         private VRCPlayerApi[] _players = new VRCPlayerApi[1];
 
@@ -147,7 +149,11 @@ namespace MimyLab.FukuroUdon
             SetDefaultPlayerVoice(player);
             SetDefaultAvatarAudio(player);
 
-            SendCustomEventDelayedFrames(nameof(_RefreshPlayerList), 1);
+            if (player.isLocal) { _isLocalPlayerJoined = true; }
+            if (_isLocalPlayerJoined)
+            {
+                _RefreshPlayerList();
+            }
         }
 
         public override void OnPlayerLeft(VRCPlayerApi player)

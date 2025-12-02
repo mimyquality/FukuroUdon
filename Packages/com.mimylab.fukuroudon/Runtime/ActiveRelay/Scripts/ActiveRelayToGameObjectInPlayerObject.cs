@@ -37,6 +37,9 @@ namespace MimyLab.FukuroUdon
         private int _activateDelayedCount = 0;
         private int _deactivateDelayedCount = 0;
 
+        private VRCPlayerApi[] _playersEmpty = new VRCPlayerApi[0];
+        private VRCPlayerApi[] _playersSolo = new VRCPlayerApi[1];
+
         private void OnEnable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
@@ -108,31 +111,33 @@ namespace MimyLab.FukuroUdon
             switch (_acceptPlayerType)
             {
                 case NetworkEventTarget.All:
-                    VRCPlayerApi.GetPlayers(players = new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()]);
+                    players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()]);
                     break;
                 case NetworkEventTarget.Owner:
-                    players = new VRCPlayerApi[] { Networking.GetOwner(this.gameObject) };
+                    _playersSolo[0] = Networking.GetOwner(this.gameObject);
+                    players = _playersSolo;
                     break;
                 case NetworkEventTarget.Others:
-                    VRCPlayerApi.GetPlayers(players = new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()]);
+                    players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()]);
                     othersOnly = true;
                     break;
                 case NetworkEventTarget.Self:
-                    players = new VRCPlayerApi[] { Networking.LocalPlayer };
+                    _playersSolo[0] = Networking.LocalPlayer;
+                    players = _playersSolo;
                     break;
                 default:
-                    players = new VRCPlayerApi[0];
+                    players = _playersEmpty;
                     break;
             }
 
             for (int i = 0; i < players.Length; i++)
             {
                 if (!Utilities.IsValid(players[i])) { continue; }
+                if (othersOnly && players[i].isLocal) { continue; }
 
                 foreach (var reference in _gameObjects)
                 {
                     if (!reference) { continue; }
-                    if (othersOnly && players[i].isLocal) { continue; }
 
                     var target = (Transform)players[i].FindComponentInPlayerObjects(reference.transform);
                     if (Utilities.IsValid(target))

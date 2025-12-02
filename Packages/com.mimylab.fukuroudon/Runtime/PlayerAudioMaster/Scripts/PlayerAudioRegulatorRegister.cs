@@ -18,7 +18,7 @@ namespace MimyLab.FukuroUdon
     {
         internal PARRegisterPlayer localParRegisterPlayer;
 
-        private int[] _playerIds = new int[PlayerAudioSupervisor.HardCap];
+        private int[] _playerIds = new int[PlayerAudioSupervisor.MaxPlayerCount];
 
         public int[] PlayerIds { get => _playerIds; }
 
@@ -29,7 +29,7 @@ namespace MimyLab.FukuroUdon
         public void _RefreshPlayerIdList()
         {
             var players = VRCPlayerApi.GetPlayers(new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()]);
-            var tmpPlayerIds = new int[PlayerAudioSupervisor.HardCap];
+            var tmpPlayerIds = new int[PlayerAudioSupervisor.MaxPlayerCount];
             var tmpCount = 0;
             for (int i = 0; i < players.Length; i++)
             {

@@ -49,7 +49,7 @@ namespace MimyLab.FukuroUdon
 
             var pos = target.GetPosition();
 
-            return pos == _collider.ClosestPoint(pos);
+            return _collider.bounds.Contains(pos) && (pos == _collider.ClosestPoint(pos));
         }
     }
 }

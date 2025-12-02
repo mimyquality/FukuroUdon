@@ -314,10 +314,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5665024793553480672, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665024793553480672, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
       objectReference: {fileID: 0}
@@ -364,6 +360,10 @@ PrefabInstance:
     - target: {fileID: 5665024793553480678, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
       propertyPath: voiceGain
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5665024793553480678, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
+      propertyPath: othersOnly
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5665024793553480678, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
       propertyPath: voiceDistanceFar

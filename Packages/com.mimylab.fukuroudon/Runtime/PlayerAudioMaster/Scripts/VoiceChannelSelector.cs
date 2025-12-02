@@ -34,7 +34,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private AudioClip _channelLeaveSound;
 
-        private VRCPlayerApi[] _players = new VRCPlayerApi[PlayerAudioSupervisor.HardCap];
+        private VRCPlayerApi[] _players = new VRCPlayerApi[PlayerAudioSupervisor.MaxPlayerCount];
         private int[][] _registeredPlayerIds;
         private VoiceChannelPlayerStates _localPlayerStates;
 

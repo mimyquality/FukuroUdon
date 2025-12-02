@@ -121,7 +121,7 @@ namespace MimyLab.FukuroUdon
             if (_existPhotoCamera && _photoCamera.Active) { return; }
 
             // 入力値を各種操作に反映
-            if (_turnValue != 0.0f || _prevTurnValue != 0.0f)
+            if (!(_turnValue == 0.0f && _prevTurnValue == 0.0f))
             {
                 if (_inputMode == SwivelChairInputMode.CasterMove)
                 {
@@ -136,7 +136,8 @@ namespace MimyLab.FukuroUdon
                 }
                 _prevTurnValue = _turnValue;
             }
-            if (_moveValue != Vector3.zero || _prevMoveValue != Vector3.zero)
+
+            if (!(_moveValue == Vector3.zero && _prevMoveValue == Vector3.zero))
             {
                 if (_inputMode == SwivelChairInputMode.CasterMove)
                 {
@@ -162,13 +163,13 @@ namespace MimyLab.FukuroUdon
             if (_existPhotoCamera && _photoCamera.Active) { return; }
 
             // 入力値を各種操作に反映
-            if (_turnValue != 0.0f || _prevTurnValue != 0.0f)
+            if (!(_turnValue == 0.0f && _prevTurnValue == 0.0f))
             {
                 caster.Turn(_turnValue);
                 _prevTurnValue = _turnValue;
             }
 
-            if (_moveValue != Vector3.zero || _prevMoveValue != Vector3.zero)
+            if (!(_moveValue == Vector3.zero && _prevMoveValue == Vector3.zero))
             {
                 caster.Move(_moveValue);
                 _prevMoveValue = _moveValue;

@@ -146,10 +146,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5612440873676648229, guid: bec8d4194ab331d478e4234cfbf19d00, type: 3}
-      propertyPath: othersOnly
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5612440873676648229, guid: bec8d4194ab331d478e4234cfbf19d00, type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 5612440873676648229, guid: bec8d4194ab331d478e4234cfbf19d00, type: 3}
@@ -452,10 +448,6 @@ PrefabInstance:
     - target: {fileID: 2947867732128564761, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
       propertyPath: m_Name
       value: PlayerAudioMaster_Sample
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
       propertyPath: m_LocalPosition.x

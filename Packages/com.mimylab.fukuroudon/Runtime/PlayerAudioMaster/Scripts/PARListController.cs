@@ -40,13 +40,11 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
-        private void Start()
-        {
-            Initialize();
-        }
 
         public override void Interact()
         {
+            Initialize();
+
             switch (switchMode)
             {
                 case PlayerAudioRegulatorListControllerSwitchMode.Assign: Assign(); break;

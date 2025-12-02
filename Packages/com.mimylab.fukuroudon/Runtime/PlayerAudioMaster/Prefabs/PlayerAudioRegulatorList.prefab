@@ -59,7 +59,8 @@ MonoBehaviour:
   channel: 0
   channelUnmatchMode: 0
   unmatchFallback: {fileID: 0}
-  whiteListPlayerName: []
+  othersOnly: 0
+  allowedPlayerNameList: []
   enablePlayerVoiceOverride: 1
   voiceGain: 15
   voiceDistanceNear: 0
@@ -68,9 +69,9 @@ MonoBehaviour:
   voiceLowpass: 1
   enableAvatarAudioOverride: 0
   avatarAudioGain: 10
-  avatarAudioDistanceNear: 40
+  avatarAudioDistanceNear: 0
   avatarAudioDistanceFar: 40
-  avatarAudioVolumetricRadius: 40
+  avatarAudioVolumetricRadius: 0
   avatarAudioForceSpatial: 0
   avatarAudioCustomCurve: 0
 --- !u!114 &3155673889125030144
