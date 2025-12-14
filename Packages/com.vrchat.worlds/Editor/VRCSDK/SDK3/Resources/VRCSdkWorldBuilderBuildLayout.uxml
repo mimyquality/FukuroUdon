@@ -1,0 +1,48 @@
+﻿<UXML xmlns="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:vrc="VRC.SDKBase.Editor.Elements">
+    <VisualElement class="col relative" name="section-3">
+        <VisualElement class="mt-2 col pr-2 pl-2" name="build-buttons-block">
+            <VisualElement class="row">
+                <VisualElement class="col flex-grow-1 align-items-start mr-3" name="build-type-container">
+                    <Label class="d-flex mt-2 mb-2 text-bold" text="Build Type" />
+                    <!-- build-type-dropdown gets inserted here -->
+                </VisualElement>
+    
+                <VisualElement class="col" name="platform-container">
+                    <vrc:PlatformSwitcherPopup label="Platform(s)" name="platform-switcher-popup" />
+                </VisualElement>
+    
+                <VisualElement class="col ml-3" name="num-clients-container">
+                    <Label class="ml-0 mr-1 mt-2 mb-2 pr-2 d-flex text-bold" text="Clients" />
+                    <uie:IntegerField name="num-clients" class="ml-0" value="1"/>
+                </VisualElement>
+            </VisualElement>
+            
+            <VisualElement class="row justify-content-between">
+                <VisualElement class="row" name="force-non-vr-container">
+                    <Toggle name="force-non-vr"/>
+                    <Label text="Force Non-VR" class="white-space-normal m-2 options-text-color" />
+                </VisualElement>
+                <VisualElement class="row" name="enable-world-reload-container">
+                    <Label text="Enable World Reload" class="white-space-normal m-2 options-text-color" />
+                    <Toggle name="enable-world-reload"/>
+                </VisualElement>
+            </VisualElement>
+    
+            <VisualElement class="mt-2">
+                <Button name="main-action-button" class="pt-4 pb-4 text-lg text-bold ml-0 mr-0" />
+                <VisualElement name="main-action-disabled-block" class="d-none absolute text-lg text-bold text-grey-200">
+                    <Label name="main-action-disabled-text" text="You must fix the issues listed above before you can Upload a Build" class="white-space-normal" />
+                </VisualElement>
+            </VisualElement>
+            
+            <VisualElement class="row justify-content-between">
+                <VisualElement class="row m-2 d-none">
+                    <Label text="Run Performance Streaming" class="ml-2 flex-shrink-1 white-space-normal pr-2 options-text-color text-right"  />
+                    <Toggle name="run-performance-streaming" />
+                </VisualElement>
+            </VisualElement>
+        </VisualElement>
+        <VisualElement class="d-none" name="v3-block" />
+        <vrc:BuilderProgress name="progress-bar" />
+    </VisualElement>
+</UXML>

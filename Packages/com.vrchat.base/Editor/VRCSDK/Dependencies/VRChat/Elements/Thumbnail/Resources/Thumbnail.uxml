@@ -1,0 +1,11 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+    <VisualElement class="thumbnail" name="thumbnail-container">
+        <VisualElement class="thumbnail-underlay">
+            <Label name="thumbnail-placeholder-text" />
+        </VisualElement>
+        <VisualElement name="thumbnail-image" />
+        <VisualElement class="thumbnail-overlay">
+            <Label name="thumbnail-hover-text" />
+        </VisualElement>
+    </VisualElement>
+</UXML>

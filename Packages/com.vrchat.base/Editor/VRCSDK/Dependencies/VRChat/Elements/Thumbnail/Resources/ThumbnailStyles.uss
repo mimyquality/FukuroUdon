@@ -1,0 +1,56 @@
+﻿.thumbnail {
+    margin: 0 auto;
+    position: relative;
+    align-self: flex-start;
+}
+
+.thumbnail-underlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    font-size: 18px;
+}
+
+.thumbnail:disabled .thumbnail-underlay #thumbnail-placeholder-text {
+    opacity: 0;
+}
+
+#thumbnail-image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -unity-background-scale-mode: scale-and-crop;
+    background-color: rgba(0,0,0,0.3);
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.thumbnail-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+    opacity: 0;
+    -unity-text-align: middle-center;
+    justify-content: center;
+    align-items: center;
+    white-space: normal;
+}
+
+.thumbnail-overlay Label {
+    -unity-font-style: bold;
+}
+
+.thumbnail:hover .thumbnail-overlay {
+    opacity: 1;
+}

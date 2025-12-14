@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="listinginfo-elem" >
+        <Style src="ListingInfo.uss" />
+        <ui:Button text="Copy Listing ID" name="copylisting-btn" />
+        <ui:Button text="Copy Group ID" name="copygroup-btn" />
+        <ui:Label text="This listing is not used in any group." name="groupinfo-label" />
+    </ui:VisualElement>
+</ui:UXML>

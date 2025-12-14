@@ -1,0 +1,20 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+    <VisualElement class="col">
+        <VisualElement class="relative" name="splash-block">
+            <VisualElement class="absolute" name="splash-bg" />
+            <VisualElement class="absolute col justify-content-center align-items-center" name="splash-block-bottom">
+                <Button text="Getting Started" name="splash-block-bottom-button" />
+            </VisualElement>
+        </VisualElement>
+        <VisualElement class="buttons-row mt-1" name="help-buttons">
+            <Button text="SDK Docs" name="sdk-docs-button" class="first" />
+            <Button text="VRChat FAQ" name="vrc-faq-button" />
+            <Button text="Help Center" name="help-center-button" class="last" />
+            <Button text="Examples" name="examples-button" class="d-none last" />
+        </VisualElement>
+        <Button text="Building VRChat Quest Content" name="vrc-quest-content-button" />
+        <VisualElement class="col justify-content-center align-items-center mt-1" name="bottom-block">
+            <Button name="bottom-block-button" class="white-space-normal" />
+        </VisualElement>
+    </VisualElement>
+</UXML>

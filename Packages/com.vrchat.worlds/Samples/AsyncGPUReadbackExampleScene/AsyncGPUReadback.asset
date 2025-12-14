@@ -1,0 +1,635 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f11136daadff0b44ac2278a314682ab, type: 3}
+  m_Name: AsyncGPUReadback
+  m_EditorClassIdentifier: 
+  serializedUdonProgramAsset: {fileID: 11400000, guid: ad8c8f372fc3444409f4e4193f783fea,
+    type: 2}
+  udonAssembly: ".data_start\r\n\r\n    .export cam\r\n    .export AsyncReadbackedTexture\r\n   
+    .export TargetMaterial\r\n    \r\n    __instance_0: %VRCUdonUdonBehaviour, this\r\n   
+    __symbolName_0: %SystemString, null\r\n    __value_0: %SystemObject, null\r\n   
+    __width_0: %SystemInt32, null\r\n    __height_0: %SystemInt32, null\r\n    __textureFormat_0:
+    %UnityEngineTextureFormat, null\r\n    __mipChain_0: %SystemBoolean, null\r\n   
+    __linear_0: %SystemBoolean, null\r\n    __instance_4: %VRCUdonUdonBehaviour,
+    this\r\n    __symbolName_1: %SystemString, null\r\n    __value_1: %SystemObject,
+    null\r\n    __instance_5: %VRCUdonUdonBehaviour, this\r\n    __symbolName_2:
+    %SystemString, null\r\n    __value_2: %SystemObject, null\r\n    __Int32_0: %SystemInt32,
+    null\r\n    __Int32_1: %SystemInt32, null\r\n    __Int32_2: %SystemInt32, null\r\n   
+    __instance_1: %UnityEngineRenderTexture, null\r\n    __instance_3: %UnityEngineRenderTexture,
+    null\r\n    __instance_2: %UnityEngineCamera, null\r\n    onAsyncGpuReadbackCompleteRequest:
+    %VRCSDK3RenderingVRCAsyncGPUReadbackRequest, null\r\n    __Boolean_0: %SystemBoolean,
+    null\r\n    __Boolean_1: %SystemBoolean, null\r\n    __instance_6: %VRCSDK3RenderingVRCAsyncGPUReadbackRequest,
+    null\r\n    __data_0: %UnityEngineColor32Array, null\r\n    __layer_0: %SystemInt32,
+    null\r\n    __instance_7: %UnityEngineTexture2D, null\r\n    __colors_0: %UnityEngineColor32Array,
+    null\r\n    __instance_8: %UnityEngineTexture2D, null\r\n    __instance_9: %UnityEngineMaterial,
+    null\r\n    __value_3: %UnityEngineTexture, null\r\n    __instance_A: %VRCUdonUdonBehaviour,
+    this\r\n    __symbolName_3: %SystemString, null\r\n    __value_4: %SystemObject,
+    null\r\n    __Boolean_2: %SystemBoolean, null\r\n    __Boolean_3: %SystemBoolean,
+    null\r\n    __instance_B: %UnityEngineCamera, null\r\n    __src_0: %UnityEngineTexture,
+    null\r\n    __mipIndex_0: %SystemInt32, null\r\n    __dstFormat_0: %UnityEngineTextureFormat,
+    null\r\n    __udonBehaviour_0: %VRCUdonUdonBehaviour, this\r\n    __VRCAsyncGPUReadbackRequest_0:
+    %VRCSDK3RenderingVRCAsyncGPUReadbackRequest, null\r\n    __instance_C: %VRCUdonUdonBehaviour,
+    this\r\n    __symbolName_4: %SystemString, null\r\n    __value_5: %SystemObject,
+    null\r\n    __Boolean_4: %SystemBoolean, null\r\n    cam: %UnityEngineCamera,
+    null\r\n    rt: %UnityEngineRenderTexture, null\r\n    AsyncReadbackedTexture:
+    %UnityEngineTexture2D, null\r\n    TargetMaterial: %UnityEngineMaterial, null\r\n   
+    isWaitingForLastUpdate: %SystemBoolean, null\r\n    textureColorData: %UnityEngineColor32Array,
+    null\r\n\r\n.data_end\r\n\r\n.code_start\r\n\r\n    .export _start\r\n    \r\n   
+    _start:\r\n    \r\n        PUSH, cam\r\n        PUSH, __instance_2\r\n       
+    COPY\r\n        PUSH, __instance_2\r\n        PUSH, __instance_1\r\n        EXTERN,
+    \"UnityEngineCamera.__get_targetTexture__UnityEngineRenderTexture\"\r\n       
+    PUSH, __instance_1\r\n        PUSH, __width_0\r\n        EXTERN, \"UnityEngineRenderTexture.__get_width__SystemInt32\"\r\n       
+    PUSH, cam\r\n        PUSH, __instance_2\r\n        COPY\r\n        PUSH, __instance_1\r\n       
+    PUSH, __instance_3\r\n        COPY\r\n        PUSH, __instance_1\r\n        PUSH,
+    __height_0\r\n        EXTERN, \"UnityEngineRenderTexture.__get_height__SystemInt32\"\r\n       
+    PUSH, __width_0\r\n        PUSH, __height_0\r\n        PUSH, __textureFormat_0\r\n       
+    PUSH, __mipChain_0\r\n        PUSH, __linear_0\r\n        PUSH, __value_0\r\n       
+    EXTERN, \"UnityEngineTexture2D.__ctor__SystemInt32_SystemInt32_UnityEngineTextureFormat_SystemBoolean_SystemBoolean__UnityEngineTexture2D\"\r\n       
+    PUSH, __instance_0\r\n        PUSH, __symbolName_0\r\n        PUSH, __value_0\r\n       
+    EXTERN, \"VRCUdonCommonInterfacesIUdonEventReceiver.__SetProgramVariable__SystemString_SystemObject__SystemVoid\"\r\n       
+    PUSH, cam\r\n        PUSH, __instance_2\r\n        COPY\r\n        PUSH, __instance_1\r\n       
+    PUSH, __value_1\r\n        COPY\r\n        PUSH, __instance_4\r\n        PUSH,
+    __symbolName_1\r\n        PUSH, __instance_1\r\n        EXTERN, \"VRCUdonCommonInterfacesIUdonEventReceiver.__SetProgramVariable__SystemString_SystemObject__SystemVoid\"\r\n       
+    PUSH, cam\r\n        PUSH, __instance_2\r\n        COPY\r\n        PUSH, __width_0\r\n       
+    PUSH, __Int32_1\r\n        COPY\r\n        PUSH, cam\r\n        PUSH, __instance_2\r\n       
+    COPY\r\n        PUSH, __instance_1\r\n        PUSH, __instance_3\r\n        COPY\r\n       
+    PUSH, __height_0\r\n        PUSH, __Int32_2\r\n        COPY\r\n        PUSH,
+    __width_0\r\n        PUSH, __height_0\r\n        PUSH, __Int32_0\r\n        EXTERN,
+    \"SystemInt32.__op_Multiplication__SystemInt32_SystemInt32__SystemInt32\"\r\n       
+    PUSH, __Int32_0\r\n        PUSH, __value_2\r\n        EXTERN, \"UnityEngineColor32Array.__ctor__SystemInt32__UnityEngineColor32Array\"\r\n       
+    PUSH, __instance_5\r\n        PUSH, __symbolName_2\r\n        PUSH, __value_2\r\n       
+    EXTERN, \"VRCUdonCommonInterfacesIUdonEventReceiver.__SetProgramVariable__SystemString_SystemObject__SystemVoid\"\r\n       
+    JUMP, 0xFFFFFFFC\r\n    \r\n    .export _onAsyncGpuReadbackComplete\r\n    \r\n   
+    _onAsyncGpuReadbackComplete:\r\n    \r\n        PUSH, onAsyncGpuReadbackCompleteRequest\r\n       
+    PUSH, __instance_6\r\n        COPY\r\n        PUSH, textureColorData\r\n       
+    PUSH, __data_0\r\n        COPY\r\n        PUSH, __instance_6\r\n        PUSH,
+    __data_0\r\n        PUSH, __layer_0\r\n        PUSH, __Boolean_0\r\n        EXTERN,
+    \"VRCSDK3RenderingVRCAsyncGPUReadbackRequest.__TryGetData__UnityEngineColor32Array_SystemInt32__SystemBoolean\"\r\n       
+    PUSH, onAsyncGpuReadbackCompleteRequest\r\n        PUSH, __instance_6\r\n       
+    COPY\r\n        PUSH, textureColorData\r\n        PUSH, __data_0\r\n        COPY\r\n       
+    PUSH, __Boolean_0\r\n        PUSH, __Boolean_1\r\n        COPY\r\n        PUSH,
+    __Boolean_0\r\n        JUMP_IF_FALSE, 0x00000364\r\n        PUSH, AsyncReadbackedTexture\r\n       
+    PUSH, __instance_7\r\n        COPY\r\n        PUSH, textureColorData\r\n       
+    PUSH, __colors_0\r\n        COPY\r\n        PUSH, __instance_7\r\n        PUSH,
+    __colors_0\r\n        EXTERN, \"UnityEngineTexture2D.__SetPixels32__UnityEngineColor32Array__SystemVoid\"\r\n       
+    PUSH, AsyncReadbackedTexture\r\n        PUSH, __instance_8\r\n        COPY\r\n       
+    PUSH, __instance_8\r\n        EXTERN, \"UnityEngineTexture2D.__Apply__SystemVoid\"\r\n       
+    PUSH, TargetMaterial\r\n        PUSH, __instance_9\r\n        COPY\r\n       
+    PUSH, AsyncReadbackedTexture\r\n        PUSH, __value_3\r\n        COPY\r\n       
+    PUSH, __instance_9\r\n        PUSH, __value_3\r\n        EXTERN, \"UnityEngineMaterial.__set_mainTexture__UnityEngineTexture__SystemVoid\"\r\n       
+    PUSH, __Boolean_2\r\n        PUSH, __value_4\r\n        COPY\r\n        PUSH,
+    __instance_A\r\n        PUSH, __symbolName_3\r\n        PUSH, __value_4\r\n       
+    EXTERN, \"VRCUdonCommonInterfacesIUdonEventReceiver.__SetProgramVariable__SystemString_SystemObject__SystemVoid\"\r\n       
+    JUMP, 0x00000364\r\n        JUMP, 0xFFFFFFFC\r\n    \r\n    .export _update\r\n   
+    \r\n    _update:\r\n    \r\n        PUSH, isWaitingForLastUpdate\r\n        JUMP_IF_FALSE,
+    0x00000384\r\n        JUMP, 0x00000420\r\n        PUSH, cam\r\n        PUSH,
+    __instance_B\r\n        COPY\r\n        PUSH, __instance_B\r\n        EXTERN,
+    \"UnityEngineCamera.__Render__SystemVoid\"\r\n        PUSH, rt\r\n        PUSH,
+    __src_0\r\n        COPY\r\n        PUSH, __src_0\r\n        PUSH, __mipIndex_0\r\n       
+    PUSH, __dstFormat_0\r\n        PUSH, __udonBehaviour_0\r\n        PUSH, __VRCAsyncGPUReadbackRequest_0\r\n       
+    EXTERN, \"VRCSDK3RenderingVRCAsyncGPUReadback.__Request__UnityEngineTexture_SystemInt32_UnityEngineTextureFormat_VRCUdonCommonInterfacesIUdonEventReceiver__VRCSDK3RenderingVRCAsyncGPUReadbackRequest\"\r\n       
+    PUSH, __Boolean_4\r\n        PUSH, __value_5\r\n        COPY\r\n        PUSH,
+    __instance_C\r\n        PUSH, __symbolName_4\r\n        PUSH, __value_5\r\n       
+    EXTERN, \"VRCUdonCommonInterfacesIUdonEventReceiver.__SetProgramVariable__SystemString_SystemObject__SystemVoid\"\r\n       
+    JUMP, 0xFFFFFFFC\r\n    \r\n\r\n.code_end\r\n"
+  assemblyError: 
+  graphData:
+    name: 
+    description: 
+    nodes:
+    - fullName: Event_Start
+      uid: 039cc50b-83ca-4974-a51f-bb3d819c7864
+      position: {x: 316, y: -642}
+      nodeUIDs: []
+      flowUIDs:
+      - 86d0d9d2-a6e9-45af-a6b6-bb06767a5e2f
+      nodeValues: []
+    - fullName: Event_OnAsyncGpuReadbackComplete
+      uid: 29f17565-60fc-4f3c-a9d1-52a755581ffb
+      position: {x: 236.51395, y: 608.90857}
+      nodeUIDs: []
+      flowUIDs:
+      - 8d4f2fd1-c564-4f46-a769-7db7b1cdfc9a
+      nodeValues: []
+    - fullName: Variable_UnityEngineCamera
+      uid: f56d65bd-5af2-4a3c-b7fd-2e2c9b781a1f
+      position: {x: 0, y: 0}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|cam
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|True
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: VRCUdonCommonInterfacesIUdonEventReceiver.__SetProgramVariable__SystemString_SystemObject__SystemVoid
+      uid: 38af980a-92c7-4dfd-8339-7afa110743fb
+      position: {x: 1121.8347, y: -404.94238}
+      nodeUIDs:
+      - 
+      - 
+      - ea18452e-a866-4621-bc87-700fa28037a0|0
+      flowUIDs:
+      - 
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|textureColorData
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Variable_UnityEngineRenderTexture
+      uid: 578d9430-199d-4b47-b75a-68a3e284dfe1
+      position: {x: -818.9783, y: -862.8262}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|rt
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: SystemInt32.__op_Multiplication__SystemInt32_SystemInt32__SystemInt32
+      uid: b36fd9de-dc55-4d58-afcc-b390f82ba1a1
+      position: {x: 722.6325, y: -293.8049}
+      nodeUIDs:
+      - 13056c79-44cd-4423-8e43-658fe41087cf|0
+      - c10f5cf0-addc-48bf-9011-8187da809d71|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+    - fullName: Get_Variable
+      uid: 382a21e7-c36a-43e5-800e-6fae6b1eb9b3
+      position: {x: -568, y: -403}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|f56d65bd-5af2-4a3c-b7fd-2e2c9b781a1f
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCUdonCommonInterfacesIUdonEventReceiver.__SetProgramVariable__SystemString_SystemObject__SystemVoid
+      uid: a78da64b-3a42-4f12-8497-a0c2799f6544
+      position: {x: 851.8351, y: -474.94235}
+      nodeUIDs:
+      - 
+      - 
+      - 3ed08e6e-9d9f-454f-95d1-2c5016d09c78|0
+      flowUIDs:
+      - 38af980a-92c7-4dfd-8339-7afa110743fb
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|rt
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: UnityEngineRenderTexture.__get_width__SystemInt32
+      uid: 13056c79-44cd-4423-8e43-658fe41087cf
+      position: {x: -108, y: -450}
+      nodeUIDs:
+      - 3ed08e6e-9d9f-454f-95d1-2c5016d09c78|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: UnityEngineRenderTexture.__get_height__SystemInt32
+      uid: c10f5cf0-addc-48bf-9011-8187da809d71
+      position: {x: -110, y: -355}
+      nodeUIDs:
+      - 3ed08e6e-9d9f-454f-95d1-2c5016d09c78|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: 69bf6b49-28f1-491c-b234-12be47eadc43
+      position: {x: 550.23816, y: 313.90363}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|578d9430-199d-4b47-b75a-68a3e284dfe1
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: b8bc788d-89ca-4103-8956-9349bdeefbae
+      position: {x: 551.2382, y: 223.90364}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|f56d65bd-5af2-4a3c-b7fd-2e2c9b781a1f
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: UnityEngineCamera.__Render__SystemVoid
+      uid: 414f306d-e6bc-4c6c-8bdc-6b149fd7df38
+      position: {x: 740.2382, y: 95.90362}
+      nodeUIDs:
+      - b8bc788d-89ca-4103-8956-9349bdeefbae|0
+      flowUIDs:
+      - 4dff2836-4bbc-47b2-bd58-2fe14a877e74
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Branch
+      uid: 12820617-d891-47af-8fbe-5e9e00c17c5f
+      position: {x: 962.8261, y: 578.34784}
+      nodeUIDs:
+      - 8d4f2fd1-c564-4f46-a769-7db7b1cdfc9a|0
+      flowUIDs:
+      - 58bd178e-7c7f-4bb9-900e-00a3ae715f1e
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: Variable_UnityEngineTexture2D
+      uid: 048656e9-ee4c-4ce2-909e-01b24c8f49f6
+      position: {x: -1808.7477, y: -870.71014}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|AsyncReadbackedTexture
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|True
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: UnityEngineTexture2D.__Apply__SystemVoid
+      uid: 66c47244-5e23-4fcc-866f-ee6d5948f7c4
+      position: {x: 1408.5138, y: 632.90857}
+      nodeUIDs:
+      - eeb09d27-acad-4d62-9496-959207f885bc|0
+      flowUIDs:
+      - 4e5a6a40-6742-4c5d-b26b-4cd646e3ceef
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Variable_UnityEngineMaterial
+      uid: 3f80844d-9e37-4af8-b632-1071af2edfc1
+      position: {x: 0, y: 0}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|TargetMaterial
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|True
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: UnityEngineMaterial.__set_mainTexture__UnityEngineTexture__SystemVoid
+      uid: 4e5a6a40-6742-4c5d-b26b-4cd646e3ceef
+      position: {x: 1608.5139, y: 679.90857}
+      nodeUIDs:
+      - 7c8315d6-87d7-489a-9f4f-51fd5d99e2af|0
+      - f75fa113-03ba-44b5-a024-15e0e9569fdf|0
+      flowUIDs:
+      - 1acb6007-a906-4d0e-b399-dd7844a2cf92
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: 7c8315d6-87d7-489a-9f4f-51fd5d99e2af
+      position: {x: 1354.5139, y: 773.90857}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|3f80844d-9e37-4af8-b632-1071af2edfc1
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: f75fa113-03ba-44b5-a024-15e0e9569fdf
+      position: {x: 1289.5139, y: 865.90857}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|048656e9-ee4c-4ce2-909e-01b24c8f49f6
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: UnityEngineTexture2D.__ctor__SystemInt32_SystemInt32_UnityEngineTextureFormat_SystemBoolean_SystemBoolean__UnityEngineTexture2D
+      uid: f7d9b4bf-7b02-413f-bfab-72a4307b378c
+      position: {x: 71.61699, y: -547.7123}
+      nodeUIDs:
+      - 13056c79-44cd-4423-8e43-658fe41087cf|0
+      - c10f5cf0-addc-48bf-9011-8187da809d71|0
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+      - unityObjectValue: {fileID: 0}
+        stringValue: UnityEngine.TextureFormat, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null|RGBA32
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|True
+    - fullName: Get_Variable
+      uid: eeb09d27-acad-4d62-9496-959207f885bc
+      position: {x: 684.5139, y: 795.9085}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|048656e9-ee4c-4ce2-909e-01b24c8f49f6
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCUdonCommonInterfacesIUdonEventReceiver.__SetProgramVariable__SystemString_SystemObject__SystemVoid
+      uid: 86d0d9d2-a6e9-45af-a6b6-bb06767a5e2f
+      position: {x: 467.83502, y: -548.9424}
+      nodeUIDs:
+      - 
+      - 
+      - f7d9b4bf-7b02-413f-bfab-72a4307b378c|0
+      flowUIDs:
+      - a78da64b-3a42-4f12-8497-a0c2799f6544
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|AsyncReadbackedTexture
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Variable_SystemBoolean
+      uid: 20a38476-f4f4-4a0d-95ea-64ce305c09cd
+      position: {x: 0, y: 0}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|isWaitingForLastUpdate
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: VRCUdonCommonInterfacesIUdonEventReceiver.__SetProgramVariable__SystemString_SystemObject__SystemVoid
+      uid: 44ceb6e5-9492-4f8b-8992-5a344005d5b5
+      position: {x: 1419.9203, y: 97.809166}
+      nodeUIDs:
+      - 
+      - 
+      - 21d3eacc-80d1-40be-aa5e-4cdf20b99880|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|isWaitingForLastUpdate
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Const_SystemBoolean
+      uid: 21d3eacc-80d1-40be-aa5e-4cdf20b99880
+      position: {x: 1281.8075, y: 297.6775}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|True
+    - fullName: VRCUdonCommonInterfacesIUdonEventReceiver.__SetProgramVariable__SystemString_SystemObject__SystemVoid
+      uid: 1acb6007-a906-4d0e-b399-dd7844a2cf92
+      position: {x: 1840.5139, y: 690.90857}
+      nodeUIDs:
+      - 
+      - 
+      - 845a1ecf-8cdb-4e24-9e32-f14c6118ebca|0
+      flowUIDs:
+      - 
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|isWaitingForLastUpdate
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Const_SystemBoolean
+      uid: 845a1ecf-8cdb-4e24-9e32-f14c6118ebca
+      position: {x: 1691.5138, y: 841.9085}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: Event_Update
+      uid: 5fa69fcf-16d2-4446-b58e-4cb8a83f4eba
+      position: {x: 387, y: 88}
+      nodeUIDs: []
+      flowUIDs:
+      - adda519e-1d09-4462-8a38-e0018be00c87
+      nodeValues: []
+    - fullName: Branch
+      uid: adda519e-1d09-4462-8a38-e0018be00c87
+      position: {x: 552.12854, y: 87.319496}
+      nodeUIDs:
+      - 1630b411-0912-4045-9a3b-f29e9d40ac1c|0
+      flowUIDs:
+      - 
+      - 414f306d-e6bc-4c6c-8bdc-6b149fd7df38
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: Get_Variable
+      uid: 1630b411-0912-4045-9a3b-f29e9d40ac1c
+      position: {x: 276.2609, y: 203.86958}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|20a38476-f4f4-4a0d-95ea-64ce305c09cd
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: UnityEngineCamera.__get_targetTexture__UnityEngineRenderTexture
+      uid: 3ed08e6e-9d9f-454f-95d1-2c5016d09c78
+      position: {x: -395, y: -403}
+      nodeUIDs:
+      - 382a21e7-c36a-43e5-800e-6fae6b1eb9b3|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Variable_UnityEngineColor32Array
+      uid: b6cb9e36-0b38-4c34-ac7e-b0f8c35ecddd
+      position: {x: 0, y: 0}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|textureColorData
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: UnityEngineColor32Array.__ctor__SystemInt32__UnityEngineColor32Array
+      uid: ea18452e-a866-4621-bc87-700fa28037a0
+      position: {x: 916.4348, y: -295.86966}
+      nodeUIDs:
+      - b36fd9de-dc55-4d58-afcc-b390f82ba1a1|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+    - fullName: UnityEngineTexture2D.__SetPixels32__UnityEngineColor32Array__SystemVoid
+      uid: 58bd178e-7c7f-4bb9-900e-00a3ae715f1e
+      position: {x: 1156.0245, y: 614.10785}
+      nodeUIDs:
+      - eeb09d27-acad-4d62-9496-959207f885bc|0
+      - 50d2e426-2a94-4943-9954-1be8d8dd0cc3|0
+      flowUIDs:
+      - 66c47244-5e23-4fcc-866f-ee6d5948f7c4
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: 50d2e426-2a94-4943-9954-1be8d8dd0cc3
+      position: {x: 358.47824, y: 751.21747}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|b6cb9e36-0b38-4c34-ac7e-b0f8c35ecddd
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCSDK3RenderingVRCAsyncGPUReadbackRequest.__TryGetData__UnityEngineColor32Array_SystemInt32__SystemBoolean
+      uid: 8d4f2fd1-c564-4f46-a769-7db7b1cdfc9a
+      position: {x: 708.26086, y: 578.95654}
+      nodeUIDs:
+      - 29f17565-60fc-4f3c-a9d1-52a755581ffb|0
+      - 50d2e426-2a94-4943-9954-1be8d8dd0cc3|0
+      - 
+      flowUIDs:
+      - 12820617-d891-47af-8fbe-5e9e00c17c5f
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+    - fullName: VRCSDK3RenderingVRCAsyncGPUReadback.__Request__UnityEngineTexture_SystemInt32_UnityEngineTextureFormat_VRCUdonCommonInterfacesIUdonEventReceiver__VRCSDK3RenderingVRCAsyncGPUReadbackRequest
+      uid: 4dff2836-4bbc-47b2-bd58-2fe14a877e74
+      position: {x: 881.42004, y: 95.707504}
+      nodeUIDs:
+      - 69bf6b49-28f1-491c-b234-12be47eadc43|0
+      - 
+      - 
+      - 
+      flowUIDs:
+      - 44ceb6e5-9492-4f8b-8992-5a344005d5b5
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+      - unityObjectValue: {fileID: 0}
+        stringValue: UnityEngine.TextureFormat, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null|RGBA32
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    updateOrder: 0
+  graphElementData: []
+  version: 1.0.0
+  showAssembly: 0

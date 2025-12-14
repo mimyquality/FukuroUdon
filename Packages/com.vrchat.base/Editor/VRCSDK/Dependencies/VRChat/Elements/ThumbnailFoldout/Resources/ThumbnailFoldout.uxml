@@ -1,0 +1,27 @@
+﻿<UXML xmlns="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:vrc="VRC.SDKBase.Editor.Elements" xmlns:vrca="VRC.SDK3A.Editor.Elements">
+    <Foldout text="Thumbnail" class="section-foldout" name="thumbnail-foldout">
+        <VisualElement class="row mt-2 mb-2 align-items-start w-100">
+            <vrc:Thumbnail width="192" height="144" hover-text="Image Size 1200 x 900" name="content-thumbnail" />
+            <VisualElement class="col ml-2 flex-grow-1">
+                <VisualElement class="col mb-2" name="thumbnail-selector-block">
+                    <Label class="mb-2 white-space-normal m-unity-field " text="You can pick a new image to be used as a thumbnail" />
+                    <Button class="mb-2" text="Select New Thumbnail" name="select-new-thumbnail-btn" />
+                    <Label class="mb-2 white-space-normal m-unity-field " text="You can also capture the new thumbnail directly from the scene" />
+                    <Button text="Capture From Scene" name="capture-thumbnail-from-scene-btn" />
+                </VisualElement>
+                <VisualElement class="col d-none" name="thumbnail-capture-block">
+                    <Label class="mb-2 white-space-normal m-unity-field " text="Move your scene view to capture the desired thumbnail" />                    
+                    <Toggle label="Fill Background" tooltip="Uses flat color as a background instead of the skybox" name="thumbnail-fill-background-toggle" />
+                    <uie:ColorField label="Background Color" name="thumbnail-background-color-field" class="d-none" />
+                    <Toggle label="Use PostProcessing" tooltip="Applies scene post processing to the thumbnail" name="thumbnail-use-post-processing-toggle" />
+                    <Toggle label="Use Custom Camera" tooltip="Utilizes a custom camera instead of a VRChat-created camera instead" name="thumbnail-use-custom-camera-toggle" />
+                    <uie:ObjectField class="flex-grow-1 d-none" label="Camera" name="thumbnail-custom-camera-ref"/>
+                    <VisualElement class="mt-2 row align-items-center" name="thumbnail-capture-confirm-block">
+                        <Button class="mr-2 flex-grow-1" text="Capture" name="thumbnail-capture-confirm-btn" />
+                        <Button class="flex-grow-1" text="Cancel" name="thumbnail-capture-cancel-btn" />
+                    </VisualElement>
+                </VisualElement>
+            </VisualElement>
+        </VisualElement>
+    </Foldout>
+</UXML>

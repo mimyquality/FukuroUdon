@@ -1,0 +1,124 @@
+#logintext-elem {
+	margin-top: 2px; 
+	margin-bottom: 2px;
+}
+
+#infobox-elem {
+	width: 100%; 
+	min-width: 100%; 
+	flex-grow: 1; 
+}
+
+#infobox-label {
+	white-space: normal; 
+	justify-content: center; 
+	overflow: hidden;
+}
+
+.infobox {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+}
+
+.infobox > Label {
+    -unity-text-align: middle-left;
+    flex-grow: 1;
+	padding-left: 6px;
+}
+
+#header-elem {
+    padding-top: 5px;
+    padding-bottom: 1px;
+    padding-right: 5px;
+    padding-left: 5px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+#footer-elem {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-top-width: 2px;
+    border-top-color: rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+#importrefresh-btn {
+    margin-right: 0;
+    margin-left: 0;
+	margin-top: 2px; 
+	margin-bottom: 2px;
+}
+
+#sort-elem {
+	flex-direction: row;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+#sortbyproject-btn, #sortbylistings-btn
+{
+    flex-grow: 1;
+}
+
+#searchbar-input {
+    width: auto;
+    height: auto;
+    margin-right: 0;
+    margin-left: 0;
+    display: none;
+}
+
+#main-elem {
+    height: auto;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    flex-direction: column;
+    flex-grow: 1;
+    opacity: 1;
+}
+
+#main-scrollview {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#logintext-elem {
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+#importbrowse-elem {
+	flex-direction: row; 
+	margin-top: 2px; 
+	margin-bottom: 2px;
+}
+
+#importbrowse-label {
+	-unity-text-align: middle-left;
+}
+
+#importbrowse-textfield {
+	flex-grow: 1;
+}
+
+#footer-elem {
+	min-height: 3%; 
+	flex-direction: column-reverse; 
+	justify-content: flex-start;
+}
+
+

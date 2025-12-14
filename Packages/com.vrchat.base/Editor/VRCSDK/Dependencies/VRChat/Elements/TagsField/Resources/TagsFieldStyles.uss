@@ -1,0 +1,82 @@
+﻿#tags-row {
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.tag {
+    padding: 2px 3px 2px 7px;
+    flex-direction: row;
+    align-items: center;
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
+    min-height: 22px;
+}
+
+.dark #add-tag-block {
+    background-color: hsl(0, 0%, 19%);
+}
+
+.light #add-tag-block {
+    background-color: hsl(0, 0%, 39%);
+}
+
+
+.light .tag {
+    background-color: rgb(228, 228, 228);
+}
+
+.dark .tag {
+    background-color: hsl(0, 0%, 18%);
+}
+
+.tag Button.tag-remove-button {
+    padding: 0;
+    margin: 0;
+    border-width: 0;
+    background-color: rgba(0,0,0,0);
+    padding-left: 18px;
+    width: 18px;
+    height: 18px;
+    opacity: 0.5;
+    cursor: link;
+}
+
+.dark .tag Button.tag-remove-button {
+    background-image: resource("d_winbtn_win_close");
+}
+
+.light .tag Button.tag-remove-button {
+    background-image: resource("winbtn_win_close");
+}
+
+.tag Button.tag-remove-button:hover {
+    opacity: 1;
+}
+
+#tags-label {
+    min-width: 135px;
+}
+
+TagsFieldButton {
+    -unity-text-align: middle-left;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+TagsFieldButton VisualElement {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    flex-direction: row;
+}
+
+TagsFieldButton #spacer {
+    flex-grow: 1;
+}
+
+TagsFieldButton #edit {
+    background-image: resource("vrcTagEditIcon");
+    width: 12px;
+    height: 12px;
+    align-self: center;
+}

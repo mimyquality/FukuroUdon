@@ -1,0 +1,8 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+    <VisualElement name="notification-block" class="col mt-2 mb-2 w-100">
+        <Label text="Your world failed to build or upload because of the following reason" />
+        <Label name="notification-error-reason" class="mt-2 p-2 white-space-normal" />
+        <Label text="We recommend taking a look at the console for more details" class="mt-2" />
+        <Button class="mt-3 pl-4 pr-4 pt-2 pb-2 text-bold" text="Check Console for more details" name="open-unity-console" />
+    </VisualElement>
+</UXML>

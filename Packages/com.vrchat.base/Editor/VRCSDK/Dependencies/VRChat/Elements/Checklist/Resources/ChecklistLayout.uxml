@@ -1,0 +1,9 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+    <VisualElement class="col" name="checklist-block">
+        <VisualElement name="checklist-label" class="mb-2 row section-header">
+            <VisualElement class="icon" name="checklist-label-icon" />
+            <Label name="checklist-label-text" />
+        </VisualElement>
+        <VisualElement name="checklist-items" class="col w-100 mb-2" />
+    </VisualElement>
+</UXML>

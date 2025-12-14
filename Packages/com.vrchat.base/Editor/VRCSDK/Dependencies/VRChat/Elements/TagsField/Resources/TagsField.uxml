@@ -1,0 +1,17 @@
+﻿<UXML xmlns="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:vrc="VRC.SDKBase.Editor.Elements">
+    <VisualElement class="col">
+        <Label name="tags-label" class="text-bold mb-2" />
+        <vrc:TagsFieldButton class="align-self-stretch row" />  
+        <vrc:Modal name="tags-modal" title="Manage Your Tags">
+            <VisualElement class="col">
+                <VisualElement class="row p-4" name="add-tag-block">
+                    <vrc:VRCTextField name="tag-add-field" class="flex-grow-1" placeholder="Enter a new tag..." />
+                    <Button name="tag-add-button" text="Add Tag" />
+                </VisualElement>
+                <ScrollView>
+                    <VisualElement name="tags-row" class="row pl-4 pr-4 pt-3 pb-2" />
+                </ScrollView>
+            </VisualElement>
+        </vrc:Modal>
+    </VisualElement>
+</UXML>

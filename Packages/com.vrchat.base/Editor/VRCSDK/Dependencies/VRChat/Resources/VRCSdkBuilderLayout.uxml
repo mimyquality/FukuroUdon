@@ -1,0 +1,39 @@
+﻿<UXML xmlns="UnityEngine.UIElements" xmlns:vrc="VRC.SDKBase.Editor.Elements">
+    <VisualElement class="col relative flex-grow-1 w-100 justify-content-between">
+        <VisualElement name="save-changes-block" class="row align-items-center d-none">
+            <Button name="save-changes-button" class="hover-opacity-80" text="Save Changes" />
+            <Button name="discard-changes-button" class="hover-opacity-80" text="Discard" />
+        </VisualElement>
+        <VisualElement name="info-section" class="col flex-grow-1">
+            <vrc:StepFoldout stepName="1." text="Prepare Your Content" class="section-foldout" name="info-foldout" view-data-key="builder-info-foldout">
+                <ScrollView>
+                    <VisualElement class="col mt-1" name="content-info-block" />
+                </ScrollView>
+            </vrc:StepFoldout>
+            <vrc:StepFoldout stepName="2." text="Review Any Alerts" class="section-foldout" name="validations-foldout" view-data-key="builder-validations-foldout">
+                <ScrollView>
+                    <VisualElement class="col mt-1" name="validations-block" />
+                </ScrollView>
+            </vrc:StepFoldout>
+        </VisualElement>
+        <VisualElement class="d-none absolute" name="descriptor-error">
+            <VisualElement name="descriptor-builder-error" />
+            <Label text="Descriptor Error" name="descriptor-error-text" />
+        </VisualElement>
+
+        <VisualElement class="col flex-shrink-0" name="build-section">
+            <vrc:StepFoldout stepName="3." text="Build" class="section-foldout" name="build-foldout" view-data-key="builder-build-foldout">
+                <VisualElement class="col" name="build-panel-gui" />
+                <VisualElement class="col absolute d-none" name="builder-notification">
+                    <VisualElement class="col flex-grow-1 flex-shrink-0 items-center justify-content-center p-3">
+                        <Label class="text-lg text-bold text-center" text="Success" name="builder-notification-title" />
+                        <VisualElement name="builder-notification-content" class="p-2" />
+                    </VisualElement>
+                    <VisualElement class="row flex-end" name="builder-notification-header">
+                        <Button class="absolute cursor-link hover-text-highlight" text=" " name="builder-notification-dismiss" />
+                    </VisualElement>
+                </VisualElement>
+            </vrc:StepFoldout>
+        </VisualElement>
+    </VisualElement>
+</UXML>

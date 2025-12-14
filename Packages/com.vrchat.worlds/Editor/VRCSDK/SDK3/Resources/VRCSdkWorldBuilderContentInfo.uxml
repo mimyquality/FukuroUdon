@@ -1,0 +1,90 @@
+﻿<UXML xmlns="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:vrc="VRC.SDKBase.Editor.Elements">
+    <VisualElement class="row pt-2 pl-2 pr-2 pb-2 flex-grow-1" name="content-info">
+        <VisualElement class="col mr-2 flex-7">
+            <vrc:VRCTextField class="content-info-field mb-2" required="true" label="Name" placeholder="Enter your world's public name..." name="content-name" vertical="true" />
+            <VisualElement class="row mb-2 m-unity-field">
+                <VisualElement class="col flex-1">
+                    <VisualElement class="row align-items-center justify-content-between w-100 mb-1">
+                        <Label class="text-bold" text="Max. Capacity" />
+                        <Button class="help-button" tooltip="What is Maximum Capacity" name="show-capacity-help-button" />
+                    </VisualElement>
+                    <uie:IntegerField tooltip="Maximum capacity" class="ml-0" value="32" name="content-capacity" required="true" />
+                </VisualElement>
+                <VisualElement class="col flex-1">
+                    <VisualElement class="row align-items-center justify-content-between w-100 mb-1">
+                        <Label class="text-bold" text="Rec. Capacity" />
+                        <Button class="help-button" tooltip="What is Recommended Capacity" name="show-recommended-capacity-help-button" />
+                    </VisualElement>
+                    <uie:IntegerField tooltip="Recommended Capacity" class="ml-0 mr-0" value="16" name="content-recommended-capacity" />
+                </VisualElement>
+            </VisualElement>
+            <VisualElement class="row m-unity-field" name="warnings-tags-block">
+                <VisualElement class="col flex-1">
+                    <vrc:ContentWarningsField label="Content Warnings" class="mb-2 mr-unity-field" name="content-warnings" />
+                </VisualElement>
+                <VisualElement class="col flex-1">
+                    <vrc:TagsField label="Tags" class="content-info-field w-100 mt-2" name="content-tags" />
+                </VisualElement>
+            </VisualElement>
+            <vrc:VRCTextField class="content-info-field mb-2" label="Description" multiline="true" placeholder="Describe world so it is easier to find!" name="content-description" vertical="true" />
+            <VisualElement class="row mb-3">
+                <VisualElement class="col m-unity-field mt-2">
+                    <Label class="field-label text-bold mb-2" text="Last Updated" />
+                    <Label text="Loading..." name="last-updated-label" />
+                </VisualElement>
+                <VisualElement class="col m-unity-field mt-2">
+                    <Label class="field-label text-bold mb-2" text="Version" />
+                    <Label text="Loading..." name="version-label" />
+                </VisualElement>
+            </VisualElement>
+            <VisualElement class="col m-unity-field">
+                <Label class="field-label text-bold mb-2" text="Supported Platforms" />
+                <Label text="Loading..." name="content-platform-info" />
+            </VisualElement>
+            <VisualElement class="mt-2 mb-2 w-100 col d-none">
+                <VisualElement class="row align-items-center m-unity-field">
+                    <Label class="field-label" text="Current Visibility" />
+                    <Label text="Loading..." name="visibility-label" />
+                </VisualElement>
+                <VisualElement class="mt-2 d-none row align-items-center" name="publish-block">
+                    <Button name="publish-button" class="flex-grow-1" />
+                    <Button class="help-button" tooltip="Learn more about Community Labs" name="community-labs-help-button" />
+                </VisualElement>
+            </VisualElement>
+        </VisualElement>
+        <VisualElement class="col flex-5">
+            <VisualElement name="visibility-block" class="col mb-2" />
+            <vrc:Modal title="Publish to Community Labs" name="labs-publish-modal">
+                <VisualElement class="col p-3">
+                    <Label class="white-space-normal mb-2" text="Publishing this world will put it in to the Community Labs" />
+                    <Label class="white-space-normal mb-2" text="Other users will be able to see your world, and it will either stay in the Labs, get promoted to Public status, or be placed back in to Private status, based on community response." />
+                    <Label class="white-space-normal mb-2" text="We encourage you to get the word out about your world if you want it to survive! If your world violates our Community Guidelines, you could get in trouble by posting it!" />
+                    <Label class="white-space-normal" text="You're only allowed to publish one world per week, so make sure to put your best foot forward!" />
+                </VisualElement>
+                <VisualElement class="row pl-3 pr-3 pb-3">
+                    <Button text="Yes, do it!" name="publish-to-labs-btn" class="flex-1 ml-0" />
+                    <Button text="No, keep the world private" name="publish-to-labs-cancel-btn" class="flex-1 mr-0" />
+                </VisualElement>
+            </vrc:Modal>
+            <vrc:Modal title="Unpublishing a World" name="unpublish-modal">
+                <VisualElement class="col p-3">
+                    <Label class="white-space-normal mb-2" text="Unpublishing this world will remove it from Public." />
+                    <Label class="white-space-normal mb-2" text="If you want to make it public again, it will need to go through Community Labs." />
+                    <Label class="white-space-normal mb-2" text="You're only allowed to publish one world per week, and when you remove a world from the labs, you don't get your one world back. Are you sure?" />
+                </VisualElement>
+                <VisualElement class="row pl-3 pr-3 pb-3">
+                    <Button text="Yes, do it!" name="unpublish-btn" class="flex-1 ml-0" />
+                    <Button text="No, keep the world public" name="unpublish-cancel-btn" class="flex-1 mr-0" />
+                </VisualElement>
+            </vrc:Modal>
+            <VisualElement class="col m-unity-field">
+                <vrc:ThumbnailBlock />
+            </VisualElement>
+            <VisualElement class="row align-items-center justify-content-end m-unity-field">
+                <Label text="World Debugging" class="field-label text-right mr-2" />
+                <Toggle name="world-debugging-toggle" class="top-05 relative" />
+                <Button class="help-button" tooltip="What is World Debugging" name="show-world-debugging-help-button" />
+            </VisualElement>
+        </VisualElement>
+    </VisualElement>
+</UXML>

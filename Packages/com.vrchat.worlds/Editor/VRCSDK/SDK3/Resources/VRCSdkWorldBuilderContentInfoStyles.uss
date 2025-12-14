@@ -1,0 +1,19 @@
+﻿#world-debugging-toggle {
+    border-bottom-width: 0;
+    background-color: rgba(0,0,0,0);
+    padding-left: 0;
+}
+
+#visibility-block PopupField {
+    flex-direction: column;
+}
+#visibility-block PopupField > Label {
+    font-size: 12px;
+    -unity-font-style: bold;
+    margin-bottom: 5px;
+    padding-top: 0;
+}
+
+#content-description {
+    min-height: 77px;
+}

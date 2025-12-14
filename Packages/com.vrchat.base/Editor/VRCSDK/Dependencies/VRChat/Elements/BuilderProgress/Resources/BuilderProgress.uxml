@@ -1,0 +1,9 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+    <Label name="progress-text" text="Refreshing data..." class="progress-text text-white mb-2" />
+    <VisualElement name="progress" class="progress-container">
+        <VisualElement name="progress-bar" class="progress-bar"  />
+    </VisualElement>
+    <VisualElement class="mt-2">
+        <Button name="cancel-button" class="flex-grow-1 d-none m-0 text-bold" text="Cancel Upload" />
+    </VisualElement>
+</UXML>

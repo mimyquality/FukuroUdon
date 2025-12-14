@@ -1,0 +1,27 @@
+.infobox {
+    border-color: rgb(35, 35, 35);
+    background-color: rgba(96, 96, 96, 0.2);
+}
+
+.infobox > Label {
+    color: rgb(189, 189, 189);
+}
+
+.infobox.warning {
+    border-color: rgba(255, 215, 0, 0.5);
+    background-color: rgba(255, 215, 0, 0.25);
+}
+
+.infobox.warning > Label {
+    color: rgb(255, 215, 0);
+}
+
+.infobox.error {
+    border-color: rgba(255, 0, 0, 0.5);
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.infobox.error > Label {
+    color: rgb(255, 100, 100);
+}
+

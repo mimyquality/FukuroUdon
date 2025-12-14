@@ -1,0 +1,697 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f11136daadff0b44ac2278a314682ab, type: 3}
+  m_Name: AvatarScalingSettings
+  m_EditorClassIdentifier: 
+  serializedUdonProgramAsset: {fileID: 11400000, guid: ad645be4cbdf9d44782cc969a2fba2fa,
+    type: 2}
+  udonAssembly: ".data_start\r\n\r\n    .export disableAvatarScaling\r\n    .export
+    minimumHeight\r\n    .export maximumHeight\r\n    .export alwaysEnforceHeight\r\n   
+    \r\n    __object_0: %SystemObject, null\r\n    __result_0: %SystemBoolean, null\r\n   
+    __Boolean_0: %SystemBoolean, null\r\n    __instance_0: %VRCSDKBaseVRCPlayerApi,
+    null\r\n    __enabled_0: %SystemBoolean, null\r\n    __message_0: %SystemObject,
+    null\r\n    __String_0: %SystemString, null\r\n    __instance_1: %VRCSDKBaseVRCPlayerApi,
+    null\r\n    __scaleMeters_0: %SystemSingle, null\r\n    __instance_2: %VRCSDKBaseVRCPlayerApi,
+    null\r\n    __scaleMeters_1: %SystemSingle, null\r\n    __message_1: %SystemObject,
+    null\r\n    __format_0: %SystemString, null\r\n    __arg0_0: %SystemObject, null\r\n   
+    __arg1_0: %SystemObject, null\r\n    __Boolean_1: %SystemBoolean, null\r\n   
+    __Boolean_2: %SystemBoolean, null\r\n    __Boolean_3: %SystemBoolean, null\r\n   
+    __instance_3: %VRCSDKBaseVRCPlayerApi, null\r\n    onAvatarEyeHeightChangedPlayer:
+    %VRCSDKBaseVRCPlayerApi, null\r\n    __value_0: %SystemSingle, null\r\n    __min_0:
+    %SystemSingle, null\r\n    __max_0: %SystemSingle, null\r\n    __instance_4:
+    %VRCSDKBaseVRCPlayerApi, null\r\n    __Boolean_4: %SystemBoolean, null\r\n   
+    __Single_0: %SystemSingle, null\r\n    __Single_1: %SystemSingle, null\r\n   
+    __instance_5: %VRCSDKBaseVRCPlayerApi, null\r\n    __instance_6: %VRCSDKBaseVRCPlayerApi,
+    null\r\n    __scaleMeters_2: %SystemSingle, null\r\n    __message_2: %SystemObject,
+    null\r\n    __format_1: %SystemString, null\r\n    __arg0_1: %SystemObject, null\r\n   
+    disableAvatarScaling: %SystemBoolean, null\r\n    minimumHeight: %SystemSingle,
+    null\r\n    maximumHeight: %SystemSingle, null\r\n    alwaysEnforceHeight: %SystemBoolean,
+    null\r\n    clampedHeight: %SystemSingle, null\r\n\r\n.data_end\r\n\r\n.code_start\r\n\r\n   
+    .export _start\r\n    \r\n    _start:\r\n    \r\n        PUSH, __object_0\r\n       
+    EXTERN, \"VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi\"\r\n       
+    PUSH, __object_0\r\n        PUSH, __result_0\r\n        EXTERN, \"VRCSDKBaseUtilities.__IsValid__SystemObject__SystemBoolean\"\r\n       
+    PUSH, __result_0\r\n        JUMP_IF_FALSE, 0x0000012C\r\n        PUSH, disableAvatarScaling\r\n       
+    JUMP_IF_FALSE, 0x0000009C\r\n        PUSH, __instance_0\r\n        EXTERN, \"VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi\"\r\n       
+    PUSH, __instance_0\r\n        PUSH, __enabled_0\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApi.__SetManualAvatarScalingAllowed__SystemBoolean__SystemVoid\"\r\n       
+    PUSH, __String_0\r\n        PUSH, __message_0\r\n        COPY\r\n        PUSH,
+    __message_0\r\n        EXTERN, \"UnityEngineDebug.__Log__SystemObject__SystemVoid\"\r\n       
+    JUMP, 0x0000009C\r\n        PUSH, __instance_1\r\n        EXTERN, \"VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi\"\r\n       
+    PUSH, __instance_1\r\n        PUSH, minimumHeight\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApi.__SetAvatarEyeHeightMinimumByMeters__SystemSingle__SystemVoid\"\r\n       
+    PUSH, __instance_2\r\n        EXTERN, \"VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi\"\r\n       
+    PUSH, __instance_2\r\n        PUSH, maximumHeight\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApi.__SetAvatarEyeHeightMaximumByMeters__SystemSingle__SystemVoid\"\r\n       
+    PUSH, __format_0\r\n        PUSH, minimumHeight\r\n        PUSH, maximumHeight\r\n       
+    PUSH, __message_1\r\n        EXTERN, \"SystemString.__Format__SystemString_SystemObject_SystemObject__SystemString\"\r\n       
+    PUSH, __message_1\r\n        EXTERN, \"UnityEngineDebug.__Log__SystemObject__SystemVoid\"\r\n       
+    JUMP, 0x0000012C\r\n        JUMP, 0xFFFFFFFC\r\n    \r\n    .export _onAvatarEyeHeightChanged\r\n   
+    \r\n    _onAvatarEyeHeightChanged:\r\n    \r\n        PUSH, onAvatarEyeHeightChangedPlayer\r\n       
+    PUSH, __instance_3\r\n        COPY\r\n        PUSH, __instance_3\r\n        PUSH,
+    __Boolean_2\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApi.__get_isLocal__SystemBoolean\"\r\n       
+    PUSH, __Boolean_2\r\n        PUSH, alwaysEnforceHeight\r\n        PUSH, __Boolean_1\r\n       
+    EXTERN, \"SystemBoolean.__op_LogicalAnd__SystemBoolean_SystemBoolean__SystemBoolean\"\r\n       
+    PUSH, __Boolean_1\r\n        JUMP_IF_FALSE, 0x000002A0\r\n        PUSH, __instance_4\r\n       
+    EXTERN, \"VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi\"\r\n       
+    PUSH, __instance_4\r\n        PUSH, __value_0\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApi.__GetAvatarEyeHeightAsMeters__SystemSingle\"\r\n       
+    PUSH, __value_0\r\n        PUSH, minimumHeight\r\n        PUSH, maximumHeight\r\n       
+    PUSH, clampedHeight\r\n        EXTERN, \"UnityEngineMathf.__Clamp__SystemSingle_SystemSingle_SystemSingle__SystemSingle\"\r\n       
+    PUSH, __instance_5\r\n        EXTERN, \"VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi\"\r\n       
+    PUSH, __instance_5\r\n        PUSH, __Single_1\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApi.__GetAvatarEyeHeightAsMeters__SystemSingle\"\r\n       
+    PUSH, clampedHeight\r\n        PUSH, __Single_1\r\n        PUSH, __Boolean_4\r\n       
+    EXTERN, \"SystemSingle.__op_Inequality__SystemSingle_SystemSingle__SystemBoolean\"\r\n       
+    PUSH, __Boolean_4\r\n        JUMP_IF_FALSE, 0x00000298\r\n        PUSH, __instance_6\r\n       
+    EXTERN, \"VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi\"\r\n       
+    PUSH, __instance_6\r\n        PUSH, clampedHeight\r\n        EXTERN, \"VRCSDKBaseVRCPlayerApi.__SetAvatarEyeHeightByMeters__SystemSingle__SystemVoid\"\r\n       
+    PUSH, __format_1\r\n        PUSH, clampedHeight\r\n        PUSH, __message_2\r\n       
+    EXTERN, \"SystemString.__Format__SystemString_SystemObject__SystemString\"\r\n       
+    PUSH, __message_2\r\n        EXTERN, \"UnityEngineDebug.__Log__SystemObject__SystemVoid\"\r\n       
+    JUMP, 0x00000298\r\n        JUMP, 0x000002A0\r\n        JUMP, 0xFFFFFFFC\r\n   
+    \r\n\r\n.code_end\r\n"
+  assemblyError: 
+  graphData:
+    name: 
+    description: 
+    nodes:
+    - fullName: VRCSDKBaseVRCPlayerApi.__SetAvatarEyeHeightMinimumByMeters__SystemSingle__SystemVoid
+      uid: 01ec84a0-1db5-4472-98f8-540904d44202
+      position: {x: -1180, y: -750}
+      nodeUIDs:
+      - f841cfe0-914b-4128-af63-b330ab29b427|0
+      - c05ddd62-f286-4135-9f80-37a29070ffb7|0
+      flowUIDs:
+      - 86e458db-9f45-496d-b611-d2bd0389b484
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+    - fullName: VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi
+      uid: f841cfe0-914b-4128-af63-b330ab29b427
+      position: {x: -1395, y: -730}
+      nodeUIDs: []
+      flowUIDs: []
+      nodeValues: []
+    - fullName: VRCSDKBaseVRCPlayerApi.__SetAvatarEyeHeightMaximumByMeters__SystemSingle__SystemVoid
+      uid: 86e458db-9f45-496d-b611-d2bd0389b484
+      position: {x: -555, y: -755}
+      nodeUIDs:
+      - c58d427a-32ef-4d6f-93cd-607dc55a0158
+      - 5281c230-00b1-48e7-9ee6-dda0de71b04b|0
+      flowUIDs:
+      - 9df96ba8-4eec-407f-9d67-5f8ebbe9ff91
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+    - fullName: VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi
+      uid: c58d427a-32ef-4d6f-93cd-607dc55a0158
+      position: {x: -745, y: -735}
+      nodeUIDs: []
+      flowUIDs: []
+      nodeValues: []
+    - fullName: Variable_SystemBoolean
+      uid: 1251b3af-d4c4-4449-9cb1-e67c233e3715
+      position: {x: -326.04532, y: 71.31207}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|disableAvatarScaling
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|True
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: Branch
+      uid: 9a75d5d9-9d40-481c-a580-f9e77c112e9f
+      position: {x: -905, y: -1040}
+      nodeUIDs:
+      - d588e000-f89d-46ef-be22-10f8e232331e|0
+      flowUIDs:
+      - 7dac345c-5970-4660-b99f-49a6716a9683
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: VRCSDKBaseVRCPlayerApi.__SetManualAvatarScalingAllowed__SystemBoolean__SystemVoid
+      uid: 7dac345c-5970-4660-b99f-49a6716a9683
+      position: {x: -650, y: -1045}
+      nodeUIDs:
+      - fa2a3e9e-1601-4ff7-824c-a90499f5bf0d|0
+      - 
+      flowUIDs:
+      - 93ca11da-f19e-409a-aaf6-84c31bdc4a3c
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi
+      uid: fa2a3e9e-1601-4ff7-824c-a90499f5bf0d
+      position: {x: -840, y: -935}
+      nodeUIDs: []
+      flowUIDs: []
+      nodeValues: []
+    - fullName: Event_Start
+      uid: b9039d1c-d3c1-4007-adea-00b73e572896
+      position: {x: -1765, y: -1040}
+      nodeUIDs: []
+      flowUIDs:
+      - 003ed3be-faa4-4897-935f-2c7dd434788f
+      nodeValues: []
+    - fullName: Block
+      uid: 7b1c5d64-881f-4093-b2b8-367d3b87fc6c
+      position: {x: -1445, y: -1040}
+      nodeUIDs: []
+      flowUIDs:
+      - 9a75d5d9-9d40-481c-a580-f9e77c112e9f
+      - 01ec84a0-1db5-4472-98f8-540904d44202
+      nodeValues: []
+    - fullName: Const_SystemString
+      uid: a540f548-d7b6-470c-b872-0abeb593fdd7
+      position: {x: -295, y: -965}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|[AvatarScalingSettings]
+          Avatar scaling has been disabled. Players will be unable to choose their
+          own avatar scale. Udon can still use SetAvatarEyeHeight.
+    - fullName: UnityEngineDebug.__Log__SystemObject__SystemVoid
+      uid: 93ca11da-f19e-409a-aaf6-84c31bdc4a3c
+      position: {x: -50, y: -1060}
+      nodeUIDs:
+      - a540f548-d7b6-470c-b872-0abeb593fdd7
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: UnityEngineDebug.__Log__SystemObject__SystemVoid
+      uid: 9df96ba8-4eec-407f-9d67-5f8ebbe9ff91
+      position: {x: 180, y: -775}
+      nodeUIDs:
+      - 4d8d8fc2-4de3-4087-a27a-52ca01448c36
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: SystemString.__Format__SystemString_SystemObject_SystemObject__SystemString
+      uid: 4d8d8fc2-4de3-4087-a27a-52ca01448c36
+      position: {x: -120, y: -665}
+      nodeUIDs:
+      - 
+      - 501cfd9c-fb30-474a-95c0-cbf5b08b48e4|0
+      - 989d0b58-780c-4470-835d-8f5063e66e01|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|[AvatarScalingSettings]
+          Avatar eye height limits have been set to {0} to {1} meters.
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Variable_SystemSingle
+      uid: e8ed8280-24c2-4e6c-a58e-f61e3ee36d96
+      position: {x: 0, y: 0}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0.2
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|minimumHeight
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|True
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: Variable_SystemSingle
+      uid: 1f342b36-6542-4990-9900-1565add01127
+      position: {x: 0, y: 0}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|5
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|maximumHeight
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|True
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: Get_Variable
+      uid: c05ddd62-f286-4135-9f80-37a29070ffb7
+      position: {x: -1410, y: -640}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|e8ed8280-24c2-4e6c-a58e-f61e3ee36d96
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: 5281c230-00b1-48e7-9ee6-dda0de71b04b
+      position: {x: -770, y: -635}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|1f342b36-6542-4990-9900-1565add01127
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: 501cfd9c-fb30-474a-95c0-cbf5b08b48e4
+      position: {x: -320, y: -620}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|e8ed8280-24c2-4e6c-a58e-f61e3ee36d96
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: 989d0b58-780c-4470-835d-8f5063e66e01
+      position: {x: -325, y: -535}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|1f342b36-6542-4990-9900-1565add01127
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Event_OnAvatarEyeHeightChanged
+      uid: 9062455c-66cd-4363-b723-f840e1e9a337
+      position: {x: -1560, y: -340}
+      nodeUIDs: []
+      flowUIDs:
+      - 13050b32-bfbf-45e1-9128-e761adbaa2ff
+      nodeValues: []
+    - fullName: VRCSDKBaseVRCPlayerApi.__GetAvatarEyeHeightAsMeters__SystemSingle
+      uid: 4aea68b6-bcfc-40ac-8cc3-a4314e4bd41f
+      position: {x: -410, y: -230}
+      nodeUIDs:
+      - e55d229e-f2da-4601-b76e-2260b728224a|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: UnityEngineMathf.__Clamp__SystemSingle_SystemSingle_SystemSingle__SystemSingle
+      uid: 79c8e376-5cfd-4eff-9862-b015515d8796
+      position: {x: -90, y: -290}
+      nodeUIDs:
+      - 4aea68b6-bcfc-40ac-8cc3-a4314e4bd41f|0
+      - 4b4be2d3-ec9f-4143-92ee-b757c3a3b4d0|0
+      - 93fac913-ae6e-4fe8-8cb9-838e882a54b7|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+    - fullName: VRCSDKBaseVRCPlayerApi.__SetAvatarEyeHeightByMeters__SystemSingle__SystemVoid
+      uid: a7aefd66-bfe6-4980-b790-dd056797f93b
+      position: {x: 60, y: 135}
+      nodeUIDs:
+      - e66ba070-37b1-48fc-8db5-25254e08bca6|0
+      - b4bd11db-3a6e-4545-a037-d1de3b7860c3|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+    - fullName: VRCSDKBaseVRCPlayerApi.__get_isLocal__SystemBoolean
+      uid: 395fc725-57d3-4f0d-bee3-a765f7259960
+      position: {x: -1190, y: -215}
+      nodeUIDs:
+      - 9062455c-66cd-4363-b723-f840e1e9a337|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Branch
+      uid: 13050b32-bfbf-45e1-9128-e761adbaa2ff
+      position: {x: -835, y: -335}
+      nodeUIDs:
+      - 7df817d0-361f-46b3-8369-0cb4ee093bab|0
+      flowUIDs:
+      - f3f1ef65-fa9d-4789-ab71-81e3f0d9cad1
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: Branch
+      uid: 8c58cb38-4902-4891-a7fa-0a08c434ab36
+      position: {x: -535, y: 125}
+      nodeUIDs:
+      - c00942d1-b12c-458a-b496-19941b7eb766|0
+      flowUIDs:
+      - 7ea4b924-b664-4177-b01e-f37576b7429b
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: SystemSingle.__op_Inequality__SystemSingle_SystemSingle__SystemBoolean
+      uid: c00942d1-b12c-458a-b496-19941b7eb766
+      position: {x: -700, y: 200}
+      nodeUIDs:
+      - aa604403-69f5-4f66-b1fd-bf338821fa67|0
+      - d7bb3bef-b24f-41c6-89f2-ef3565e8ea52|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|0
+    - fullName: VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi
+      uid: e66ba070-37b1-48fc-8db5-25254e08bca6
+      position: {x: -135, y: 205}
+      nodeUIDs: []
+      flowUIDs: []
+      nodeValues: []
+    - fullName: Variable_SystemBoolean
+      uid: 3c9efe8e-be90-473a-a818-8e7c7bf274d0
+      position: {x: 0, y: 0}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|alwaysEnforceHeight
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|True
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: Get_Variable
+      uid: d588e000-f89d-46ef-be22-10f8e232331e
+      position: {x: -1135, y: -945}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|1251b3af-d4c4-4449-9cb1-e67c233e3715
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: 1c21bda9-6978-4fab-9009-d75b46101c5f
+      position: {x: -1235, y: -125}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|3c9efe8e-be90-473a-a818-8e7c7bf274d0
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: SystemBoolean.__op_LogicalAnd__SystemBoolean_SystemBoolean__SystemBoolean
+      uid: 7df817d0-361f-46b3-8369-0cb4ee093bab
+      position: {x: -1010, y: -215}
+      nodeUIDs:
+      - 395fc725-57d3-4f0d-bee3-a765f7259960|0
+      - 1c21bda9-6978-4fab-9009-d75b46101c5f|0
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi
+      uid: e55d229e-f2da-4601-b76e-2260b728224a
+      position: {x: -495, y: -150}
+      nodeUIDs: []
+      flowUIDs: []
+      nodeValues: []
+    - fullName: UnityEngineDebug.__Log__SystemObject__SystemVoid
+      uid: 001a1601-7f07-4a6d-80b0-555c304f3710
+      position: {x: -215, y: 555}
+      nodeUIDs:
+      - 05694561-f226-4fc7-87e7-f3497757d803
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: SystemString.__Format__SystemString_SystemObject__SystemString
+      uid: 05694561-f226-4fc7-87e7-f3497757d803
+      position: {x: -515, y: 630}
+      nodeUIDs:
+      - 
+      - 76634197-01b9-4ba2-b831-35bb3931e67d|0
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|[AvatarScalingSettings]
+          Enforcing height limit. The local player's avatar eye height has been clamped
+          to {0} meters.
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Block
+      uid: 7ea4b924-b664-4177-b01e-f37576b7429b
+      position: {x: -330, y: 130}
+      nodeUIDs: []
+      flowUIDs:
+      - a7aefd66-bfe6-4980-b790-dd056797f93b
+      - 001a1601-7f07-4a6d-80b0-555c304f3710
+      nodeValues: []
+    - fullName: Variable_SystemSingle
+      uid: 5257c1e1-d87f-4227-8b89-248ac6602782
+      position: {x: 0, y: 0}
+      nodeUIDs:
+      - 
+      - 
+      - 
+      - 
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|clampedHeight
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|none
+    - fullName: Set_Variable
+      uid: 0637e8f3-d89f-45a1-b4dc-f5ae561fb568
+      position: {x: 120, y: -335}
+      nodeUIDs:
+      - 
+      - 79c8e376-5cfd-4eff-9862-b015515d8796|0
+      - 
+      flowUIDs:
+      - 
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|5257c1e1-d87f-4227-8b89-248ac6602782
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089|False
+    - fullName: Get_Variable
+      uid: 4b4be2d3-ec9f-4143-92ee-b757c3a3b4d0
+      position: {x: -310, y: -155}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|e8ed8280-24c2-4e6c-a58e-f61e3ee36d96
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: 93fac913-ae6e-4fe8-8cb9-838e882a54b7
+      position: {x: -320, y: -65}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|1f342b36-6542-4990-9900-1565add01127
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: aa604403-69f5-4f66-b1fd-bf338821fa67
+      position: {x: -890, y: 200}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|5257c1e1-d87f-4227-8b89-248ac6602782
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi
+      uid: d2ed1053-45a5-4cce-a4d9-fa2224be68ce
+      position: {x: -1020, y: 375}
+      nodeUIDs: []
+      flowUIDs: []
+      nodeValues: []
+    - fullName: VRCSDKBaseVRCPlayerApi.__GetAvatarEyeHeightAsMeters__SystemSingle
+      uid: d7bb3bef-b24f-41c6-89f2-ef3565e8ea52
+      position: {x: -980, y: 285}
+      nodeUIDs:
+      - d2ed1053-45a5-4cce-a4d9-fa2224be68ce
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Block
+      uid: f3f1ef65-fa9d-4789-ab71-81e3f0d9cad1
+      position: {x: -650, y: -340}
+      nodeUIDs: []
+      flowUIDs:
+      - 0637e8f3-d89f-45a1-b4dc-f5ae561fb568
+      - 8c58cb38-4902-4891-a7fa-0a08c434ab36
+      nodeValues: []
+    - fullName: Get_Variable
+      uid: b4bd11db-3a6e-4545-a037-d1de3b7860c3
+      position: {x: -145, y: 295}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|5257c1e1-d87f-4227-8b89-248ac6602782
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: Get_Variable
+      uid: 76634197-01b9-4ba2-b831-35bb3931e67d
+      position: {x: -710, y: 670}
+      nodeUIDs:
+      - 
+      flowUIDs: []
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|5257c1e1-d87f-4227-8b89-248ac6602782
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    - fullName: VRCSDKBaseNetworking.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi
+      uid: 21c8babd-e5bb-4909-be93-a3db0cb67a5c
+      position: {x: -1835, y: -950}
+      nodeUIDs: []
+      flowUIDs: []
+      nodeValues: []
+    - fullName: Is_Valid
+      uid: 003ed3be-faa4-4897-935f-2c7dd434788f
+      position: {x: -1615, y: -1040}
+      nodeUIDs:
+      - 21c8babd-e5bb-4909-be93-a3db0cb67a5c|0
+      flowUIDs:
+      - 7b1c5d64-881f-4093-b2b8-367d3b87fc6c
+      nodeValues:
+      - unityObjectValue: {fileID: 0}
+        stringValue: 
+    updateOrder: 0
+  graphElementData:
+  - type: 2
+    uid: 2d459ad5-1e38-4419-8356-5ce3050aae72
+    jsonData: '{"uid":"2d459ad5-1e38-4419-8356-5ce3050aae72","layout":{"serializedVersion":"2","x":-1162.0001220703125,"y":-1101.0,"width":835.0,"height":273.0},"containedElements":["fa2a3e9e-1601-4ff7-824c-a90499f5bf0d","7dac345c-5970-4660-b99f-49a6716a9683","9a75d5d9-9d40-481c-a580-f9e77c112e9f","de7eb81c-bc68-4161-a7e0-e3efa64a2a1b","d588e000-f89d-46ef-be22-10f8e232331e"],"title":"Disable
+      avatar scaling.","layer":-1,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":1.0}}'
+  - type: 2
+    uid: 228020e2-ac0d-438c-bb0f-2c3762873f7f
+    jsonData: '{"uid":"228020e2-ac0d-438c-bb0f-2c3762873f7f","layout":{"serializedVersion":"2","x":-1436.0,"y":-807.9998779296875,"width":627.0,"height":276.0},"containedElements":["457a1281-2e06-4f64-bf9a-45f6d6326653","f841cfe0-914b-4128-af63-b330ab29b427","01ec84a0-1db5-4472-98f8-540904d44202","c05ddd62-f286-4135-9f80-37a29070ffb7"],"title":"Set
+      minimum height","layer":-1,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":1.0}}'
+  - type: 2
+    uid: ddb51be5-53a2-4890-9387-8d2d1d40f9c2
+    jsonData: '{"uid":"ddb51be5-53a2-4890-9387-8d2d1d40f9c2","layout":{"serializedVersion":"2","x":-792.9999389648438,"y":-813.9998779296875,"width":615.0,"height":288.0},"containedElements":["3f3b146a-ef6a-4409-9011-554f18ee0beb","c58d427a-32ef-4d6f-93cd-607dc55a0158","86e458db-9f45-496d-b611-d2bd0389b484","5281c230-00b1-48e7-9ee6-dda0de71b04b"],"title":"Set
+      maximum height","layer":-1,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":1.0}}'
+  - type: 2
+    uid: 7dbb843b-637d-4c3a-9cec-1231101ad30a
+    jsonData: '{"uid":"7dbb843b-637d-4c3a-9cec-1231101ad30a","layout":{"serializedVersion":"2","x":-319.00006103515627,"y":-1118.9998779296875,"width":427.0,"height":263.0},"containedElements":["93ca11da-f19e-409a-aaf6-84c31bdc4a3c","a540f548-d7b6-470c-b872-0abeb593fdd7"],"title":"Log
+      disabled state.","layer":-1,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":1.0}}'
+  - type: 2
+    uid: f45e3bc2-8711-40e3-a64b-2ce8d6760dfb
+    jsonData: '{"uid":"f45e3bc2-8711-40e3-a64b-2ce8d6760dfb","layout":{"serializedVersion":"2","x":-348.9999084472656,"y":-835.0000610351563,"width":688.0,"height":409.0},"containedElements":["33b9526a-156f-48dc-938e-e17a0579801b","4d8d8fc2-4de3-4087-a27a-52ca01448c36","9df96ba8-4eec-407f-9d67-5f8ebbe9ff91","291727a8-5ad8-4dcb-ad3d-3b78fd4d9996","501cfd9c-fb30-474a-95c0-cbf5b08b48e4","989d0b58-780c-4470-835d-8f5063e66e01","7aac2b11-3bfd-496d-8221-97292a500072","13714afc-cdaf-431e-8b9a-ed707ae524db","ad311d42-d593-4db1-8441-d198a164868b","b4f9e285-cb58-4576-814d-7b7c0d5fc647"],"title":"Log
+      minimum and maximum.","layer":-1,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":1.0}}'
+  - type: 2
+    uid: c2de7fd6-2e9e-4ea1-831c-42f93d161b71
+    jsonData: '{"uid":"c2de7fd6-2e9e-4ea1-831c-42f93d161b71","layout":{"serializedVersion":"2","x":-1262.0,"y":-392.9999694824219,"width":590.0,"height":375.0},"containedElements":["7df817d0-361f-46b3-8369-0cb4ee093bab","1c21bda9-6978-4fab-9009-d75b46101c5f","13050b32-bfbf-45e1-9128-e761adbaa2ff","395fc725-57d3-4f0d-bee3-a765f7259960"],"title":"Should
+      height be enforced?","layer":-1,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":1.0}}'
+  - type: 2
+    uid: d985ab69-151d-4a43-b794-a65e4ef18ede
+    jsonData: '{"uid":"d985ab69-151d-4a43-b794-a65e4ef18ede","layout":{"serializedVersion":"2","x":-171.0,"y":76.00000762939453,"width":533.0,"height":329.0},"containedElements":["e66ba070-37b1-48fc-8db5-25254e08bca6","a7aefd66-bfe6-4980-b790-dd056797f93b","b4bd11db-3a6e-4545-a037-d1de3b7860c3"],"title":"Clamp
+      height","layer":-1,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":1.0}}'
+  - type: 2
+    uid: ce65028d-4d22-4115-a624-ce2c4801e64a
+    jsonData: '{"uid":"ce65028d-4d22-4115-a624-ce2c4801e64a","layout":{"serializedVersion":"2","x":-521.0,"y":-391.0,"width":861.0,"height":432.0},"containedElements":["93fac913-ae6e-4fe8-8cb9-838e882a54b7","4b4be2d3-ec9f-4143-92ee-b757c3a3b4d0","e55d229e-f2da-4601-b76e-2260b728224a","79c8e376-5cfd-4eff-9862-b015515d8796","4aea68b6-bcfc-40ac-8cc3-a4314e4bd41f","0637e8f3-d89f-45a1-b4dc-f5ae561fb568"],"title":"Calculate
+      clamped height","layer":-1,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":1.0}}'
+  - type: 2
+    uid: 4b0f7172-3241-4969-9883-ab6347f4e075
+    jsonData: '{"uid":"4b0f7172-3241-4969-9883-ab6347f4e075","layout":{"serializedVersion":"2","x":-1043.0,"y":69.0,"width":671.0,"height":412.0},"containedElements":["d7bb3bef-b24f-41c6-89f2-ef3565e8ea52","d2ed1053-45a5-4cce-a4d9-fa2224be68ce","aa604403-69f5-4f66-b1fd-bf338821fa67","c00942d1-b12c-458a-b496-19941b7eb766","8c58cb38-4902-4891-a7fa-0a08c434ab36"],"title":"Is
+      height outside limit?","layer":-1,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":1.0}}'
+  - type: 2
+    uid: f37c9393-e4b0-4cf0-b97a-baf80e7bc99a
+    jsonData: '{"uid":"f37c9393-e4b0-4cf0-b97a-baf80e7bc99a","layout":{"serializedVersion":"2","x":-735.0,"y":497.9998474121094,"width":676.0,"height":281.0},"containedElements":["76634197-01b9-4ba2-b831-35bb3931e67d","05694561-f226-4fc7-87e7-f3497757d803","001a1601-7f07-4a6d-80b0-555c304f3710"],"title":"Log
+      clamped height","layer":-1,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":1.0}}'
+  - type: 2
+    uid: 55632920-34a6-4316-bc8c-fdf04da03f72
+    jsonData: '{"uid":"55632920-34a6-4316-bc8c-fdf04da03f72","layout":{"serializedVersion":"2","x":-1860.0,"y":-1100.0,"width":677.0,"height":256.0},"containedElements":["21c8babd-e5bb-4909-be93-a3db0cb67a5c","b9039d1c-d3c1-4007-adea-00b73e572896","7b1c5d64-881f-4093-b2b8-367d3b87fc6c","003ed3be-faa4-4897-935f-2c7dd434788f"],"title":"Prevent
+      this script from running without a valid player","layer":-1,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":1.0}}'
+  version: 1.0.0
+  showAssembly: 0

@@ -1,0 +1,973 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: Xiaobingge <3261590758@qq.com>\n"
+"PO-Revision-Date: 2025-09-06 18:50+0800\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh-Hans\n"
+
+#: Common
+
+msgid "OK"
+msgstr "确定"
+
+msgid "Add"
+msgstr "添加"
+
+msgid "Remove"
+msgstr "移除"
+
+#: For Docs
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Description"
+msgstr "描述"
+
+msgid "Property"
+msgstr "属性"
+
+msgid "Menu Location"
+msgstr "菜单位置"
+
+msgid "How to use"
+msgstr "使用方法"
+
+#: README
+
+msgid "Useful tool box"
+msgstr "实用工具箱"
+
+msgid "This package contains various useful editor extensions."
+msgstr "此包包含多种实用的编辑器扩展功能。"
+
+msgid "Document"
+msgstr "文档"
+
+msgid "Home"
+msgstr "主页"
+
+msgid "Search"
+msgstr "搜索"
+
+msgid "Display detailed list"
+msgstr "显示详细列表"
+
+msgid "Reset search"
+msgstr "重置搜索"
+
+msgid "Close search"
+msgstr "关闭搜索"
+
+msgid "No results for"
+msgstr "未找到结果"
+
+msgid "to select"
+msgstr "选择"
+
+msgid "enter"
+msgstr "回车"
+
+msgid "to navigate"
+msgstr "切换"
+
+msgid "up arrow"
+msgstr "上箭头"
+
+msgid "down arrow"
+msgstr "下箭头"
+
+msgid "to close"
+msgstr "关闭"
+
+msgid "escape"
+msgstr "ESC"
+
+msgid "Updated at"
+msgstr "更新时间"
+
+msgid "Documents"
+msgstr "文档列表"
+
+msgid "This is the documentation page for lilEditorToolbox."
+msgstr "这是 lilEditorToolbox 的文档页面。"
+
+#: AnimatorControllerEditorPatch/AnimatorControllerEditorMenu.cs
+
+msgid "AnimatorController related extension menus"
+msgstr "AnimatorController 相关扩展菜单"
+
+msgid "These are some additional menus related to the AnimatorController."
+msgstr "这些是一些与 AnimatorController 相关的附加菜单。"
+
+msgid "Detect and remove unnecessary sub-assets contained in AnimatorController."
+msgstr "检测并删除 AnimatorController 中不必要的子资源。"
+
+msgid "## Copy and paste menu for StateMachineBehavior"
+msgstr "## StateMachineBehaviour 的复制粘贴菜单"
+
+msgid "StateMachineBehaviour can be copied and pasted just like a component."
+msgstr "StateMachineBehaviour 可以像组件一样复制粘贴。"
+
+msgid "Allows you to create BlendTree like any other asset."
+msgstr "允许像创建其他资源一样创建 BlendTree。"
+
+#: AssetGrimoire/Grimoire.cs
+
+msgid "Missing Asset Identification Tool"
+msgstr "缺失资源识别工具"
+
+msgid "This tool identifies tools and shaders that are missing from your project by looking at the [GUID database](https://github.com/lilxyzw/guid_database). If the missing assets are registered in the database, they will be displayed in the Inspector of the material or component that is causing the error. The database can be updated by `Tools/lilEditorToolbox/[AssetGrimoire] Update Database`."
+msgstr "此工具通过查看 [GUID 数据库](https://github.com/lilxyzw/guid_database) 来识别项目中缺失的工具和着色器。如果缺失的资源已在数据库中注册，它们将显示在出错材质或组件的 Inspector 中。可以通过 `Tools/lilEditorToolbox/[AssetGrimoire] Update Database` 更新数据库。"
+
+msgid "<u>Selecting the component or material in error</u> will automatically display the information, unless the missing asset is not in the database, in which case nothing will be displayed."
+msgstr "<u>选择出错的组件或材质</u> 后将自动显示信息。但如果缺失的资源不在数据库中，则不会显示任何内容。"
+
+msgid "## Procedure for registering a tool that is not in the database"
+msgstr "## 注册数据库中不存在的工具的步骤"
+
+msgid "1. Select the target to register in the database in `Tools/lilEditorToolbox/[AssetGrimoire] Make Target (*)`  "
+msgstr "1. 在 `Tools/lilEditorToolbox/[AssetGrimoire] Make Target (*)` 中选择要注册到数据库中的目标"
+
+msgid "   -> `Make Target (Folder)` specifies the folder selected in the Project window as the target  "
+msgstr "   -> `Make Target (Folder)` 会将 Project 窗口中选中的文件夹作为目标"
+
+msgid "   -> `Make Target (Unitypackage)` specifies a unitypackage outside the project as a direct target"
+msgstr "   -> `Make Target (Unitypackage)` 会将项目外的 unitypackage 直接作为目标"
+
+msgid "2. The settings for the target specified in step 1 will be added to `Assets/GUIDList/`, so edit the settings as necessary."
+msgstr "2. 第一步中指定目标的设置将被添加到 `Assets/GUIDList/` 中，可根据需要进行编辑。"
+
+msgid "3. Click `Tools/lilEditorToolbox/[AssetGrimoire] Output GUIDs` and select the database output folder in the dialog."
+msgstr "3. 点击 `Tools/lilEditorToolbox/[AssetGrimoire] Output GUIDs`，在对话框中选择数据库输出文件夹。"
+
+msgid "4. Submit an additional request via a pull request for [guid_database](https://github.com/lilxyzw/guid_database)"
+msgstr "4. 通过 Pull Request 向 [guid_database](https://github.com/lilxyzw/guid_database) 提交添加请求"
+
+msgid "Missing assets"
+msgstr "缺失资源"
+
+msgid "Open web page"
+msgstr "打开网页"
+
+msgid "Add to VCC"
+msgstr "添加到 VCC"
+
+#: ImportExtension/UnityPackageImporter.cs
+
+msgid "Import directory"
+msgstr "导入目录"
+
+msgid "Show Import Window"
+msgstr "显示导入窗口"
+
+#: ProjectExtension/Components/IconOverlay.cs
+
+msgid "Target"
+msgstr "目标"
+
+msgid "Icon"
+msgstr "图标"
+
+msgid "Clip Bottom"
+msgstr "底部裁剪"
+
+msgid "Clip Top"
+msgstr "顶部裁剪"
+
+#: ToolbarExtension/Components/LockReloadAssembliesButton.cs
+
+msgid "Assemblies Locked"
+msgstr "程序集已锁定"
+
+msgid "Assemblies Unlocked"
+msgstr "程序集已解锁"
+
+#: EditorToolboxSettings.cs
+
+msgid "Project Settings"
+msgstr "项目设置"
+
+msgid "Setting Preset"
+msgstr "设置预设"
+
+msgid "New Preset"
+msgstr "新建预设"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "Settings related to lilEditorToolbox. You can open it from `Edit/Preference/lilEditorToolbox` on the menu bar, where you can change the language and enable various functions."
+msgstr "与 lilEditorToolbox 相关的设置。可通过菜单栏 `Edit/Preference/lilEditorToolbox` 打开，支持更改语言和启用各种功能。"
+
+msgid "Open preference folder"
+msgstr "打开设置文件夹"
+
+msgid "The language setting for lilEditorToolbox. The language file exists in `jp.lilxyzw.editortoolbox/Editor/Localization`, and you can support other languages by creating a language file."
+msgstr "lilEditorToolbox 的语言设置。语言文件位于 `jp.lilxyzw.editortoolbox/Editor/Localization`，你可以通过创建语言文件来支持其他语言。"
+
+#: EditorToolboxSettings.cs/AssetImport
+
+msgid "Asset Import"
+msgstr "资源导入"
+
+msgid "Drag And Drop Overwrite"
+msgstr "拖拽自动覆盖"
+
+msgid "When importing assets via D&D, if there is a file with the same name at the same level, it will be overwritten by the import."
+msgstr "通过拖拽导入资源时，如果同一层级存在同名文件，将被覆盖导入。"
+
+msgid "Cancel Unitypackage Overwrite In Packages"
+msgstr "禁止在 Packages 目录下覆盖 unitypackage 资源"
+
+msgid "Prevents unitypackage from overwriting assets under Packages."
+msgstr "防止 unitypackage 覆盖 Packages 目录下的资源。"
+
+msgid "Do Not Add Variant To The End Of Prefab Name"
+msgstr "不在 Prefab 名称末尾添加 \"Variant\""
+
+msgid "Do not add \"Variant\" to the end of the name when creating a Prefab Variant."
+msgstr "创建 Prefab Variant 时，不在名称末尾添加 \"Variant\"。"
+
+msgid "Add Unitypackage Directory Selection Menu"
+msgstr "添加 unitypackage 导入目录选择菜单"
+
+msgid "Add a button to change the import directory in the unitypackage import window."
+msgstr "在 unitypackage 导入窗口中添加更改导入目录的按钮。"
+
+#: EditorToolboxSettings.cs/TextureImport
+
+msgid "Texture Import"
+msgstr "纹理导入"
+
+msgid "Turn Off Crunch Compression"
+msgstr "自动关闭 Crunch 压缩"
+
+msgid "Automatically turn off Crunch Compression when importing textures to speed up imports."
+msgstr "导入纹理时自动关闭 Crunch 压缩以加快导入速度。"
+
+msgid "Turn On Streaming Mipmaps"
+msgstr "自动开启 Streaming Mipmaps"
+
+msgid "Automatically turn on `Streaming Mipmaps` when importing textures."
+msgstr "导入纹理时自动开启 `Streaming Mipmaps`。"
+
+msgid "Change To Kaiser Mipmaps"
+msgstr "自动切换为 Kaiser Mipmaps"
+
+msgid "Automatically change to `Kaiser` when importing texture."
+msgstr "导入纹理时自动切换为 `Kaiser` 类型。"
+
+#: EditorToolboxSettings.cs/ModelImport
+
+msgid "Model Import"
+msgstr "模型导入"
+
+msgid "Turn On Readable"
+msgstr "自动开启 Readable"
+
+msgid "Automatically turn on `Readable` when importing a model."
+msgstr "导入模型时自动开启 `Readable`。"
+
+msgid "Fix Blendshapes"
+msgstr "自动修复 BlendShapes 设置"
+
+msgid "Turn off `Legacy Blend Shape Normals` when importing a model to turn off automatic recalculation of BlendShape normals."
+msgstr "导入模型时关闭 `Legacy Blend Shape Normals` 以防止自动重新计算 BlendShape 法线。"
+
+msgid "Remove Jaw"
+msgstr "自动从 Humanoid 中移除 Jaw"
+
+msgid "When importing a model, if a bone that does not contain `jaw` (case insensitive) in the bone name is assigned to the Humanoid Jaw, it will be automatically unassigned."
+msgstr "导入模型时，如果分配给 Humanoid Jaw 的骨骼名称中不包含 `jaw`（不区分大小写），将自动取消分配。"
+
+#: EditorToolboxSettings.cs/AnimatorControllerEditor
+
+msgid "Animator Controller Editor"
+msgstr "动画控制器编辑器"
+
+msgid "Default Layer Weight 1"
+msgstr "默认 Layer Weight 为 1"
+
+msgid "Change the default Layer Weight value to 1 when creating a new layer."
+msgstr "创建新层时，将默认 Layer Weight 值设为 1。"
+
+msgid "Default Write Defaults Off"
+msgstr "默认关闭 Write Defaults"
+
+msgid "Change the default value of Write Defaults when creating a new state to off."
+msgstr "创建新状态时，将 Write Defaults 默认值设为关闭。"
+
+msgid "Default Has Exit Time Off"
+msgstr "默认关闭 Has Exit Time"
+
+msgid "Change the default value of Has Exit Time when creating a new transition to off."
+msgstr "创建新过渡时，将 Has Exit Time 默认值设为关闭。"
+
+msgid "Default Exit Time 1"
+msgstr "默认 Exit Time 为 1"
+
+msgid "Change the default value of Exit Time when creating a new transition to 1."
+msgstr "创建新过渡时，将 Exit Time 默认值设为 1。"
+
+msgid "Default Duration 0"
+msgstr "默认 Duration 为 0"
+
+msgid "Change the default value of Duration when creating a new transition to 0."
+msgstr "创建新过渡时，将 Duration 默认值设为 0。"
+
+msgid "Default Can Transition Self Off"
+msgstr "默认关闭 Can Transition Self"
+
+msgid "Change the default value of Can Transition Self when creating a new transition to off."
+msgstr "创建新过渡时，将 Can Transition Self 默认值设为关闭。"
+
+msgid "Extend Animator Controller Parameter GUI"
+msgstr "扩展动画控制器参数编辑界面"
+
+msgid "The Animator Controller parameter type has been expanded to allow it to be changed, and a decimal point will be displayed if the type is Float, making it easier to distinguish from Int types."
+msgstr "扩展了动画控制器参数类型，支持修改类型，Float 类型会显示小数点，便于与 Int 类型区分。"
+
+msgid "Add Copy And Paste Layer Menu"
+msgstr "添加图层复制粘贴菜单"
+
+msgid "Add copy and paste to the right-click menu of the Animator Controller layer."
+msgstr "在动画控制器图层的右键菜单中添加复制和粘贴功能。"
+
+msgid "Add Copy Transition Settings Menu"
+msgstr "添加过渡设置复制菜单"
+
+msgid "Add copy and paste settings to the transition right-click menu."
+msgstr "在过渡的右键菜单中添加复制和粘贴设置功能。"
+
+msgid "Add Select In Out Transitions Menu"
+msgstr "添加入/出过渡批量选择菜单"
+
+msgid "Add a bulk selection menu for entering and exiting transitions to the state right-click menu."
+msgstr "在状态的右键菜单中添加批量选择入/出过渡的功能。"
+
+msgid "Add Parameter References Menu"
+msgstr "添加参数引用显示菜单"
+
+msgid "Add a menu to the right-click menu of parameters that displays the referenced transition state."
+msgstr "在参数的右键菜单中添加显示引用过渡状态的菜单。"
+
+msgid "Make Transition With Double Click"
+msgstr "双击创建过渡"
+
+msgid "Make transition when you double-click a state."
+msgstr "双击状态时创建过渡。"
+
+msgid "Fix Copy Interruption Settings"
+msgstr "修复复制中断设置"
+
+msgid "Fix a Unity bug where transition Interruption settings were not copied."
+msgstr "修复 Unity 中过渡中断设置未被复制的 bug。"
+
+msgid "Fix Transition Condition GUI"
+msgstr "修复过渡条件设置界面"
+
+msgid "When changing a parameter in the transition condition settings, if the destination is an Int type, the default value will be Equals."
+msgstr "在过渡条件设置中更改参数时，如果目标为 Int 类型，则默认值为 Equals。"
+
+msgid "Fix State Multiple Edit"
+msgstr "修复状态同时编辑问题"
+
+msgid "Fix a Unity bug that caused some properties to be overwritten when editing multiple states at the same time."
+msgstr "修复同时编辑多个状态时部分属性被覆盖的 Unity bug。"
+
+#: EditorToolboxSettings.cs/HierarchyExtension
+
+msgid "Hierarchy Extension"
+msgstr "层级窗口扩展"
+
+msgid "You can display objects, components, tags, layers, etc. on the Hierarchy. You can also add your own extensions by implementing `IHierarchyExtensionConponent`. Please refer to the scripts under `Editor/HierarchyExtension/Components` for how to write them."
+msgstr "你可以在层级窗口中显示对象、组件、标签、图层等。还可以通过实现 `IHierarchyExtensionConponent` 来添加自定义扩展。编写方法请参考 `Editor/HierarchyExtension/Components` 下的脚本。"
+
+#: EditorToolboxSettings.cs/HierarchyExtension
+
+msgid "Hierarchy Extension"
+msgstr "层级窗口扩展"
+
+msgid "You can display objects, components, tags, layers, etc. on the Hierarchy. You can also add your own extensions by implementing `IHierarchyExtensionConponent`. Please refer to the scripts under `Editor/HierarchyExtension/Components` for how to write them."
+msgstr "你可以在层级窗口中显示对象开关状态、组件、标签、图层等信息。也可以通过实现 `IHierarchyExtensionConponent` 接口来添加自定义扩展。具体写法请参考 `Editor/HierarchyExtension/Components` 目录下的脚本。"
+
+msgid "Hierarchy Spacer Width"
+msgstr "层级间隔宽度"
+
+msgid "The width of the margin to avoid interfering with other Hierarchy extensions."
+msgstr "为避免与其他层级扩展冲突而预留的空白宽度。"
+
+msgid "Hierarchy Spacer Priority"
+msgstr "层级间隔优先级"
+
+msgid "This is the timing to insert margins so as not to interfere with other Hierarchy extensions."
+msgstr "插入空白以避免与其他层级扩展冲突的时机。"
+
+msgid "Hierarchy Mouse Button"
+msgstr "层级鼠标按键"
+
+msgid "This is the mouse button that the hierarchy window extension that supports this property will respond to. If you make many erroneous operations, please change the button."
+msgstr "响应该属性的层级窗口扩展所绑定的鼠标按键。如果误操作过多，请更换按键。"
+
+msgid "Hierarchy Layer And Tag Side By Side"
+msgstr "层级中Layer与Tag并排显示"
+
+msgid "Displays Layer and Tag side by side."
+msgstr "将Layer与Tag并排显示在层级中。"
+
+msgid "Hierarchy Spacer"
+msgstr "层级间隔"
+
+msgid "Add margins so as not to interfere with other Hierarchy extensions."
+msgstr "添加空白以避免与其他层级扩展冲突。"
+
+msgid "Active Toggle"
+msgstr "激活开关"
+
+msgid "A checkbox that turns an object on and off."
+msgstr "用于开关对象的复选框。"
+
+msgid "Alternating Background"
+msgstr "交替背景色"
+
+msgid "Alternates the background color of the Hierarchy."
+msgstr "为层级窗口交替使用不同的背景色。"
+
+msgid "Object Marker Background"
+msgstr "对象标记背景色"
+
+msgid "Applies a background color to the ObjectMarker."
+msgstr "为带有ObjectMarker的对象应用背景色。"
+
+msgid "Children Drawer"
+msgstr "子对象组件"
+
+msgid "Displays the child components of an object."
+msgstr "显示对象的子级组件。"
+
+msgid "Components Drawer"
+msgstr "组件抽屉"
+
+msgid "Displays the object's components. You can turn components on or off by clicking their icons."
+msgstr "显示对象的组件。点击图标可开关对应组件。"
+
+msgid "Editor Only Label"
+msgstr "仅编辑器标签"
+
+msgid "Shows the icon if the object is EditorOnly."
+msgstr "如果对象标记为EditorOnly，则显示图标。"
+
+msgid "Hierarchy Line"
+msgstr "层级连线"
+
+msgid "Displays lines representing the parent-child relationships of objects in the Hierarchy."
+msgstr "在层级窗口绘制表示对象父子关系的连线。"
+
+msgid "Layer And Tag"
+msgstr "图层与标签"
+
+msgid "Displays the layer and tag of an object."
+msgstr "显示对象的图层和标签。"
+
+#: EditorToolboxSettings.cs/ProjectExtension
+
+msgid "Project Extension"
+msgstr "项目窗口扩展"
+
+msgid "You can display extensions and prefab information on the project. You can also add your own extensions by implementing `IProjectExtensionConponent`. Please refer to the script under `Editor/ProjectExtension/Components` for how to write it."
+msgstr "你可以在项目窗口中显示扩展名、预制体信息等。也可以通过实现 `IProjectExtensionConponent` 接口来添加自定义扩展。具体写法请参考 `Editor/ProjectExtension/Components` 目录下的脚本。"
+
+msgid "Project Line"
+msgstr "项目文件层级线"
+
+msgid "Displays lines that represent the hierarchy of files."
+msgstr "绘制表示文件层级结构的连线。"
+
+msgid "Overlay File In Folder"
+msgstr "文件夹内文件叠加"
+
+msgid "Overlays the folder icon with the files inside."
+msgstr "在文件夹图标上叠加显示其内部的文件。"
+
+msgid "Icon Overlay"
+msgstr "图标叠加"
+
+msgid "Overlay any image on the icon."
+msgstr "在资源图标上叠加任意图片。"
+
+msgid "Alternating Project Background"
+msgstr "项目窗口交替背景"
+
+msgid "Alternates the background color of the Project window."
+msgstr "为项目窗口交替使用不同的背景色。"
+
+msgid "Unitypackage Hilighter"
+msgstr "Unitypackage高亮"
+
+msgid "Highlight the assets you imported in each Unitypackage."
+msgstr "高亮显示每次从Unitypackage导入的资源。"
+
+msgid "Extension Drawer"
+msgstr "扩展名显示"
+
+msgid "Displays the file extension."
+msgstr "显示文件扩展名。"
+
+msgid "Prefab Info"
+msgstr "预制体信息"
+
+msgid "Displays Prefab information."
+msgstr "显示预制体相关信息。"
+
+msgid "Material Variant"
+msgstr "材质变体"
+
+msgid "Displays the parent material if the material is a variant."
+msgstr "如果材质是变体，则显示其父材质。"
+
+msgid "Material Queue"
+msgstr "材质渲染队列"
+
+msgid "Displays the Render Queue for materials."
+msgstr "显示材质的渲染队列值。"
+
+msgid "Material Shader"
+msgstr "材质着色器"
+
+msgid "Displays the material's shader."
+msgstr "显示材质所用的着色器。"
+
+msgid "Asset Marker"
+msgstr "资源标记"
+
+msgid "Mark any asset to make it easier to find."
+msgstr "为资源添加标记，便于查找。"
+
+#: EditorToolboxSettings.cs/ToolbarExtension
+
+msgid "Toolbar Extension"
+msgstr "工具栏扩展"
+
+msgid "You can display an assembly lock button or an extension inspector tab on the Toolbar. You can also add your own extension by implementing `IToolbarExtensionComponent`. Please refer to the script under `Editor/ToolbarExtension/Components` for how to write it."
+msgstr "你可以在工具栏显示程序集锁定按钮或扩展 Inspector 标签页。也可以通过实现 `IToolbarExtensionComponent` 接口来添加自定义扩展。具体写法请参考 `Editor/ToolbarExtension/Components` 目录下的脚本。"
+
+msgid "Lock Reload Assemblies Button"
+msgstr "锁定程序集按钮"
+
+msgid "Locks the assembly to reduce the wait time for script compilation. This is useful if you frequently rewrite scripts."
+msgstr "锁定程序集以减少脚本编译等待时间。适合频繁修改脚本时使用。"
+
+msgid "Add Inspector Tab Button"
+msgstr "添加 Inspector 标签页按钮"
+
+msgid "Displays a button to add a tab to the Inspector that is locked on the selected object."
+msgstr "显示一个按钮，用于将锁定当前选中对象的 Inspector 添加为标签页。"
+
+#: EditorToolboxSettings.cs/MenuDirectoryReplaces
+
+msgid "Menu Directory Replaces"
+msgstr "菜单层级修改与删除"
+
+msgid "You can customize the menu bar by changing or deleting the menu hierarchy. You can also edit multiple menus at once by specifying `Tools/*`."
+msgstr "你可以通过修改或删除菜单层级来自定义菜单栏。也可以通过指定 `Tools/*` 来批量编辑多个菜单。"
+
+msgid "Some menu items may not be compatible with replacement."
+msgstr "部分菜单项可能不支持替换。"
+
+msgid "Enable Menu Directory Replaces"
+msgstr "启用菜单层级修改与删除"
+
+msgid "When this check box is selected, changing and deleting the menu hierarchy is enabled."
+msgstr "勾选此复选框后，将允许修改和删除菜单层级。"
+
+msgid "Add the menu to be changed here. If To is empty, the menu will be deleted, if it is not empty, it will be moved to that hierarchy."
+msgstr "在此处添加要修改的菜单。如果“目标”为空，则删除该菜单；否则将其移动到指定层级。"
+
+#: FolderOpener.cs
+
+msgid "Tool to open Unity-related folders"
+msgstr "打开 Unity 相关文件夹的工具"
+
+msgid "You can open folders used by Unity with one click. You can easily open folders that you may want to check occasionally, such as the location of configuration files or the location of unity packages on the asset store."
+msgstr "你可以一键打开 Unity 使用的文件夹。轻松访问配置文件路径、AssetStore 下载的 unitypackage 位置等偶尔需要查看的目录。"
+
+#: JsonObjectViewer.cs
+
+msgid "A tool to view and edit any object in json format"
+msgstr "以 JSON 格式查看并编辑任意对象的工具"
+
+msgid "For developers. When editing an Object as a SerializedObject, if you need to check the property names or structure, you can display it as JSON to quickly check the contents. You can also edit JSON directly and reflect it in the Object."
+msgstr "面向开发者。使用 SerializedObject 编辑对象时，若需查看属性名称或结构，可将其以 JSON 形式展示，快速确认内容。也可以直接编辑 JSON 并回写到对象。"
+
+msgid "Refresh"
+msgstr "刷新"
+
+msgid "Apply Modification"
+msgstr "应用修改"
+
+#: MissingFinder.cs
+
+msgid "Missing reference finder tool"
+msgstr "缺失引用查找工具"
+
+msgid "You can find missing parts in any object. Use it to check if a reference has been broken due to missing prerequisite assets or file deletion."
+msgstr "可查找任意对象中的缺失引用。用于检查因缺少前置资源或文件被删导致的引用断裂。"
+
+msgid "No object selected."
+msgstr "未选中对象。"
+
+msgid "There are probably no missing references."
+msgstr "暂无缺失引用。"
+
+msgid "Objects with Missing References"
+msgstr "包含缺失引用的对象"
+
+#: PlayModeSaver.cs
+
+msgid "Save changes in PlayMode"
+msgstr "保存 PlayMode 下的修改"
+
+msgid "Values changed in PlayMode can be maintained even after exiting PlayMode. Click the hamburger menu in the upper right corner of each component and select `Save changes in PlayMode` to save the changes to that component."
+msgstr "在 PlayMode 中修改的数值可在退出 PlayMode 后保留。点击组件右上角汉堡菜单，选择「保存 PlayMode 下的修改」即可保存该组件的变动。"
+
+#: ReferenceReplacer.cs
+
+msgid "Batch replacement tool for all object references"
+msgstr "批量替换所有对象引用工具"
+
+msgid "Replace all object references in all objects at once. For example, you can replace the avatar's materials all at once, or even replace the textures within the materials at once."
+msgstr "一次性替换所有对象中的引用。例如，可批量替换 avatar 的所有材质，甚至一并替换材质内部的纹理。"
+
+msgid "Simply set the object you want to edit (such as an avatar) to `Edit target`, and set the objects before and after the modification to `From` and `To`! When you press the execute button, all references will be replaced and the edited results will be displayed."
+msgstr "只需将待编辑对象（如 avatar）设为「编辑目标」，把修改前后的资源分别拖到「替换前」和「替换后」，点击执行即可全部替换，并展示编辑结果。"
+
+msgid "Edit target"
+msgstr "编辑目标"
+
+msgid "This is the object to be edited."
+msgstr "要执行编辑的对象。"
+
+msgid "From"
+msgstr "替换前"
+
+msgid "The object before replacement."
+msgstr "替换前的对象。"
+
+msgid "To"
+msgstr "替换后"
+
+msgid "This is the object after replacement."
+msgstr "替换后的对象。"
+
+msgid "Run"
+msgstr "执行"
+
+msgid "Please open a scene before running."
+msgstr "执行前请先打开一个场景。"
+
+msgid "Complete!"
+msgstr "完成！"
+
+msgid "Modified Objects"
+msgstr "已修改对象"
+
+msgid "The objects that have been edited."
+msgstr "发生修改的对象列表。"
+
+#: SceneCapture.cs
+
+msgid "High-resolution capture tool for Scene View"
+msgstr "Scene 视图高分辨率截图工具"
+
+msgid "This tool captures the screen displayed in Scene View as is and saves it as an image. You can capture only specific objects and output with transparency."
+msgstr "该工具可将 Scene 视图画面原样截屏并保存为图片。支持仅截取指定对象，并可带透明通道输出。"
+
+msgid "<u>Just set the resolution and press the `Capture` button!</u> You can also capture only the objects selected in the Hierarchy by checking `Capture only selected objects`."
+msgstr "<u>只需设置分辨率并点击「截图」按钮！</u> 勾选「仅截图选中对象」后，可仅对 Hierarchy 中选中对象进行截图。"
+
+msgid "Scene View is not open."
+msgstr "未打开 Scene 视图。"
+
+msgid "Capture only selected objects"
+msgstr "仅截图选中对象"
+
+msgid "No GameObject is selected."
+msgstr "未选中任何 GameObject。"
+
+msgid "Fit Aspect Ratio to Scene View"
+msgstr "适配 Scene 视图宽高比"
+
+msgid "Width"
+msgstr "宽度"
+
+msgid "Height"
+msgstr "高度"
+
+msgid "Capture"
+msgstr "截图"
+
+msgid "Finish!"
+msgstr "截图完成！"
+
+#: SceneExtension.cs
+
+msgid "Scene View Extensions"
+msgstr "场景视图扩展"
+
+msgid "A button to turn on anti-aliasing in the scene view and a camera mode (Vertex Attribute) has been added to check the vertex data of the model."
+msgstr "新增场景视图抗锯齿开关按钮，以及用于查看模型顶点数据的相机模式（顶点属性）。"
+
+msgid "> Some functions do not work in the Metal environment because the camera mode extension uses a geometry shader."
+msgstr "> 由于相机模式扩展使用了几何着色器，部分功能在 Metal 环境下无法使用。"
+
+msgid "Click the MSAA button on the toolbar above the Scene View to toggle anti-aliasing on and off. Anti-aliasing is always applied, allowing you to adjust materials in a way that is close to how they will actually appear."
+msgstr "点击 Scene View 上方工具栏的 MSAA 按钮可切换抗锯齿开关。抗锯齿始终生效，让你能在接近最终效果的状态下调整材质。"
+
+msgid "## Camera Modes"
+msgstr "## 相机模式"
+
+msgid "This extension function will be enabled when you click the camera mode change button (which switches to Wireframe display, etc.) on the toolbar above the Scene View and select Vertex Attribute. A popup will appear in the upper left of the Scene View that allows you to switch the vertex data to be displayed, so you can change this to check the desired data."
+msgstr "点击 Scene View 上方工具栏的相机模式切换按钮（可切换至线框显示等）并选择「顶点属性」后，该扩展功能即被启用。Scene View 左上角会出现一个弹出菜单，可切换要显示的顶点数据，便于查看所需信息。"
+
+#: SelectionInventory.cs
+
+msgid "Inventory for any object"
+msgstr "任意对象收纳箱"
+
+msgid "This is an inventory that allows you to place any object, assets, folders, etc. Click on the added item to select it immediately."
+msgstr "可将任意对象、资源、文件夹等拖入收纳箱。点击已添加项即可立即选中。"
+
+msgid "Add Something Here By Drag And Drop"
+msgstr "拖放任意对象到此处"
+
+msgid "Remove from inventory"
+msgstr "从收纳箱移除"
+
+#: ShaderKeywordViewer.cs
+
+msgid "Shader keyword check tool"
+msgstr "Shader 关键字查看工具"
+
+msgid "A tool for shader developers. You can check shader keywords for each shader stage."
+msgstr "面向着色器开发者。可按着色器阶段查看关键字。"
+
+msgid "The shader keywords for <u>the shader selected in the Project window</u> are displayed for each pass and shader stage. This can be used to prevent unnecessary shader keywords from increasing the build size, or to identify cases where a missing shader keyword causes the shader to behave unexpectedly."
+msgstr "将<u>Project 窗口中选中的着色器</u>的关键字按 Pass 和着色器阶段列出。可用于排查无用关键字导致构建体积增大，或关键字缺失引发着色器行为异常等问题。"
+
+msgid "Show builtin keywords"
+msgstr "显示内置关键字"
+
+msgid "Global Keywords"
+msgstr "全局关键字"
+
+msgid "Local Keywords"
+msgstr "局部关键字"
+
+msgid "Builtin Keywords"
+msgstr "内置关键字"
+
+#: TabInspector.cs
+
+msgid "Extended Inspector"
+msgstr "扩展 Inspector"
+
+msgid "This allows you to treat the Inspector like a browser tab. This is an Inspector that is fixed to one object, so the display content does not change even if you select another object. This window is not opened from the menu bar, but from the + icon on the toolbar at the top of Unity. If you do not have the + icon, you can add it by turning on the `Add Inspector Tab Button` in the Toolbar Extensions of Preferences."
+msgstr "让 Inspector 像浏览器标签页一样工作。该 Inspector 固定于单个对象，切换选择时内容保持不变。窗口不从菜单栏打开，而是通过 Unity 顶部工具栏的「+」图标开启。若无「+」图标，请在 Preferences 的 Toolbar Extensions 中开启「添加 Inspector 标签页按钮」。"
+
+msgid "Normal"
+msgstr "普通"
+
+msgid "This is a regular Inspector."
+msgstr "常规 Inspector。"
+
+msgid "Debug"
+msgstr "调试"
+
+msgid "Inspector for debugging. Normally, you do not need to use it."
+msgstr "调试专用 Inspector，通常无需使用。"
+
+msgid "Developer"
+msgstr "开发者"
+
+msgid "This is a special Inspector that can only be seen in developer mode."
+msgstr "开发者模式下可见的专用 Inspector。"
+
+msgid "Close this tab."
+msgstr "关闭当前标签页。"
+
+#: TexturePacker.cs
+
+msgid "Texture Channel Packing Tool"
+msgstr "纹理通道合并工具"
+
+msgid "Stores multiple textures in the RGBA channels of a single texture. Intended for use with Standard Shader PBR materials."
+msgstr "将多张纹理合并到单张纹理的 RGBA 通道，适用于 Standard Shader PBR 材质。"
+
+msgid "Simply set a texture for each channel and output it. For example, if you have multiple PBR textures you want to use with the Standard shader, you can combine them into a single image by setting Metallic to R, Smoothness to A, and Occlusion to G, and then setting the `Channel to be used` for each to R and outputting them."
+msgstr "只需为各通道指定纹理并输出即可。例如，将 Metallic 贴到 R、Smoothness 贴到 A、Occlusion 贴到 G，再把「使用通道」都设为 R，即可合并成一张图。"
+
+msgid "R Channel"
+msgstr "R 通道"
+
+msgid "G Channel"
+msgstr "G 通道"
+
+msgid "B Channel"
+msgstr "B 通道"
+
+msgid "A Channel"
+msgstr "A 通道"
+
+msgid "Export Texture"
+msgstr "导出纹理"
+
+msgid "Channel to use"
+msgstr "使用通道"
+
+msgid "Default value"
+msgstr "填充值"
+
+#: TransformResetter.cs
+
+msgid "Transform Initialization/Copy Tool"
+msgstr "Transform 初始化/复制工具"
+
+msgid "You can restore the Transform of any object to its prefab state or copy it from another object. It is intended to be used when an avatar is stuck in a crouching position and cannot return to its original position."
+msgstr "可将任意对象的 Transform 恢复为预制体状态，或从其他对象复制。适用于角色卡在蹲姿无法复原等情况。"
+
+msgid "Just set the crouching avatar and costume to `Editing target` and press the button. Generally, `Reset to prefab` is recommended, but if the reference is broken when unpacking the prefab, use `Reset to animator`. If you can't do that with a costume that is not set to Humanoid, set the original prefab to the copy source of `Copy from other object` and press the button to copy the state from the prefab."
+msgstr "只需将卡住的角色或服装拖入「编辑目标」并点击按钮。通常建议「恢复到预制体」；若预制体解包后引用丢失，则改用「恢复到 Animator」。非 Humanoid 服装无法使用时，可将原预制体设为「从其他对象复制」的源，点击按钮即可复制状态。"
+
+msgid "This is the target for Transform editing."
+msgstr "要编辑 Transform 的目标。"
+
+msgid "Reset to prefab"
+msgstr "恢复到预制体"
+
+msgid "Resets the prefab to its initial state. This is only available when the prefab has not been unpacked."
+msgstr "将预制体恢复到初始状态，仅限未解包时使用。"
+
+msgid "Reset to animator"
+msgstr "恢复到 Animator"
+
+msgid "Resets the Animator to its initial state. Use this if you have unpacked the Prefab."
+msgstr "将 Animator 恢复到初始状态，适用于已解包预制体的情况。"
+
+msgid "Copy from other object"
+msgstr "从其他对象复制"
+
+msgid "Copies the Transform from another selected object. Use this when neither of the above menus can be used."
+msgstr "从选中的其他对象复制 Transform。上述两项不可用时使用。"
+
+msgid "Copy from"
+msgstr "复制来源"
+
+msgid "This is the source of the Transform copy. The object will be copied from this object to the one being edited."
+msgstr "复制 Transform 的源对象，其状态将被复制到编辑目标。"
+
+msgid "All transforms"
+msgstr "所有 Transform"
+
+msgid "The process is performed on all Transforms."
+msgstr "对所有 Transform 执行操作。"
+
+msgid "Humanoid transforms"
+msgstr "仅 Humanoid"
+
+msgid "The process is performed on humanoid bones."
+msgstr "仅对 Humanoid 骨骼执行操作。"
+
+#: runtime/CameraMover.cs
+
+msgid "By attaching this component to a camera, you can control the camera with WASDQE."
+msgstr "将此组件挂载到摄像机上后，即可使用 WASDQE 键控制摄像机。"
+
+msgid "Just attach the component to the camera object and press the `Operate` button. You can end the interaction by clicking it again or pressing the escape key."
+msgstr "只需把组件拖到摄像机对象上，点击「操作」按钮即可开始。再次点击或按 Esc 键可结束操作。"
+
+msgid "The moving speed of the camera."
+msgstr "摄像机的移动速度。"
+
+msgid "The amount the camera rotates when you move the mouse."
+msgstr "鼠标移动时摄像机的旋转幅度。"
+
+msgid "W: Front"
+msgstr "W：前进"
+
+msgid "A: Left"
+msgstr "A：向左"
+
+msgid "S: Back"
+msgstr "S：后退"
+
+msgid "D: Right"
+msgstr "D：向右"
+
+msgid "Q: Up"
+msgstr "Q：上升"
+
+msgid "E: Down"
+msgstr "E：下降"
+
+msgid "Esc: End"
+msgstr "Esc：结束操作"
+
+msgid "Wheel: Change Scroll Speed"
+msgstr "滚轮：调整移动速度"
+
+msgid "Operate"
+msgstr "操作"
+
+#: runtime/CustomFalloff.cs
+
+msgid "By attaching this component to any object, you can customize its behavior during light mapping."
+msgstr "将此组件挂载到任意对象后，可在光照贴图阶段自定义其行为。"
+
+msgid "You can use it just by attaching this component to any object in the scene. Some settings cannot be changed from Unity's UI, so you need to use this component."
+msgstr "只需在场景中的任意对象上挂载该组件即可使用。部分设置无法通过 Unity 界面调整，因此需要借助此组件。"
+
+msgid "Falloff Type"
+msgstr "衰减类型"
+
+msgid "The type of light attenuation. InverseSquared is a darker but physically correct attenuation than the default. InverseSquaredNoRangeAttenuation is also physically correct but ignores the range parameter. Linear is a non-physically correct linear attenuation, Legacy is the quadratic attenuation that Unity uses by default."
+msgstr "光照衰减类型。InverseSquared 比默认设置更暗但符合物理；InverseSquaredNoRangeAttenuation 同样物理正确，但忽略范围参数；Linear 为非物理的线性衰减；Legacy 为 Unity 默认的二次衰减。"
+
+msgid "Intensity Multiplier"
+msgstr "强度倍数"
+
+msgid "Multiplier for the light intensity. Does not affect directional lights. This option applies to non-directional lights, as it is intended to be used to adjust darkened scenes by changing the type of attenuation."
+msgstr "光照强度倍数，不影响方向光。仅用于非方向光，旨在通过改变衰减类型来补偿变暗的场景。"
+
+msgid "Range Multiplier"
+msgstr "范围倍数"
+
+msgid "Multiplier for the light range. Does not affect directional lights. This option applies to non-directional lights, as it is intended to be used to adjust darkened scenes by changing the type of attenuation."
+msgstr "光照范围倍数，不影响方向光。仅用于非方向光，旨在通过改变衰减类型来补偿变暗的场景。"
+
+#: runtime/ObjectMarker.cs
+
+msgid "By attaching this component to a GameObject, you can change the background color of the hierarchy to highlight it."
+msgstr "将此组件挂载到 GameObject 后，可更改其在层级窗口的背景色，实现高亮显示。"
+
+msgid "It is intended to be used to organize the hierarchy. For example, you can create a GameObject named `Summer`, add an ObjectMarker component, and place summer costumes under it, and similarly create `Autumn` and place autumn costumes under it, etc."
+msgstr "主要用于层级整理。例如创建名为「Summer」的 GameObject 并添加 ObjectMarker，再将夏季服装放到其下；同样可创建「Autumn」并放置秋季服装，以此类推。"
+
+msgid "Color"
+msgstr "颜色"
+
+msgid "Underline"
+msgstr "下划线"
+
+msgid "The background color. You can set the color using the color picker."
+msgstr "背景颜色，可通过颜色选择器设置。"
+
+msgid "Instead of painting the color over the entire background, it paints it as an underline."
+msgstr "不再整行填充背景色，仅绘制下划线。"
+
+#: runtime/SceneMSAA.cs
+
+msgid "Merged into [Scene View Extension](../SceneExtension)."
+msgstr "已合并至 [场景视图扩展](../SceneExtension)。"

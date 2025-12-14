@@ -1,0 +1,66 @@
+﻿.row {
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.col {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.d-none {
+    display: none;
+}
+
+.options-popup-content
+{
+    padding: 4px;
+}
+
+#label {
+    min-width: 135px;
+}
+
+.option {
+    padding: 0;
+    margin: 1px 5px 5px 0;
+    flex-direction: row;
+    align-items: center;
+}
+
+.option Toggle {
+    border-bottom-width: 0;
+}
+
+.option Label {
+    margin-left: 4px;
+}
+
+/* We need to use a specific name to have these styles override the base USS */
+#dropdown #popup-button
+{
+    -unity-text-align: middle-left;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: 12px;
+    margin-left: 0;
+    margin-right: 0;
+    flex-direction: row;
+}
+
+#dropdown Button VisualElement {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    flex-direction: row;
+}
+
+#dropdown Button #spacer {
+    flex-grow: 1;
+}
+
+#dropdown Button #arrow {
+    background-image: resource("d_dropdown.png");
+    width: 12px;
+    height: 12px;
+    align-self: center;
+}

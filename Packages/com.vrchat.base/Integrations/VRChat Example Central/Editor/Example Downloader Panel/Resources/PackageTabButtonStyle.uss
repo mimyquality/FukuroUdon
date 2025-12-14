@@ -1,0 +1,28 @@
+
+#container {
+    flex-grow: 0; 
+    flex-shrink: 0; 
+    height: 40px; 
+    background-color: rgb(41, 41, 41); 
+    margin-bottom: 1px;
+}
+
+#selection-element {
+    flex-grow: 1; 
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    bottom: 0; 
+    background-color: rgb(56, 56, 56); 
+    display: none; 
+    left: 0;
+}
+
+#container Label {
+    flex-grow: 1; 
+    -unity-text-align: middle-left; 
+    margin-left: 16px; 
+    font-size: 14px; 
+    -unity-font-style: bold; 
+    color: rgb(255, 255, 255);
+}

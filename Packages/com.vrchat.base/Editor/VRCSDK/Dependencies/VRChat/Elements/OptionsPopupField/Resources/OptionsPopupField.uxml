@@ -1,0 +1,6 @@
+﻿<UXML xmlns="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <VisualElement class="col align-items-stretch">
+        <Label name="label" class="mt-2 text-bold mb-2" />
+        <VisualElement name="dropdown" class="align-self-stretch" />
+    </VisualElement>
+</UXML>

@@ -1,0 +1,1041 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja-JP\n"
+
+
+
+#: Common
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Add"
+msgstr "追加"
+
+msgid "Remove"
+msgstr "削除"
+
+
+
+#: For Docs
+
+msgid "Name"
+msgstr "名前"
+
+msgid "Description"
+msgstr "説明"
+
+msgid "Property"
+msgstr "プロパティ"
+
+msgid "Menu Location"
+msgstr "メニューの場所"
+
+msgid "How to use"
+msgstr "使い方"
+
+
+
+#: README
+
+msgid "Useful tool box"
+msgstr "便利ツール集"
+
+msgid "This package contains various useful editor extensions."
+msgstr "様々な便利系エディタ拡張が入ったパッケージです。"
+
+msgid "Document"
+msgstr "ドキュメント"
+
+msgid "Home"
+msgstr "ホーム"
+
+msgid "Search"
+msgstr "検索"
+
+msgid "Display detailed list"
+msgstr "詳細リストを表示"
+
+msgid "Reset search"
+msgstr "検索条件を削除"
+
+msgid "Close search"
+msgstr "検索を閉じる"
+
+msgid "No results for"
+msgstr "見つかりませんでした。"
+
+msgid "to select"
+msgstr "選択"
+
+msgid "enter"
+msgstr "エンター"
+
+msgid "to navigate"
+msgstr "切り替え"
+
+msgid "up arrow"
+msgstr "上矢印"
+
+msgid "down arrow"
+msgstr "下矢印"
+
+msgid "to close"
+msgstr "閉じる"
+
+msgid "escape"
+msgstr "エスケープ"
+
+msgid "Updated at"
+msgstr "最終更新"
+
+msgid "Documents"
+msgstr "ドキュメント一覧"
+
+msgid "This is the documentation page for lilEditorToolbox."
+msgstr "lilEditorToolboxのドキュメントページです。"
+
+
+
+#: AnimatorControllerEditorPatch/AnimatorControllerEditorMenu.cs
+
+msgid "AnimatorController related extension menus"
+msgstr "AnimatorController関係の拡張メニュー"
+
+msgid "These are some additional menus related to the AnimatorController."
+msgstr "これらはAnimatorControllerに関連したいくつかの追加メニューです。"
+
+msgid "Detect and remove unnecessary sub-assets contained in AnimatorController."
+msgstr "AnimatorControllerに含まれる不要なサブアセットを検出して除去します。"
+
+msgid "## Copy and paste menu for StateMachineBehavior"
+msgstr "## StateMachineBehaviourのコピーアンドペーストメニュー"
+
+msgid "StateMachineBehaviour can be copied and pasted just like a component."
+msgstr "StateMachineBehaviourをコンポーネント同様にコピーアンドペースト可能にします。"
+
+msgid "Allows you to create BlendTree like any other asset."
+msgstr "BlendTreeを他のアセット同様に作成可能にします。"
+
+
+
+#: AssetGrimoire/Grimoire.cs
+
+msgid "Missing Asset Identification Tool"
+msgstr "不足アセット特定ツール"
+
+msgid "This tool identifies tools and shaders that are missing from your project by looking at the [GUID database](https://github.com/lilxyzw/guid_database). If the missing assets are registered in the database, they will be displayed in the Inspector of the material or component that is causing the error. The database can be updated by `Tools/lilEditorToolbox/[AssetGrimoire] Update Database`."
+msgstr "[GUIDのデータベース](https://github.com/lilxyzw/guid_database)を見てプロジェクトに不足しているツールやシェーダーを特定するツールです。不足しているアセットがデータベースに登録されている場合、エラーになっているマテリアルやコンポーネントのInspectorに不足アセットが表示されます。データベースは`Tools/lilEditorToolbox/[AssetGrimoire] Update Database`で更新できます。"
+
+msgid "<u>Selecting the component or material in error</u> will automatically display the information, unless the missing asset is not in the database, in which case nothing will be displayed."
+msgstr "<u>エラーになっているコンポーネントやマテリアルを選択する</u>と自動で情報が表示されます。ただし、不足アセットがデータベースにない場合は何も表示されません。"
+
+msgid "## Procedure for registering a tool that is not in the database"
+msgstr "## データベースにないツールを登録する手順"
+
+msgid "1. Select the target to register in the database in `Tools/lilEditorToolbox/[AssetGrimoire] Make Target (*)`  "
+msgstr "1. `Tools/lilEditorToolbox/[AssetGrimoire] Make Target (*)`でデータベースに登録するターゲットを選択  "
+
+msgid "   -> `Make Target (Folder)` specifies the folder selected in the Project window as the target  "
+msgstr "   -> `Make Target (Folder)`はProjectウィンドウで選択中のフォルダをターゲットとして指定します  "
+
+msgid "   -> `Make Target (Unitypackage)` specifies a unitypackage outside the project as a direct target"
+msgstr "   -> `Make Target (Unitypackage)`はプロジェクト外のunitypackageを直接ターゲットとして指定します"
+
+msgid "2. The settings for the target specified in step 1 will be added to `Assets/GUIDList/`, so edit the settings as necessary."
+msgstr "2. `Assets/GUIDList/`内に手順1で指定したターゲットの設定が追加されるので必要に応じて設定を編集"
+
+msgid "3. Click `Tools/lilEditorToolbox/[AssetGrimoire] Output GUIDs` and select the database output folder in the dialog."
+msgstr "3. `Tools/lilEditorToolbox/[AssetGrimoire] Output GUIDs`をクリックし、ダイアログでデータベース出力先フォルダを選択"
+
+msgid "4. Submit an additional request via a pull request for [guid_database](https://github.com/lilxyzw/guid_database)"
+msgstr "4. [guid_database](https://github.com/lilxyzw/guid_database)のPull Requestで追加リクエストを送信"
+
+msgid "Missing assets"
+msgstr "不足アセット"
+
+msgid "Open web page"
+msgstr "Webページを開く"
+
+msgid "Add to VCC"
+msgstr "VCCに追加"
+
+
+
+#: ImportExtension/UnityPackageImporter.cs
+
+msgid "Import directory"
+msgstr "インポート先"
+
+msgid "Show Import Window"
+msgstr "インポート画面を表示"
+
+msgid "This unitypackage contains the script."
+msgstr "このunitypackageにはスクリプトが含まれています。"
+
+msgid "Exclude scripts from import"
+msgstr "スクリプトをインポート対象から除外"
+
+
+
+#: ProjectExtension/Components/IconOverlay.cs
+
+msgid "Target"
+msgstr "ターゲット"
+
+msgid "Icon"
+msgstr "アイコン"
+
+msgid "Clip Bottom"
+msgstr "下部をクリップ"
+
+msgid "Clip Top"
+msgstr "上部をクリップ"
+
+
+
+#: ToolbarExtension/Components/LockReloadAssembliesButton.cs
+
+msgid "Assemblies Locked"
+msgstr "アセンブリをロック中"
+
+msgid "Assemblies Unlocked"
+msgstr "アセンブリをアンロック中"
+
+
+
+#: EditorToolboxSettings.cs
+
+msgid "Project Settings"
+msgstr "プロジェクト設定"
+
+msgid "Setting Preset"
+msgstr "設定プリセット"
+
+msgid "New Preset"
+msgstr "新規プリセット"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "Settings related to lilEditorToolbox. You can open it from `Edit/Preference/lilEditorToolbox` on the menu bar, where you can change the language and enable various functions."
+msgstr "lilEditorToolboxに関する設定です。メニューバーの`Edit/Preference/lilEditorToolbox`から開くことができ、言語を変更したり各種機能を有効化したりできます。"
+
+msgid "Open preference folder"
+msgstr "設定ファイルの保存先を表示"
+
+msgid "The language setting for lilEditorToolbox. The language file exists in `jp.lilxyzw.editortoolbox/Editor/Localization`, and you can support other languages by creating a language file."
+msgstr "lilEditorToolboxの設定言語です。言語ファイルは`jp.lilxyzw.editortoolbox/Editor/Localization`に存在し、言語ファイルを作成することで他の言語にも対応できます。"
+
+
+
+#: EditorToolboxSettings.cs/AssetImport
+
+msgid "Asset Import"
+msgstr "アセットインポート"
+
+msgid "Drag And Drop Overwrite"
+msgstr "ドラッグ＆ドロップで自動上書き"
+
+msgid "When importing assets via D&D, if there is a file with the same name at the same level, it will be overwritten by the import."
+msgstr "アセットをD&Dでインポートしたとき、同一階層に同名のファイルがある場合上書きインポートします。"
+
+msgid "Cancel Unitypackage Overwrite In Packages"
+msgstr "unitypackageインポート時にPackages配下のアセットの上書きを防止"
+
+msgid "Prevents unitypackage from overwriting assets under Packages."
+msgstr "unitypackageでPackages配下のアセットの上書きするのを防止します。"
+
+msgid "Do Not Add Variant To The End Of Prefab Name"
+msgstr "Prefab名の末尾に\"Variant\"を追加しない"
+
+msgid "Do not add \"Variant\" to the end of the name when creating a Prefab Variant."
+msgstr "Prefab Variant作成時に名前の末尾に\"Variant\"を追加しないようにします。"
+
+msgid "Add Unitypackage Directory Selection Menu"
+msgstr "unitypackageインポート先変更メニューを追加"
+
+msgid "Add a button to change the import directory in the unitypackage import window."
+msgstr "unitypackageのインポートウィンドウにインポート先を変更できるボタンを追加します。"
+
+msgid "Add Unitypackage Contains Script Warning"
+msgstr "unitypackageにスクリプトが含まれている場合の警告を追加"
+
+msgid "Add a warning if the unitypackage contains scripts."
+msgstr "unitypackageにスクリプトが含まれている場合の警告を追加します。"
+
+
+
+#: EditorToolboxSettings.cs/TextureImport
+
+msgid "Texture Import"
+msgstr "テクスチャインポート"
+
+msgid "Turn Off Crunch Compression"
+msgstr "Crunch Compressionを自動オフ"
+
+msgid "Automatically turn off Crunch Compression when importing textures to speed up imports."
+msgstr "テクスチャインポート時に`Crunch Compression`を自動でオフにしてインポートを高速化します。"
+
+msgid "Turn On Streaming Mipmaps"
+msgstr "Streaming Mipmapsを自動オン"
+
+msgid "Automatically turn on `Streaming Mipmaps` when importing textures."
+msgstr "テクスチャインポート時に`Streaming Mipmaps`を自動でオンにします。"
+
+msgid "Change To Kaiser Mipmaps"
+msgstr "Kaiser Mipmapsに自動変更"
+
+msgid "Automatically change to `Kaiser` when importing texture."
+msgstr "テクスチャインポート時に`Kaiser`に自動で変更します。"
+
+
+
+#: EditorToolboxSettings.cs/ModelImport
+
+msgid "Model Import"
+msgstr "モデルインポート"
+
+msgid "Turn On Readable"
+msgstr "Readableを自動オン"
+
+msgid "Automatically turn on `Readable` when importing a model."
+msgstr "モデルインポート時に`Readable`を自動でオンにします。"
+
+msgid "Fix Blendshapes"
+msgstr "Blendshapes設定を自動修正"
+
+msgid "Turn off `Legacy Blend Shape Normals` when importing a model to turn off automatic recalculation of BlendShape normals."
+msgstr "モデルインポート時に`Legacy Blend Shape Normals`をオフにし、BlendShapeの法線の自動再計算をオフにします。"
+
+msgid "Remove Jaw"
+msgstr "HumanoidからJawを自動削除"
+
+msgid "When importing a model, if a bone that does not contain `jaw` (case insensitive) in the bone name is assigned to the Humanoid Jaw, it will be automatically unassigned."
+msgstr "モデルインポート時にボーン名に`jaw`（大文字小文字区別せず）が含まれていないボーンがHumanoidのJawに割り当てられている場合、自動で割り当てを外します。"
+
+
+
+#: EditorToolboxSettings.cs/AnimatorControllerEditor
+
+msgid "Animator Controller Editor"
+msgstr "アニメーターコントローラーエディタ"
+
+msgid "Default Layer Weight 1"
+msgstr "Layer Weightをデフォルトで1に"
+
+msgid "Change the default Layer Weight value to 1 when creating a new layer."
+msgstr "新規レイヤー作成時のLayer Weightのデフォルト値を1に変更します。"
+
+msgid "Default Write Defaults Off"
+msgstr "Write Defaultsをデフォルトでオフに"
+
+msgid "Change the default value of Write Defaults when creating a new state to off."
+msgstr "新規ステート作成時のWrite Defaultsのデフォルト値をオフに変更します。"
+
+msgid "Default Has Exit Time Off"
+msgstr "Has Exit Timeをデフォルトでオフに"
+
+msgid "Change the default value of Has Exit Time when creating a new transition to off."
+msgstr "新規トランジション作成時のHas Exit Timeのデフォルト値をオフに変更します。"
+
+msgid "Default Exit Time 1"
+msgstr "Exit Timeをデフォルトで1に"
+
+msgid "Change the default value of Exit Time when creating a new transition to 1."
+msgstr "新規トランジション作成時のExit Timeのデフォルト値を1に変更します。"
+
+msgid "Default Duration 0"
+msgstr "Durationをデフォルトで0に"
+
+msgid "Change the default value of Duration when creating a new transition to 0."
+msgstr "新規トランジション作成時のDurationのデフォルト値を0に変更します。"
+
+msgid "Default Can Transition Self Off"
+msgstr "Can Transition Selfをデフォルトでオフに"
+
+msgid "Change the default value of Can Transition Self when creating a new transition to off."
+msgstr "新規トランジション作成時のCan Transition Selfのデフォルト値をオフに変更します。"
+
+msgid "Extend Animator Controller Parameter GUI"
+msgstr "アニメーターコントローラーのパラメーター編集の拡張"
+
+msgid "The Animator Controller parameter type has been expanded to allow it to be changed, and a decimal point will be displayed if the type is Float, making it easier to distinguish from Int types."
+msgstr "アニメーターコントローラーのパラメーターの型の変更を可能にし、型がFloatの場合は小数点を表示しInt型と区別しやすくします。"
+
+msgid "Add Copy And Paste Layer Menu"
+msgstr "レイヤーのコピーアンドペーストメニューを追加"
+
+msgid "Add copy and paste to the right-click menu of the Animator Controller layer."
+msgstr "アニメーターコントローラーのレイヤーの右クリックメニューにコピー、ペーストを追加します。"
+
+msgid "Add Copy Transition Settings Menu"
+msgstr "トランジションの設定コピーメニューを追加"
+
+msgid "Add copy and paste settings to the transition right-click menu."
+msgstr "トランジションの右クリックメニューに設定のコピー、ペーストを追加します。"
+
+msgid "Add Select In Out Transitions Menu"
+msgstr "入出トランジション一括選択メニューを追加"
+
+msgid "Add a bulk selection menu for entering and exiting transitions to the state right-click menu."
+msgstr "ステートの右クリックメニューに入出トランジションの一括選択メニューを追加します。"
+
+msgid "Add Parameter References Menu"
+msgstr "パラメーター参照表示メニューを追加"
+
+msgid "Add a menu to the right-click menu of parameters that displays the referenced transition state."
+msgstr "パラメーターの右クリックメニューに参照しているトランジション・ステートを表示するメニューを追加します。"
+
+msgid "Make Transition With Double Click"
+msgstr "ダブルクリックでトランジションを作成"
+
+msgid "Make transition when you double-click a state."
+msgstr "ステートをダブルクリックした際にトランジションを作成します。"
+
+msgid "Fix Copy Interruption Settings"
+msgstr "Interruption設定がコピーされるように"
+
+msgid "Fix a Unity bug where transition Interruption settings were not copied."
+msgstr "トランジションのInterruption設定がコピーされないUnityの不具合を修正します。"
+
+msgid "Fix Transition Condition GUI"
+msgstr "トランジションの条件設定GUIの修正"
+
+msgid "When changing a parameter in the transition condition settings, if the destination is an Int type, the default value will be Equals."
+msgstr "トランジションの条件設定でパラメーター変更時に変更先がInt型であればEqualsを初期値にします。"
+
+msgid "Fix State Multiple Edit"
+msgstr "ステート同時編集の修正"
+
+msgid "Fix a Unity bug that caused some properties to be overwritten when editing multiple states at the same time."
+msgstr "ステート同時編集時に一部プロパティが上書きされてしまうUnityのバグを修正します。"
+
+
+
+#: EditorToolboxSettings.cs/HierarchyExtension
+
+msgid "Hierarchy Extension"
+msgstr "ヒエラルキーウィンドウ拡張"
+
+msgid "You can display objects, components, tags, layers, etc. on the Hierarchy. You can also add your own extensions by implementing `IHierarchyExtensionConponent`. Please refer to the scripts under `Editor/HierarchyExtension/Components` for how to write them."
+msgstr "Hierarchy上にオブジェクトのオンオフ、コンポーネント、タグ、レイヤーなどを表示できます。`IHierarchyExtensionConponent`を実装することで独自に拡張を追加することもできます。書き方は`Editor/HierarchyExtension/Components`配下のスクリプトを参考にしてください。"
+
+msgid "Hierarchy Spacer Width"
+msgstr "余白の幅"
+
+msgid "The width of the margin to avoid interfering with other Hierarchy extensions."
+msgstr "他のHierarchy拡張に干渉しないようにする余白の幅です。"
+
+msgid "Hierarchy Spacer Priority"
+msgstr "余白の挿入タイミング"
+
+msgid "This is the timing to insert margins so as not to interfere with other Hierarchy extensions."
+msgstr "他のHierarchy拡張に干渉しないようにする余白の挿入タイミングです。"
+
+msgid "Hierarchy Mouse Button"
+msgstr "マウスボタンの割り当て"
+
+msgid "This is the mouse button that the hierarchy window extension that supports this property will respond to. If you make many erroneous operations, please change the button."
+msgstr "このプロパティに対応しているヒエラルキーウィンドウ拡張が反応するマウスボタンです。誤操作が多い場合はボタンを変更してください。"
+
+msgid "Hierarchy Layer And Tag Side By Side"
+msgstr "LayerとTagを横並びに"
+
+msgid "Displays Layer and Tag side by side."
+msgstr "LayerとTagを横並びに表示します。"
+
+msgid "Hierarchy Spacer"
+msgstr "余白の挿入"
+
+msgid "Add margins so as not to interfere with other Hierarchy extensions."
+msgstr "他のHierarchy拡張と干渉しないように余白を挿入します。"
+
+msgid "Active Toggle"
+msgstr "オブジェクトのオンオフ"
+
+msgid "A checkbox that turns an object on and off."
+msgstr "オブジェクトをオンオフするチェックボックスです。"
+
+msgid "Alternating Background"
+msgstr "背景色を交互にする"
+
+msgid "Alternates the background color of the Hierarchy."
+msgstr "Hierarchyの背景色を交互に変更します。"
+
+msgid "Object Marker Background"
+msgstr "ObjectMarkerの背景色を適用"
+
+msgid "Applies a background color to the ObjectMarker."
+msgstr "ObjectMarkerの背景色を適用します。"
+
+msgid "Children Drawer"
+msgstr "子のコンポーネント"
+
+msgid "Displays the child components of an object."
+msgstr "オブジェクトの子のコンポーネントを表示します。"
+
+msgid "Components Drawer"
+msgstr "コンポーネント"
+
+msgid "Displays the object's components. You can turn components on or off by clicking their icons."
+msgstr "オブジェクトのコンポーネントを表示します。アイコンをクリックすることでコンポーネントのオンオフを変更できます。"
+
+msgid "Editor Only Label"
+msgstr "EditorOnlyラベル"
+
+msgid "Shows the icon if the object is EditorOnly."
+msgstr "オブジェクトがEditorOnlyである場合にアイコンを表示します。"
+
+msgid "Hierarchy Line"
+msgstr "ヒエラルキーの線"
+
+msgid "Displays lines representing the parent-child relationships of objects in the Hierarchy."
+msgstr "Hierarchyにオブジェクトの親子関係を表す線を表示します。"
+
+msgid "Layer And Tag"
+msgstr "LayerとTag"
+
+msgid "Displays the layer and tag of an object."
+msgstr "オブジェクトのLayerとTagを表示します。"
+
+
+
+#: EditorToolboxSettings.cs/ProjectExtension
+
+msgid "Project Extension"
+msgstr "プロジェクトウィンドウ拡張"
+
+msgid "You can display extensions and prefab information on the project. You can also add your own extensions by implementing `IProjectExtensionConponent`. Please refer to the script under `Editor/ProjectExtension/Components` for how to write it."
+msgstr "Project上に拡張子やprefabの情報などを表示できます。`IProjectExtensionConponent`を実装することで独自に拡張を追加することもできます。書き方は`Editor/ProjectExtension/Components`配下のスクリプトを参考にしてください。"
+
+msgid "Project Line"
+msgstr "ファイル階層の線"
+
+msgid "Displays lines that represent the hierarchy of files."
+msgstr "ファイルの階層を表す線を表示します。"
+
+msgid "Overlay File In Folder"
+msgstr "フォルダにファイルをオーバーレイ"
+
+msgid "Overlays the folder icon with the files inside."
+msgstr "フォルダのアイコンに中のファイルをオーバーレイ表示します。"
+
+msgid "Icon Overlay"
+msgstr "アイコンオーバーレイ"
+
+msgid "Overlay any image on the icon."
+msgstr "アセットのアイコンに任意の画像をオーバーレイ表示します。"
+
+msgid "Alternating Project Background"
+msgstr "背景色を交互にする"
+
+msgid "Alternates the background color of the Project window."
+msgstr "Projectウィンドウの背景色を交互に変更します。"
+
+msgid "Unitypackage Hilighter"
+msgstr "unitypackageのアイテムを強調"
+
+msgid "Highlight the assets you imported in each Unitypackage."
+msgstr "各Unitypackageでインポートしたアセットを強調表示します。"
+
+msgid "Extension Drawer"
+msgstr "拡張子を表示"
+
+msgid "Displays the file extension."
+msgstr "ファイルの拡張子を表示します。"
+
+msgid "Prefab Info"
+msgstr "Prefab情報"
+
+msgid "Displays Prefab information."
+msgstr "Prefabの情報を表示します。"
+
+msgid "Material Variant"
+msgstr "Material Variant"
+
+msgid "Displays the parent material if the material is a variant."
+msgstr "マテリアルがVariantである場合に親のマテリアルを表示します。"
+
+msgid "Material Queue"
+msgstr "マテリアルのRenderQueue"
+
+msgid "Displays the Render Queue for materials."
+msgstr "マテリアルのRender Queueを表示します。"
+
+msgid "Material Shader"
+msgstr "マテリアルのShader"
+
+msgid "Displays the material's shader."
+msgstr "マテリアルのシェーダーを表示します。"
+
+msgid "Asset Marker"
+msgstr "アセットマーカー"
+
+msgid "Mark any asset to make it easier to find."
+msgstr "アセットをマークして見つけやすくします。。"
+
+
+
+#: EditorToolboxSettings.cs/ToolbarExtension
+
+msgid "Toolbar Extension"
+msgstr "ツールバー拡張"
+
+msgid "You can display an assembly lock button or an extension inspector tab on the Toolbar. You can also add your own extension by implementing `IToolbarExtensionComponent`. Please refer to the script under `Editor/ToolbarExtension/Components` for how to write it."
+msgstr "Toolbar上にアセンブリのロックボタンや拡張インスペクターのタブを開くボタンを表示できます。`IToolbarExtensionConponent`を実装することで独自に拡張を追加することもできます。書き方は`Editor/ToolbarExtension/Components`配下のスクリプトを参考にしてください。"
+
+msgid "Lock Reload Assemblies Button"
+msgstr "アセンブリのロックボタン"
+
+msgid "Locks the assembly to reduce the wait time for script compilation. This is useful if you frequently rewrite scripts."
+msgstr "Assemblyをロックしてスクリプトのコンパイルの待ち時間を抑制します。頻繁にスクリプトを書き換える場合に便利です。"
+
+msgid "Add Inspector Tab Button"
+msgstr "インスペクターのタブ追加ボタン"
+
+msgid "Displays a button to add a tab to the Inspector that is locked on the selected object."
+msgstr "選択中のオブジェクトでロックされたInspectorをタブに追加するボタンを表示します。"
+
+
+
+#: EditorToolboxSettings.cs/MenuDirectoryReplaces
+
+msgid "Menu Directory Replaces"
+msgstr "メニューの階層変更・削除"
+
+msgid "You can customize the menu bar by changing or deleting the menu hierarchy. You can also edit multiple menus at once by specifying `Tools/*`."
+msgstr "メニューバーにあるメニューの階層を変更したり削除したりして任意にカスタマイズできます。`Tools/*`のように指定して複数まとめて編集することもできます。"
+
+msgid "Some menu items may not be compatible with replacement."
+msgstr "一部メニューについては置き換えに対応していない場合があります。"
+
+msgid "Enable Menu Directory Replaces"
+msgstr "メニューの階層変更・削除を有効化"
+
+msgid "When this check box is selected, changing and deleting the menu hierarchy is enabled."
+msgstr "このチェックボックスがオンの場合にメニューの階層変更・削除が有効化されます。"
+
+msgid "Add the menu to be changed here. If To is empty, the menu will be deleted, if it is not empty, it will be moved to that hierarchy."
+msgstr "変更対象のメニューをここに追加します。Toが空の場合はメニューの削除が、空でない場合はその階層への移動が行われます。"
+
+
+
+#: FolderOpener.cs
+
+msgid "Tool to open Unity-related folders"
+msgstr "Unity関連フォルダを開くツール"
+
+msgid "You can open folders used by Unity with one click. You can easily open folders that you may want to check occasionally, such as the location of configuration files or the location of unity packages on the asset store."
+msgstr "Unityで使われているフォルダをワンクリックで開くことができます。設定ファイルの場所やアセットストアのunitypackageの場所などたまに確認したくなるフォルダを手軽に開くことができます。"
+
+
+
+#: JsonObjectViewer.cs
+
+msgid "A tool to view and edit any object in json format"
+msgstr "任意のObjectをjson形式で確認＆編集するツール"
+
+msgid "For developers. When editing an Object as a SerializedObject, if you need to check the property names or structure, you can display it as JSON to quickly check the contents. You can also edit JSON directly and reflect it in the Object."
+msgstr "開発者向けです。ObjectをSerializedObjectで編集するときにプロパティ名や構造を確認する必要がある場合に、jsonとして表示して素早く内容を確認できます。また、jsonを直接編集してObjectに反映することもできます。"
+
+msgid "Refresh"
+msgstr "更新"
+
+msgid "Apply Modification"
+msgstr "変更を適用"
+
+
+
+#: MissingFinder.cs
+
+msgid "Missing reference finder tool"
+msgstr "Missing参照発見ツール"
+
+msgid "You can find missing parts in any object. Use it to check if a reference has been broken due to missing prerequisite assets or file deletion."
+msgstr "任意のオブジェクト内でMissing（対象が行方不明）になっている部分を発見できます。前提アセットのインポート漏れやファイルの削除で参照が壊れていないかの確認などに使います。"
+
+msgid "No object selected."
+msgstr "オブジェクトが選択されていません。"
+
+msgid "There are probably no missing references."
+msgstr "Missing参照はおそらくありません。"
+
+msgid "Objects with Missing References"
+msgstr "Missing参照を含むオブジェクト"
+
+
+
+#: PlayModeSaver.cs
+
+msgid "Save changes in PlayMode"
+msgstr "PlayModeでの変更を保存"
+
+msgid "Values changed in PlayMode can be maintained even after exiting PlayMode. Click the hamburger menu in the upper right corner of each component and select `Save changes in PlayMode` to save the changes to that component."
+msgstr "PlayModeでの変更した値をPlayMode終了後も維持できます。各コンポーネント右上のハンバーガーメニューをクリックし`Save changes in PlayMode`を選択するとそのコンポーネントの変更点を保存します。"
+
+
+
+#: ReferenceReplacer.cs
+
+msgid "Batch replacement tool for all object references"
+msgstr "オブジェクト参照を何でも一括置き換えツール"
+
+msgid "Replace all object references in all objects at once. For example, you can replace the avatar's materials all at once, or even replace the textures within the materials at once."
+msgstr "あらゆるオブジェクトの中にあるあらゆるオブジェクト参照を一括で置き換えます。たとえばアバターのマテリアルを一括で置き換えたり、更にはマテリアル内のテクスチャを一括で置き換えたりできます。"
+
+msgid "Simply set the object you want to edit (such as an avatar) to `Edit target`, and set the objects before and after the modification to `From` and `To`! When you press the execute button, all references will be replaced and the edited results will be displayed."
+msgstr "`編集対象`に編集を行うオブジェクト（アバターなど）をセットし、`置き換え前`と`置き換え後`にそれぞれ改変前・改変後のオブジェクトをセットするだけです！実行ボタンを押すと全ての参照が置き換わり、編集結果が表示されます。"
+
+msgid "Edit target"
+msgstr "編集対象"
+
+msgid "This is the object to be edited."
+msgstr "編集を行う対象です。"
+
+msgid "From"
+msgstr "置き換え前"
+
+msgid "The object before replacement."
+msgstr "置き換え前のオブジェクトです。"
+
+msgid "To"
+msgstr "置き換え後"
+
+msgid "This is the object after replacement."
+msgstr "置き換え後のオブジェクトです。"
+
+msgid "Run"
+msgstr "実行"
+
+msgid "Please open a scene before running."
+msgstr "実行前にシーンを開いてください。"
+
+msgid "Complete!"
+msgstr "完了しました。"
+
+msgid "Modified Objects"
+msgstr "変更が行われたオブジェクト"
+
+msgid "The objects that have been edited."
+msgstr "編集が行われたオブジェクトです。"
+
+
+
+#: SceneCapture.cs
+
+msgid "High-resolution capture tool for Scene View"
+msgstr "Scene Viewの高解像度キャプチャツール"
+
+msgid "This tool captures the screen displayed in Scene View as is and saves it as an image. You can capture only specific objects and output with transparency."
+msgstr "Scene Viewで表示されている画面をそのままキャプチャし画像として保存するツールです。特定のオブジェクトだけをキャプチャしたり透過付きで出力したりできます。"
+
+msgid "<u>Just set the resolution and press the `Capture` button!</u> You can also capture only the objects selected in the Hierarchy by checking `Capture only selected objects`."
+msgstr "<u>解像度を設定して`キャプチャ`ボタンを押すだけ</u>です！`選択中のオブジェクトのみをキャプチャする`にチェックを入れるとHierarchyで選択中のオブジェクトだけをキャプチャすることもできます。"
+
+msgid "Scene View is not open."
+msgstr "Scene Viewが開かれていません。"
+
+msgid "Capture only selected objects"
+msgstr "選択中のオブジェクトのみキャプチャする"
+
+msgid "No GameObject is selected."
+msgstr "GameObjectが選択されていません。"
+
+msgid "Fit Aspect Ratio to Scene View"
+msgstr "アスペクト比をScene Viewに合わせる"
+
+msgid "Width"
+msgstr "幅"
+
+msgid "Height"
+msgstr "高さ"
+
+msgid "Capture"
+msgstr "キャプチャ"
+
+msgid "Finish!"
+msgstr "完了しました。"
+
+
+
+#: SceneExtension.cs
+
+msgid "Scene View Extensions"
+msgstr "Scene View拡張"
+
+msgid "A button to turn on anti-aliasing in the scene view and a camera mode (Vertex Attribute) has been added to check the vertex data of the model."
+msgstr "シーンビューのアンチエイリアスをオンにするMSAAボタンや、モデルの頂点データを確認するカメラモード（Vertex Attribute）を追加しています。"
+
+msgid "> Some functions do not work in the Metal environment because the camera mode extension uses a geometry shader."
+msgstr "> カメラモード拡張でジオメトリシェーダーを使用しているため`Metal`環境では一部機能が動作しません。"
+
+msgid "Click the MSAA button on the toolbar above the Scene View to toggle anti-aliasing on and off. Anti-aliasing is always applied, allowing you to adjust materials in a way that is close to how they will actually appear."
+msgstr "Scene Viewの上のツールバーにあるMSAAボタンをクリックするとアンチエイリアスのオンオフが切り替わります。アンチエイリアスが常に適用されるので、実際の見え方に近い状態でマテリアルの調整を行えます。"
+
+msgid "## Camera Modes"
+msgstr "## カメラモード"
+
+msgid "This extension function will be enabled when you click the camera mode change button (which switches to Wireframe display, etc.) on the toolbar above the Scene View and select Vertex Attribute. A popup will appear in the upper left of the Scene View that allows you to switch the vertex data to be displayed, so you can change this to check the desired data."
+msgstr "Scene Viewの上のツールバーにあるカメラモード変更ボタン（Wireframe表示などに切り替えられるボタン）をクリックしてVertex Attributeを選択するとこの拡張機能が有効になります。Scene View左上に表示対象の頂点データを切り替えるポップアップが表示されるので、ここを変更して任意のデータを確認できます。"
+
+
+
+#: SelectionInventory.cs
+
+msgid "Inventory for any object"
+msgstr "オブジェクトのインベントリー"
+
+msgid "This is an inventory that allows you to place any object, assets, folders, etc. Click on the added item to select it immediately."
+msgstr "任意のオブジェクトやアセット、フォルダなどを配置できるインベントリです。追加したアイテムをクリックすればすぐにそのアイテムを選択できます。"
+
+msgid "Add Something Here By Drag And Drop"
+msgstr "ここにD&Dで好きなオブジェクトを追加"
+
+msgid "Remove from inventory"
+msgstr "インベントリーから削除"
+
+
+
+#: ShaderKeywordViewer.cs
+
+msgid "Shader keyword check tool"
+msgstr "シェーダー本体のキーワード確認ツール"
+
+msgid "A tool for shader developers. You can check shader keywords for each shader stage."
+msgstr "シェーダー開発者向けのツールです。シェーダーステージごとにシェーダーキーワードを確認できます。"
+
+msgid "The shader keywords for <u>the shader selected in the Project window</u> are displayed for each pass and shader stage. This can be used to prevent unnecessary shader keywords from increasing the build size, or to identify cases where a missing shader keyword causes the shader to behave unexpectedly."
+msgstr "<u>Projectウィンドウで選択中のシェーダー</u>のシェーダーキーワードがパス・シェーダーステージごとに表示されます。無駄なシェーダーキーワードでビルドサイズが大きくなってしまう場合の対策や、逆にシェーダーキーワード漏れでシェーダーの挙動が想定外になる場合の特定などに利用できます。"
+
+msgid "Show builtin keywords"
+msgstr "ビルトインキーワードを表示"
+
+msgid "Global Keywords"
+msgstr "グローバルキーワード"
+
+msgid "Local Keywords"
+msgstr "ローカルキーワード"
+
+msgid "Builtin Keywords"
+msgstr "ビルトインキーワード"
+
+
+
+#: TabInspector.cs
+
+msgid "Extended Inspector"
+msgstr "拡張Inspector"
+
+msgid "This allows you to treat the Inspector like a browser tab. This is an Inspector that is fixed to one object, so the display content does not change even if you select another object. This window is not opened from the menu bar, but from the + icon on the toolbar at the top of Unity. If you do not have the + icon, you can add it by turning on the `Add Inspector Tab Button` in the Toolbar Extensions of Preferences."
+msgstr "ブラウザのタブのようにInspectorを扱えるようにするものです。これは1つのオブジェクトに固定されたインスペクターで、他のオブジェクトを選択しても表示内容が変わらないようになっています。このウィンドウはメニューバーから開くのではなく、Unity上部のツールバーの+アイコンから開きます。+アイコンない場合はPreferencesのツールバー拡張の中の`インスペクターのタブ追加ボタン`をオンにすることで追加できます。"
+
+msgid "Normal"
+msgstr "ノーマル"
+
+msgid "This is a regular Inspector."
+msgstr "通常のInspectorです。"
+
+msgid "Debug"
+msgstr "デバッグ"
+
+msgid "Inspector for debugging. Normally, you do not need to use it."
+msgstr "デバッグ用のInspectorです。通常は使用する必要はありません。"
+
+msgid "Developer"
+msgstr "開発者"
+
+msgid "This is a special Inspector that can only be seen in developer mode."
+msgstr "開発者モードでのみ見れる特別なInspectorです。"
+
+msgid "Close this tab."
+msgstr "現在開いているタブを閉じます。"
+
+
+
+#: TexturePacker.cs
+
+msgid "Texture Channel Packing Tool"
+msgstr "テクスチャチャンネルパッキングツール"
+
+msgid "Stores multiple textures in the RGBA channels of a single texture. Intended for use with Standard Shader PBR materials."
+msgstr "複数のテクスチャを1枚のテクスチャのRGBAチャンネルに格納します。Standard ShaderのPBRマテリアルなどに利用することを想定しています。"
+
+msgid "Simply set a texture for each channel and output it. For example, if you have multiple PBR textures you want to use with the Standard shader, you can combine them into a single image by setting Metallic to R, Smoothness to A, and Occlusion to G, and then setting the `Channel to be used` for each to R and outputting them."
+msgstr "各チャンネルにテクスチャをセットして出力するだけです。例えばStandardシェーダーで使いたいPBRテクスチャが複数に分かれている場合、MetallicをR、SmoothnessをA、OcclusionをGにセットしてそれぞれ`使うチャンネル`をRにセットして出力することで1枚にまとめることができます。"
+
+msgid "R Channel"
+msgstr "Rチャンネル"
+
+msgid "G Channel"
+msgstr "Gチャンネル"
+
+msgid "B Channel"
+msgstr "Bチャンネル"
+
+msgid "A Channel"
+msgstr "Aチャンネル"
+
+msgid "Export Texture"
+msgstr "テクスチャを出力"
+
+msgid "Channel to use"
+msgstr "使うチャンネル"
+
+msgid "Default value"
+msgstr "チャンネルを埋める値"
+
+
+
+#: TransformResetter.cs
+
+msgid "Transform Initialization/Copy Tool"
+msgstr "Transform初期化・コピーツール"
+
+msgid "You can restore the Transform of any object to its prefab state or copy it from another object. It is intended to be used when an avatar is stuck in a crouching position and cannot return to its original position."
+msgstr "任意のオブジェクトのTransformをまとめてprefabの状態に戻したり、他のオブジェクトからコピーしたりできます。アバターが中腰のまま戻らなくなったときに使うことを想定しています。"
+
+msgid "Just set the crouching avatar and costume to `Editing target` and press the button. Generally, `Reset to prefab` is recommended, but if the reference is broken when unpacking the prefab, use `Reset to animator`. If you can't do that with a costume that is not set to Humanoid, set the original prefab to the copy source of `Copy from other object` and press the button to copy the state from the prefab."
+msgstr "中腰になったアバター・衣装を`編集対象`にセットしてボタンを押すだけです。基本的に`Prefabの状態にリセット`がオススメですが、PrefabのUnpackで参照が破壊されている場合は`Animatorの状態にリセット`を使用します。Humanoid設定されていない衣装でそれすらもできない場合は`他オブジェクトからコピー`のコピー元に元のPrefabをセットしてボタンを押すことでPrefabから状態がコピーされます。"
+
+msgid "This is the target for Transform editing."
+msgstr "Transformの編集を行う対象です。"
+
+msgid "Reset to prefab"
+msgstr "Prefabの状態にリセット"
+
+msgid "Resets the prefab to its initial state. This is only available when the prefab has not been unpacked."
+msgstr "Prefabの初期状態にリセットします。PrefabをUnpackしていないときのみ利用できます。"
+
+msgid "Reset to animator"
+msgstr "Animatorの状態にリセット"
+
+msgid "Resets the Animator to its initial state. Use this if you have unpacked the Prefab."
+msgstr "Animatorの初期状態にリセットします。PrefabをUnpackしている場合に使います。"
+
+msgid "Copy from other object"
+msgstr "他オブジェクトからコピー"
+
+msgid "Copies the Transform from another selected object. Use this when neither of the above menus can be used."
+msgstr "選択した他オブジェクトからTransformをコピーします。上記メニューが2つとも使えない場合に使います。"
+
+msgid "Copy from"
+msgstr "コピー元"
+
+msgid "This is the source of the Transform copy. The object will be copied from this object to the one being edited."
+msgstr "Transformをコピーする際のコピー元です。このオブジェクトから編集対象に対してコピーが行われます。"
+
+msgid "All transforms"
+msgstr "全Transform"
+
+msgid "The process is performed on all Transforms."
+msgstr "全てのTransformに対して処理を行います。"
+
+msgid "Humanoid transforms"
+msgstr "Humanoidのみ"
+
+msgid "The process is performed on humanoid bones."
+msgstr "Humanoid（体）のボーンに対して処理を行います。"
+
+
+
+#: runtime/CameraMover.cs
+
+msgid "By attaching this component to a camera, you can control the camera with WASDQE."
+msgstr "このコンポーネントをカメラに付けると、WASDQEでカメラを操作することができます。"
+
+msgid "Just attach the component to the camera object and press the `Operate` button. You can end the interaction by clicking it again or pressing the escape key."
+msgstr "カメラオブジェクトにコンポーネントを付けて、`操作`ボタンを押すだけです。操作はもう一度クリックするかエスケープキーを押すと終了できます。"
+
+msgid "The moving speed of the camera."
+msgstr "カメラの移動速度です。"
+
+msgid "The amount the camera rotates when you move the mouse."
+msgstr "マウスを動かしたときのカメラの回転量です。"
+
+msgid "W: Front"
+msgstr "W: 前"
+
+msgid "A: Left"
+msgstr "A: 左"
+
+msgid "S: Back"
+msgstr "S: 後"
+
+msgid "D: Right"
+msgstr "D: 右"
+
+msgid "Q: Up"
+msgstr "Q: 上"
+
+msgid "E: Down"
+msgstr "E: 下"
+
+msgid "Esc: End"
+msgstr "Esc: 操作終了"
+
+msgid "Wheel: Change Move Speed"
+msgstr "マウスホイール: 移動速度の変更"
+
+msgid "Operate"
+msgstr "操作"
+
+
+
+#: runtime/CustomFalloff.cs
+
+msgid "By attaching this component to any object, you can customize its behavior during light mapping."
+msgstr "このコンポーネントを任意のオブジェクトにつけることでライトマッピング時の動作をカスタマイズできます。"
+
+msgid "You can use it just by attaching this component to any object in the scene. Some settings cannot be changed from Unity's UI, so you need to use this component."
+msgstr "シーン内の任意のオブジェクトにこのコンポーネントを付けるだけで使用できます。一部設定はUnityのUIからは変更できないため、このコンポーネントを使用する必要があります。"
+
+msgid "Falloff Type"
+msgstr "減衰の種類"
+
+msgid "The type of light attenuation. InverseSquared is a darker but physically correct attenuation than the default. InverseSquaredNoRangeAttenuation is also physically correct but ignores the range parameter. Linear is a non-physically correct linear attenuation, Legacy is the quadratic attenuation that Unity uses by default."
+msgstr "ライトの減衰の種類です。InverseSquaredはデフォルトより暗くなりますが、物理的に正しい減衰です。InverseSquaredNoRangeAttenuationも物理的に正しいですが、こちらは範囲パラメーターを無視します。Linearは物理的に正しくない直線的な減衰、LegacyはUnityがデフォルトで使用する二次関数的な減衰です。"
+
+msgid "Intensity Multiplier"
+msgstr "強度の倍率"
+
+msgid "Multiplier for the light intensity. Does not affect directional lights. This option applies to non-directional lights, as it is intended to be used to adjust darkened scenes by changing the type of attenuation."
+msgstr "ライト強度の倍率です。このオプションは減衰の種類を変更して暗くなったシーンを調整するために使用することを想定しているため、ディレクショナルライト以外に適用されます。"
+
+msgid "Range Multiplier"
+msgstr "範囲の倍率"
+
+msgid "Multiplier for the light range. Does not affect directional lights. This option applies to non-directional lights, as it is intended to be used to adjust darkened scenes by changing the type of attenuation."
+msgstr "ライト範囲の倍率です。このオプションは減衰の種類を変更して暗くなったシーンを調整するために使用することを想定しているため、ディレクショナルライト以外に適用されます。"
+
+
+
+#: runtime/ObjectMarker.cs
+
+msgid "By attaching this component to a GameObject, you can change the background color of the hierarchy to highlight it."
+msgstr "このコンポーネントをGameObjectに付けるとヒエラルキーの背景色を変更し強調表示できます。"
+
+msgid "It is intended to be used to organize the hierarchy. For example, you can create a GameObject named `Summer`, add an ObjectMarker component, and place summer costumes under it, and similarly create `Autumn` and place autumn costumes under it, etc."
+msgstr "ヒエラルキーの整理のために使うことを想定しています。例えば`Summer`という名前のGameObjectを作成してObjectMarkerコンポーネントを付けてその下に夏の衣装を、同様に`Autumn`を作成してその下に秋の衣装を……というように整理できます。"
+
+msgid "Color"
+msgstr "色"
+
+msgid "Underline"
+msgstr "下線"
+
+msgid "The background color. You can set the color using the color picker."
+msgstr "背景の色です。カラーピッカーで色を設定できます。"
+
+msgid "Instead of painting the color over the entire background, it paints it as an underline."
+msgstr "背景全体に色を描画せず、下線として描画します。"
+
+
+
+#: runtime/SceneMSAA.cs
+
+msgid "Merged into [Scene View Extension](../SceneExtension)."
+msgstr "[Scene View拡張](../SceneExtension)に統合されました。"

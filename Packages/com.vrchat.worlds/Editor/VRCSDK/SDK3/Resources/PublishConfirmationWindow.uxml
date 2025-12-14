@@ -1,0 +1,12 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+    <ScrollView>
+        <VisualElement name="root" class="p-2">
+            <Label name="title" class="header3 mb-2" />
+            <Label name="body" enable-rich-text="true" class="mt-2 mb-2 white-space-normal" />
+            <VisualElement class="mb-2 row align-items-center w-100">
+                <Button class="mr-2 bg-button-bg flex-1 pt-2 pb-2" name="yes-button" />
+                <Button name="no-button" class="flex-1 pt-2 pb-2" />
+            </VisualElement>
+        </VisualElement>
+    </ScrollView>
+</UXML>

@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/com.vrchat.base/Integrations/VRChat%20Sample%20Central/Editor/Sample%20Downloader%20Panel/Resources/PackageTabButtonStyle.uss?fileID=7433441132597879392&amp;guid=7d25b279c57e51341bb553313ea74fc0&amp;type=3#PackageTabButtonStyle" />
+    <ui:VisualElement name="container">
+        <ui:VisualElement name="selection-element" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+    </ui:VisualElement>
+</ui:UXML>

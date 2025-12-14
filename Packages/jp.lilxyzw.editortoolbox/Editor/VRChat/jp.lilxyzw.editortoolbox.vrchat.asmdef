@@ -1,0 +1,25 @@
+{
+    "name": "jp.lilxyzw.editortoolbox.vrchat",
+    "rootNamespace": "",
+    "references": [
+        "jp.lilxyzw.editortoolbox.runtime",
+        "VRC.SDKBase"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.vrchat.base",
+            "expression": "",
+            "define": "LIL_VRCSDK3"
+        }
+    ],
+    "noEngineReferences": false
+}

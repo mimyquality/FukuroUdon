@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 2dd19633aa70e484a94e884e201460a2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - VisualTree: {fileID: 9197481963319205126, guid: 850bbb1837d721e48a16d8567e3ecf7b,
+      type: 3}
+  - PackageTabButton: {fileID: 9197481963319205126, guid: f4f9892bd4d997b42923c93f4fb8519c,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,45 @@
+﻿BuilderProgress {
+    position: absolute;
+    background-color: rgba(0,0,0,0.9);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.progress-container {
+    background-color: #363636;
+    margin: 4px 0;
+    height: 24px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-bar {
+    position: absolute;
+    left: 0;
+    top:0;
+    height: 100%;
+    width: 0;
+    background-color: #006FF8;
+}
+
+.progress-text {
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    font-size: 16px;
+}
+
+#cancel-button {
+    font-size: 14px;
+    padding: 8px 24px 8px 24px;
+}

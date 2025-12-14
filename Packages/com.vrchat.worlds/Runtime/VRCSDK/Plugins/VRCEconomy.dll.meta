@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 4e3d68749ed34978b027c380dd051f97
+PluginImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  iconMap: VRC.Economy.UdonProduct: {fileID: 2800000, guid: 7410fc1ea5f5f224aa8c89d04772fc06, type: 3}
+  executionOrder: {}
+  isPreloaded: 0
+  isOverridable: 0
+  platformData:
+  - first:
+      Any: 
+    second:
+      enabled: 1
+      settings: {}
+  - first:
+      Editor: Editor
+    second:
+      enabled: 0
+      settings:
+        DefaultValueInitialized: true
+  - first:
+      Windows Store Apps: WindowsStoreApps
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

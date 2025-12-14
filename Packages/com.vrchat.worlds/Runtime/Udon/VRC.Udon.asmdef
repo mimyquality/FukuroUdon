@@ -1,0 +1,19 @@
+{
+    "name": "VRC.Udon",
+    "rootNamespace": "",
+    "references": [
+        "VRC.Udon.Serialization.OdinSerializer",
+        "VRC.Core.Networking.Tools",
+        "VRC.Core.Networking",
+        "VRC.Dynamics"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

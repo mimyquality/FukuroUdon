@@ -1,0 +1,40 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/com.vrchat.base/Integrations/VRChat%20Example%20Central/Editor/Example%20Downloader%20Panel/Resources/ExampleDownloaderPanelStyle.uss?fileID=7433441132597879392&amp;guid=2bbc5f61b79c52c4ebcb9fcf6a8a4487&amp;type=3#ExampleDownloaderPanelStyle" />
+    <ui:VisualElement name="container">
+        <ui:VisualElement name="go-to-login">
+            <ui:Button text="Log in to use Example Central" parse-escape-sequences="true" display-tooltip-when-elided="true" name="go-to-login-btn" tooltip="Opens the VRC Control Panel in order to log in and enable Example Central." />
+        </ui:VisualElement>
+        <VRC.ExampleCentral.Window.SplitView name="split-main" fixed-pane-index="1" fixed-pane-initial-dimension="500" view-data-key="ExamplePanel-MainView">
+            <ui:VisualElement name="examples-container">
+                <ui:VisualElement name="header-examples">
+                    <ui:Label tabindex="-1" text="Search" parse-escape-sequences="true" display-tooltip-when-elided="true" name="examples-label" />
+                    <uie:ToolbarSearchField focusable="true" name="examples-search-field" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings-button" />
+                </ui:VisualElement>
+                <ui:ScrollView name="examples-scrollview" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Auto">
+                    <ui:VisualElement name="examples-scrollview-container">
+                        <VRC.ExampleCentral.Window.PackageButton style="color: rgb(255, 255, 255);" />
+                        <VRC.ExampleCentral.Window.PackageButton style="color: rgb(255, 255, 255);" />
+                        <VRC.ExampleCentral.Window.PackageButton style="color: rgb(255, 255, 255);" />
+                        <VRC.ExampleCentral.Window.PackageButton style="color: rgb(255, 255, 255);" />
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+            <VRC.ExampleCentral.Window.SplitView name="split-details" orientation="Vertical" fixed-pane-index="0" view-data-key="ExamplePanel-DetailsView" fixed-pane-initial-dimension="200">
+                <ui:VisualElement name="preview-thumbnail" />
+                <ui:VisualElement name="preview-settings">
+                    <ui:Label tabindex="-1" text="Examples Thing" parse-escape-sequences="true" display-tooltip-when-elided="true" name="preview-title" />
+                    <ui:ScrollView name="preview-settings-scrollview" horizontal-scroller-visibility="Hidden">
+                        <ui:Label tabindex="-1" text="Version: " parse-escape-sequences="true" display-tooltip-when-elided="true" name="preview-version" />
+                        <ui:Label tabindex="-1" text="Tags: Used, Unused" parse-escape-sequences="true" display-tooltip-when-elided="true" name="preview-tags" />
+                        <ui:Label tabindex="-1" text="Description" parse-escape-sequences="true" display-tooltip-when-elided="true" name="preview-description" style="-unity-font-style: normal; margin-left: 0; margin-right: 0; margin-top: 4px; margin-bottom: 4px; overflow: visible; flex-wrap: nowrap; white-space: normal; text-overflow: ellipsis; color: rgb(255, 255, 255);" />
+                    </ui:ScrollView>
+                    <ui:VisualElement name="preview-options">
+                        <ui:Button text="Import" parse-escape-sequences="true" display-tooltip-when-elided="true" name="preview-download" />
+                        <ui:Button text="Docs" parse-escape-sequences="true" display-tooltip-when-elided="true" name="preview-documentation" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </VRC.ExampleCentral.Window.SplitView>
+        </VRC.ExampleCentral.Window.SplitView>
+    </ui:VisualElement>
+</ui:UXML>

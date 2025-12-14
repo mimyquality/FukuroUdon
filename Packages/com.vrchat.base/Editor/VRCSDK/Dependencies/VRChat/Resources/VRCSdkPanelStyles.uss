@@ -1,0 +1,1029 @@
+﻿#root {
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 518px;
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+    padding: 5px;
+    align-items: center;
+}
+
+#banner {
+    background-image: resource("SDK_Panel_Banner");
+    -unity-background-scale-mode: scale-and-crop;
+    max-width: 512px;
+    width: 100%;
+    max-height: 100%;
+    height: 85px;
+    margin-bottom: 2px;
+    flex-shrink: 0;
+}
+
+#sdk-container {
+    width: 100%;
+    height: 100%;
+}
+
+#builder-panel {
+    width: 100%;
+    height: 100%;
+}
+
+#toolbar ToolbarToggle Label {
+    width: 100%;
+}
+
+.col {
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.flex-shrink-0 {
+    flex-shrink: 0;
+}
+
+.flex-shrink-1 {
+    flex-shrink: 1;
+}
+
+.flex-grow-0 {
+    flex-grow: 0;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.mb-1 {
+    margin-bottom: 3px;
+}
+
+.mb-2 {
+    margin-bottom: 6px;
+}
+
+.mb-3 {
+    margin-bottom: 14px;
+}
+
+.mb-4 {
+    margin-bottom: 24px;
+}
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.mt-1 {
+    margin-top: 3px;
+}
+
+.mt-2 {
+    margin-top: 6px;
+}
+
+.mt-3 {
+    margin-top: 14px;
+}
+
+.mt-4 {
+    margin-top: 24px;
+}
+
+.ml-0 {
+    margin-left: 0;
+}
+
+.ml-1 {
+    margin-left: 3px;
+}
+
+.ml-2 {
+    margin-left: 6px;
+}
+
+.ml-3 {
+    margin-left: 14px;
+}
+
+.ml-4 {
+    margin-left: 24px;
+}
+
+.mr-0 {
+    margin-right: 0;
+}
+
+.mr-1 {
+    margin-right: 3px;
+}
+
+.mr-2 {
+    margin-right: 6px;
+}
+
+.mr-3 {
+    margin-right: 14px;
+}
+
+.mr-4 {
+    margin-right: 24px;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.m-1 {
+    margin: 3px;
+}
+
+.m-2 {
+    margin: 6px;
+}
+
+.m-3 {
+    margin: 14px;
+}
+
+.m-4 {
+    margin: 24px;
+}
+
+.pb-0 {
+    padding-bottom: 0;
+}
+
+.pb-1 {
+    padding-bottom: 3px;
+}
+
+.pb-2 {
+    padding-bottom: 6px;
+}
+
+.pb-3 {
+    padding-bottom: 14px;
+}
+
+.pb-4 {
+    padding-bottom: 24px;
+}
+
+.pt-0 {
+    padding-top: 0;
+}
+
+.pt-1 {
+    padding-top: 3px;
+}
+
+.pt-2 {
+    padding-top: 6px;
+}
+
+.pt-3 {
+    padding-top: 14px;
+}
+
+.pt-4 {
+    padding-top: 24px;
+}
+
+.pl-0 {
+    padding-left: 0;
+}
+
+.pl-1 {
+    padding-left: 3px;
+}
+
+.pl-2 {
+    padding-left: 6px;
+}
+
+.pl-3 {
+    padding-left: 14px;
+}
+
+.pl-4 {
+    padding-left: 24px;
+}
+
+.pr-0 {
+    padding-right: 0;
+}
+
+.pr-1 {
+    padding-right: 3px;
+}
+
+.pr-2 {
+    padding-right: 6px;
+}
+
+.pr-3 {
+    padding-right: 14px;
+}
+
+.pr-4 {
+    padding-right: 24px;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.p-1 {
+    padding: 3px;
+}
+
+.p-2 {
+    padding: 6px;
+}
+
+.p-3 {
+    padding: 14px;
+}
+
+.p-4 {
+    padding: 24px;
+}
+
+.header1 {
+    font-size: 24px;
+    -unity-font-style: bold;
+}
+
+.header2 {
+    font-size: 20px;
+    -unity-font-style: bold;
+}
+
+.header3 {
+    font-size: 18px;
+    -unity-font-style: bold;
+}
+
+.subheader1 {
+    font-size: 16px;
+    -unity-font-style: bold;
+}
+
+.subheader2 {
+    font-size: 14px;
+    -unity-font-style: bold;
+}
+.subheader3 {
+    font-size: 12px;
+    -unity-font-style: bold;
+}
+
+.text-bold {
+    -unity-font-style: bold;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.align-items-start {
+    align-items: flex-start;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.justify-content-end {
+    justify-content: flex-end;
+}
+
+.align-self-stretch {
+    align-self: stretch;
+}
+
+.align-self-start {
+    align-self: flex-start;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.max-w-100 {
+    max-width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.flex-3 {
+    flex: 3;
+}
+
+.flex-4 {
+    flex: 4;
+}
+
+.flex-5 {
+    flex: 5;
+}
+
+.flex-6 {
+    flex: 6;
+}
+
+.flex-7 {
+    flex: 7;
+}
+
+.flex-8 {
+    flex: 8;
+}
+
+.flex-9 {
+    flex: 9;
+}
+
+.flex-10 {
+    flex: 10;
+}
+
+.flex-11 {
+    flex: 11;
+}
+
+.flex-12 {
+    flex: 12;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.d-none {
+    display: none;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.top-05 {
+    top: 1px;
+}
+
+.top-1 {
+    top: 3px;
+}
+
+.top-2 {
+    top: 6px;
+}
+
+.top-3 {
+    top: 14px;
+}
+
+.top-4 {
+    top: 24px;
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.white-space-normal {
+    white-space: normal;
+}
+
+.white-space-nowrap {
+    white-space: nowrap;
+}
+
+.buttons-row {
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.buttons-row Button {
+    margin-right: 0;
+    margin-left: 0;
+    border-left-width: 1px;
+    border-right-width: 0;
+    border-radius: 0;
+    flex: 1;
+}
+
+.buttons-row Button.active {
+    background-color: #747474;
+    color: white;
+}
+
+.buttons-row Button.last {
+    border-right-width: 1px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.buttons-row Button.first {
+    border-left-width: 1px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.dark #toolbar ToolbarButton.active {
+    background-color: #6E6E6E;
+    color: #EEEEEE;
+}
+
+.light #toolbar ToolbarButton.active {
+    background-color: #BEBEBE;
+    color: #090909;
+}
+
+.text-center {
+    -unity-text-align: middle-center;
+}
+
+.text-left {
+    -unity-text-align: middle-left;
+}
+
+.text-right {
+    -unity-text-align: middle-right;
+}
+
+.text-highlight {
+    color: #6AE3F9;
+}
+
+.text-active {
+    color: #2BAAC1;
+}
+
+.text-subheader {
+    color: #008389;
+}
+
+.text-button-border {
+    color: #20454C;
+}
+
+.text-button-bg {
+    color: #113637;
+}
+
+.text-green {
+    color: #2BCF5C;
+}
+
+.text-yellow {
+    color: #F9FF00;
+}
+
+.text-amber {
+    color: #E3BE0C;
+}
+
+.text-orange {
+    color: #FF7B42;
+}
+
+.text-red {
+    color: #F04747;
+}
+
+.text-red-dark {
+    color: #A53D29;
+}
+
+.text-purple {
+    color: #8143E6;
+}
+
+.text-blue {
+    color: #1778FF;
+}
+
+.text-black {
+    color: #000;
+}
+
+.text-grey-100 {
+    color: #575757;
+}
+
+.text-grey-200 {
+    color: #797979;
+}
+
+.text-grey-300 {
+    color: #9C9C9C;
+}
+
+.text-grey-400 {
+    color: #BABABA;
+}
+
+.text-grey-500 {
+    color: #DADADA;
+}
+
+.text-white {
+    color: #FFF;
+}
+
+.border-highlight {
+    border-color: #6AE3F9;
+}
+
+.border-active {
+    border-color: #2BAAC1;
+}
+
+.border-subheader {
+    border-color: #008389;
+}
+
+.border-button-border {
+    border-color: #20454C;
+}
+
+.border-button-bg {
+    border-color: #113637;
+}
+
+.border-green {
+    border-color: #2BCF5C;
+}
+
+.border-yellow {
+    border-color: #F9FF00;
+}
+
+.border-amber {
+    border-color: #E3BE0C;
+}
+
+.border-orange {
+    border-color: #FF7B42;
+}
+
+.border-red {
+    border-color: #F04747;
+}
+
+.border-red-dark {
+    border-color: #A53D29;
+}
+
+.border-purple {
+    border-color: #8143E6;
+}
+
+.border-blue {
+    border-color: #1778FF;
+}
+
+.border-black {
+    border-color: #000;
+}
+
+.border-grey-100 {
+    border-color: #575757;
+}
+
+.border-grey-200 {
+    border-color: #797979;
+}
+
+.border-grey-300 {
+    border-color: #9C9C9C;
+}
+
+.border-grey-400 {
+    border-color: #BABABA;
+}
+
+.border-grey-500 {
+    border-color: #DADADA;
+}
+
+.border-white {
+    border-color: #FFF;
+}
+
+
+.bg-highlight {
+    background-color: #6AE3F9;
+}
+
+.bg-active {
+    background-color: #2BAAC1;
+}
+
+.bg-subheader {
+    background-color: #008389;
+}
+
+.bg-button-border {
+    background-color: #20454C;
+}
+
+.bg-button-bg {
+    background-color: #113637;
+}
+
+.bg-green {
+    background-color: #2BCF5C;
+}
+
+.bg-yellow {
+    background-color: #F9FF00;
+}
+
+.bg-amber {
+    background-color: #E3BE0C;
+}
+
+.bg-orange {
+    background-color: #FF7B42;
+}
+
+.bg-red {
+    background-color: #F04747;
+}
+
+.bg-red-dark {
+    background-color: #A53D29;
+}
+
+.bg-purple {
+    background-color: #8143E6;
+}
+
+.bg-blue {
+    background-color: #1778FF;
+}
+
+.bg-black {
+    background-color: #000;
+}
+
+.bg-grey-100 {
+    background-color: #575757;
+}
+
+.bg-grey-200 {
+    background-color: #797979;
+}
+
+.bg-grey-300 {
+    background-color: #9C9C9C;
+}
+
+.bg-grey-400 {
+    background-color: #BABABA;
+}
+
+.bg-grey-500 {
+    background-color: #DADADA;
+}
+
+.bg-white {
+    background-color: #FFF;
+}
+
+.hover-text-highlight:hover {
+    color: #6AE3F9;
+}
+
+.hover-text-active:hover {
+    color: #2BAAC1;
+}
+
+.hover-text-subheader:hover {
+    color: #008389;
+}
+
+.hover-text-button-border:hover {
+    color: #20454C;
+}
+
+.hover-text-button-bg:hover {
+    color: #113637;
+}
+
+.hover-text-green:hover {
+    color: #2BCF5C;
+}
+
+.hover-text-yellow:hover {
+    color: #F9FF00;
+}
+
+.hover-text-amber:hover {
+    color: #E3BE0C;
+}
+
+.hover-text-orange:hover {
+    color: #FF7B42;
+}
+
+.hover-text-red:hover {
+    color: #F04747;
+}
+
+.hover-text-red-dark:hover {
+    color: #A53D29;
+}
+
+.hover-text-purple:hover {
+    color: #8143E6;
+}
+
+.hover-text-blue:hover {
+    color: #1778FF;
+}
+
+.hover-text-black:hover {
+    color: #000;
+}
+
+.hover-text-grey-100:hover {
+    color: #575757;
+}
+
+.hover-text-grey-200:hover {
+    color: #797979;
+}
+
+.hover-text-grey-300:hover {
+    color: #9C9C9C;
+}
+
+.hover-text-grey-400:hover {
+    color: #BABABA;
+}
+
+.hover-text-grey-500:hover {
+    color: #DADADA;
+}
+
+.hover-text-white:hover {
+    color: #FFF;
+}
+
+.hover-bg-highlight:hover {
+    background-color: #6AE3F9;
+}
+
+.hover-bg-active:hover {
+    background-color: #2BAAC1;
+}
+
+.hover-bg-subheader:hover {
+    background-color: #008389;
+}
+
+.hover-bg-button-border:hover {
+    background-color: #20454C;
+}
+
+.hover-bg-button-bg:hover {
+    background-color: #113637;
+}
+
+.hover-bg-green:hover {
+    background-color: #2BCF5C;
+}
+
+.hover-bg-yellow:hover {
+    background-color: #F9FF00;
+}
+
+.hover-bg-amber:hover {
+    background-color: #E3BE0C;
+}
+
+.hover-bg-orange:hover {
+    background-color: #FF7B42;
+}
+
+.hover-bg-red:hover {
+    background-color: #F04747;
+}
+
+.hover-bg-red-dark:hover {
+    background-color: #A53D29;
+}
+
+.hover-bg-purple:hover {
+    background-color: #8143E6;
+}
+
+.hover-bg-blue:hover {
+    background-color: #1778FF;
+}
+
+.hover-bg-black:hover {
+    background-color: #000;
+}
+
+.hover-bg-grey-100:hover {
+    background-color: #575757;
+}
+
+.hover-bg-grey-200:hover {
+    background-color: #797979;
+}
+
+.hover-bg-grey-300:hover {
+    background-color: #9C9C9C;
+}
+
+.hover-bg-grey-400:hover {
+    background-color: #BABABA;
+}
+
+.hover-bg-grey-500:hover {
+    background-color: #DADADA;
+}
+
+.hover-bg-white:hover {
+    background-color: #FFF;
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.opacity-10 {
+    opacity: 0.1;
+}
+
+.opacity-20 {
+    opacity: 0.2;
+}
+
+.opacity-30 {
+    opacity: 0.3;
+}
+
+.opacity-40 {
+    opacity: 0.4;
+}
+
+.opacity-50 {
+    opacity: 0.5;
+}
+
+.opacity-60 {
+    opacity: 0.6;
+}
+
+.opacity-70 {
+    opacity: 0.7;
+}
+
+.opacity-80 {
+    opacity: 0.8;
+}
+
+.opacity-90 {
+    opacity: 0.9;
+}
+
+.opacity-100 {
+    opacity: 1;
+}
+
+.hover-opacity-0:hover {
+    opacity: 0;
+}
+
+.hover-opacity-10:hover {
+    opacity: 0.1;
+}
+
+.hover-opacity-20:hover {
+    opacity: 0.2;
+}
+
+.hover-opacity-30:hover {
+    opacity: 0.3;
+}
+
+.hover-opacity-40:hover {
+    opacity: 0.4;
+}
+
+.hover-opacity-50:hover {
+    opacity: 0.5;
+}
+
+.hover-opacity-60:hover {
+    opacity: 0.6;
+}
+
+.hover-opacity-70:hover {
+    opacity: 0.7;
+}
+
+.hover-opacity-80:hover {
+    opacity: 0.8;
+}
+
+.hover-opacity-90:hover {
+    opacity: 0.9;
+}
+
+.hover-opacity-100:hover {
+    opacity: 1;
+}
+
+.border-right-1 {
+    border-right-width: 1px;
+}
+
+.dark .border-right-neutral {
+    border-right-color: #646464;
+}
+
+.light .border-right-neutral {
+    border-right-color: #DADADA;
+}
+
+VRCTextField > Label {
+    margin-bottom: 4px;
+    -unity-font-style: bold;
+    font-size: 12px;
+}
+
+.light .options-text-color {
+    color: #575757;
+}
+
+.dark .options-text-color {
+    color: #9C9C9C;
+}
+
+.unity-text-field__placeholder > .unity-base-text-field__input {
+    color: #969696
+}
+.unity-text-field__loading > .unity-base-text-field__input {
+    color: #969696
+}
+
+.m-unity-field {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.mr-unity-field {
+    margin-right: 3px;
+}
+
+.ml-unity-field {
+    margin-left: 3px;
+}
+
+.cursor-link {
+    cursor: link;
+}
+
+.text-lg {
+    font-size: 14px;
+}

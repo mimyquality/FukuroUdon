@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="product-elem">
+        <Style src="UdonProduct.uss" />
+        <ui:VisualElement name="image-elem" tooltip="Fetched product images are stored in your Unity project, which may increase the size of your world. It is recommended to only fetch the images if you plan on using them with Udon.">
+            <ui:Button text="Fetch image" name="imagefetch-btn" />
+            <ui:Button text="✖" name="imagedelete-btn" />
+        </ui:VisualElement>
+        <ui:VisualElement name="text-elem" >
+            <ui:Label text="Product A" binding-path="_Name" name="name-label" />
+            <ui:Label text="Description of the product, this is a description of the product right here as you can see. " binding-path="_Description" name="desc-label" />
+        </ui:VisualElement>
+        <ui:VisualElement name="buttons-elem" >
+            <ui:VisualElement name="customgui-elem" />
+            <ui:Button text="Find in project" name="find-btn" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

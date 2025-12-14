@@ -1,0 +1,212 @@
+#container {
+    flex-direction: row;
+    flex-grow: 1;
+    background-color: rgb(31, 31, 31);
+}
+
+#go-to-login {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#split-main {
+    display: none;
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+#split-details {
+    background-color: rgb(20, 20, 20);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-left: 16px;
+    min-width: 155px;
+}
+
+#examples-container {
+    flex-grow: 0;
+    min-width: 126px;
+    margin-right: 16px;
+}
+
+#header-examples {
+    flex-direction: row;
+    margin-bottom: 8px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+#examples-label {
+    -unity-font-style: bold;
+    font-size: 20px;
+    margin-right: 16px;
+    color: rgb(255, 255, 255);
+}
+
+#examples-search-field {
+    flex-grow: 1;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    width: 0;
+    font-size: 14px;
+}
+
+#packages-header {
+    background-color: rgb(41, 41, 41);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    height: 24px;
+    flex-shrink: 0;
+    border-left-color: rgb(82, 82, 82);
+    border-right-color: rgb(82, 82, 82);
+    border-top-color: rgb(82, 82, 82);
+    border-bottom-color: rgb(82, 82, 82);
+    border-bottom-width: 1px;
+}
+
+#packages-label {
+    -unity-font-style: bold;
+    padding-left: 16px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    flex-grow: 1;
+    -unity-text-align: middle-left;
+    color: rgb(255, 255, 255);
+}
+
+#examples-scrollview {
+    background-color: rgb(41, 41, 41);
+}
+
+#examples-scrollview-container {
+    background-color: rgb(82, 82, 82);
+}
+
+#preview-thumbnail {
+    height: 144px;
+    background-color: rgba(89, 89, 89, 0);
+    flex-shrink: 0;
+    background-image: none;
+    -unity-background-scale-mode: scale-to-fit;
+    min-height: 64px;
+}
+
+#preview-settings {
+    flex-grow: 1;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    min-height: 164px;
+}
+
+#preview-title {
+    -unity-font-style: bold;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 8px;
+    margin-bottom: 2px;
+    font-size: 20px;
+    white-space: normal;
+    color: rgb(255, 255, 255);
+}
+
+#preview-settings-scrollview {
+    flex-grow: 1;
+}
+
+#preview-version {
+    -unity-font-style: normal;
+    flex-grow: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 2px;
+    margin-bottom: 4px;
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    white-space: normal;
+}
+
+#preview-tags {
+    -unity-font-style: normal;
+    flex-grow: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 2px;
+    margin-bottom: 4px;
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    white-space: normal;
+}
+
+#preview-options {
+    flex-direction: row;
+    height: 32px;
+    flex-shrink: 0;
+    min-height: 32px;
+    margin-top: 8px;
+}
+
+#preview-download {
+    flex-grow: 1;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: auto;
+    background-color: rgb(15, 145, 169);
+    -unity-font-style: bold;
+    font-size: 14px;
+    border-left-color: rgb(48, 48, 48);
+    border-right-color: rgb(48, 48, 48);
+    border-top-color: rgb(48, 48, 48);
+    border-bottom-color: rgb(36, 36, 36);
+    color: rgb(238, 238, 238);
+}
+
+#preview-documentation {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    margin-left: 6px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    flex-grow: 0;
+    background-color: rgb(20, 20, 20);
+    -unity-font-style: bold;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+    border-left-color: rgb(48, 48, 48);
+    border-right-color: rgb(48, 48, 48);
+    border-top-color: rgb(48, 48, 48);
+    border-bottom-color: rgb(36, 36, 36);
+}
+
+#settings-button {
+    background-image: none; 
+    flex-basis: 24px; 
+    width: 24px; 
+    height: 24px; 
+    -unity-background-scale-mode: scale-to-fit;
+}

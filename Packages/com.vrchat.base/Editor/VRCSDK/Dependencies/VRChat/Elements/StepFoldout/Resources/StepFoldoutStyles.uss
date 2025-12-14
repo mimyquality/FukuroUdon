@@ -1,0 +1,6 @@
+﻿/* There is a higher level parent stylesheet that we want to override with a more specific selector */
+.section-foldout > Toggle Label.step-label,
+.step-label{
+    flex-grow: 0;
+    margin-left: 8px;
+}

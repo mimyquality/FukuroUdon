@@ -1,0 +1,60 @@
+﻿#checklist-block {
+    border-bottom-width: 1px;
+}
+
+.dark #checklist-block  {
+    border-bottom-color: rgb(26, 26, 26);
+}
+
+.light #checklist-block  {
+    border-bottom-color: rgb(127, 127, 127);
+}
+
+
+/*.light #checklist-block {*/
+/*    border-color: #A9A9A9;*/
+/*    background-color: rgba(235, 235, 235, 0.2039216);*/
+/*    color: #161616;*/
+/*}*/
+
+/*.dark #checklist-block {*/
+/*    border-color: #232323;*/
+/*    background-color: rgba(96, 96, 96, 0.2039216);*/
+/*    color: #BDBDBD;*/
+/*}*/
+
+#checklist-block #checklist-label {
+    -unity-font-style: bold;
+    border-bottom-width: 0;
+}
+
+#checklist-block #checklist-label #checklist-label-text {
+    padding-bottom: 1px;
+}
+
+#checklist-items .icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+}
+
+.cross-icon {
+    background-image: resource("DotFill");
+}
+
+.check-icon {
+    background-image: resource("P4_CheckOutRemote");
+}
+
+
+.light .create-icon {
+    background-image: resource("CreateAddNew");
+}
+
+.dark .create-icon {
+    background-image: resource("d_CreateAddNew");
+}
+
+#checklist-items Label {
+    
+}

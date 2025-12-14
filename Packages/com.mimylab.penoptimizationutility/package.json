@@ -1,0 +1,20 @@
+{
+  "name": "com.mimylab.penoptimizationutility",
+  "displayName": "Pen Optimization Utility",
+  "version": "1.0.4",
+  "description": "You can optimize VRChat world pen",
+  "unity": "2019.4",
+  "author": {
+    "name": "Mimy Quality",
+    "url": "https://github.com/mimyquality"
+  },
+  "documentationUrl": "https://github.com/mimyquality/PenOptimizationUtility/wiki",
+  "changelogUrl":"https://github.com/mimyquality/PenOptimizationUtility/blob/main/Packages/com.mimylab.penoptimizationutility/CHANGELOG.md",
+  "licensesUrl":"https://github.com/mimyquality/PenOptimizationUtility/blob/main/Packages/com.mimylab.penoptimizationutility/LICENSE.md",
+  "dependencies": {},
+  "gitDependencies": {},
+  "vpmDependencies": {
+    "com.vrchat.worlds": "^3.4.2",
+    "net.ureishi.qvpen": "^3.2.6"
+  }
+}

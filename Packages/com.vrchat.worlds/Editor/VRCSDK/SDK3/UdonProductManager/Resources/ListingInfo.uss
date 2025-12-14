@@ -1,0 +1,16 @@
+#listinginfo-elem {
+	flex-direction: row; 
+	align-items: center;
+}
+
+#copylisting-btn {
+	flex-grow: 0;
+}
+
+#copygroup-btn {
+	flex-grow: 1;
+}
+
+#groupinfo-label {
+	flex-grow: 1;
+}

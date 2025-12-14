@@ -1,0 +1,13 @@
+﻿<UXML xmlns="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <VisualElement name="root">
+        <uie:Toolbar name="toolbar" class="w-100">
+            <uie:ToolbarButton name="tab-authentication" text="Authentication" class="flex-1 text-center" />
+            <uie:ToolbarButton name="tab-builder" text="Builder" class="flex-1 text-center" />
+            <uie:ToolbarButton name="tab-content-manager" text="Content Manager" class="flex-1 text-center" />
+            <uie:ToolbarButton name="tab-settings" text="Settings" class="flex-1 text-center" />
+        </uie:Toolbar>
+        <VisualElement name="banner" />
+        <VisualElement name="sdk-container" />
+        <VisualElement name="builder-panel" class="d-none" />
+    </VisualElement>
+</UXML>

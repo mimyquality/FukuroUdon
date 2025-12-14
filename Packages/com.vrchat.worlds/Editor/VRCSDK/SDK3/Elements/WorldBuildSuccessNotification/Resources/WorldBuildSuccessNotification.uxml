@@ -1,0 +1,5 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+    <VisualElement name="notification-block" class="col mt-2 mb-2 w-100 align-items-center">
+        <Label text="Your world was built successfully!" class="text-lg" />
+    </VisualElement>
+</UXML>

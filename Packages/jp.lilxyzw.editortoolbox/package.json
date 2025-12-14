@@ -1,0 +1,10 @@
+{
+  "name": "jp.lilxyzw.editortoolbox",
+  "version": "1.11.0",
+  "displayName": "lilEditorToolbox",
+  "description": "Extensions for Unity Editor.",
+  "unity": "2022.3",
+  "license": "MIT",
+  "url" : "https://github.com/lilxyzw/lilEditorToolbox/releases/download/1.11.0/jp.lilxyzw.editortoolbox-1.11.0.zip?",
+  "repo" : "https://lilxyzw.github.io/vpm-repos/vpm.json"
+}

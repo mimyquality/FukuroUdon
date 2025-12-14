@@ -1,0 +1,16 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+    <VisualElement name="modal-backdrop" class="absolute" />
+    <VisualElement name="modal-container" class="col">
+        <VisualElement class="row p-2 justify-container-between align-items-center" name="modal-header">
+            <VisualElement name="modal-icon" class="d-none" />
+            <Label name="modal-title" class="text-bold text-center flex-grow-1" />
+            <Button name="modal-close-btn" text=" " class="pl-2 pr-2" />
+        </VisualElement>
+        <VisualElement name="modal-content-wrapper" class="flex-grow row w-full">
+            <VisualElement name="modal-content" class="flex-grow flex-9 w-full col white-space-normal" />
+            <VisualElement name="modal-action-button-wrapper" class="flex-3 p-3 d-none">
+                <Button name="modal-action-button" class="text-lg text-bold flex-grow-1" />
+            </VisualElement>
+        </VisualElement>
+    </VisualElement>
+</UXML>

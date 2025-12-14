@@ -1,0 +1,53 @@
+﻿Modal {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#modal-backdrop {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#modal-container {
+    margin: auto;
+    max-width: 95%;
+    width: 100%;
+    background-color: var(--unity-colors-window-background);
+}
+
+#modal-header {
+    background-color: var(--unity-colors-highlight-background-hover-lighter);
+}
+
+#modal-icon {
+    width: 18px;
+    height: 18px;
+}
+
+#modal-close-btn {
+    border-width: 0;
+    background-color: transparent;
+    width: 16px;
+    height: 16px;
+}
+
+.dark #modal-close-btn {
+    background-image: resource("d_winbtn_win_close");
+}
+
+.light #modal-close-btn {
+    background-image: resource("winbtn_win_close");
+}
+
+.dark #modal-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.light #modal-close-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}

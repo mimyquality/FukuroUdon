@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 169f56f4f49b74da7b292b052bacb883
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _udonSharpBackingUdonBehaviour: {instanceID: 0}
+  - localStrokesContainer: {instanceID: 0}
+  - strokesContainer: {instanceID: 0}
+  - strokePrefab: {instanceID: 0}
+  - strokeMaterialPC: {fileID: 2100000, guid: 83c0744722b414d788102fa27cf540a8, type: 2}
+  - strokeMaterialQuest: {fileID: 2100000, guid: 51b4f978542bf4a8bac381b1baab9a96,
+      type: 2}
+  - localLeftStylus: {instanceID: 0}
+  - localRightStylus: {instanceID: 0}
+  - myStream: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
