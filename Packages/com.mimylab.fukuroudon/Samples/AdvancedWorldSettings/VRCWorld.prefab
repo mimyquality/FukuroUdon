@@ -183,16 +183,16 @@ MonoBehaviour:
   _initializePickups: 1
   _enablePickups: 1
   _initializePlayerVoice: 1
-  _voiceGain: 0
+  _voiceGain: 15
   _voiceDistanceNear: 0
   _voiceDistanceFar: 25
   _voiceVolumetricRadius: 0
   _voiceLowpass: 1
   _initializeAvatarAudio: 1
   _avatarAudioGain: 10
-  _avatarAudioDistanceNear: 40
+  _avatarAudioDistanceNear: 0
   _avatarAudioDistanceFar: 40
-  _avatarAudioVolumetricRadius: 40
+  _avatarAudioVolumetricRadius: 0
   _avatarAudioForceSpatial: 0
   _avatarAudioCustomCurve: 0
   _initializeAvatarScaling: 1
@@ -289,6 +289,10 @@ MonoBehaviour:
   - 0
   _initializeQualitySettings: 0
   _shadowDistance: 50
+  _shadowCascade2Split: 0.33333334
+  _shadowCascade4Split0: 0.06666667
+  _shadowCascade4Split1: 0.2
+  _shadowCascade4Split2: 0.46666667
 --- !u!114 &4847006719195930141
 MonoBehaviour:
   m_ObjectHideFlags: 0

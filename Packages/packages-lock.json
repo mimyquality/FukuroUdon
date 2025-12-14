@@ -310,12 +310,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "net.narazaka.vrchat.tmp-fallback-fonts-jp": {
-      "version": "file:net.narazaka.vrchat.tmp-fallback-fonts-jp",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "net.ureishi.qvpen": {
       "version": "file:net.ureishi.qvpen",
       "depth": 0,

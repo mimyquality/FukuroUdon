@@ -12,7 +12,6 @@
   <Project Path="VRC.ClientSim.Editor.csproj" />
   <Project Path="VRC.SDK3.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="TextMeshProFallbackFontJP.csproj" />
   <Project Path="VRC.SDK3.Editor.csproj" />
   <Project Path="UniTask.DOTween.csproj" />
   <Project Path="FukuroUdon.csproj" />
