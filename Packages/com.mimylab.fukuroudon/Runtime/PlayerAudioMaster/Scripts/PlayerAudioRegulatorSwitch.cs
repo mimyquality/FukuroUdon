@@ -23,7 +23,7 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class PlayerAudioRegulatorSwitch : IPlayerAudioRegulator
     {
-        [Header("Specific settings")]
+        [Header("Option Settings")]
         public PlayerAudioRegulatorSwitchMode switchMode = default;
 
         [UdonSynced]

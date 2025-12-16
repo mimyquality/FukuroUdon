@@ -20,15 +20,16 @@ namespace MimyLab.FukuroUdon
 
     public class IPlayerAudioRegulator : UdonSharpBehaviour
     {
-        [Header("Options")]
+        [Header("Filter Settings")]
+        public bool othersOnly = false;
+        public string[] allowedPlayerNameList = new string[0];
+
+        [Header("Channel Settings")]
         public bool enableChannelMode = false;
         [Min(0)]
         public int channel = 0;
         public PlayerAudioRegulatorChannelUncmatchMode channelUnmatchMode = default;
         public IPlayerAudioRegulator unmatchFallback = null;
-        [Space]
-        public bool othersOnly = false;
-        public string[] allowedPlayerNameList = new string[0];
 
         [Header("Player Voice Settings")]
         public bool enablePlayerVoiceOverride = true;

@@ -16,6 +16,7 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerAudioRegulatorAvatarScale : IPlayerAudioRegulator
     {
+        [Header("Option Settings")]
         [SerializeField, Min(0.1f), Tooltip("meter")]
         private float _baseEyeHeight = 1.6f;
 
