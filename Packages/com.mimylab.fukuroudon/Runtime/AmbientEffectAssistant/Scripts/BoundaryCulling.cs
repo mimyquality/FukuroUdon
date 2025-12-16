@@ -21,13 +21,12 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class BoundaryCulling : UdonSharpBehaviour
     {
-        [Header("Targets")]
         [SerializeField]
         private Renderer[] _renderers = new Renderer[0];
         [SerializeField]
         private GameObject[] _gameObjects = new GameObject[0];
 
-        [Header("Bounds Settings")]
+        [Header("Bound Settings")]
         [SerializeField]
         private Transform _point;
         [SerializeField]

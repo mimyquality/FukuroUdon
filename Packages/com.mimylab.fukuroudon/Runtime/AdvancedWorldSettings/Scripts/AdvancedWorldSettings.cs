@@ -110,6 +110,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField][Range(0.0f, 1.0f)] private float _shadowCascade4Split1 = 6f / 30f;
         [SerializeField][Range(0.0f, 1.0f)] private float _shadowCascade4Split2 = 14f / 30f;
 
+        private VRCPlayerApi _localPlayer;
         private bool _hasAvatarChanged = false;
         private bool _hasFirstAvatarChanged = false;
 
@@ -134,6 +135,8 @@ namespace MimyLab.FukuroUdon
 
         private void Start()
         {
+            _localPlayer = Networking.LocalPlayer;
+
             if (_initializeScreenCameraSettings)
             {
                 var screenCamera = VRCCameraSettings.ScreenCamera;
@@ -219,13 +222,12 @@ namespace MimyLab.FukuroUdon
 
         public override void OnAvatarChanged(VRCPlayerApi player)
         {
-            if (player.isLocal)
-            {
-                _hasAvatarChanged = true;
+            if (!player.isLocal) { return; }
 
-                // 同じ目の高さのアバターに変更した場合はOnAvatarEyeHeightChanged()が発火しない
-                SendCustomEventDelayedSeconds(nameof(_CloseAvatarChangeProcessing), 0.2f);
-            }
+            _hasAvatarChanged = true;
+
+            // 同じ目の高さのアバターに変更した場合はOnAvatarEyeHeightChanged()が発火しない
+            SendCustomEventDelayedSeconds(nameof(_CloseAvatarChangeProcessing), 0.2f);
         }
 
         public override void OnAvatarEyeHeightChanged(VRCPlayerApi player, float prevEyeHeightAsMeters)
@@ -237,14 +239,14 @@ namespace MimyLab.FukuroUdon
             {
                 if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightType.AvatarChange) > 0)
                 {
-                    ClampAvatarEyeHeight(player);
+                    ClampAvatarEyeHeight();
                 }
             }
             else
             {
                 if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightType.Join) > 0)
                 {
-                    ClampAvatarEyeHeight(player);
+                    ClampAvatarEyeHeight();
                 }
 
                 _hasFirstAvatarChanged = true;
@@ -258,11 +260,11 @@ namespace MimyLab.FukuroUdon
             _hasAvatarChanged = false;
         }
 
-        private void ClampAvatarEyeHeight(VRCPlayerApi localPlayer)
+        private void ClampAvatarEyeHeight()
         {
-            var avatarEyeHeight = localPlayer.GetAvatarEyeHeightAsMeters();
+            var avatarEyeHeight = _localPlayer.GetAvatarEyeHeightAsMeters();
             avatarEyeHeight = Mathf.Clamp(avatarEyeHeight, _avatarEyeHeightLowerLimit, _avatarEyeHeightUpperLimit);
-            localPlayer.SetAvatarEyeHeightByMeters(avatarEyeHeight);
+            _localPlayer.SetAvatarEyeHeightByMeters(avatarEyeHeight);
         }
     }
 }

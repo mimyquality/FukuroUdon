@@ -27,8 +27,11 @@ namespace MimyLab.FukuroUdon
         [SerializeField, Min(0.0f), Tooltip("meter")]
         private float _activeRange = 10.0f;
 
+        [Header("Bounds Settings")]
         [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
         private Collider[] _area = new Collider[0];
+        [SerializeField]
+        private bool _areaIsStatic = true;
 
         private Bounds _areaBounds;
         //private VRCCameraSettings _camera;
@@ -59,7 +62,7 @@ namespace MimyLab.FukuroUdon
             //var position = _camera.Position;
             var position = _localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).position;
 
-            if (_inactiveOutOfRange && !_areaBounds.Contains(position))
+            if (_inactiveOutOfRange && _areaIsStatic && !_areaBounds.Contains(position))
             {
                 // 完全に _activeRange の範囲外にいる
                 if (_target.gameObject.activeSelf) { _target.gameObject.SetActive(false); }

@@ -17,19 +17,18 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class AreaCulling : UdonSharpBehaviour
     {
-        [Header("Targets")]
         [SerializeField]
         private Renderer[] _renderers = new Renderer[0];
         [SerializeField]
         private GameObject[] _gameObjects = new GameObject[0];
 
-        [Space]
-        [SerializeField]
-        private bool _invert = false;
-
         [Header("Bounds Settings")]
         [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
         private Collider[] _area = new Collider[0];
+        [SerializeField]
+        private bool _areaIsStatic = true;
+        [SerializeField]
+        private bool _invert = false;
         [SerializeField, Tooltip("Include the VRC Camera and Drone for culling checks")]
         private bool _includeVRCCamera = false;
 
@@ -63,12 +62,16 @@ namespace MimyLab.FukuroUdon
             if (!Utilities.IsValid(_screenCamera)) { return; }
 
             var position = _screenCamera.Position;
-            var isIn = _areaBounds.Contains(position) && CheckInArea(position);
+            var isIn = _areaIsStatic ?
+                       _areaBounds.Contains(position) && CheckInArea(position) :
+                       CheckInArea(position);
 
             if (_includeVRCCamera && _photoCamera.Active && !isIn)
             {
                 var photoPosition = _photoCamera.Position;
-                isIn = _areaBounds.Contains(photoPosition) && CheckInArea(photoPosition);
+                isIn = _areaIsStatic ?
+                       _areaBounds.Contains(photoPosition) && CheckInArea(photoPosition) :
+                       CheckInArea(photoPosition);
             }
 
             if (isIn != _wasIn)
