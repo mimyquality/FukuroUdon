@@ -6,6 +6,19 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.14.0] - 2025/12/16
+
+**Added**  
+
+- Area Culling と Boundary Culling に、VRCカメラ/ドローンを計算に含む設定を追加しました。 [#34](https://github.com/mimyquality/FukuroUdon/issues/34)
+- Flexible AudioSource にコライダー範囲内に居る間の音量を変更できる機能を追加しました。 [#36](https://github.com/mimyquality/FukuroUdon/issues/36)
+
+**Fixed**  
+
+- AmbientEffect Assistant の Area 対象コライダーを、ver 3.12.0 以前のように動的に計算するか切り替えられるようにしました。
+- 内部的に設けていたインスタンス内の人数上限(90人)を撤廃しました。
+- PARegulator 系コンポーネントの設定項目を整理しました。
+
 ## [3.13.0] - 2025/11/28
 
 **Added**  
@@ -780,6 +793,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.14.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.14.0
 [3.13.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0
 [3.12.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.12.0
 [3.11.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.11.0

@@ -19,11 +19,16 @@ namespace MimyLab.FukuroUdon
     {
         [SerializeField]
         private AudioSource _decaySound;
-        [SerializeField]
-        private AudioSource _innerSound;
-
         [SerializeField, Min(0.0f), Tooltip("meter")]
         private float _effectiveRangeOffset = 1.0f;
+
+        [Header("Advanced Settings")]
+        [SerializeField, Min(0.0f)]
+        private float _insideVolumeMultiplier = 1.0f;
+        [SerializeField, Min(0.0f), Tooltip("sec")]
+        private float _insideVolumeDuration = 0.0f;
+        [SerializeField]
+        private AudioSource _innerSound;
 
         [Header("Bounds Settings")]
         [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
@@ -37,6 +42,13 @@ namespace MimyLab.FukuroUdon
         //private VRCCameraSettings _camera;
         private VRCPlayerApi _localPlayer;
         private float _effectiveRange;
+
+        private bool _wasIn = false;
+        private bool _isTransition = false;
+        private float _standardVolume;
+        private float _outsidedVolume;
+        private float _insideVolume;
+        private float _elapsedTime;
 
         private bool _initialized = false;
         private void Initialize()
@@ -86,6 +98,8 @@ namespace MimyLab.FukuroUdon
                 {
                     if (_decaySound.isPlaying) { _decaySound.Pause(); }
                 }
+
+                ControlVolume(isIn);
             }
 
             if (_innerSound)
@@ -154,6 +168,47 @@ namespace MimyLab.FukuroUdon
             }
 
             return false;
+        }
+
+        private void ControlVolume(bool isIn)
+        {
+            var hasChanged = false;
+
+            if (_standardVolume != _decaySound.volume)
+            {
+                _outsidedVolume = _decaySound.volume;
+                _insideVolume = _outsidedVolume * _insideVolumeMultiplier;
+                hasChanged = true;
+            }
+
+            if (_wasIn != isIn)
+            {
+                if (!_isTransition)
+                {
+                    _elapsedTime = isIn ? 0.0f : _insideVolumeDuration;
+                }
+
+                _wasIn = isIn;
+                hasChanged = true;
+            }
+
+            if (hasChanged || _isTransition)
+            {
+                if (Mathf.Approximately(_insideVolumeDuration, 0.0f))
+                {
+                    _standardVolume = isIn ? _insideVolume : _outsidedVolume;
+                }
+                else
+                {
+                    _elapsedTime += isIn ? Time.deltaTime : -Time.deltaTime;
+
+                    var t = Mathf.Clamp01(_elapsedTime / _insideVolumeDuration);
+                    _standardVolume = Mathf.Lerp(_outsidedVolume, _insideVolume, t);
+                }
+                _decaySound.volume = _standardVolume;
+
+                _isTransition = 0.0f < _elapsedTime && _elapsedTime < _insideVolumeDuration;
+            }
         }
     }
 }
