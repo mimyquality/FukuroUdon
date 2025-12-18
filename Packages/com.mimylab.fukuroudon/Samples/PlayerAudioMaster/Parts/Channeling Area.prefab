@@ -263,34 +263,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5391508250777434637, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5391508250777434637, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5391508250777434637, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5391508250777434637, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5391508250777434637, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5391508250777434637, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5391508250777434637, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5391508250777434637, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -308,7 +280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5391508250777434678, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e, type: 3}
       propertyPath: voiceDistanceFar
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 5391508250777434678, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e, type: 3}
       propertyPath: enableChannelMode
@@ -316,7 +288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5391508250777434678, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e, type: 3}
       propertyPath: voiceDistanceNear
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 5391508250777434678, guid: fbb4ae282a46eec44bb0a5ddaf6e7b1e, type: 3}
       propertyPath: serializationData.Prefab

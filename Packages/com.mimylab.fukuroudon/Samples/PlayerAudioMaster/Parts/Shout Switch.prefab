@@ -314,34 +314,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5665024793553480672, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665024793553480672, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665024793553480672, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665024793553480672, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665024793553480672, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665024793553480672, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665024793553480672, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665024793553480672, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -367,11 +339,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5665024793553480678, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
       propertyPath: voiceDistanceFar
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 5665024793553480678, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
       propertyPath: voiceDistanceNear
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 5665024793553480678, guid: 8e1302297d5fc6d4e9d17e86d56e3076, type: 3}
       propertyPath: serializationData.Prefab

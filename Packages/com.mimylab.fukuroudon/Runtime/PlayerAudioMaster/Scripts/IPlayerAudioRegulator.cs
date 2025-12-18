@@ -35,9 +35,9 @@ namespace MimyLab.FukuroUdon
         public bool enablePlayerVoiceOverride = true;
         [Range(0f, 24f)]
         public float voiceGain = 15f;
-        [Range(0f, 999999.9f)]
+        [Range(0f, 1000000.0f)]
         public float voiceDistanceNear = 0f;
-        [Range(0f, 999999.9f)]
+        [Range(0f, 1000000.0f)]
         public float voiceDistanceFar = 25f;
 
         [Header("Player Voice Advance Settings")]

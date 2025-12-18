@@ -13,34 +13,6 @@ PrefabInstance:
       value: PlayerAudioMaster_Telephone_Sample
       objectReference: {fileID: 0}
     - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}

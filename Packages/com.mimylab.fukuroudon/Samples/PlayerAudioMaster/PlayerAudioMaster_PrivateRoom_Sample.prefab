@@ -55,12 +55,12 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 4614573410669067282}
-  enableChannelMode: 1
+  othersOnly: 0
+  allowedPlayerNameList: []
+  enableChannelMode: 0
   channel: 0
   channelUnmatchMode: 0
   unmatchFallback: {fileID: 0}
-  othersOnly: 0
-  allowedPlayerNameList: []
   enablePlayerVoiceOverride: 1
   voiceGain: 15
   voiceDistanceNear: 0
@@ -69,9 +69,9 @@ MonoBehaviour:
   voiceLowpass: 1
   enableAvatarAudioOverride: 1
   avatarAudioGain: 10
-  avatarAudioDistanceNear: 40
+  avatarAudioDistanceNear: 0
   avatarAudioDistanceFar: 40
-  avatarAudioVolumetricRadius: 40
+  avatarAudioVolumetricRadius: 0
   avatarAudioForceSpatial: 0
   avatarAudioCustomCurve: 0
 --- !u!114 &4614573410669067282
@@ -207,34 +207,6 @@ PrefabInstance:
     - target: {fileID: 2947867732128564761, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
       propertyPath: m_Name
       value: PlayerAudioMaster_PrivateRoom_Sample
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2947867732128564762, guid: 9043dc03c5520c7468be8f5e2e9ad6b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

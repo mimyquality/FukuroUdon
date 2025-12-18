@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: voiceDistanceFar
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: enableChannelMode
@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: voiceDistanceNear
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: serializationData.Prefab
@@ -243,7 +243,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: voiceDistanceFar
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: enableChannelMode
@@ -251,7 +251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: voiceDistanceNear
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: serializationData.Prefab
@@ -344,7 +344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: voiceDistanceFar
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: enableChannelMode
@@ -352,7 +352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: voiceDistanceNear
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: serializationData.Prefab
@@ -445,7 +445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: voiceDistanceFar
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: enableChannelMode
@@ -453,7 +453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: voiceDistanceNear
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: serializationData.Prefab
@@ -920,7 +920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: voiceDistanceFar
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: enableChannelMode
@@ -928,7 +928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: voiceDistanceNear
-      value: 999999.9
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 4327216011090071883, guid: ddba211b7a5bc724ea58bc142965d628, type: 3}
       propertyPath: serializationData.Prefab

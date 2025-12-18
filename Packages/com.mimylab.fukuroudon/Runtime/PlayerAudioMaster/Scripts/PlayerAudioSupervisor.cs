@@ -27,9 +27,9 @@ namespace MimyLab.FukuroUdon
         [Header("Player Voice Settings")]
         [Range(0f, 24f)]
         public float defaultVoiceGain = 15f;
-        [Range(0f, 999999.9f)]
+        [Range(0f, 1000000.0f)]
         public float defaultVoiceDistanceNear = 0f;
-        [Range(0f, 999999.9f)]
+        [Range(0f, 1000000.0f)]
         public float defaultVoiceDistanceFar = 25f;
 
         [Header("Player Voice Advance Settings")]
