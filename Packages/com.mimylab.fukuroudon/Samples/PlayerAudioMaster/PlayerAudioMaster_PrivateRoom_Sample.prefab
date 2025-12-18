@@ -57,7 +57,7 @@ MonoBehaviour:
   _udonSharpBackingUdonBehaviour: {fileID: 4614573410669067282}
   othersOnly: 0
   allowedPlayerNameList: []
-  enableChannelMode: 0
+  enableChannelMode: 1
   channel: 0
   channelUnmatchMode: 0
   unmatchFallback: {fileID: 0}
