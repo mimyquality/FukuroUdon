@@ -83,14 +83,14 @@ namespace MimyLab.FukuroUdon
         {
             if (!Utilities.IsValid(_screenCamera)) { return; }
 
-            var direction = _screenCamera.Position - _point.position;
             var borderNormal = (_normal != Vector3.zero) ? _point.rotation * _normal : Vector3.up;
-            var isIn = Vector3.Dot(borderNormal, direction) >= 0.0f;
+            var direction = _screenCamera.Position - _point.position;
+            var isIn = Vector3.Dot(borderNormal, direction) <= 0.0f;
 
             if (_includeVRCCamera && _photoCamera.Active && !isIn)
             {
                 direction = _photoCamera.Position - _point.position;
-                isIn = Vector3.Dot(borderNormal, direction) >= 0.0f;
+                isIn = Vector3.Dot(borderNormal, direction) <= 0.0f;
             }
 
             if (_wasIn != isIn)
