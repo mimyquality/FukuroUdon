@@ -102,7 +102,7 @@ MonoBehaviour:
   TurnOffMirrorOcclusion: 1
   m_ReflectLayers:
     serializedVersion: 2
-    m_Bits: 404233
+    m_Bits: 272905
   mirrorResolution: 0
   maximumAntialiasing: 4
   customShader: {fileID: 0}
@@ -131,7 +131,6 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 6391212833605758589}
-  _mirror: {fileID: 4462604946471584214}
   _profileList: []
 --- !u!114 &6391212833605758589
 MonoBehaviour:

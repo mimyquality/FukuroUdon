@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1866242174522884489, guid: cf66c3f0a6069ad49a1f8fe3d852c3e0, type: 3}
       propertyPath: reflectLayers.m_Bits
-      value: 523055
+      value: 2143812399
       objectReference: {fileID: 0}
     - target: {fileID: 1866242174522884489, guid: cf66c3f0a6069ad49a1f8fe3d852c3e0, type: 3}
       propertyPath: serializationData.Prefab
@@ -24,10 +24,6 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 3594488417241320025, guid: cf66c3f0a6069ad49a1f8fe3d852c3e0, type: 3}
-    - target: {fileID: 5997113869887129901, guid: cf66c3f0a6069ad49a1f8fe3d852c3e0, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5997113869887129901, guid: cf66c3f0a6069ad49a1f8fe3d852c3e0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
