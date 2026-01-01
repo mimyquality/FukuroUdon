@@ -6,6 +6,17 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.15.0] - 2026/1/2
+
+**Added**  
+
+- Mirror Tuner に、ミラーが距離で非表示になる機能を追加したサンプル Prefab を追加しました。 [#43](https://github.com/mimyquality/FukuroUdon/issues/43)
+
+**Fixed**  
+
+- Boundary Culling の境界面の表裏が逆だったのを修正しました。 [#42](https://github.com/mimyquality/FukuroUdon/issues/42)
+  - PB Collider の Plane と同じく、トゲの出てない側が内側です。
+
 ## [3.14.0] - 2025/12/16
 
 **Added**  
@@ -793,6 +804,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.15.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.15.0
 [3.14.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.14.0
 [3.13.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0
 [3.12.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.12.0
