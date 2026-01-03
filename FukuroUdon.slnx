@@ -1,6 +1,6 @@
 ﻿<Solution>
-  <Project Path="VRC.Udon.Serialization.OdinSerializer.csproj" />
   <Project Path="VRC.ClientSim.csproj" />
+  <Project Path="VRC.Udon.Serialization.OdinSerializer.csproj" />
   <Project Path="UdonSharp.Editor.csproj" />
   <Project Path="VRC.Udon.Editor.csproj" />
   <Project Path="VRC.SDKBase.Editor.csproj" />
