@@ -22,7 +22,7 @@ namespace MimyLab.FukuroUdon
         public int linkNumber = 0;
 
         [UdonSynced]
-        internal bool hasSaved = false;
+        internal bool _hasSaved = false;
         [UdonSynced]
         private Vector3 _localOffset;
 
@@ -57,8 +57,8 @@ namespace MimyLab.FukuroUdon
                 return;
             }
 
-            _adjuster = GetComponentInParent<SwivelChair2>(true).seatAdjuster;
-            _adjuster.adjustmentSync = this;
+            _adjuster = GetComponentInParent<SwivelChair2>(true)._seatAdjuster;
+            _adjuster._adjustmentSync = this;
         }
 
         public void LinkLocalOffset(SC2AdjustmentSync linker)
@@ -69,7 +69,7 @@ namespace MimyLab.FukuroUdon
         private void SetLocalOffset(Vector3 value)
         {
             _localOffset = value;
-            hasSaved = true;
+            _hasSaved = true;
             RequestSerialization();
         }
 

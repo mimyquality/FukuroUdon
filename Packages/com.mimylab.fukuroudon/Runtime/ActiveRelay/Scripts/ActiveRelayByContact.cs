@@ -8,10 +8,10 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
-    using VRC.Udon.Common.Interfaces;
     using VRC.Dynamics;
+    using VRC.SDKBase;
     using VRC.SDK3.Dynamics.Contact.Components;
+    using VRC.Udon.Common.Interfaces;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-contact")]
     [Icon(ComponentIconPath.FukuroUdon)]

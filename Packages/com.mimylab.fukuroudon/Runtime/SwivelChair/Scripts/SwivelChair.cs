@@ -9,7 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.Udon;
     using VRC.Udon.Common;
 
 #if UNITY_EDITOR
@@ -44,15 +43,15 @@ namespace MimyLab.FukuroUdon
         public float fixSpeed = 0.5f;   // 入力量に対する調節速度の係数
 
         [SerializeField]
-        float maxHight = 0.5f, minHight = -0.5f;    // 座高の調節可能範囲
+        private float maxHight = 0.5f, minHight = -0.5f;    // 座高の調節可能範囲
 
         [SerializeField]
-        float maxForward = 0.3f, maxBack = -0.3f;   // 座深の調節可能範囲
+        private float maxForward = 0.3f, maxBack = -0.3f;   // 座深の調節可能範囲
 
         [Header("Caster Move Settings")]
         [FieldChangeCallback(nameof(EnableCasterMove))]
         [SerializeField]
-        bool _enableCasterMove = false;   // 移動機能の有効化
+        private bool _enableCasterMove = false;   // 移動機能の有効化
         public bool EnableCasterMove
         {
             get => _enableCasterMove;
@@ -76,10 +75,9 @@ namespace MimyLab.FukuroUdon
         public float deadZone = 0.05f;   // 不感帯、入力がこれ以下なら無効
 
         // 同期用
-        [FieldChangeCallback(nameof(SeatPosition))]
-        [UdonSynced]
-        Vector3 _seatPosition;
-        Vector3 SeatPosition
+        [UdonSynced, FieldChangeCallback(nameof(SeatPosition))]
+        private Vector3 _seatPosition;
+        private Vector3 SeatPosition
         {
             get => _seatPosition;
             set
@@ -90,10 +88,9 @@ namespace MimyLab.FukuroUdon
                 _enterPoint.localPosition = value;
             }
         }
-        [FieldChangeCallback(nameof(SeatRotation))]
-        [UdonSynced]
-        Quaternion _seatRotation;
-        Quaternion SeatRotation
+        [UdonSynced, FieldChangeCallback(nameof(SeatRotation))]
+        private Quaternion _seatRotation;
+        private Quaternion SeatRotation
         {
             get => _seatRotation;
             set
@@ -106,22 +103,22 @@ namespace MimyLab.FukuroUdon
         }
 
         // コンポーネントのキャッシュ用
-        SCKeyInputManager _keyInputManager;
-        VRCStation _station;
-        Transform _enterPoint;
-        Transform _parent;
+        private SCKeyInputManager _keyInputManager;
+        private VRCStation _station;
+        private Transform _enterPoint;
+        private Transform _parent;
 
         // ローカル処理用
-        VRCPlayerApi _lPlayer;
-        bool _isSit = false;    // 自分がこの椅子に座っているか判定
-        bool _fixShift = false, _lUse = false, _rUse = false;   // インプット渡し用
-        float _lookVerticalValue = 0f, _lookHorizontalValue = 0f;   // インプット渡し用
-        float _vertical, _sagittal;    // 計算用
-        Vector3 _fixValue;  // 計算用
-        float _rotateValue;  // 計算用
-        Vector3 _savedSeatPosition;  // 座高のローカル保持用
-        float _moveVerticalValue = 0f, _moveHorizontalValue = 0f;   // インプット渡し用
-        Vector3 _moveDirection;   //移動方向
+        private VRCPlayerApi _lPlayer;
+        private bool _isSit = false;    // 自分がこの椅子に座っているか判定
+        private bool _fixShift = false, _lUse = false, _rUse = false;   // インプット渡し用
+        private float _lookVerticalValue = 0f, _lookHorizontalValue = 0f;   // インプット渡し用
+        private float _vertical, _sagittal;    // 計算用
+        private Vector3 _fixValue;  // 計算用
+        private float _rotateValue;  // 計算用
+        private Vector3 _savedSeatPosition;  // 座高のローカル保持用
+        private float _moveVerticalValue = 0f, _moveHorizontalValue = 0f;   // インプット渡し用
+        private Vector3 _moveDirection;   //移動方向
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnValidate()
@@ -142,8 +139,8 @@ namespace MimyLab.FukuroUdon
         }
 #endif
 
-        bool _initialized = false;
-        void Initialize()
+        private bool _initialized = false;
+        private void Initialize()
         {
             if (_initialized) { return; }
 
@@ -155,7 +152,7 @@ namespace MimyLab.FukuroUdon
             _keyInputManager.enabled = _isSit;
 
             _station = GetComponent<VRCStation>();
-            _enterPoint = (_station.stationEnterPlayerLocation) ? _station.stationEnterPlayerLocation : this.transform;
+            _enterPoint = _station.stationEnterPlayerLocation ? _station.stationEnterPlayerLocation : this.transform;
 
             // 移動用
             _parent = this.transform.parent;
@@ -166,7 +163,7 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
-        void Start()
+        private void Start()
         {
             Initialize();
         }
@@ -257,7 +254,7 @@ namespace MimyLab.FukuroUdon
         /******************************
          インプット(DTP)
         ******************************/
-        void InputKeyboard()
+        private void InputKeyboard()
         {
             if (!Utilities.IsValid(_lPlayer)) { return; }
             if (_lPlayer.IsUserInVR()) { return; }
@@ -297,7 +294,7 @@ namespace MimyLab.FukuroUdon
             }
 
             // 左右Shift
-            _fixShift = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));
+            _fixShift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         }
 
         /******************************
@@ -325,7 +322,7 @@ namespace MimyLab.FukuroUdon
 
             if (args.handType == HandType.RIGHT) { _rUse = value; }
             if (args.handType == HandType.LEFT) { _lUse = value; }
-            _fixShift = (_rUse || _lUse);
+            _fixShift = _rUse || _lUse;
         }
 
         /******************************

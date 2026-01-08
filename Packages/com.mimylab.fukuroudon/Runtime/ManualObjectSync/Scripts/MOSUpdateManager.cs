@@ -9,7 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     //using VRC.SDKBase;
-    //using VRC.Udon;
 
 #if UNITY_EDITOR
     using UnityEditor;
@@ -22,7 +21,7 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MOSUpdateManager : UdonSharpBehaviour
     {
-        internal float respawnHeightY = -100.0f;
+        internal float _respawnHeightY = -100.0f;
         private ManualObjectSync[] _mosList = new ManualObjectSync[0];
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
@@ -48,7 +47,7 @@ namespace MimyLab.FukuroUdon
                 foreach (var tmp_mos in tmp_mosList)
                 {
                     tmp_mos.SetUpdateManager(this);
-                    tmp_mos.SetRespawnHeightY(respawnHeightY);
+                    tmp_mos.SetRespawnHeightY(_respawnHeightY);
                     tmp_mos.RecordSelf();
                 }
             }

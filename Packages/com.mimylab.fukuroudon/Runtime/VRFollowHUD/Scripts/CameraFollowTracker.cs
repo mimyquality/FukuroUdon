@@ -19,7 +19,7 @@ namespace MimyLab.FukuroUdon
     public class CameraFollowTracker : LocalPlayerCameraTracker
     {
         [SerializeField]
-        private bool vROnly = true; // VRモードでのみ有効
+        private bool _vROnly = true; // VRモードでのみ有効
 
         [Header("Position Settings")]
         public bool syncPosition = true;  // 位置同期
@@ -41,8 +41,8 @@ namespace MimyLab.FukuroUdon
         public bool lockRoll = true, lockPitch = false, lockYaw = false;   // 遅延せず回転同期(軸毎)
 
         // 計算用
-        private float pauseThreshold; // 追跡終了閾値、追跡開始閾値の5%を使う
-        private float restThreshold;  // 追跡回転終了閾値、追跡回転開始閾値の5%を使う
+        private float _pauseThreshold; // 追跡終了閾値、追跡開始閾値の5%を使う
+        private float _restThreshold;  // 追跡回転終了閾値、追跡回転開始閾値の5%を使う
         private bool _isPause, _isRest;
 
         private VRCPlayerApi _localPlayer;
@@ -59,7 +59,7 @@ namespace MimyLab.FukuroUdon
                 return base.GetTrackingPosition(trackingTarget);
             }
 
-            if (vROnly && !_localPlayer.IsUserInVR())
+            if (_vROnly && !_localPlayer.IsUserInVR())
             {
                 return base.GetTrackingPosition(trackingTarget);
             }
@@ -73,7 +73,7 @@ namespace MimyLab.FukuroUdon
             {
                 return base.GetTrackingRotation(trackingTarget);
             }
-            if (vROnly && !_localPlayer.IsUserInVR())
+            if (_vROnly && !_localPlayer.IsUserInVR())
             {
                 return base.GetTrackingRotation(trackingTarget);
             }
@@ -88,7 +88,7 @@ namespace MimyLab.FukuroUdon
             var pos = transform.position;
 
             // moveThresholdの5%を閾値に使う
-            pauseThreshold = moveThreshold * 0.05f;
+            _pauseThreshold = moveThreshold * 0.05f;
 
             // 相対距離を算出
             var distance = (pos - targetPosition).sqrMagnitude;
@@ -98,7 +98,7 @@ namespace MimyLab.FukuroUdon
             {
                 _isPause = false;
             }
-            else if (distance < pauseThreshold * pauseThreshold)
+            else if (distance < _pauseThreshold * _pauseThreshold)
             {
                 _isPause = true;
             }
@@ -124,7 +124,7 @@ namespace MimyLab.FukuroUdon
 
             angleRange = Mathf.Clamp(angleRange, 0.0f, 180.0f);
             rotateThreshold = Mathf.Clamp(rotateThreshold, 0.0f, 180.0f);
-            restThreshold = rotateThreshold * 0.05f; // RotateThresholdの5%を閾値に使う
+            _restThreshold = rotateThreshold * 0.05f; // RotateThresholdの5%を閾値に使う
 
             // 相対角度を算出
             var angle = Quaternion.Angle(rot, targetRotation);
@@ -134,7 +134,7 @@ namespace MimyLab.FukuroUdon
             {
                 _isRest = false;
             }
-            else if (angle < restThreshold)
+            else if (angle < _restThreshold)
             {
                 _isRest = true;
             }

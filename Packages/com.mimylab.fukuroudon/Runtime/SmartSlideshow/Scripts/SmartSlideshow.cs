@@ -9,7 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.Udon;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Smart-Slideshow#smart-slideshow")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -19,9 +18,9 @@ namespace MimyLab.FukuroUdon
     {
         [Header("Reference")]
         [SerializeField]
-        Literature[] literatures = new Literature[0];   // 切替対象のスライドセット
+        private Literature[] literatures = new Literature[0];   // 切替対象のスライドセット
         [SerializeField]
-        SSs_Controller[] controllers = new SSs_Controller[0];   // 入力フィードバック用
+        private SSs_Controller[] controllers = new SSs_Controller[0];   // 入力フィードバック用
 
         [Header("Settings")]
         [SerializeField]
@@ -38,6 +37,7 @@ namespace MimyLab.FukuroUdon
             if (v) { OnDeserialization(); }
             else { FeedbackController(); }
         }
+
         [SerializeField]
         [FieldChangeCallback(nameof(PageLink))]
         private bool _pageLink = false;   // スライド間でページを一致させるか
@@ -53,6 +53,7 @@ namespace MimyLab.FukuroUdon
             // FeedbackController();
             PageSelect(_selectedPage[_selectedIndex]);
         }
+
         [Tooltip("When Auto Slide is enabled, this is forced to be enabled")]
         [SerializeField]
         [FieldChangeCallback(nameof(PageLoop))]
@@ -67,6 +68,7 @@ namespace MimyLab.FukuroUdon
             _pageLoop = v;
             FeedbackController();
         }
+
         [Tooltip("If this value is greater than 0, Auto slide is enabled.")]
         [Range(0.0f, 9999.0f)]
         [SerializeField]
@@ -97,22 +99,22 @@ namespace MimyLab.FukuroUdon
 
         // 同期用変数
         [UdonSynced(UdonSyncMode.None)]
-        int g_SelectedIndex = 0;
+        private int g_SelectedIndex = 0;
         [UdonSynced(UdonSyncMode.None)]
-        int[] g_SelectedPage;
+        private int[] g_SelectedPage;
 
         // ローカル用変数
-        int _selectedIndex = 0;
-        int[] _selectedPage;
-        int[] _endPage;
-        bool _activeAutoSlide = false;
+        private int _selectedIndex = 0;
+        private int[] _selectedPage;
+        private int[] _endPage;
+        private bool _activeAutoSlide = false;
 
-        void OnValidate()
+        private void OnValidate()
         {
             if (AutoSlide > 0.0f) _pageLoop = true;
         }
 
-        void Start()
+        private void Start()
         {
             _selectedPage = new int[literatures.Length];
             g_SelectedPage = new int[literatures.Length];
@@ -181,6 +183,7 @@ namespace MimyLab.FukuroUdon
             RefreshView();
             FeedbackController();
         }
+
         public void PageIncrement()
         {
             if (_selectedPage[_selectedIndex] < _endPage[_selectedIndex])
@@ -192,6 +195,7 @@ namespace MimyLab.FukuroUdon
                 PageSelect(0);
             }
         }
+
         public void PageDecrement()
         {
             if (_selectedPage[_selectedIndex] > 0)
@@ -214,11 +218,13 @@ namespace MimyLab.FukuroUdon
             RefreshView();
             FeedbackController();
         }
+
         public void IndexIncrement()
         {
             IndexSelect((_selectedIndex < literatures.Length - 1) ? _selectedIndex + 1 : 0);
 
         }
+
         public void IndexDecrement()
         {
             IndexSelect((_selectedIndex > 0) ? _selectedIndex - 1 : literatures.Length - 1);
@@ -248,7 +254,7 @@ namespace MimyLab.FukuroUdon
         /******************************
          Local events
         ******************************/
-        void RefreshView()
+        private void RefreshView()
         {
             for (int i = 0; i < literatures.Length; i++)
             {
@@ -260,10 +266,10 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        void FeedbackController()
+        private void FeedbackController()
         {
-            bool next = (PageLoop) ? true : (_selectedPage[_selectedIndex] < _endPage[_selectedIndex]);
-            bool prev = (PageLoop) ? true : (_selectedPage[_selectedIndex] > 0);
+            bool next = PageLoop || (_selectedPage[_selectedIndex] < _endPage[_selectedIndex]);
+            bool prev = PageLoop || (_selectedPage[_selectedIndex] > 0);
             for (int i = 0; i < controllers.Length; i++)
             {
                 if (controllers[i])

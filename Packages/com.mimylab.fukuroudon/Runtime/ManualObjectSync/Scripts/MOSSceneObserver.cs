@@ -49,7 +49,7 @@ namespace MimyLab.FukuroUdon
             if (_respawnHeightY != _sceneDescriptor.RespawnHeightY)
             {
                 _respawnHeightY = _sceneDescriptor.RespawnHeightY;
-                _updateManager.respawnHeightY = _respawnHeightY;
+                _updateManager._respawnHeightY = _respawnHeightY;
                 EditorUtility.SetDirty(_updateManager);
                 PrefabUtility.RecordPrefabInstancePropertyModifications(_updateManager);
                 _updateManager.SetupAllMOS();

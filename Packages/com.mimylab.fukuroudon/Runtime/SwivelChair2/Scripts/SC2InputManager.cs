@@ -8,8 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDK3.Rendering;
     using VRC.SDKBase;
+    using VRC.SDK3.Rendering;
     using VRC.Udon.Common;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Swivel-Chair-2#sc2-input-manager")]
@@ -18,9 +18,6 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class SC2InputManager : UdonSharpBehaviour
     {
-        internal SC2SeatAdjuster seatAdjuster;
-        internal SC2Caster caster;
-
         [SerializeField]
         [Tooltip("0 = PCVR \n1 = Desktop \n2 = Quest \n3 = Android")]
         private GameObject[] _tooltip = new GameObject[0];
@@ -30,6 +27,9 @@ namespace MimyLab.FukuroUdon
         [Min(0.0f), Tooltip("sec")]
         public float doubleTapDuration = 0.2f;
 
+        internal SC2SeatAdjuster _seatAdjuster;
+        internal SC2Caster _caster;
+        
         private Rigidbody _casterRigidbody;
         private Animator[] _tooltipAnimator;
         private SwivelChairPlayerPlatform _platform = default;
@@ -60,7 +60,7 @@ namespace MimyLab.FukuroUdon
             _platform = Networking.LocalPlayer.IsUserInVR() ? SwivelChairPlayerPlatform.StandaloneVR : SwivelChairPlayerPlatform.Mobile;
 #endif
 
-            if (caster) { _casterRigidbody = caster.GetComponent<Rigidbody>(); }
+            if (_caster) { _casterRigidbody = _caster.GetComponent<Rigidbody>(); }
 
             _tooltipAnimator = new Animator[_tooltip.Length];
             for (int i = 0; i < _tooltip.Length; i++)
@@ -112,7 +112,7 @@ namespace MimyLab.FukuroUdon
         {
             // ジャンプボタン長押し処理
             if (_isJump) { _inputJumpInterval += Time.deltaTime; }
-            if (_inputJumpInterval > longPushDuration) { seatAdjuster.Exit(); }
+            if (_inputJumpInterval > longPushDuration) { _seatAdjuster.Exit(); }
 
             // ジャンプボタン二度押し処理
             if (!_isJump && _inputDoubleJumpInterval < doubleTapDuration) { _inputDoubleJumpInterval += Time.deltaTime; }
@@ -127,12 +127,12 @@ namespace MimyLab.FukuroUdon
                 {
                     if (!_casterRigidbody)
                     {
-                        caster.Turn(_turnValue);
+                        _caster.Turn(_turnValue);
                     }
                 }
                 else
                 {
-                    seatAdjuster.Revolve(_turnValue);
+                    _seatAdjuster.Revolve(_turnValue);
                 }
                 _prevTurnValue = _turnValue;
             }
@@ -143,12 +143,12 @@ namespace MimyLab.FukuroUdon
                 {
                     if (!_casterRigidbody)
                     {
-                        caster.Move(_moveValue);
+                        _caster.Move(_moveValue);
                     }
                 }
                 else
                 {
-                    seatAdjuster.Adjust(_moveValue);
+                    _seatAdjuster.Adjust(_moveValue);
                 }
                 _prevMoveValue = _moveValue;
             }
@@ -165,13 +165,13 @@ namespace MimyLab.FukuroUdon
             // 入力値を各種操作に反映
             if (!(_turnValue == 0.0f && _prevTurnValue == 0.0f))
             {
-                caster.Turn(_turnValue);
+                _caster.Turn(_turnValue);
                 _prevTurnValue = _turnValue;
             }
 
             if (!(_moveValue == Vector3.zero && _prevMoveValue == Vector3.zero))
             {
-                caster.Move(_moveValue);
+                _caster.Move(_moveValue);
                 _prevMoveValue = _moveValue;
             }
         }
@@ -229,7 +229,7 @@ namespace MimyLab.FukuroUdon
             {
                 if (_platform == SwivelChairPlayerPlatform.Mobile)
                 {
-                    if (_inputDoubleJumpInterval < doubleTapDuration) { seatAdjuster.Exit(); }
+                    if (_inputDoubleJumpInterval < doubleTapDuration) { _seatAdjuster.Exit(); }
                 }
 
                 return;
@@ -246,7 +246,7 @@ namespace MimyLab.FukuroUdon
                 case SwivelChairInputMode.Horizontal: tmpInputMode = SwivelChairInputMode.CasterMove; break;
                 case SwivelChairInputMode.CasterMove: tmpInputMode = SwivelChairInputMode.Disable; break;
             }
-            if (tmpInputMode == SwivelChairInputMode.CasterMove && !caster)
+            if (tmpInputMode == SwivelChairInputMode.CasterMove && !_caster)
             {
                 tmpInputMode = SwivelChairInputMode.Disable;
             }

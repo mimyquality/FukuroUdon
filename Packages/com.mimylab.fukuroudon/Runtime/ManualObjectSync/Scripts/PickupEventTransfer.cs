@@ -8,8 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.Udon;
     //using VRC.SDK3.Components;
+    using VRC.Udon;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#pickupevent-transfer")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -19,7 +19,7 @@ namespace MimyLab.FukuroUdon
     public class PickupEventTransfer : UdonSharpBehaviour
     {
         [SerializeField]
-        UdonBehaviour target = null;
+        private UdonBehaviour target = null;
 
         public override void Interact()
         {

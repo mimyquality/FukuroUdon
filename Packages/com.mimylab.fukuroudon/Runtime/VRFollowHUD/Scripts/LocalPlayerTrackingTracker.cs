@@ -23,9 +23,9 @@ namespace MimyLab.FukuroUdon
         public bool enableRotation = true;
 
         // Updateで使う変数キャッシュ用
-        protected VRCPlayerApi _localPlayer;
+        internal VRCPlayerApi _localPlayer;
 
-        protected void OnEnable()
+        private void OnEnable()
         {
             _localPlayer = Networking.LocalPlayer;
 

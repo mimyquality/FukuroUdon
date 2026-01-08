@@ -72,6 +72,14 @@ namespace MimyLab.FukuroUdon
             return CheckApplicableInternal(target);
         }
 
+        public bool EligiblePlayer(VRCPlayerApi target)
+        {
+            if (allowedPlayerNameList.Length == 0) { return true; }
+            if (System.Array.IndexOf(allowedPlayerNameList, target.displayName) > -1) { return true; }
+
+            return false;
+        }
+
         public bool OverridePlayerVoice(VRCPlayerApi target)
         {
             if (enablePlayerVoiceOverride)
@@ -99,14 +107,6 @@ namespace MimyLab.FukuroUdon
             }
 
             return enableAvatarAudioOverride;
-        }
-
-        protected bool EligiblePlayer(VRCPlayerApi target)
-        {
-            if (allowedPlayerNameList.Length == 0) { return true; }
-            if (System.Array.IndexOf(allowedPlayerNameList, target.displayName) > -1) { return true; }
-
-            return false;
         }
 
         protected virtual bool CheckApplicableInternal(VRCPlayerApi target) { return false; }

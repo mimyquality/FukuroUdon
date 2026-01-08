@@ -28,13 +28,13 @@ namespace MimyLab.FukuroUdon
         [Min(0.0f), Tooltip("degree/sec")]
         public float rotateSpeed = 60.0f;
 
-        internal SwivelChair2 swivelChair2;
-        internal SC2AdjustmentSync adjustmentSync;
-
         [UdonSynced, FieldChangeCallback(nameof(Offset))]
         private Vector3 _offset;
         [UdonSynced, FieldChangeCallback(nameof(Direction))]
         private Quaternion _direction;
+
+        internal SwivelChair2 _swivelChair2;
+        internal SC2AdjustmentSync _adjustmentSync;
 
         private VRCStation _station;
         private Transform _seat;
@@ -66,11 +66,11 @@ namespace MimyLab.FukuroUdon
 
         private Vector3 LocalOffset
         {
-            get => adjustmentSync && adjustmentSync.hasSaved ? adjustmentSync.LocalOffset : _localOffset;
+            get => _adjustmentSync && _adjustmentSync._hasSaved ? _adjustmentSync.LocalOffset : _localOffset;
             set
             {
                 _localOffset = value;
-                if (adjustmentSync) { adjustmentSync.LocalOffset = value; }
+                if (_adjustmentSync) { _adjustmentSync.LocalOffset = value; }
             }
         }
 
@@ -104,7 +104,7 @@ namespace MimyLab.FukuroUdon
         {
             if (!player.isLocal) { return; }
 
-            swivelChair2.OnSitDown();
+            _swivelChair2.OnSitDown();
 
             Networking.SetOwner(player, this.gameObject);
 
@@ -115,7 +115,7 @@ namespace MimyLab.FukuroUdon
         {
             if (!player.isLocal) { return; }
 
-            swivelChair2.OnStandUp();
+            _swivelChair2.OnStandUp();
 
             LocalOffset = Offset;
         }

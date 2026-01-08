@@ -231,7 +231,7 @@ namespace MimyLab.FukuroUdon
             if (_updateManager) { return; }
             if (_updateManager = FindObjectOfType<MOSUpdateManager>())
             {
-                _respawnHightY = _updateManager.respawnHeightY;
+                _respawnHightY = _updateManager._respawnHeightY;
                 RecordSelf();
                 return;
             }

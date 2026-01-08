@@ -8,8 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDK3.UdonNetworkCalling;
     using VRC.SDKBase;
+    using VRC.SDK3.UdonNetworkCalling;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#pa-regulator-list")]
     [Icon(ComponentIconPath.FukuroUdon)]

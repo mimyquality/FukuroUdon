@@ -11,7 +11,7 @@ namespace MimyLab.FukuroUdon
 
     abstract public class IViewPointReceiver : UdonSharpBehaviour
     {
-        internal Transform viewPointTracker = null;
+        protected internal Transform viewPointTracker = null;
 
         public abstract void ReceiveViewPoint(Vector3 position, Quaternion rotation);
 

@@ -9,7 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     //using VRC.SDKBase;
-    //using VRC.Udon;
     using VRC.SDK3.Components;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Mirror-Tuner#mirror-profile")]

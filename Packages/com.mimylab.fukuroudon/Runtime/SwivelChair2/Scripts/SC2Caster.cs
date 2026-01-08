@@ -26,7 +26,7 @@ namespace MimyLab.FukuroUdon
 
         private Transform _transform;
         private Rigidbody _rigidbody;
-        private VRCObjectSync _objectSync;
+        //private VRCObjectSync _objectSync;
 
         private bool _initialized = false;
         private void Initialize()
@@ -35,7 +35,7 @@ namespace MimyLab.FukuroUdon
 
             _transform = transform;
             _rigidbody = GetComponent<Rigidbody>();
-            _objectSync = GetComponent<VRCObjectSync>();
+            //_objectSync = GetComponent<VRCObjectSync>();
 
             _initialized = true;
         }

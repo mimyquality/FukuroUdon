@@ -6,11 +6,11 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
+    using TMPro;
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
     using VRC.SDK3.Components;
-    using TMPro;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#voicechannel-player-states")]
     [Icon(ComponentIconPath.FukuroUdon)]

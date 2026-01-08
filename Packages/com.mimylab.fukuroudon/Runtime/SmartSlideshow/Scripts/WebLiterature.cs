@@ -10,8 +10,8 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using UnityEngine.UI;
     using VRC.SDKBase;
-    using VRC.Udon.Common.Interfaces;
     using VRC.SDK3.Image;
+    using VRC.Udon.Common.Interfaces;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Smart-Slideshow#web-literature")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -53,19 +53,6 @@ namespace MimyLab.FukuroUdon
             _initialized = true;
         }
 
-        protected override void SetPage(int v)
-        {
-            Initialize();
-
-            _page = Mathf.Clamp(v, 0, EndPage);
-
-            if (!_rawImage) _rawImage = GetComponent<RawImage>();
-            if (_rawImage)
-            {
-                _rawImage.texture = _dlTextures[_page];
-            }
-        }
-
         private void OnDestroy()
         {
             _imageDownloader.Dispose();
@@ -94,6 +81,19 @@ namespace MimyLab.FukuroUdon
                     _dlTextures[i] = result.Result;
                     Page = Page;
                 }
+            }
+        }
+
+        private protected override void SetPage(int v)
+        {
+            Initialize();
+
+            _page = Mathf.Clamp(v, 0, EndPage);
+
+            if (!_rawImage) _rawImage = GetComponent<RawImage>();
+            if (_rawImage)
+            {
+                _rawImage.texture = _dlTextures[_page];
             }
         }
     }

@@ -10,7 +10,6 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using UnityEngine.UI;
     //using VRC.SDKBase;
-    //using VRC.Udon;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Smart-Slideshow#literature")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -22,7 +21,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private Sprite[] slide;    // 表示するスライドのリスト
 
-        protected Image _image = null; // スライドを表示するuGUI
+        private protected Image _image = null; // スライドを表示するuGUI
 
         public virtual int EndPage
         {
@@ -30,13 +29,13 @@ namespace MimyLab.FukuroUdon
         }
 
         [FieldChangeCallback(nameof(Page))]
-        protected int _page = 0;
+        private protected int _page = 0;
         public int Page
         {
             get => _page;
             set => SetPage(value);
         }
-        protected virtual void SetPage(int v)
+        private protected virtual void SetPage(int v)
         {
             _page = Mathf.Clamp(v, 0, EndPage);
 
@@ -47,7 +46,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        protected void Start()
+        private void Start()
         {
             Page = Page;
         }

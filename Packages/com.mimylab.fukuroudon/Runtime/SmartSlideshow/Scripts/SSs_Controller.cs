@@ -6,12 +6,11 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
+    using TMPro;
     using UdonSharp;
     using UnityEngine;
     using UnityEngine.UI;
     //using VRC.SDKBase;
-    //using VRC.Udon;
-    using TMPro;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Smart-Slideshow#sss_controller")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -21,62 +20,62 @@ namespace MimyLab.FukuroUdon
     {
         [Header("Reference")]
         [SerializeField]
-        SmartSlideshow target;    // 操作対象のスライドショー
+        private SmartSlideshow target;    // 操作対象のスライドショー
         [SerializeField]
-        SmartSlideshow[] subTarget = new SmartSlideshow[0];    // 同時操作対象のスライドショー
+        private SmartSlideshow[] subTarget = new SmartSlideshow[0];    // 同時操作対象のスライドショー
 
         [Header("Paging UI")]
         [SerializeField]
-        Button pageNext;  // ページ送り操作用
+        private Button pageNext;  // ページ送り操作用
         [SerializeField]
-        Button pagePrev;  // ページ戻し操作用
+        private Button pagePrev;  // ページ戻し操作用
         [SerializeField]
-        Slider pageSlider;  // ページ直指定用
+        private Slider pageSlider;  // ページ直指定用
         [SerializeField]
-        Text pageNumber;    // ページ数表示用
+        private Text pageNumber;    // ページ数表示用
         [SerializeField]
-        TextMeshProUGUI pageNumberTMP;    // ページ数表示用
+        private TextMeshProUGUI pageNumberTMP;    // ページ数表示用
 
         [Header("Indexing UI")]
         [SerializeField]
-        Button indexNext;   // 巻送り操作用
+        private Button indexNext;   // 巻送り操作用
         [SerializeField]
-        Button indexPrev;    // 巻戻し操作用
+        private Button indexPrev;    // 巻戻し操作用
         [SerializeField]
-        Slider indexSlider; // 巻の直指定用
+        private Slider indexSlider; // 巻の直指定用
         [SerializeField]
-        Text indexNumber;   // 巻数表示用
+        private Text indexNumber;   // 巻数表示用
         [SerializeField]
-        TextMeshProUGUI indexNumberTMP;   // 巻数表示用
+        private TextMeshProUGUI indexNumberTMP;   // 巻数表示用
 
         [Header("Setting UI")]
         [SerializeField]
-        Toggle isGlobal;    // isGlobal変更用
+        private Toggle isGlobal;    // isGlobal変更用
         [SerializeField]
-        Toggle pageLink;    // pageLink変更用
+        private Toggle pageLink;    // pageLink変更用
         [SerializeField]
-        Toggle pageLoop;    // pageLoop変更用
+        private Toggle pageLoop;    // pageLoop変更用
         [SerializeField]
-        Slider autoSlideSlider; // AutoSlide値変更用
+        private Slider autoSlideSlider; // AutoSlide値変更用
         [SerializeField]
-        Text autoSlideCount;    // AutoSlide秒数表示用
+        private Text autoSlideCount;    // AutoSlide秒数表示用
         [SerializeField]
-        TextMeshProUGUI autoSlideCountTMP;  // AutoSlide秒数表示用
+        private TextMeshProUGUI autoSlideCountTMP;  // AutoSlide秒数表示用
 
         [Header("List of SendCustomEvent (For copy and paste)")]
         [SerializeField]
         [TextArea(11, 15)]
-        string events;
-        string _events = nameof(OnPageNext)
-                + "\n" + nameof(OnPagePrev)
-                + "\n" + nameof(OnPageSlide)
-                + "\n" + nameof(OnIndexNext)
-                + "\n" + nameof(OnIndexPrev)
-                + "\n" + nameof(OnIndexSlide)
-                + "\n" + nameof(OnIsGlobal)
-                + "\n" + nameof(OnPageLink)
-                + "\n" + nameof(OnPageLoop)
-                + "\n" + nameof(OnAutoSlide);
+        private string events;
+        private string _events = nameof(OnPageNext)
+                        + "\n" + nameof(OnPagePrev)
+                        + "\n" + nameof(OnPageSlide)
+                        + "\n" + nameof(OnIndexPrev)
+                        + "\n" + nameof(OnIndexSlide)
+                        + "\n" + nameof(OnIndexNext)
+                        + "\n" + nameof(OnIsGlobal)
+                        + "\n" + nameof(OnPageLink)
+                        + "\n" + nameof(OnPageLoop)
+                        + "\n" + nameof(OnAutoSlide);
 
         private void OnValidate()
         {

@@ -7,7 +7,6 @@ https://opensource.org/licenses/mit-license.php
 namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
-    using UnityEditor;
     using UnityEngine;
     using VRC.SDKBase;
 

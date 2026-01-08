@@ -29,7 +29,7 @@ namespace MimyLab.FukuroUdon
         public bool enablePosition = true;
         public bool enableRotation = true;
 
-        protected void OnEnable()
+        private void OnEnable()
         {
             var camera = GetCamera(trackingPoint);
             if (Utilities.IsValid(camera))
@@ -68,7 +68,7 @@ namespace MimyLab.FukuroUdon
             return trackingTarget.Rotation;
         }
 
-        protected VRCCameraSettings GetCamera(LocalPlayerCameraTrackerCameraType cameraType)
+        private VRCCameraSettings GetCamera(LocalPlayerCameraTrackerCameraType cameraType)
         {
             VRCCameraSettings camera = null;
             switch (cameraType)
