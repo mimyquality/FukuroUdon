@@ -47,7 +47,7 @@ namespace MimyLab.FukuroUdon
 
         private void DoDroneAction()
         {
-            var drone = Networking.LocalPlayer.GetDrone();
+            VRCDroneApi drone = Networking.LocalPlayer.GetDrone();
 
             if (_teleportTarget)
             {

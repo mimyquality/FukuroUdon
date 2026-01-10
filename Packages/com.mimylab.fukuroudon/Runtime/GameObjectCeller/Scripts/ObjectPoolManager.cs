@@ -140,7 +140,7 @@ namespace MimyLab.FukuroUdon
 
             if (!Networking.IsOwner(this.gameObject)) { return null; }
 
-            var resultObject = _objectPool.TryToSpawn();
+            GameObject resultObject = _objectPool.TryToSpawn();
             if (resultObject) { _lastSpawnedObject = resultObject; }
 
             return resultObject;
@@ -177,7 +177,7 @@ namespace MimyLab.FukuroUdon
             var spawnCount = 0;
             for (int i = 0; i < _pool.Length; i++)
             {
-                var spawnObject = _objectPool.TryToSpawn();
+                GameObject spawnObject = _objectPool.TryToSpawn();
                 if (!spawnObject) { break; }
 
                 _lastSpawnedObject = spawnObject;

@@ -134,8 +134,8 @@ namespace MimyLab.FukuroUdon
 
         public void Revolve(float inputValue)
         {
-            var angle = Time.deltaTime * rotateSpeed * inputValue;
-            var result = _direction * Quaternion.AngleAxis(angle, Vector3.up);
+            float angle = Time.deltaTime * rotateSpeed * inputValue;
+            Quaternion result = _direction * Quaternion.AngleAxis(angle, Vector3.up);
 
             if (Mathf.Approximately(angle, 0.0f))
             {
@@ -150,8 +150,8 @@ namespace MimyLab.FukuroUdon
 
         public void Adjust(Vector3 inputValue)
         {
-            var shift = Time.deltaTime * adjustSpeed * inputValue;
-            var result = _offset + shift;
+            Vector3 shift = Time.deltaTime * adjustSpeed * inputValue;
+            Vector3 result = _offset + shift;
 
             result = Vector3.Max(result, adjustMinLimit);
             result = Vector3.Min(result, adjustMaxLimit);

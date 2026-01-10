@@ -87,12 +87,12 @@ namespace MimyLab.FukuroUdon
             // 進入方向と速度のバリデーション
             if (_isNormalCheck)
             {
-                var collideNormal = this.transform.TransformDirection(_normal);
+                Vector3 collideNormal = this.transform.TransformDirection(_normal);
                 if (Vector3.Dot(collideNormal, collideeVelocity) >= 0.0f) { return; }
             }
 
             // SpawnEffect() か SpawnHighEffect() のどちらかだけ実行
-            var collideeSpeed = collideeVelocity.sqrMagnitude;
+            float collideeSpeed = collideeVelocity.sqrMagnitude;
             if (_highEffectPrefab)
             {
                 if (collideeSpeed > _highImpactSpeed * _highImpactSpeed)
@@ -111,7 +111,7 @@ namespace MimyLab.FukuroUdon
 
         private void SpawnEffect(Vector3 position)
         {
-            var index = System.Array.IndexOf(_spawnedEffects, 0);
+            int index = System.Array.IndexOf(_spawnedEffects, 0);
             if (index < 0) { return; }
 
             _spawnCount = (_spawnCount < _poolSize) ? _spawnCount + 1 : 1;
@@ -125,7 +125,7 @@ namespace MimyLab.FukuroUdon
 
         private void SpawnHighEffect(Vector3 position)
         {
-            var index = System.Array.IndexOf(_spawnedEffects, 0);
+            int index = System.Array.IndexOf(_spawnedEffects, 0);
             if (index < 0) { return; }
 
             _spawnCount = (_spawnCount < _poolSize) ? _spawnCount + 1 : 1;
@@ -140,7 +140,7 @@ namespace MimyLab.FukuroUdon
         public void _ReturnEffect()
         {
             _returnCount = (_returnCount < _poolSize) ? _returnCount + 1 : 1;
-            var index = System.Array.IndexOf(_spawnedEffects, _returnCount);
+            int index = System.Array.IndexOf(_spawnedEffects, _returnCount);
             if (index < 0) { return; }
 
             _spawnedEffects[index] = 0;

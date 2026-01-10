@@ -22,7 +22,7 @@ namespace MimyLab.FukuroUdon
         private const string TagIsEmpty = "None";
 
         [Header("Reference Settings")]
-        public IPlayerAudioRegulator[] playerAudioRegulators;
+        public PlayerAudioRegulator[] playerAudioRegulators;
 
         [Header("Player Voice Settings")]
         [Range(0f, 24f)]
@@ -57,12 +57,12 @@ namespace MimyLab.FukuroUdon
 
         private void Update()
         {
-            var chosenPlayer = _players[Time.frameCount % _playerCount];
+            VRCPlayerApi chosenPlayer = _players[Time.frameCount % _playerCount];
             if (!Utilities.IsValid(chosenPlayer)) { return; }
 
-            var channel = TagIsEmpty;
-            var overrideNumber = TagIsEmpty;
-            IPlayerAudioRegulator overrideRegulator = null;
+            string channel = TagIsEmpty;
+            string overrideNumber = TagIsEmpty;
+            PlayerAudioRegulator overrideRegulator = null;
             for (int i = 0; i < playerAudioRegulators.Length; i++)
             {
                 if (!playerAudioRegulators[i]) { continue; }

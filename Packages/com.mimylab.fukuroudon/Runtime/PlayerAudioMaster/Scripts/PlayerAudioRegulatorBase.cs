@@ -14,7 +14,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator Base")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class PlayerAudioRegulatorBase : IPlayerAudioRegulator
+    public class PlayerAudioRegulatorBase : PlayerAudioRegulator
     {
         protected override bool CheckApplicableInternal(VRCPlayerApi target)
         {

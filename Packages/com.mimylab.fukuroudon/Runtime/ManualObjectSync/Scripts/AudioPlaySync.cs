@@ -125,8 +125,8 @@ namespace MimyLab.FukuroUdon
 
             if (sync_isPlaying)
             {
-                var currentPlayStartTime = Networking.GetServerTimeInSeconds() - _audioSource.time;
-                var differenceTime = Networking.CalculateServerDeltaTime(currentPlayStartTime, sync_latestPlayStartTime);
+                double currentPlayStartTime = Networking.GetServerTimeInSeconds() - _audioSource.time;
+                double differenceTime = Networking.CalculateServerDeltaTime(currentPlayStartTime, sync_latestPlayStartTime);
                 if (differenceTime > TimeTolerance || differenceTime < -TimeTolerance)
                 {
                     sync_latestPlayStartTime = currentPlayStartTime;

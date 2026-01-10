@@ -314,7 +314,7 @@ namespace MimyLab.FukuroUdon
             }
             else
             {
-                var index = System.Array.IndexOf(_eventReceivers, this);
+                int index = System.Array.IndexOf(_eventReceivers, this);
                 if (index > -1)
                 {
                     // 自分自身を除外
@@ -496,8 +496,8 @@ namespace MimyLab.FukuroUdon
             if (_pickup && _pickup.IsHeld) { _pickup.Drop(); }
 
             _equipBone = (byte)targetBone;
-            var bonePosition = _localPlayer.GetBonePosition(targetBone);
-            var boneRotation = _localPlayer.GetBoneRotation(targetBone);
+            Vector3 bonePosition = _localPlayer.GetBonePosition(targetBone);
+            Quaternion boneRotation = _localPlayer.GetBoneRotation(targetBone);
             _syncPosition = bonePosition.Equals(Vector3.zero) ? Vector3.zero : Quaternion.Inverse(boneRotation) * (transform.position - bonePosition);
             _syncRotation = boneRotation.Equals(Quaternion.identity) ? Quaternion.identity : (Quaternion.Inverse(boneRotation) * transform.rotation);
 
@@ -604,7 +604,7 @@ namespace MimyLab.FukuroUdon
             {
                 transform.SetPositionAndRotation(_syncPosition, _syncRotation);
             }
-            var parent = transform.parent;
+            Transform parent = transform.parent;
             _localPosition = parent ? transform.InverseTransformPoint(_syncPosition) : _syncPosition;
             _localRotation = parent ? Quaternion.Inverse(parent.rotation) * _syncRotation : _syncRotation;
 
@@ -633,11 +633,11 @@ namespace MimyLab.FukuroUdon
 
             if (!_localPlayer.IsUserInVR()) { pickupHandBone = HumanBodyBones.Head; }
 
-            var handPosition = _localPlayer.GetBonePosition(pickupHandBone);
-            var handRotation = _localPlayer.GetBoneRotation(pickupHandBone);
+            Vector3 handPosition = _localPlayer.GetBonePosition(pickupHandBone);
+            Quaternion handRotation = _localPlayer.GetBoneRotation(pickupHandBone);
 
-            var offsetPosition = handPosition.Equals(Vector3.zero) ? Vector3.zero : Quaternion.Inverse(handRotation) * (_rigidbody.position - handPosition);
-            var offsetRotation = handRotation.Equals(Quaternion.identity) ? Quaternion.identity : (Quaternion.Inverse(handRotation) * _rigidbody.rotation);
+            Vector3 offsetPosition = handPosition.Equals(Vector3.zero) ? Vector3.zero : Quaternion.Inverse(handRotation) * (_rigidbody.position - handPosition);
+            Quaternion offsetRotation = handRotation.Equals(Quaternion.identity) ? Quaternion.identity : (Quaternion.Inverse(handRotation) * _rigidbody.rotation);
 
             if (offsetPosition != _syncPosition
              || offsetRotation != _syncRotation)
@@ -656,14 +656,14 @@ namespace MimyLab.FukuroUdon
         {
             if (!_isHeld) { return false; }
 
-            var owner = Networking.GetOwner(this.gameObject);
+            VRCPlayerApi owner = Networking.GetOwner(this.gameObject);
             if (!Utilities.IsValid(owner)) { return true; }
 
             var pickupHandBone = owner.IsUserInVR() ?
                 (_equipBone == (byte)HumanBodyBones.LeftHand) ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand :
                 HumanBodyBones.Head;
-            var handPosition = owner.GetBonePosition(pickupHandBone);
-            var handRotation = owner.GetBoneRotation(pickupHandBone);
+            Vector3 handPosition = owner.GetBonePosition(pickupHandBone);
+            Quaternion handRotation = owner.GetBoneRotation(pickupHandBone);
 
             if (handPosition.Equals(Vector3.zero) ||
                 handRotation.Equals(Quaternion.identity))
@@ -686,15 +686,15 @@ namespace MimyLab.FukuroUdon
         {
             if (!_isEquiped) { return false; }
 
-            var owner = Networking.GetOwner(this.gameObject);
+            VRCPlayerApi owner = Networking.GetOwner(this.gameObject);
             if (!Utilities.IsValid(owner)) { return true; }
 
-            var bonePosition = owner.GetBonePosition((HumanBodyBones)_equipBone);
-            var boneRotation = owner.GetBoneRotation((HumanBodyBones)_equipBone);
+            Vector3 bonePosition = owner.GetBonePosition((HumanBodyBones)_equipBone);
+            Quaternion boneRotation = owner.GetBoneRotation((HumanBodyBones)_equipBone);
             if (bonePosition.Equals(Vector3.zero) || boneRotation.Equals(Quaternion.identity)) { return _isEquiped; }
 
-            var equipPosition = bonePosition + (boneRotation * _syncPosition);
-            var equipRotation = boneRotation * _syncRotation;
+            Vector3 equipPosition = bonePosition + (boneRotation * _syncPosition);
+            Quaternion equipRotation = boneRotation * _syncRotation;
 
             transform.SetPositionAndRotation(equipPosition, equipRotation);
             _syncHasChanged = false;

@@ -72,7 +72,7 @@ namespace MimyLab.FukuroUdon
         {
             //if (!Utilities.IsValid(_camera)) { return; }
             //var position = _camera.Position;
-            var position = _localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).position;
+            Vector3 position = _localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).position;
 
             if (_areaIsStatic && !_areaBounds.Contains(position))
             {
@@ -118,13 +118,13 @@ namespace MimyLab.FukuroUdon
 
         public void RecalculateAreaBounds()
         {
-            var compoundMin = Vector3.positiveInfinity;
-            var compoundMax = Vector3.negativeInfinity;
-            foreach (var collider in _area)
+            Vector3 compoundMin = Vector3.positiveInfinity;
+            Vector3 compoundMax = Vector3.negativeInfinity;
+            foreach (Collider collider in _area)
             {
                 if (!collider) { continue; }
 
-                var bounds = collider.bounds;
+                Bounds bounds = collider.bounds;
                 if (bounds.extents.Equals(Vector3.zero)) { continue; }
 
                 compoundMin = Vector3.Min(compoundMin, bounds.min);
@@ -140,25 +140,25 @@ namespace MimyLab.FukuroUdon
             // 音の届く範囲も Bounds に含める
             // マージンを足して、接近に対して早めに有効にする
             _effectiveRange = _decaySound ? _decaySound.maxDistance + _effectiveRangeOffset : _effectiveRangeOffset;
-            var effectiveRangeV3 = _effectiveRange * Vector3.one;
+            Vector3 effectiveRangeV3 = _effectiveRange * Vector3.one;
             compoundMin -= effectiveRangeV3;
             compoundMax += effectiveRangeV3;
 
-            var center = (compoundMin + compoundMax) * 0.5f;
-            var size = compoundMax - compoundMin;
+            Vector3 center = (compoundMin + compoundMax) * 0.5f;
+            Vector3 size = compoundMax - compoundMin;
             _areaBounds = new Bounds(center, size);
         }
 
         private bool CheckInArea(Vector3 position, out Vector3 nearest)
         {
             nearest = Vector3.positiveInfinity;
-            foreach (var collider in _area)
+            foreach (Collider collider in _area)
             {
                 if (!collider) { continue; }
                 if (!collider.enabled) { continue; }
                 if (!collider.gameObject.activeInHierarchy) { continue; }
 
-                var point = collider.ClosestPoint(position);
+                Vector3 point = collider.ClosestPoint(position);
                 nearest = (point - position).sqrMagnitude < (nearest - position).sqrMagnitude ? point : nearest;
 
                 if (point == position)
@@ -202,7 +202,7 @@ namespace MimyLab.FukuroUdon
                 {
                     _elapsedTime += isIn ? Time.deltaTime : -Time.deltaTime;
 
-                    var t = Mathf.Clamp01(_elapsedTime / _insideVolumeDuration);
+                    float t = Mathf.Clamp01(_elapsedTime / _insideVolumeDuration);
                     _standardVolume = Mathf.Lerp(_outsidedVolume, _insideVolume, t);
                 }
                 _decaySound.volume = _standardVolume;

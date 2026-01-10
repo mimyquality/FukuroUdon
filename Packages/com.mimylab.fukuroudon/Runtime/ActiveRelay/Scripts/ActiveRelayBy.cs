@@ -23,9 +23,9 @@ namespace MimyLab.FukuroUdon
         public string[] allowedPlayerNameList = new string[0];
 
         [SerializeField]
-        protected GameObject[] _gameObjects = new GameObject[0];
+        private protected GameObject[] _gameObjects = new GameObject[0];
         [SerializeField]
-        protected ActiveRelayActivateType _actionType = default;
+        private protected ActiveRelayActivateType _actionType = default;
 
         public bool DoAction(VRCPlayerApi player)
         {
@@ -47,7 +47,7 @@ namespace MimyLab.FukuroUdon
             return true;
         }
 
-        protected void ToggleActive()
+        private protected void ToggleActive()
         {
             for (int i = 0; i < _gameObjects.Length; i++)
             {
@@ -58,7 +58,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        protected void SetActive(bool value)
+        private protected void SetActive(bool value)
         {
             for (int i = 0; i < _gameObjects.Length; i++)
             {

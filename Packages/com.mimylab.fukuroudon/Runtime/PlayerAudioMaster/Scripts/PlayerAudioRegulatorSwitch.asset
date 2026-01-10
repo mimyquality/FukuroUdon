@@ -352,7 +352,7 @@ MonoBehaviour:
       Data: 20|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.IPlayerAudioRegulator, FukuroUdon
+      Data: MimyLab.FukuroUdon.PlayerAudioRegulator, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

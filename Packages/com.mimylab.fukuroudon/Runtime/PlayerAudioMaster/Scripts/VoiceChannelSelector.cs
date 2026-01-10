@@ -57,7 +57,7 @@ namespace MimyLab.FukuroUdon
 
         private void Update()
         {
-            var selectedPlayer = _players[Time.frameCount % _playerCount];
+            VRCPlayerApi selectedPlayer = _players[Time.frameCount % _playerCount];
             if (!Utilities.IsValid(selectedPlayer)) { return; }
 
             var channel = -1;
@@ -96,8 +96,8 @@ namespace MimyLab.FukuroUdon
 
         public void _OnPlayerStatesChange(VoiceChannelPlayerStates states)
         {
-            var changedPlayer = Networking.GetOwner(states.gameObject);
-            var channel = states.VoiceChannel;
+            VRCPlayerApi changedPlayer = Networking.GetOwner(states.gameObject);
+            int channel = states.VoiceChannel;
 
             // 誰かが同じチャンネルに入ってきたか、同じチャンネルから抜けた
             if (!changedPlayer.isLocal && _LocalPlayerStates.VoiceChannel > -1)

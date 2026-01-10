@@ -49,16 +49,16 @@ namespace MimyLab.FukuroUdon
         public override void PostLateUpdate()
         {
             if (!Utilities.IsValid(_camera)) { return; }
-            var position = _camera.Position;
+            Vector3 position = _camera.Position;
 
-            foreach (var canvasGroup in _canvasGroups)
+            foreach (CanvasGroup canvasGroup in _canvasGroups)
             {
                 if (!canvasGroup) { continue; }
 
-                var targetPoint = canvasGroup.transform.position;
-                var distance = Vector3.Distance(targetPoint, position);
+                Vector3 targetPoint = canvasGroup.transform.position;
+                float distance = Vector3.Distance(targetPoint, position);
 
-                var calculateFade = _enableFade ?
+                float calculateFade = _enableFade ?
                     _fadeCurve.Evaluate(distance) :
                     Mathf.Sign(_fadeEnd - distance);
 

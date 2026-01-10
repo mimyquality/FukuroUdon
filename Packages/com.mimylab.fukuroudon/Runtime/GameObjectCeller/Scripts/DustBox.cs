@@ -27,8 +27,8 @@ namespace MimyLab.FukuroUdon
             if (!target) { return; }
 
             if (!Utilities.IsValid(other)) { return; }
-            var incommingObject = other.gameObject;
-            var index = System.Array.IndexOf(target.Pool, incommingObject);
+            GameObject incommingObject = other.gameObject;
+            int index = System.Array.IndexOf(target.Pool, incommingObject);
             if (index < 0)
             {
                 var returnEventTrigger = incommingObject.GetComponent<DustBoxReturnTrigger>();

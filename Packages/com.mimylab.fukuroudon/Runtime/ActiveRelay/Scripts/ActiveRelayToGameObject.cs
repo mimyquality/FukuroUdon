@@ -106,7 +106,7 @@ namespace MimyLab.FukuroUdon
 
         private void ToggleActive(bool value)
         {
-            foreach (var item in _gameObjects)
+            foreach (GameObject item in _gameObjects)
             {
                 if (!item) { continue; }
 

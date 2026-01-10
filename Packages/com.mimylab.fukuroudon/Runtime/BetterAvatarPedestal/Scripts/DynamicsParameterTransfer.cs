@@ -118,12 +118,12 @@ namespace MimyLab.FukuroUdon
             var referencePhysboneHashes = new int[_physbones.Length];
             for (int i = 0; i < _physbones.Length; i++)
             {
-                var pbName = _physbones[i] ? (_physbones[i].gameObject.name + suffix) : "";
+                string pbName = _physbones[i] ? (_physbones[i].gameObject.name + suffix) : "";
                 referencePhysboneHashes[i] = Animator.StringToHash(pbName);
             }
 
-            var parameters = _animator.parameters;
-            var parameterCount = _animator.parameterCount;
+            AnimatorControllerParameter[] parameters = _animator.parameters;
+            int parameterCount = _animator.parameterCount;
 
             var tmp_physbones = new VRCPhysBone[parameterCount];
             var tmp_physboneTypes = new int[parameterCount];
@@ -131,8 +131,8 @@ namespace MimyLab.FukuroUdon
             var physboneCount = 0;
             for (int i = 0; i < parameterCount; i++)
             {
-                var hash = parameters[i].nameHash;
-                var index = System.Array.IndexOf(referencePhysboneHashes, hash);
+                int hash = parameters[i].nameHash;
+                int index = System.Array.IndexOf(referencePhysboneHashes, hash);
                 if (index < 0) { continue; }
 
                 tmp_physbones[physboneCount] = _physbones[index];
@@ -155,12 +155,12 @@ namespace MimyLab.FukuroUdon
             var referenceContactHashes = new int[_contacts.Length];
             for (int i = 0; i < _contacts.Length; i++)
             {
-                var crName = _contacts[i] ? (_contacts[i].gameObject.name + suffix) : "";
+                string crName = _contacts[i] ? (_contacts[i].gameObject.name + suffix) : "";
                 referenceContactHashes[i] = Animator.StringToHash(crName);
             }
 
-            var parameters = _animator.parameters;
-            var parameterCount = _animator.parameterCount;
+            AnimatorControllerParameter[] parameters = _animator.parameters;
+            int parameterCount = _animator.parameterCount;
 
             var tmp_contacts = new ContactReceiverInfomation[parameterCount];
             var tmp_contactTypes = new int[parameterCount];
@@ -168,8 +168,8 @@ namespace MimyLab.FukuroUdon
             var contactCount = 0;
             for (int i = 0; i < parameterCount; i++)
             {
-                var hash = parameters[i].nameHash;
-                var index = System.Array.IndexOf(referenceContactHashes, hash);
+                int hash = parameters[i].nameHash;
+                int index = System.Array.IndexOf(referenceContactHashes, hash);
                 if (index < 0) { continue; }
 
                 tmp_contacts[contactCount] = _contacts[index];

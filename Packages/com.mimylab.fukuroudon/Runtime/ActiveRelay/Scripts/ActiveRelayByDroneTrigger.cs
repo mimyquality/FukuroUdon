@@ -32,7 +32,7 @@ namespace MimyLab.FukuroUdon
 
         public override void OnDroneTriggerEnter(VRCDroneApi drone)
         {
-            var player = drone.GetPlayer();
+            VRCPlayerApi player = drone.GetPlayer();
 
             switch (_eventType)
             {
@@ -45,7 +45,7 @@ namespace MimyLab.FukuroUdon
 
         public override void OnDroneTriggerExit(VRCDroneApi drone)
         {
-            var player = drone.GetPlayer();
+            VRCPlayerApi player = drone.GetPlayer();
 
             switch (_eventType)
             {

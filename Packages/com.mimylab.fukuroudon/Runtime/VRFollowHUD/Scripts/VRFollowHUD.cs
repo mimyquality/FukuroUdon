@@ -77,13 +77,13 @@ namespace MimyLab.FukuroUdon
         // 位置の遅延追従
         private Vector3 GetFollowPosition(Vector3 targetPosition)
         {
-            var pos = transform.position;
+            Vector3 pos = transform.position;
 
             // moveThresholdの5%を閾値に使う
             _pauseThreshold = moveThreshold * 0.05f;
 
             // 相対距離を算出
-            var distance = (pos - targetPosition).sqrMagnitude;
+            float distance = (pos - targetPosition).sqrMagnitude;
 
             // 閾値判定
             if (distance >= moveThreshold * moveThreshold)
@@ -112,14 +112,14 @@ namespace MimyLab.FukuroUdon
         // 回転の遅延追従
         private Quaternion GetFollowRotation(Quaternion targetRotation)
         {
-            var rot = transform.rotation;
+            Quaternion rot = transform.rotation;
 
             angleRange = Mathf.Clamp(angleRange, 0.0f, 180.0f);
             rotateThreshold = Mathf.Clamp(rotateThreshold, 0.0f, 180.0f);
             _restThreshold = rotateThreshold * 0.05f; // RotateThresholdの5%を閾値に使う
 
             // 相対角度を算出
-            var angle = Quaternion.Angle(rot, targetRotation);
+            float angle = Quaternion.Angle(rot, targetRotation);
 
             // 閾値判定
             if (angle >= rotateThreshold)

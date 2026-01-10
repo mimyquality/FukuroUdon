@@ -14,7 +14,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator AvatarScale")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class PlayerAudioRegulatorAvatarScale : IPlayerAudioRegulator
+    public class PlayerAudioRegulatorAvatarScale : PlayerAudioRegulator
     {
         [Header("Option Settings")]
         [SerializeField, Min(0.1f), Tooltip("meter")]
@@ -59,8 +59,8 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            var targetScale = target.GetAvatarEyeHeightAsMeters() / _baseEyeHeight;
-            var multiply = targetScale < 1.0f ? 1f - _underScaleMultiplier * (1 - targetScale) : _overScaleMultiplier * targetScale;
+            float targetScale = target.GetAvatarEyeHeightAsMeters() / _baseEyeHeight;
+            float multiply = targetScale < 1.0f ? 1f - _underScaleMultiplier * (1 - targetScale) : _overScaleMultiplier * targetScale;
 
             voiceGain = Mathf.Clamp(multiply * _baseVoiceGain, 0f, 24f);
             voiceDistanceNear = Mathf.Clamp(multiply * _baseVoiceDistanceNear, 0f, 999999.9f);

@@ -41,7 +41,7 @@ namespace MimyLab.FukuroUdon
             _prevViewPointRotation = _screenCamera.Rotation;
             this.transform.SetPositionAndRotation(_prevViewPointPosition, _prevViewPointRotation);
 
-            foreach (var target in _viewPointReceiver)
+            foreach (IViewPointReceiver target in _viewPointReceiver)
             {
                 if (target)
                 {
@@ -53,17 +53,17 @@ namespace MimyLab.FukuroUdon
 
         public override void PostLateUpdate()
         {
-            var viewPointPosition = _screenCamera.Position;
-            var viewPointRotation = _screenCamera.Rotation;
+            Vector3 viewPointPosition = _screenCamera.Position;
+            Quaternion viewPointRotation = _screenCamera.Rotation;
 
-            var isMoved = viewPointPosition != _prevViewPointPosition;
-            var isTurned = viewPointRotation != _prevViewPointRotation;
+            bool isMoved = viewPointPosition != _prevViewPointPosition;
+            bool isTurned = viewPointRotation != _prevViewPointRotation;
 
             if (isMoved | isTurned)
             {
                 this.transform.SetPositionAndRotation(viewPointPosition, viewPointRotation);
 
-                foreach (var target in _viewPointReceiver)
+                foreach (IViewPointReceiver target in _viewPointReceiver)
                 {
                     if (target && target.enabled && target.gameObject.activeInHierarchy)
                     {
@@ -73,7 +73,7 @@ namespace MimyLab.FukuroUdon
 
                 if (isMoved)
                 {
-                    foreach (var target in _positionReceiver)
+                    foreach (UdonBehaviour target in _positionReceiver)
                     {
                         if (target && target.enabled && target.gameObject.activeInHierarchy)
                         {
@@ -84,7 +84,7 @@ namespace MimyLab.FukuroUdon
 
                 if (isTurned)
                 {
-                    foreach (var target in _rotationReceiver)
+                    foreach (UdonBehaviour target in _rotationReceiver)
                     {
                         if (target && target.enabled && target.gameObject.activeInHierarchy)
                         {

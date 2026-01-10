@@ -51,7 +51,7 @@ namespace MimyLab.FukuroUdon
             if (!Networking.IsOwner(this.gameObject)) { return; }
             if (immobile) { return; }
 
-            var shift = Time.deltaTime * moveSpeed * inputValue;
+            Vector3 shift = Time.deltaTime * moveSpeed * inputValue;
             if (_rigidbody)
             {
                 if (_rigidbody.isKinematic)
@@ -76,7 +76,7 @@ namespace MimyLab.FukuroUdon
             if (!Networking.IsOwner(this.gameObject)) { return; }
             if (immobile) { return; }
 
-            var angle = Time.deltaTime * turnSpeed * inputValue;
+            float angle = Time.deltaTime * turnSpeed * inputValue;
             if (_rigidbody)
             {
                 if (_rigidbody.isKinematic)

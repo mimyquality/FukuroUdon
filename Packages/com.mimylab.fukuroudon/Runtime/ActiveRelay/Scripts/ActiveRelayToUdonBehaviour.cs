@@ -41,13 +41,13 @@ namespace MimyLab.FukuroUdon
                 case NetworkEventTarget.All:
                 case NetworkEventTarget.Owner:
                 case NetworkEventTarget.Others:
-                    foreach (var ub in _udonBehaviourForActive)
+                    foreach (UdonBehaviour ub in _udonBehaviourForActive)
                     {
                         if (ub) { ub.SendCustomNetworkEvent(_networkEventTarget, _customEventNameForActive); }
                     }
                     break;
                 default:
-                    foreach (var ub in _udonBehaviourForActive)
+                    foreach (UdonBehaviour ub in _udonBehaviourForActive)
                     {
                         if (ub) { ub.SendCustomEvent(_customEventNameForActive); }
                     }
@@ -64,13 +64,13 @@ namespace MimyLab.FukuroUdon
                 case NetworkEventTarget.All:
                 case NetworkEventTarget.Owner:
                 case NetworkEventTarget.Others:
-                    foreach (var ub in _udonBehaviourForInactive)
+                    foreach (UdonBehaviour ub in _udonBehaviourForInactive)
                     {
                         if (ub) { ub.SendCustomNetworkEvent(_networkEventTarget, _customEventNameForInactive); }
                     }
                     break;
                 default:
-                    foreach (var ub in _udonBehaviourForInactive)
+                    foreach (UdonBehaviour ub in _udonBehaviourForInactive)
                     {
                         if (ub) { ub.SendCustomEvent(_customEventNameForInactive); }
                     }

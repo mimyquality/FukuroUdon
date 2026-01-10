@@ -12,7 +12,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Rendering;
 
     [System.Flags]
-    public enum AdvancedWorldSettingsInitializeEyeHeightType
+    public enum AdvancedWorldSettingsInitializeEyeHeightTypes
     {
         Join = 1 << 0,
         AvatarChange = 1 << 1
@@ -70,7 +70,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMaximum = 5f;
         [Space]
         [Tooltip("When the button is checked, the Avatar Eye Height is Clamped at that point.")]
-        [SerializeField][EnumFlag] private AdvancedWorldSettingsInitializeEyeHeightType _initializeAvatarEyeHight = 0;
+        [SerializeField][EnumFlag] private AdvancedWorldSettingsInitializeEyeHeightTypes _initializeAvatarEyeHight = 0;
         [SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeightLowerLimit = 1.3f;
         [SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeightUpperLimit = 1.3f;
 
@@ -111,7 +111,6 @@ namespace MimyLab.FukuroUdon
         [SerializeField][Range(0.0f, 1.0f)] private float _shadowCascade4Split2 = 14f / 30f;
 
         private VRCPlayerApi _localPlayer;
-        private bool _hasAvatarChanged = false;
         private bool _hasFirstAvatarChanged = false;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
@@ -224,45 +223,27 @@ namespace MimyLab.FukuroUdon
         {
             if (!player.isLocal) { return; }
 
-            _hasAvatarChanged = true;
-
-            // 同じ目の高さのアバターに変更した場合はOnAvatarEyeHeightChanged()が発火しない
-            SendCustomEventDelayedSeconds(nameof(_CloseAvatarChangeProcessing), 0.2f);
-        }
-
-        public override void OnAvatarEyeHeightChanged(VRCPlayerApi player, float prevEyeHeightAsMeters)
-        {
-            if (!player.isLocal) { return; }
-            if (!_hasAvatarChanged) { return; }
-
             if (_hasFirstAvatarChanged)
             {
-                if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightType.AvatarChange) > 0)
+                if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightTypes.AvatarChange) > 0)
                 {
                     ClampAvatarEyeHeight();
                 }
             }
             else
             {
-                if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightType.Join) > 0)
+                if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightTypes.Join) > 0)
                 {
                     ClampAvatarEyeHeight();
                 }
 
                 _hasFirstAvatarChanged = true;
             }
-
-            _CloseAvatarChangeProcessing();
-        }
-
-        public void _CloseAvatarChangeProcessing()
-        {
-            _hasAvatarChanged = false;
         }
 
         private void ClampAvatarEyeHeight()
         {
-            var avatarEyeHeight = _localPlayer.GetAvatarEyeHeightAsMeters();
+            float avatarEyeHeight = _localPlayer.GetAvatarEyeHeightAsMeters();
             avatarEyeHeight = Mathf.Clamp(avatarEyeHeight, _avatarEyeHeightLowerLimit, _avatarEyeHeightUpperLimit);
             _localPlayer.SetAvatarEyeHeightByMeters(avatarEyeHeight);
         }

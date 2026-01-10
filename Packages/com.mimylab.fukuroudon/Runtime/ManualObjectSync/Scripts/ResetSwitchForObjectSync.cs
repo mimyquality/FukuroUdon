@@ -72,7 +72,7 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            var resetTime = Time.time;
+            float resetTime = Time.time;
             if (resetTime < _lastResetTime + _interval) { return; }
             _lastResetTime = resetTime;
 

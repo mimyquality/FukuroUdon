@@ -246,14 +246,14 @@ namespace MimyLab.FukuroUdon
 
             this.transform.localPosition = new Vector3(_localX, _localY, _localZ);
 
-            ReachMinX = (_localX <= minX + Vector3.kEpsilon);
-            ReachMaxX = (_localX >= maxX - Vector3.kEpsilon);
+            ReachMinX = _localX <= minX + Vector3.kEpsilon;
+            ReachMaxX = _localX >= maxX - Vector3.kEpsilon;
 
-            ReachMinY = (_localY <= minY + Vector3.kEpsilon);
-            ReachMaxY = (_localY >= maxY - Vector3.kEpsilon);
+            ReachMinY = _localY <= minY + Vector3.kEpsilon;
+            ReachMaxY = _localY >= maxY - Vector3.kEpsilon;
 
-            ReachMinZ = (_localZ <= minZ + Vector3.kEpsilon);
-            ReachMaxZ = (_localZ >= maxZ - Vector3.kEpsilon);
+            ReachMinZ = _localZ <= minZ + Vector3.kEpsilon;
+            ReachMaxZ = _localZ >= maxZ - Vector3.kEpsilon;
         }
 
         private OcclusionPortal[] GetOcclusionPortals(ref Transform[] objectArray)

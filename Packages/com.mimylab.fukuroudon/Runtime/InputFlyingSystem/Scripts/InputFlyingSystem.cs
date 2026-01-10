@@ -198,7 +198,7 @@ namespace MimyLab.FukuroUdon
         private void Flight()
         {
             // インプットを速度に反映
-            var direction = Vector3.ClampMagnitude(_inputDirection, 1.0f);
+            Vector3 direction = Vector3.ClampMagnitude(_inputDirection, 1.0f);
             if (direction.sqrMagnitude > 0.0f)
             {
                 // 昇降中は重力を切る
@@ -209,7 +209,7 @@ namespace MimyLab.FukuroUdon
                 }
 
                 _elapsedTime = 0.0f;
-                var rotation = _localPlayer.IsUserInVR() ? _localPlayer.GetRotation() : _camera.Rotation;
+                Quaternion rotation = _localPlayer.IsUserInVR() ? _localPlayer.GetRotation() : _camera.Rotation;
                 _velocity = rotation * direction * flightSpeed;
                 _localPlayer.SetVelocity(_velocity);
 
@@ -222,7 +222,7 @@ namespace MimyLab.FukuroUdon
                 if (dampTime > 0.0f && _elapsedTime < dampTime)
                 {
                     _elapsedTime += Time.deltaTime;
-                    var velocity = Vector3.Lerp(_velocity, Vector3.zero, _elapsedTime / dampTime);
+                    Vector3 velocity = Vector3.Lerp(_velocity, Vector3.zero, _elapsedTime / dampTime);
                     _localPlayer.SetVelocity(velocity);
 
                     return;

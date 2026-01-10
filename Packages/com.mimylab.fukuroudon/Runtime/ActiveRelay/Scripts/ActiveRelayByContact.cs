@@ -36,7 +36,7 @@ namespace MimyLab.FukuroUdon
                 case ActiveRelayCollisionEventType.Enter:
                     if (contactInfo.enterVelocity.sqrMagnitude < _minVelocity * _minVelocity) { return; }
 
-                    var player = contactInfo.contactSender.player;
+                    VRCPlayerApi player = contactInfo.contactSender.player;
                     player = Utilities.IsValid(player) ? player : Networking.LocalPlayer;
                     if (CheckAccept(player)) { DoAction(player); }
                     break;
@@ -49,7 +49,7 @@ namespace MimyLab.FukuroUdon
             {
                 case ActiveRelayCollisionEventType.EnterAndExit:
                 case ActiveRelayCollisionEventType.Exit:
-                    var player = contactInfo.contactSender.player;
+                    VRCPlayerApi player = contactInfo.contactSender.player;
                     player = Utilities.IsValid(player) ? player : Networking.LocalPlayer;
                     if (CheckAccept(player)) { DoAction(player); }
                     break;

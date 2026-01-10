@@ -81,7 +81,7 @@ namespace MimyLab.FukuroUdon
 
             if (_particleForActive)
             {
-                var emission = _particleForActive.emission;
+                ParticleSystem.EmissionModule emission = _particleForActive.emission;
                 switch (_emissionModuleForActive)
                 {
                     case ActiveRelayToEffectEmissionModule.Enable: emission.enabled = true; break;
@@ -114,7 +114,7 @@ namespace MimyLab.FukuroUdon
 
             if (_particleForInactive)
             {
-                var emission = _particleForInactive.emission;
+                ParticleSystem.EmissionModule emission = _particleForInactive.emission;
                 switch (_emissionModuleForInactive)
                 {
                     case ActiveRelayToEffectEmissionModule.Enable: emission.enabled = true; break;

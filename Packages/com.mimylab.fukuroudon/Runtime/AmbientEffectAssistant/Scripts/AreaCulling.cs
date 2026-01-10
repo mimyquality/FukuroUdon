@@ -61,14 +61,14 @@ namespace MimyLab.FukuroUdon
         {
             if (!Utilities.IsValid(_screenCamera)) { return; }
 
-            var position = _screenCamera.Position;
-            var isIn = _areaIsStatic ?
+            Vector3 position = _screenCamera.Position;
+            bool isIn = _areaIsStatic ?
                        _areaBounds.Contains(position) && CheckInArea(position) :
                        CheckInArea(position);
 
             if (_includeVRCCamera && _photoCamera.Active && !isIn)
             {
-                var photoPosition = _photoCamera.Position;
+                Vector3 photoPosition = _photoCamera.Position;
                 isIn = _areaIsStatic ?
                        _areaBounds.Contains(photoPosition) && CheckInArea(photoPosition) :
                        CheckInArea(photoPosition);
@@ -85,11 +85,11 @@ namespace MimyLab.FukuroUdon
         {
             var compoundMin = Vector3.positiveInfinity;
             var compoundMax = Vector3.negativeInfinity;
-            foreach (var collider in _area)
+            foreach (Collider collider in _area)
             {
                 if (!collider) { continue; }
 
-                var bounds = collider.bounds;
+                Bounds bounds = collider.bounds;
                 if (bounds.extents.Equals(Vector3.zero)) { continue; }
 
                 compoundMin = Vector3.Min(compoundMin, bounds.min);
@@ -102,20 +102,20 @@ namespace MimyLab.FukuroUdon
                 return;
             }
 
-            var center = (compoundMin + compoundMax) / 2f;
-            var size = compoundMax - compoundMin;
+            Vector3 center = (compoundMin + compoundMax) / 2f;
+            Vector3 size = compoundMax - compoundMin;
             _areaBounds = new Bounds(center, size);
         }
 
         private bool CheckInArea(Vector3 position)
         {
-            foreach (var collider in _area)
+            foreach (Collider collider in _area)
             {
                 if (!collider) { continue; }
                 if (!collider.enabled) { continue; }
                 if (!collider.gameObject.activeInHierarchy) { continue; }
 
-                var point = collider.ClosestPoint(position);
+                Vector3 point = collider.ClosestPoint(position);
                 if (point == position)
                 {
                     return true;
@@ -127,11 +127,11 @@ namespace MimyLab.FukuroUdon
 
         private void ToggleTargetsEnabled(bool value)
         {
-            foreach (var target in _renderers)
+            foreach (Renderer target in _renderers)
             {
                 if (target) { target.enabled = value; }
             }
-            foreach (var target in _gameObjects)
+            foreach (GameObject target in _gameObjects)
             {
                 if (target) { target.SetActive(value); }
             }

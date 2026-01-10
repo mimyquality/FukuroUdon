@@ -39,7 +39,7 @@ namespace MimyLab.FukuroUdon
             // U# はプロキシー概念があるので別途 UdonSharpBehaviour 配列を用意して管理する
             var tmp_udonSharpBehaviours = new UdonSharpBehaviour[_components.Length];
             var usbCount = 0;
-            foreach (var component in _components)
+            foreach (Component component in _components)
             {
                 if (ValidateComponentType(component))
                 {
@@ -61,7 +61,6 @@ namespace MimyLab.FukuroUdon
         {
             if (!component) { return false; }
 
-            var type = component.GetType();
             if (component is Collider) { return true; }
             if (component is Renderer) { return true; }
             // 個別に羅列の必要ある
@@ -115,11 +114,11 @@ namespace MimyLab.FukuroUdon
 
         private void ToggleComponents(bool value)
         {
-            foreach (var component in _components)
+            foreach (Component component in _components)
             {
                 if (!component) continue;
 
-                var type = component.GetType();
+                System.Type type = component.GetType();
                 if (type == typeof(GameObject)) { continue; }
                 // Extra
                 // 用途的に、アクティブならClose・非アクティブならOpenのが都合が良さそうなので反転
@@ -164,7 +163,7 @@ namespace MimyLab.FukuroUdon
                 // else if (type == typeof(AudioListener)) { var downCasted = (AudioListener)component; downCasted.enabled = value; }
                 // else if (type == typeof(Cloth)) { var downCasted = (Cloth)component; downCasted.enabled = value; }
             }
-            foreach (var udonSharpBehaviour in _udonSharpBehaviours)
+            foreach (UdonSharpBehaviour udonSharpBehaviour in _udonSharpBehaviours)
             {
                 if (!udonSharpBehaviour) continue;
                 udonSharpBehaviour.enabled = value;

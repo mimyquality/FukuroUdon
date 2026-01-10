@@ -84,7 +84,7 @@ namespace MimyLab.FukuroUdon
 
             if (_caster)
             {
-                var stationOwner = Networking.GetOwner(_seatAdjuster.gameObject);
+                VRCPlayerApi stationOwner = Networking.GetOwner(_seatAdjuster.gameObject);
                 Networking.SetOwner(stationOwner, _caster.gameObject);
             }
         }

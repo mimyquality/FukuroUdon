@@ -12,6 +12,8 @@ namespace MimyLab.FukuroUdon
 #if UNITY_EDITOR
     using UnityEditor;
     using UnityEditor.SceneManagement;
+    using UnityEngine.SceneManagement;
+
     //using UdonSharpEditor;
 #endif
 
@@ -37,7 +39,7 @@ namespace MimyLab.FukuroUdon
             if (PrefabStageUtility.GetCurrentPrefabStage() != null) { return; }
             if (PrefabUtility.IsPartOfPrefabAsset(this)) { return; }
 
-            var scene = this.gameObject.scene;
+            Scene scene = this.gameObject.scene;
             if (!scene.IsValid()) { return; }
             if (!scene.isLoaded) { return; }
 

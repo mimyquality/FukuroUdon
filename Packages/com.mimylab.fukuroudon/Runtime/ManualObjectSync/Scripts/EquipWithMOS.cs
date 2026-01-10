@@ -50,7 +50,7 @@ namespace MimyLab.FukuroUdon
             if (target.IsEquiped) { return; }
 
             Networking.SetOwner(Networking.LocalPlayer, target.gameObject);
-            var mostNearBone = MostNearBone(Networking.LocalPlayer);
+            HumanBodyBones mostNearBone = MostNearBone(Networking.LocalPlayer);
             if (mostNearBone == HumanBodyBones.LastBone) { return; }
 
             target.Equip(mostNearBone);
@@ -59,15 +59,16 @@ namespace MimyLab.FukuroUdon
         private HumanBodyBones MostNearBone(VRCPlayerApi pl)
         {
             var result = HumanBodyBones.LastBone;
-            var snapPosition = snapPoint.position;
+
+            Vector3 snapPosition = snapPoint.position;
             var mostNearSqrtDistance = float.PositiveInfinity;
             var lastBone = (int)HumanBodyBones.LastBone;
             for (int i = 0; i < lastBone; i++)
             {
-                var bonePosition = pl.GetBonePosition((HumanBodyBones)i);
+                Vector3 bonePosition = pl.GetBonePosition((HumanBodyBones)i);
                 if (bonePosition.Equals(Vector3.zero)) { continue; }
 
-                var sqrtDistance = (snapPosition - bonePosition).sqrMagnitude;
+                float sqrtDistance = (snapPosition - bonePosition).sqrMagnitude;
                 if (sqrtDistance < mostNearSqrtDistance)
                 {
                     mostNearSqrtDistance = sqrtDistance;

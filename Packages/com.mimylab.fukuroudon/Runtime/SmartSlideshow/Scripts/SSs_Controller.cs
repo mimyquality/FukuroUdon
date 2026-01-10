@@ -62,26 +62,6 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private TextMeshProUGUI autoSlideCountTMP;  // AutoSlide秒数表示用
 
-        [Header("List of SendCustomEvent (For copy and paste)")]
-        [SerializeField]
-        [TextArea(11, 15)]
-        private string events;
-        private string _events = nameof(OnPageNext)
-                        + "\n" + nameof(OnPagePrev)
-                        + "\n" + nameof(OnPageSlide)
-                        + "\n" + nameof(OnIndexPrev)
-                        + "\n" + nameof(OnIndexSlide)
-                        + "\n" + nameof(OnIndexNext)
-                        + "\n" + nameof(OnIsGlobal)
-                        + "\n" + nameof(OnPageLink)
-                        + "\n" + nameof(OnPageLoop)
-                        + "\n" + nameof(OnAutoSlide);
-
-        private void OnValidate()
-        {
-            events = _events;
-        }
-
         /******************************
          UI input events
         ******************************/

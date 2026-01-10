@@ -99,7 +99,7 @@ namespace MimyLab.FukuroUdon
             var length = _last + 1;
             for (int i = 0; i < length; i++)
             {
-                var proximity = CalculateProximity(_senders[i]);
+                float proximity = CalculateProximity(_senders[i]);
                 result = Mathf.Max(result, proximity);
             }
 
@@ -132,7 +132,7 @@ namespace MimyLab.FukuroUdon
         {
             _last = ValidateStayedSenders();
 
-            var index = System.Array.IndexOf(_senders, null);
+            int index = System.Array.IndexOf(_senders, null);
             if (index > -1)
             {
                 _senders[index] = sender;

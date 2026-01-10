@@ -41,7 +41,7 @@ namespace MimyLab.FukuroUdon
             {
                 case ActiveRelayByPhysboneType.PhysboneGrabAndRelease:
                 case ActiveRelayByPhysboneType.PhysboneGrab:
-                    var player = physBoneInfo.player;
+                    VRCPlayerApi player = physBoneInfo.player;
                     if (CheckAccept(player)) { DoAction(player); }
                     break;
             }
@@ -53,7 +53,7 @@ namespace MimyLab.FukuroUdon
             {
                 case ActiveRelayByPhysboneType.PhysboneGrabAndRelease:
                 case ActiveRelayByPhysboneType.PhysboneRelease:
-                    var player = physBoneInfo.player;
+                    VRCPlayerApi player = physBoneInfo.player;
                     if (CheckAccept(player)) { DoAction(player); }
                     break;
             }
@@ -65,7 +65,7 @@ namespace MimyLab.FukuroUdon
             {
                 case ActiveRelayByPhysboneType.PhysbonePoseAndUnpose:
                 case ActiveRelayByPhysboneType.PhysbonePose:
-                    var player = physBoneInfo.player;
+                    VRCPlayerApi player = physBoneInfo.player;
                     if (CheckAccept(player)) { DoAction(player); }
                     break;
             }
@@ -77,7 +77,7 @@ namespace MimyLab.FukuroUdon
             {
                 case ActiveRelayByPhysboneType.PhysbonePoseAndUnpose:
                 case ActiveRelayByPhysboneType.PhysboneUnpose:
-                    var player = physBoneInfo.player;
+                    VRCPlayerApi player = physBoneInfo.player;
                     if (CheckAccept(player)) { DoAction(player); }
                     break;
             }

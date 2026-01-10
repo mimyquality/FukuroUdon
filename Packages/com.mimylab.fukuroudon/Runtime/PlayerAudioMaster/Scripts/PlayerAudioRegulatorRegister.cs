@@ -14,7 +14,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator Register")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class PlayerAudioRegulatorRegister : IPlayerAudioRegulator
+    public class PlayerAudioRegulatorRegister : PlayerAudioRegulator
     {
         public const int MaxPlayerCount = 90;
         public const int ExtendPlayerCount = 30;
@@ -55,10 +55,10 @@ namespace MimyLab.FukuroUdon
 
         internal void _OnPlayerAssigned(VRCPlayerApi target)
         {
-            var playerId = target.playerId;
+            int playerId = target.playerId;
             if (System.Array.IndexOf(_playerIds, playerId) > -1) { return; }
 
-            var vacantIndex = System.Array.IndexOf(_playerIds, 0);
+            int vacantIndex = System.Array.IndexOf(_playerIds, 0);
             // 空きがないのでリフレッシュ
             if (vacantIndex < 0)
             {
@@ -86,7 +86,7 @@ namespace MimyLab.FukuroUdon
 
         internal void _OnPlayerReleased(VRCPlayerApi target)
         {
-            var playerId = target.playerId;
+            int playerId = target.playerId;
             int index;
             while ((index = System.Array.IndexOf(_playerIds, playerId)) > -1)
             {

@@ -66,7 +66,7 @@ namespace MimyLab.FukuroUdon
 
         private void Teleport()
         {
-            var localPlayer = Networking.LocalPlayer;
+            VRCPlayerApi localPlayer = Networking.LocalPlayer;
 
             if (_teleportTarget)
             {

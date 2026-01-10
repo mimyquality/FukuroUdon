@@ -11,7 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Components;
 
     [System.Flags]
-    public enum ActiveRelayToTransformChangeProperty
+    public enum ActiveRelayToTransformChangeProperties
     {
         //None = 0,
         Position = 1 << 0,
@@ -30,9 +30,9 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private Transform[] _transforms = new Transform[0];
         [SerializeField, EnumFlag]
-        private ActiveRelayToTransformChangeProperty _changeProperty =
-            ActiveRelayToTransformChangeProperty.Position |
-            ActiveRelayToTransformChangeProperty.Rotation;
+        private ActiveRelayToTransformChangeProperties _changeProperty =
+            ActiveRelayToTransformChangeProperties.Position |
+            ActiveRelayToTransformChangeProperties.Rotation;
         [SerializeField]
         private Vector3 _position = Vector3.zero;
         [SerializeField]
@@ -55,8 +55,8 @@ namespace MimyLab.FukuroUdon
 
             _pickups = new VRCPickup[_transforms.Length];
             var positionOrRotation =
-                (int)ActiveRelayToTransformChangeProperty.Position |
-                (int)ActiveRelayToTransformChangeProperty.Rotation;
+                (int)ActiveRelayToTransformChangeProperties.Position |
+                (int)ActiveRelayToTransformChangeProperties.Rotation;
             var dropFlag = ((int)_changeProperty & positionOrRotation) > 0;
             if (dropFlag)
             {
@@ -99,9 +99,9 @@ namespace MimyLab.FukuroUdon
 
         private void Transforming()
         {
-            var position = _referenceTransform ? _referenceTransform.position : _position;
-            var rotation = _referenceTransform ? _referenceTransform.rotation : _rotation;
-            var scale = _referenceTransform ? _referenceTransform.lossyScale : _scale;
+            Vector3 position = _referenceTransform ? _referenceTransform.position : _position;
+            Quaternion rotation = _referenceTransform ? _referenceTransform.rotation : _rotation;
+            Vector3 scale = _referenceTransform ? _referenceTransform.lossyScale : _scale;
 
             for (int i = 0; i < _transforms.Length; i++)
             {
@@ -110,19 +110,19 @@ namespace MimyLab.FukuroUdon
                     _pickups[i].Drop();
                 }
 
-                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Position) > 0)
+                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperties.Position) > 0)
                 {
                     _transforms[i].position = position;
                 }
-                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Rotation) > 0)
+                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperties.Rotation) > 0)
                 {
                     _transforms[i].rotation = rotation;
                 }
-                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Scale) > 0)
+                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperties.Scale) > 0)
                 {
                     // ワールド空間のスケールを適用
-                    var parent = _transforms[i].parent;
-                    var parentScale = parent ? parent.lossyScale : Vector3.one;
+                    Transform parent = _transforms[i].parent;
+                    Vector3 parentScale = parent ? parent.lossyScale : Vector3.one;
                     _transforms[i].localScale = new Vector3
                     (
                         Mathf.Approximately(parentScale.x, 0.0f) ? scale.x : scale.x / parentScale.x,
@@ -135,9 +135,9 @@ namespace MimyLab.FukuroUdon
 
         private void RelativeTransforming()
         {
-            var position = _referenceTransform ? _referenceTransform.localPosition : _position;
-            var rotation = _referenceTransform ? _referenceTransform.localRotation : _rotation;
-            var scale = _referenceTransform ? _referenceTransform.localScale : _scale;
+            Vector3 position = _referenceTransform ? _referenceTransform.localPosition : _position;
+            Quaternion rotation = _referenceTransform ? _referenceTransform.localRotation : _rotation;
+            Vector3 scale = _referenceTransform ? _referenceTransform.localScale : _scale;
 
             for (int i = 0; i < _transforms.Length; i++)
             {
@@ -146,15 +146,15 @@ namespace MimyLab.FukuroUdon
                     _pickups[i].Drop();
                 }
 
-                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Position) > 0)
+                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperties.Position) > 0)
                 {
                     _transforms[i].localPosition = position;
                 }
-                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Rotation) > 0)
+                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperties.Rotation) > 0)
                 {
                     _transforms[i].localRotation = rotation;
                 }
-                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Scale) > 0)
+                if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperties.Scale) > 0)
                 {
                     _transforms[i].localScale = scale;
                 }

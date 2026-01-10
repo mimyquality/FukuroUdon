@@ -18,7 +18,7 @@ namespace MimyLab.FukuroUdon
         Pretend,
     }
 
-    public class IPlayerAudioRegulator : UdonSharpBehaviour
+    public abstract class PlayerAudioRegulator : UdonSharpBehaviour
     {
         [Header("Filter Settings")]
         public bool othersOnly = false;
@@ -29,7 +29,7 @@ namespace MimyLab.FukuroUdon
         [Min(0)]
         public int channel = 0;
         public PlayerAudioRegulatorChannelUncmatchMode channelUnmatchMode = default;
-        public IPlayerAudioRegulator unmatchFallback = null;
+        public PlayerAudioRegulator unmatchFallback = null;
 
         [Header("Player Voice Settings")]
         public bool enablePlayerVoiceOverride = true;
@@ -109,6 +109,6 @@ namespace MimyLab.FukuroUdon
             return enableAvatarAudioOverride;
         }
 
-        protected virtual bool CheckApplicableInternal(VRCPlayerApi target) { return false; }
+        protected abstract bool CheckApplicableInternal(VRCPlayerApi target);
     }
 }

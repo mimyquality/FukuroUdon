@@ -68,7 +68,7 @@ namespace MimyLab.FukuroUdon
 
         private void ChangePlayerMobility(bool value)
         {
-            var localPlayer = Networking.LocalPlayer;
+            VRCPlayerApi localPlayer = Networking.LocalPlayer;
 
             if (_setWalkSpeed)
             {

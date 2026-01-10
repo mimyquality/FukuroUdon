@@ -13,6 +13,8 @@ namespace MimyLab.FukuroUdon
 #if UNITY_EDITOR
     using UnityEditor;
     using UnityEditor.SceneManagement;
+    using UnityEngine.SceneManagement;
+
     //using UdonSharpEditor;
 #endif
 
@@ -36,15 +38,15 @@ namespace MimyLab.FukuroUdon
             if (PrefabStageUtility.GetCurrentPrefabStage() != null) { return; }
             if (PrefabUtility.IsPartOfPrefabAsset(this)) { return; }
 
-            var scene = this.gameObject.scene;
+            Scene scene = this.gameObject.scene;
             if (!scene.IsValid()) { return; }
             if (!scene.isLoaded) { return; }
 
-            var rootObjects = scene.GetRootGameObjects();
-            foreach (var obj in rootObjects)
+            GameObject[] rootObjects = scene.GetRootGameObjects();
+            foreach (GameObject obj in rootObjects)
             {
-                var tmp_mosList = obj.GetComponentsInChildren<ManualObjectSync>(true);
-                foreach (var tmp_mos in tmp_mosList)
+                ManualObjectSync[] tmp_mosList = obj.GetComponentsInChildren<ManualObjectSync>(true);
+                foreach (ManualObjectSync tmp_mos in tmp_mosList)
                 {
                     tmp_mos.SetUpdateManager(this);
                     tmp_mos.SetRespawnHeightY(_respawnHeightY);
@@ -57,7 +59,7 @@ namespace MimyLab.FukuroUdon
         public override void PostLateUpdate()
         {
             var pauseUpdate = true;
-            foreach (var mos in _mosList)
+            foreach (ManualObjectSync mos in _mosList)
             {
                 if (mos)
                 {
@@ -77,7 +79,7 @@ namespace MimyLab.FukuroUdon
         {
             this.enabled = true;
 
-            var index = System.Array.IndexOf(_mosList, mos);
+            int index = System.Array.IndexOf(_mosList, mos);
             if (index > -1) { return; }
 
             index = System.Array.IndexOf(_mosList, null);
@@ -98,7 +100,7 @@ namespace MimyLab.FukuroUdon
         {
             if (_mosList.Length < 1) { return; }
 
-            var index = System.Array.IndexOf(_mosList, mos);
+            int index = System.Array.IndexOf(_mosList, mos);
             if (index > -1)
             {
                 _mosList[index] = null;

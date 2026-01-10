@@ -80,8 +80,8 @@ namespace MimyLab.FukuroUdon
 
             _animator = GetComponent<Animator>();
 
-            var parameters = _animator.parameters;
-            var parameterCount = _animator.parameterCount;
+            AnimatorControllerParameter[] parameters = _animator.parameters;
+            int parameterCount = _animator.parameterCount;
 
             var tmp_boolParameterHashes = new int[parameterCount];
             var boolCount = 0;
@@ -184,7 +184,7 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _boolParameterHashes.Length; i++)
             {
-                var index = System.Array.IndexOf(sync_boolParameterHashes, _boolParameterHashes[i]);
+                int index = System.Array.IndexOf(sync_boolParameterHashes, _boolParameterHashes[i]);
                 if (index < 0) { continue; }
 
                 if (_animator.GetBool(_boolParameterHashes[i]) != sync_boolParameterValues[index])
@@ -196,7 +196,7 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _intParameterHashes.Length; i++)
             {
-                var index = System.Array.IndexOf(sync_intParameterHashes, _intParameterHashes[i]);
+                int index = System.Array.IndexOf(sync_intParameterHashes, _intParameterHashes[i]);
                 if (index < 0) { continue; }
 
                 if (_animator.GetInteger(_intParameterHashes[i]) != sync_intParameterValues[index])
@@ -208,10 +208,10 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _floatParameterHashes.Length; i++)
             {
-                var index = System.Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
+                int index = System.Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
                 if (index < 0) { continue; }
 
-                var animatorFloatParameter = _animator.GetFloat(_floatParameterHashes[i]);
+                float animatorFloatParameter = _animator.GetFloat(_floatParameterHashes[i]);
                 if (Mathf.Approximately(animatorFloatParameter, sync_floatParameterValues[index])) { continue; }
 
                 // スムージング処理ありなら Update() でやるので、ここでは行わない
@@ -234,7 +234,7 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _boolParameterHashes.Length; i++)
             {
-                var boolValue = _animator.GetBool(_boolParameterHashes[i]);
+                bool boolValue = _animator.GetBool(_boolParameterHashes[i]);
                 if (_boolParameterValues[i] == boolValue) { continue; }
 
                 _boolParameterValues[i] = boolValue;
@@ -243,7 +243,7 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _intParameterHashes.Length; i++)
             {
-                var intValue = _animator.GetInteger(_intParameterHashes[i]);
+                int intValue = _animator.GetInteger(_intParameterHashes[i]);
                 if (_intParameterValues[i] == intValue) { continue; }
 
                 _intParameterValues[i] = intValue;
@@ -252,7 +252,7 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _floatParameterHashes.Length; i++)
             {
-                var floatValue = _animator.GetFloat(_floatParameterHashes[i]);
+                float floatValue = _animator.GetFloat(_floatParameterHashes[i]);
                 if (Mathf.Approximately(_floatParameterValues[i], floatValue)) { continue; }
 
                 _floatParameterValues[i] = floatValue;
@@ -267,10 +267,10 @@ namespace MimyLab.FukuroUdon
             if (_elapsedTime >= SmoothingDuration) { return; }
             _elapsedTime += Time.deltaTime;
 
-            var t = _elapsedTime / SmoothingDuration;
+            float t = _elapsedTime / SmoothingDuration;
             for (int i = 0; i < _floatParameterHashes.Length; i++)
             {
-                var index = System.Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
+                int index = System.Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
                 if (index < 0) { continue; }
 
                 float currentFloatValue;

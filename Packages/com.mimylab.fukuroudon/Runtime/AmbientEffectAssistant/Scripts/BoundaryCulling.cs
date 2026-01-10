@@ -41,11 +41,11 @@ namespace MimyLab.FukuroUdon
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            var point = _point ? _point : this.transform;
-            var pos = point.position;
-            var normal = (_normal != Vector3.zero) ? _normal.normalized : Vector3.up;
-            var normalRotation = point.rotation * Quaternion.LookRotation(normal);
-            var size = HandleUtility.GetHandleSize(pos);
+            Transform point = _point ? _point : this.transform;
+            Vector3 pos = point.position;
+            Vector3 normal = (_normal != Vector3.zero) ? _normal.normalized : Vector3.up;
+            Quaternion normalRotation = point.rotation * Quaternion.LookRotation(normal);
+            float size = HandleUtility.GetHandleSize(pos);
             var plane = new Vector3[]
             {
                 normalRotation * new Vector3(size, size, 0) + pos,
@@ -83,9 +83,9 @@ namespace MimyLab.FukuroUdon
         {
             if (!Utilities.IsValid(_screenCamera)) { return; }
 
-            var borderNormal = (_normal != Vector3.zero) ? _point.rotation * _normal : Vector3.up;
-            var direction = _screenCamera.Position - _point.position;
-            var isIn = Vector3.Dot(borderNormal, direction) <= 0.0f;
+            Vector3 borderNormal = (_normal != Vector3.zero) ? _point.rotation * _normal : Vector3.up;
+            Vector3 direction = _screenCamera.Position - _point.position;
+            bool isIn = Vector3.Dot(borderNormal, direction) <= 0.0f;
 
             if (_includeVRCCamera && _photoCamera.Active && !isIn)
             {
@@ -102,11 +102,11 @@ namespace MimyLab.FukuroUdon
 
         private void ToggleTargetsEnabled(bool value)
         {
-            foreach (var target in _renderers)
+            foreach (Renderer target in _renderers)
             {
                 if (target) { target.enabled = value; }
             }
-            foreach (var target in _gameObjects)
+            foreach (GameObject target in _gameObjects)
             {
                 if (target) { target.SetActive(value); }
             }

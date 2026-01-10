@@ -135,7 +135,7 @@ namespace MimyLab.FukuroUdon
                 if (!Utilities.IsValid(players[i])) { continue; }
                 if (othersOnly && players[i].isLocal) { continue; }
 
-                foreach (var reference in _gameObjects)
+                foreach (GameObject reference in _gameObjects)
                 {
                     if (!reference) { continue; }
 

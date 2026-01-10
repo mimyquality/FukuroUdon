@@ -19,9 +19,9 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private ActiveRelayEventType _eventType = ActiveRelayEventType.Inactive;
         [SerializeField, EnumFlag]
-        private ActiveRelayToTransformChangeProperty _changeProperty =
-            ActiveRelayToTransformChangeProperty.Position |
-            ActiveRelayToTransformChangeProperty.Rotation;
+        private ActiveRelayToTransformChangeProperties _changeProperty =
+            ActiveRelayToTransformChangeProperties.Position |
+            ActiveRelayToTransformChangeProperties.Rotation;
         [SerializeField]
         private Space _relativeTo = Space.World;
 
@@ -54,8 +54,8 @@ namespace MimyLab.FukuroUdon
             }
 
             var positionOrRotation =
-                (int)ActiveRelayToTransformChangeProperty.Position |
-                (int)ActiveRelayToTransformChangeProperty.Rotation;
+                (int)ActiveRelayToTransformChangeProperties.Position |
+                (int)ActiveRelayToTransformChangeProperties.Rotation;
             if (((int)_changeProperty & positionOrRotation) > 0)
             {
                 _pickup = GetComponent<VRCPickup>();
@@ -99,19 +99,19 @@ namespace MimyLab.FukuroUdon
                 _pickup.Drop();
             }
 
-            if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Position) > 0)
+            if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperties.Position) > 0)
             {
                 this.transform.position = _startPosition;
             }
-            if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Rotation) > 0)
+            if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperties.Rotation) > 0)
             {
                 this.transform.rotation = _startRotation;
             }
-            if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Scale) > 0)
+            if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperties.Scale) > 0)
             {
                 // ワールド空間のスケールを適用
-                var parent = this.transform.parent;
-                var parentScale = parent ? parent.lossyScale : Vector3.one;
+                Transform parent = this.transform.parent;
+                Vector3 parentScale = parent ? parent.lossyScale : Vector3.one;
                 this.transform.localScale = new Vector3
                     (
                         Mathf.Approximately(parentScale.x, 0.0f) ? _startLocalScale.x : _startScale.x / parentScale.x,
@@ -128,15 +128,15 @@ namespace MimyLab.FukuroUdon
                 _pickup.Drop();
             }
 
-            if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Position) > 0)
+            if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperties.Position) > 0)
             {
                 this.transform.localPosition = _startPosition;
             }
-            if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Rotation) > 0)
+            if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperties.Rotation) > 0)
             {
                 this.transform.localRotation = _startRotation;
             }
-            if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperty.Scale) > 0)
+            if (((int)_changeProperty & (int)ActiveRelayToTransformChangeProperties.Scale) > 0)
             {
                 this.transform.localScale = _startLocalScale;
             }

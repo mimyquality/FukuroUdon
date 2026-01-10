@@ -187,7 +187,7 @@ MonoBehaviour:
       Data: 12|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.ActiveRelayToTransformChangeProperty, FukuroUdon
+      Data: MimyLab.FukuroUdon.ActiveRelayToTransformChangeProperties, FukuroUdon
     - Name: 
       Entry: 8
       Data: 

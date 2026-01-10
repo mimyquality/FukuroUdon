@@ -21,7 +21,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator Switch")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-    public class PlayerAudioRegulatorSwitch : IPlayerAudioRegulator
+    public class PlayerAudioRegulatorSwitch : PlayerAudioRegulator
     {
         [Header("Option Settings")]
         public PlayerAudioRegulatorSwitchMode switchMode = default;

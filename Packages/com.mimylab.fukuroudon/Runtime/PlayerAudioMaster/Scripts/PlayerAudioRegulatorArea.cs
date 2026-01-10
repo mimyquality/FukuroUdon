@@ -14,7 +14,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator Area")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class PlayerAudioRegulatorArea : IPlayerAudioRegulator
+    public class PlayerAudioRegulatorArea : PlayerAudioRegulator
     {
         private Collider _collider;
 
@@ -47,7 +47,7 @@ namespace MimyLab.FukuroUdon
 
             if (!_collider.enabled) { return false; }
 
-            var pos = target.GetPosition();
+            Vector3 pos = target.GetPosition();
 
             return _collider.bounds.Contains(pos) && (pos == _collider.ClosestPoint(pos));
         }
