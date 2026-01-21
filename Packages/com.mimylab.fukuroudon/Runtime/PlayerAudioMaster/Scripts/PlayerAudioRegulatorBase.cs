@@ -16,7 +16,7 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerAudioRegulatorBase : PlayerAudioRegulator
     {
-        protected override bool CheckApplicableInternal(VRCPlayerApi target)
+        protected override bool CheckUniqueApplicable(VRCPlayerApi target)
         {
             return true;
         }

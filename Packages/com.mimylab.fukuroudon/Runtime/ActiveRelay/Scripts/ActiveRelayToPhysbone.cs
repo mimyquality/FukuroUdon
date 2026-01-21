@@ -16,7 +16,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to Physbone")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-    public class ActiveRelayToPhysbone : UdonSharpBehaviour
+    public class ActiveRelayToPhysbone : ActiveRelayTo
     {
         [SerializeField]
         private ActiveRelayEventType _eventType = default;
@@ -27,7 +27,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private bool _releasePoses = true;
 
-        private void OnEnable()
+        private protected override void OnEnable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
              || _eventType == ActiveRelayEventType.Active)
@@ -37,7 +37,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        private void OnDisable()
+        private protected override void OnDisable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
              || _eventType == ActiveRelayEventType.Inactive)

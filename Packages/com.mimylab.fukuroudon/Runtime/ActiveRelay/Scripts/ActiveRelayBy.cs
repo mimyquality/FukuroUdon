@@ -18,8 +18,9 @@ namespace MimyLab.FukuroUdon
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ActiveRelayBy : UdonSharpBehaviour
+    public abstract class ActiveRelayBy : UdonSharpBehaviour
     {
+        public ActiveRelayBy[] _activeRelays = new ActiveRelayBy[0];
         public string[] allowedPlayerNameList = new string[0];
 
         [SerializeField]
@@ -27,7 +28,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private protected ActiveRelayActivateType _actionType = default;
 
-        public bool DoAction(VRCPlayerApi player)
+        private protected bool DoAction(VRCPlayerApi player)
         {
             if (allowedPlayerNameList.Length > 0)
             {
@@ -47,7 +48,7 @@ namespace MimyLab.FukuroUdon
             return true;
         }
 
-        private protected void ToggleActive()
+        private void ToggleActive()
         {
             for (int i = 0; i < _gameObjects.Length; i++)
             {
@@ -58,7 +59,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        private protected void SetActive(bool value)
+        private void SetActive(bool value)
         {
             for (int i = 0; i < _gameObjects.Length; i++)
             {

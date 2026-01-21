@@ -69,7 +69,7 @@ namespace MimyLab.FukuroUdon
             if (othersOnly && target.isLocal) { return false; }
             if (!EligiblePlayer(target)) { return false; }
 
-            return CheckApplicableInternal(target);
+            return CheckUniqueApplicable(target);
         }
 
         public bool EligiblePlayer(VRCPlayerApi target)
@@ -109,6 +109,6 @@ namespace MimyLab.FukuroUdon
             return enableAvatarAudioOverride;
         }
 
-        protected abstract bool CheckApplicableInternal(VRCPlayerApi target);
+        protected abstract bool CheckUniqueApplicable(VRCPlayerApi target);
     }
 }

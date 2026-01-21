@@ -28,7 +28,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to Effect")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ActiveRelayToEffect : UdonSharpBehaviour
+    public class ActiveRelayToEffect : ActiveRelayTo
     {
         [Header("Settings when active")]
         [SerializeField]
@@ -62,7 +62,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private int _emitForInactive = 0;
 
-        private void OnEnable()
+        private protected override void OnEnable()
         {
             if (_audioSourceForActive)
             {
@@ -95,7 +95,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        private void OnDisable()
+        private protected override void OnDisable()
         {
             if (_audioSourceForInactive)
             {

@@ -106,7 +106,7 @@ namespace MimyLab.FukuroUdon
         [NetworkCallable]
         public void CallReleasePlayer(int targetPlayerId) { ReleasePlayer(targetPlayerId); }
 
-        protected override bool CheckApplicableInternal(VRCPlayerApi target)
+        protected override bool CheckUniqueApplicable(VRCPlayerApi target)
         {
             return System.Array.IndexOf(_playerIds, target.playerId) > -1;
         }

@@ -23,7 +23,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to Transform")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ActiveRelayToTransform : UdonSharpBehaviour
+    public class ActiveRelayToTransform : ActiveRelayTo
     {
         [SerializeField]
         private ActiveRelayEventType _eventType = default;
@@ -69,7 +69,7 @@ namespace MimyLab.FukuroUdon
             _initialized = true;
         }
 
-        private void OnEnable()
+        private protected override void OnEnable()
         {
             Initialize();
 
@@ -84,7 +84,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        private void OnDisable()
+        private protected override void OnDisable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive ||
                 _eventType == ActiveRelayEventType.Inactive)

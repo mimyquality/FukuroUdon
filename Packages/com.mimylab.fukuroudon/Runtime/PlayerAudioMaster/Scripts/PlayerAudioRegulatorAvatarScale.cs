@@ -55,7 +55,7 @@ namespace MimyLab.FukuroUdon
             _initialized = true;
         }
 
-        protected override bool CheckApplicableInternal(VRCPlayerApi target)
+        protected override bool CheckUniqueApplicable(VRCPlayerApi target)
         {
             Initialize();
 

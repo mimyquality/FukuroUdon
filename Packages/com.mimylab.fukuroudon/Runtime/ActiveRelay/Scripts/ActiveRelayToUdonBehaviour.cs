@@ -15,7 +15,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to UdonBehaviour")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ActiveRelayToUdonBehaviour : UdonSharpBehaviour
+    public class ActiveRelayToUdonBehaviour : ActiveRelayTo
     {
         [SerializeField]
         private NetworkEventTarget _networkEventTarget = NetworkEventTarget.Self;
@@ -32,7 +32,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private string _customEventNameForInactive = "";
 
-        private void OnEnable()
+        private protected override void OnEnable()
         {
             if (_customEventNameForActive == "") { return; }
 
@@ -55,7 +55,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        private void OnDisable()
+        private protected override void OnDisable()
         {
             if (_customEventNameForInactive == "") { return; }
 

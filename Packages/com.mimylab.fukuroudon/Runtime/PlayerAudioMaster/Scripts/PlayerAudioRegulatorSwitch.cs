@@ -99,7 +99,7 @@ namespace MimyLab.FukuroUdon
             RequestSerialization();
         }
 
-        protected override bool CheckApplicableInternal(VRCPlayerApi target)
+        protected override bool CheckUniqueApplicable(VRCPlayerApi target)
         {
             return target.playerId == _assignedPlayerId;
         }

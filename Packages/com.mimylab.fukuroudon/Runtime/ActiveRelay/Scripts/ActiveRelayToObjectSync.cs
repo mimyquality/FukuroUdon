@@ -24,7 +24,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to ObjectSync")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-    public class ActiveRelayToObjectSync : UdonSharpBehaviour
+    public class ActiveRelayToObjectSync : ActiveRelayTo
     {
         [SerializeField]
         private ActiveRelayEventType _eventType = default;
@@ -39,7 +39,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField, Tooltip("Normal : Respawn when OnEnable\nImvert : Respawn when OnDisable")]
         private ActiveRelayActionType _respawn = default;
 
-        private void OnEnable()
+        private protected override void OnEnable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
              || _eventType == ActiveRelayEventType.Active)
@@ -69,7 +69,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        private void OnDisable()
+        private protected override void OnDisable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
              || _eventType == ActiveRelayEventType.Inactive)

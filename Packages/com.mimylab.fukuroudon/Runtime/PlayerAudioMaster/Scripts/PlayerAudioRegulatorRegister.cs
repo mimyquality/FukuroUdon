@@ -94,7 +94,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        protected override bool CheckApplicableInternal(VRCPlayerApi target)
+        protected override bool CheckUniqueApplicable(VRCPlayerApi target)
         {
             return System.Array.IndexOf(_playerIds, target.playerId) > -1;
         }

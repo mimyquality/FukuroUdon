@@ -16,7 +16,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/ActiveRelay to/ActiveRelay to GameObject in PlayerObject")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ActiveRelayToGameObjectInPlayerObject : UdonSharpBehaviour
+    public class ActiveRelayToGameObjectInPlayerObject : ActiveRelayTo
     {
         [SerializeField]
         private ActiveRelayEventType _eventType = default;
@@ -40,7 +40,7 @@ namespace MimyLab.FukuroUdon
         private VRCPlayerApi[] _playersEmpty = new VRCPlayerApi[0];
         private VRCPlayerApi[] _playersSolo = new VRCPlayerApi[1];
 
-        private void OnEnable()
+        private protected override void OnEnable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
              || _eventType == ActiveRelayEventType.Active)
@@ -64,7 +64,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        private void OnDisable()
+        private protected override void OnDisable()
         {
             if (_eventType == ActiveRelayEventType.ActiveAndInactive
              || _eventType == ActiveRelayEventType.Inactive)
