@@ -18,7 +18,7 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public abstract class ActiveRelayTo : UdonSharpBehaviour
     {
-        private protected abstract void OnEnable();
-        private protected abstract void OnDisable();
+        private protected virtual void OnEnable() { }
+        private protected virtual void OnDisable() { }
     }
 }

@@ -14,7 +14,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/ActiveRelay with/ActiveRelay with Delay")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ActiveRelayWithDelay : UdonSharpBehaviour
+    public class ActiveRelayWithDelay : ActiveRelayTo
     {
         [HelpBox("Disable delay if Dlelay Time is 0", HelpBoxAttribute.MessageType.Info)]
         [SerializeField, Min(0.0f), Tooltip("sec")]
@@ -25,7 +25,7 @@ namespace MimyLab.FukuroUdon
         private int _activateDelayedCount = 0;
         private int _deactivateDelayedCount = 0;
 
-        private void OnEnable()
+        private protected override void OnEnable()
         {
             if (_delayTimeToInactive > 0.0f)
             {
@@ -34,7 +34,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        private void OnDisable()
+        private protected override void OnDisable()
         {
 
             if (_delayTimeToActive > 0.0f)
