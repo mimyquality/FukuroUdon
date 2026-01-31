@@ -11,7 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.SDK3.Components;
 
-    public enum ActiveRelayPickupEventType
+    public enum ActiveRelayPickupEvent
     {
         Pickup,
         PickupUseDown,
@@ -27,7 +27,7 @@ namespace MimyLab.FukuroUdon
     public class ActiveRelayByPickup : ActiveRelayBy
     {
         [SerializeField]
-        private ActiveRelayPickupEventType _eventType = default;
+        private ActiveRelayPickupEvent _eventType = default;
         [SerializeField]
         private bool _localOnly = true;
 
@@ -64,7 +64,7 @@ namespace MimyLab.FukuroUdon
 
         public override void OnPickup()
         {
-            if (_eventType == ActiveRelayPickupEventType.Pickup)
+            if (_eventType == ActiveRelayPickupEvent.Pickup)
             {
                 if (DoAction(Networking.LocalPlayer))
                 {
@@ -75,7 +75,7 @@ namespace MimyLab.FukuroUdon
 
         public override void OnPickupUseDown()
         {
-            if (_eventType == ActiveRelayPickupEventType.PickupUseDown)
+            if (_eventType == ActiveRelayPickupEvent.PickupUseDown)
             {
                 if (DoAction(Networking.LocalPlayer))
                 {
@@ -86,7 +86,7 @@ namespace MimyLab.FukuroUdon
 
         public override void OnPickupUseUp()
         {
-            if (_eventType == ActiveRelayPickupEventType.PickupUseUp)
+            if (_eventType == ActiveRelayPickupEvent.PickupUseUp)
             {
                 if (DoAction(Networking.LocalPlayer))
                 {
@@ -97,7 +97,7 @@ namespace MimyLab.FukuroUdon
 
         public override void OnDrop()
         {
-            if (_eventType == ActiveRelayPickupEventType.Drop)
+            if (_eventType == ActiveRelayPickupEvent.Drop)
             {
                 if (DoAction(Networking.LocalPlayer))
                 {

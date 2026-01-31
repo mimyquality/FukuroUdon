@@ -21,7 +21,7 @@ namespace MimyLab.FukuroUdon
     public class ActiveRelayByContact : ActiveRelayBy
     {
         [SerializeField]
-        private ActiveRelayCollisionEventType _eventType = default;
+        private ActiveRelayCollisionEvent _eventType = default;
         [SerializeField]
         private NetworkEventTarget _acceptPlayerType = NetworkEventTarget.All;
         [SerializeField]
@@ -32,8 +32,8 @@ namespace MimyLab.FukuroUdon
         {
             switch (_eventType)
             {
-                case ActiveRelayCollisionEventType.EnterAndExit:
-                case ActiveRelayCollisionEventType.Enter:
+                case ActiveRelayCollisionEvent.EnterAndExit:
+                case ActiveRelayCollisionEvent.Enter:
                     if (contactInfo.enterVelocity.sqrMagnitude < _minVelocity * _minVelocity) { return; }
 
                     VRCPlayerApi player = contactInfo.contactSender.player;
@@ -47,8 +47,8 @@ namespace MimyLab.FukuroUdon
         {
             switch (_eventType)
             {
-                case ActiveRelayCollisionEventType.EnterAndExit:
-                case ActiveRelayCollisionEventType.Exit:
+                case ActiveRelayCollisionEvent.EnterAndExit:
+                case ActiveRelayCollisionEvent.Exit:
                     VRCPlayerApi player = contactInfo.contactSender.player;
                     player = Utilities.IsValid(player) ? player : Networking.LocalPlayer;
                     if (CheckAccept(player)) { DoAction(player); }

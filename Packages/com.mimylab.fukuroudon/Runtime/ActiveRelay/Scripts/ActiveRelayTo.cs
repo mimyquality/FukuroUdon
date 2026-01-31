@@ -8,11 +8,12 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
 
-    public enum ActiveRelayEventType
+    public enum ActiveRelayActiveEvent
     {
         ActiveAndInactive,
         Active,
         Inactive,
+        Ignore
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

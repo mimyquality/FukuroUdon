@@ -13,14 +13,14 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Dynamics.PhysBone.Components;
     using VRC.Udon.Common.Interfaces;
 
-    public enum ActiveRelayByPhysboneType
+    public enum ActiveRelayPhysboneEvent
     {
-        PhysboneGrabAndRelease,
-        PhysboneGrab,
-        PhysboneRelease,
-        PhysbonePoseAndUnpose,
-        PhysbonePose,
-        PhysboneUnpose
+        GrabAndRelease,
+        Grab,
+        Release,
+        PoseAndUnpose,
+        Pose,
+        Unpose
     }
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-physbone")]
@@ -31,7 +31,7 @@ namespace MimyLab.FukuroUdon
     public class ActiveRelayByPhysbone : ActiveRelayBy
     {
         [SerializeField]
-        private ActiveRelayByPhysboneType _eventType = default;
+        private ActiveRelayPhysboneEvent _eventType = default;
         [SerializeField]
         private NetworkEventTarget _acceptPlayerType = NetworkEventTarget.All;
 
@@ -39,8 +39,8 @@ namespace MimyLab.FukuroUdon
         {
             switch (_eventType)
             {
-                case ActiveRelayByPhysboneType.PhysboneGrabAndRelease:
-                case ActiveRelayByPhysboneType.PhysboneGrab:
+                case ActiveRelayPhysboneEvent.GrabAndRelease:
+                case ActiveRelayPhysboneEvent.Grab:
                     VRCPlayerApi player = physBoneInfo.player;
                     if (CheckAccept(player)) { DoAction(player); }
                     break;
@@ -51,8 +51,8 @@ namespace MimyLab.FukuroUdon
         {
             switch (_eventType)
             {
-                case ActiveRelayByPhysboneType.PhysboneGrabAndRelease:
-                case ActiveRelayByPhysboneType.PhysboneRelease:
+                case ActiveRelayPhysboneEvent.GrabAndRelease:
+                case ActiveRelayPhysboneEvent.Release:
                     VRCPlayerApi player = physBoneInfo.player;
                     if (CheckAccept(player)) { DoAction(player); }
                     break;
@@ -63,8 +63,8 @@ namespace MimyLab.FukuroUdon
         {
             switch (_eventType)
             {
-                case ActiveRelayByPhysboneType.PhysbonePoseAndUnpose:
-                case ActiveRelayByPhysboneType.PhysbonePose:
+                case ActiveRelayPhysboneEvent.PoseAndUnpose:
+                case ActiveRelayPhysboneEvent.Pose:
                     VRCPlayerApi player = physBoneInfo.player;
                     if (CheckAccept(player)) { DoAction(player); }
                     break;
@@ -75,8 +75,8 @@ namespace MimyLab.FukuroUdon
         {
             switch (_eventType)
             {
-                case ActiveRelayByPhysboneType.PhysbonePoseAndUnpose:
-                case ActiveRelayByPhysboneType.PhysboneUnpose:
+                case ActiveRelayPhysboneEvent.PoseAndUnpose:
+                case ActiveRelayPhysboneEvent.Unpose:
                     VRCPlayerApi player = physBoneInfo.player;
                     if (CheckAccept(player)) { DoAction(player); }
                     break;

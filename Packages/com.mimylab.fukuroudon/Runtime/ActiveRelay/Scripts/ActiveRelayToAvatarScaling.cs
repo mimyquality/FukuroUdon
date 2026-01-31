@@ -23,7 +23,7 @@ namespace MimyLab.FukuroUdon
     public class ActiveRelayToAvatarScaling : ActiveRelayTo
     {
         [SerializeField]
-        private ActiveRelayEventType _eventType = default;
+        private ActiveRelayActiveEvent _eventType = default;
 
         [SerializeField]
         private ActiveRelayToAvatarScalingSetMode _setMode = default;
@@ -32,8 +32,8 @@ namespace MimyLab.FukuroUdon
 
         private protected override void OnEnable()
         {
-            if (_eventType == ActiveRelayEventType.ActiveAndInactive
-             || _eventType == ActiveRelayEventType.Active)
+            if (_eventType == ActiveRelayActiveEvent.ActiveAndInactive
+             || _eventType == ActiveRelayActiveEvent.Active)
             {
                 SetAvatarEyeHeight();
             }
@@ -41,8 +41,8 @@ namespace MimyLab.FukuroUdon
 
         private protected override void OnDisable()
         {
-            if (_eventType == ActiveRelayEventType.ActiveAndInactive
-             || _eventType == ActiveRelayEventType.Inactive)
+            if (_eventType == ActiveRelayActiveEvent.ActiveAndInactive
+             || _eventType == ActiveRelayActiveEvent.Inactive)
             {
                 SetAvatarEyeHeight();
             }

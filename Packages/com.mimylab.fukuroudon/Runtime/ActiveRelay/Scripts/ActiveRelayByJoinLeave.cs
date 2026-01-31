@@ -18,7 +18,7 @@ namespace MimyLab.FukuroUdon
     public class ActiveRelayByJoinLeave : ActiveRelayBy
     {
         [SerializeField]
-        private ActiveRelayPlayerEventType _eventType = default;
+        private ActiveRelayPlayerEvent _eventType = default;
         [SerializeField]
         private NetworkEventTarget _acceptPlayerType = NetworkEventTarget.All;
 
@@ -26,8 +26,8 @@ namespace MimyLab.FukuroUdon
         {
             switch (_eventType)
             {
-                case ActiveRelayPlayerEventType.PlayerEnterAndExit:
-                case ActiveRelayPlayerEventType.PlayerEnter:
+                case ActiveRelayPlayerEvent.PlayerEnterAndExit:
+                case ActiveRelayPlayerEvent.PlayerEnter:
                     if (CheckAccept(player)) { DoAction(player); }
                     break;
             }
@@ -37,8 +37,8 @@ namespace MimyLab.FukuroUdon
         {
             switch (_eventType)
             {
-                case ActiveRelayPlayerEventType.PlayerEnterAndExit:
-                case ActiveRelayPlayerEventType.PlayerExit:
+                case ActiveRelayPlayerEvent.PlayerEnterAndExit:
+                case ActiveRelayPlayerEvent.PlayerExit:
                     if (CheckAccept(player)) { DoAction(player); }
                     break;
             }

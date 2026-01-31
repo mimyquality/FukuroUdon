@@ -20,7 +20,6 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public abstract class ActiveRelayBy : UdonSharpBehaviour
     {
-        public ActiveRelayBy[] _activeRelays = new ActiveRelayBy[0];
         public string[] allowedPlayerNameList = new string[0];
 
         [SerializeField]

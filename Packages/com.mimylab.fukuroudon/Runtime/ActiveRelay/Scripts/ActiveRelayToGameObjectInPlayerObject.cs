@@ -19,7 +19,7 @@ namespace MimyLab.FukuroUdon
     public class ActiveRelayToGameObjectInPlayerObject : ActiveRelayTo
     {
         [SerializeField]
-        private ActiveRelayEventType _eventType = default;
+        private ActiveRelayActiveEvent _eventType = default;
         [SerializeField]
         private NetworkEventTarget _acceptPlayerType = NetworkEventTarget.Self;
         [SerializeField]
@@ -42,8 +42,8 @@ namespace MimyLab.FukuroUdon
 
         private protected override void OnEnable()
         {
-            if (_eventType == ActiveRelayEventType.ActiveAndInactive
-             || _eventType == ActiveRelayEventType.Active)
+            if (_eventType == ActiveRelayActiveEvent.ActiveAndInactive
+             || _eventType == ActiveRelayActiveEvent.Active)
             {
                 if (_delayTime > 0.0f)
                 {
@@ -66,8 +66,8 @@ namespace MimyLab.FukuroUdon
 
         private protected override void OnDisable()
         {
-            if (_eventType == ActiveRelayEventType.ActiveAndInactive
-             || _eventType == ActiveRelayEventType.Inactive)
+            if (_eventType == ActiveRelayActiveEvent.ActiveAndInactive
+             || _eventType == ActiveRelayActiveEvent.Inactive)
             {
                 if (_delayTime > 0.0f)
                 {

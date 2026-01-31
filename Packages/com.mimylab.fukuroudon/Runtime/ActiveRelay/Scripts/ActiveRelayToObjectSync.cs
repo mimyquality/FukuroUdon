@@ -13,7 +13,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Components;
     using VRC.SDK3.UdonNetworkCalling;
 
-    public enum ActiveRelayActionType
+    public enum ActiveRelayToObjectSyncRigidbodyState
     {
         NoChange,
         Normal,
@@ -27,75 +27,77 @@ namespace MimyLab.FukuroUdon
     public class ActiveRelayToObjectSync : ActiveRelayTo
     {
         [SerializeField]
-        private ActiveRelayEventType _eventType = default;
+        private ActiveRelayActiveEvent _eventType = default;
         [SerializeField]
         private VRCObjectSync[] _vrcObjectSyncs = new VRCObjectSync[0];
         [SerializeField]
         private ManualObjectSync[] _manualObjectSyncs = new ManualObjectSync[0];
         [SerializeField]
-        private ActiveRelayActionType _isKinematic = default;
+        private ActiveRelayToObjectSyncRigidbodyState _isKinematic = default;
         [SerializeField]
-        private ActiveRelayActionType _useGravity = default;
-        [SerializeField, Tooltip("Normal : Respawn when OnEnable\nImvert : Respawn when OnDisable")]
-        private ActiveRelayActionType _respawn = default;
+        private ActiveRelayToObjectSyncRigidbodyState _useGravity = default;
+        [SerializeField]
+        private ActiveRelayActiveEvent _respawn = ActiveRelayActiveEvent.Ignore;
 
         private protected override void OnEnable()
         {
-            if (_eventType == ActiveRelayEventType.ActiveAndInactive
-             || _eventType == ActiveRelayEventType.Active)
+            if (_eventType == ActiveRelayActiveEvent.ActiveAndInactive
+             || _eventType == ActiveRelayActiveEvent.Active)
             {
-                if (_isKinematic == ActiveRelayActionType.Normal)
+                if (_isKinematic == ActiveRelayToObjectSyncRigidbodyState.Normal)
                 {
                     SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SetKinematicEnable));
                 }
-                if (_isKinematic == ActiveRelayActionType.Invert)
+                if (_isKinematic == ActiveRelayToObjectSyncRigidbodyState.Invert)
                 {
                     SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SetKinematicDisable));
                 }
 
-                if (_useGravity == ActiveRelayActionType.Normal)
+                if (_useGravity == ActiveRelayToObjectSyncRigidbodyState.Normal)
                 {
                     SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SetGravityEnable));
                 }
-                if (_useGravity == ActiveRelayActionType.Invert)
+                if (_useGravity == ActiveRelayToObjectSyncRigidbodyState.Invert)
                 {
                     SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SetGravityDisable));
                 }
+            }
 
-                if (_respawn == ActiveRelayActionType.Normal)
-                {
-                    SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DoRespawn));
-                }
+            if (_respawn == ActiveRelayActiveEvent.ActiveAndInactive
+             || _respawn == ActiveRelayActiveEvent.Active)
+            {
+                SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DoRespawn));
             }
         }
 
         private protected override void OnDisable()
         {
-            if (_eventType == ActiveRelayEventType.ActiveAndInactive
-             || _eventType == ActiveRelayEventType.Inactive)
+            if (_eventType == ActiveRelayActiveEvent.ActiveAndInactive
+             || _eventType == ActiveRelayActiveEvent.Inactive)
             {
-                if (_isKinematic == ActiveRelayActionType.Invert)
+                if (_isKinematic == ActiveRelayToObjectSyncRigidbodyState.Invert)
                 {
                     SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SetKinematicEnable));
                 }
-                if (_isKinematic == ActiveRelayActionType.Normal)
+                if (_isKinematic == ActiveRelayToObjectSyncRigidbodyState.Normal)
                 {
                     SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SetKinematicDisable));
                 }
 
-                if (_useGravity == ActiveRelayActionType.Invert)
+                if (_useGravity == ActiveRelayToObjectSyncRigidbodyState.Invert)
                 {
                     SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SetGravityEnable));
                 }
-                if (_useGravity == ActiveRelayActionType.Normal)
+                if (_useGravity == ActiveRelayToObjectSyncRigidbodyState.Normal)
                 {
                     SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SetGravityDisable));
                 }
+            }
 
-                if (_respawn == ActiveRelayActionType.Invert)
-                {
-                    SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DoRespawn));
-                }
+            if (_respawn == ActiveRelayActiveEvent.ActiveAndInactive
+             || _respawn == ActiveRelayActiveEvent.Inactive)
+            {
+                SendCustomNetworkEvent(NetworkEventTarget.All, nameof(DoRespawn));
             }
         }
 

@@ -11,7 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.Udon.Common.Interfaces;
 
-    public enum ActiveRelayDroneEventType
+    public enum ActiveRelayDroneEvent
     {
         DroneEnterAndExit,
         DroneEnter,
@@ -26,7 +26,7 @@ namespace MimyLab.FukuroUdon
     public class ActiveRelayByDroneTrigger : ActiveRelayBy
     {
         [SerializeField]
-        private ActiveRelayDroneEventType _eventType = default;
+        private ActiveRelayDroneEvent _eventType = default;
         [SerializeField]
         private NetworkEventTarget _acceptPlayerType = NetworkEventTarget.All;
 
@@ -36,8 +36,8 @@ namespace MimyLab.FukuroUdon
 
             switch (_eventType)
             {
-                case ActiveRelayDroneEventType.DroneEnterAndExit:
-                case ActiveRelayDroneEventType.DroneEnter:
+                case ActiveRelayDroneEvent.DroneEnterAndExit:
+                case ActiveRelayDroneEvent.DroneEnter:
                     if (CheckAccept(player)) { DoAction(player); }
                     break;
             }
@@ -49,8 +49,8 @@ namespace MimyLab.FukuroUdon
 
             switch (_eventType)
             {
-                case ActiveRelayDroneEventType.DroneEnterAndExit:
-                case ActiveRelayDroneEventType.DroneExit:
+                case ActiveRelayDroneEvent.DroneEnterAndExit:
+                case ActiveRelayDroneEvent.DroneExit:
                     if (CheckAccept(player)) { DoAction(player); }
                     break;
             }

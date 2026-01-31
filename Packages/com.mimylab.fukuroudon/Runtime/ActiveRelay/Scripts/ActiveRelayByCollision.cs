@@ -10,7 +10,7 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
 
-    public enum ActiveRelayCollisionEventType
+    public enum ActiveRelayCollisionEvent
     {
         EnterAndExit,
         Enter,
@@ -25,7 +25,7 @@ namespace MimyLab.FukuroUdon
     public class ActiveRelayByCollision : ActiveRelayBy
     {
         [SerializeField]
-        private ActiveRelayCollisionEventType _eventType = default;
+        private ActiveRelayCollisionEvent _eventType = default;
         [SerializeField]
         private Collider[] _reactiveColliders = new Collider[0];
 
@@ -35,8 +35,8 @@ namespace MimyLab.FukuroUdon
 
             switch (_eventType)
             {
-                case ActiveRelayCollisionEventType.EnterAndExit:
-                case ActiveRelayCollisionEventType.Enter:
+                case ActiveRelayCollisionEvent.EnterAndExit:
+                case ActiveRelayCollisionEvent.Enter:
                     if (CheckAccept(collision.collider)) { DoAction(Networking.LocalPlayer); }
                     break;
             }
@@ -48,8 +48,8 @@ namespace MimyLab.FukuroUdon
 
             switch (_eventType)
             {
-                case ActiveRelayCollisionEventType.EnterAndExit:
-                case ActiveRelayCollisionEventType.Exit:
+                case ActiveRelayCollisionEvent.EnterAndExit:
+                case ActiveRelayCollisionEvent.Exit:
                     if (CheckAccept(collision.collider)) { DoAction(Networking.LocalPlayer); }
                     break;
             }

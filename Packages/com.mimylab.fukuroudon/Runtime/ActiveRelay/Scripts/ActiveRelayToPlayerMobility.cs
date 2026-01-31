@@ -24,7 +24,7 @@ namespace MimyLab.FukuroUdon
     public class ActiveRelayToPlayerMobility : ActiveRelayTo
     {
         [SerializeField]
-        private ActiveRelayEventType _eventType = default;
+        private ActiveRelayActiveEvent _eventType = default;
         [SerializeField]
         private bool _setWalkSpeed = false;
         [SerializeField, Range(0.0f, 5.0f)]
@@ -50,8 +50,8 @@ namespace MimyLab.FukuroUdon
 
         private protected override void OnEnable()
         {
-            if (_eventType == ActiveRelayEventType.ActiveAndInactive
-             || _eventType == ActiveRelayEventType.Active)
+            if (_eventType == ActiveRelayActiveEvent.ActiveAndInactive
+             || _eventType == ActiveRelayActiveEvent.Active)
             {
                 ChangePlayerMobility(true);
             }
@@ -59,8 +59,8 @@ namespace MimyLab.FukuroUdon
 
         private protected override void OnDisable()
         {
-            if (_eventType == ActiveRelayEventType.ActiveAndInactive
-             || _eventType == ActiveRelayEventType.Inactive)
+            if (_eventType == ActiveRelayActiveEvent.ActiveAndInactive
+             || _eventType == ActiveRelayActiveEvent.Inactive)
             {
                 ChangePlayerMobility(false);
             }

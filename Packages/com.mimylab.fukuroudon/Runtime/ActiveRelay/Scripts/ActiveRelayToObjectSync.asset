@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.ActiveRelayEventType, FukuroUdon
+      Data: MimyLab.FukuroUdon.ActiveRelayActiveEvent, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -249,13 +249,7 @@ MonoBehaviour:
       Entry: 1
       Data: _isKinematic
     - Name: <UserType>k__BackingField
-      Entry: 7
-      Data: 17|System.RuntimeType, mscorlib
-    - Name: 
-      Entry: 1
-      Data: MimyLab.FukuroUdon.ActiveRelayActionType, FukuroUdon
-    - Name: 
-      Entry: 8
+      Entry: 6
       Data: 
     - Name: <SystemType>k__BackingField
       Entry: 9
@@ -274,13 +268,13 @@ MonoBehaviour:
       Data: true
     - Name: _fieldAttributes
       Entry: 7
-      Data: 18|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 17|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 19|UnityEngine.SerializeField, UnityEngine.CoreModule
+      Data: 18|UnityEngine.SerializeField, UnityEngine.CoreModule
     - Name: 
       Entry: 8
       Data: 
@@ -304,13 +298,13 @@ MonoBehaviour:
       Data: _useGravity
     - Name: $v
       Entry: 7
-      Data: 20|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 19|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
       Data: _useGravity
     - Name: <UserType>k__BackingField
-      Entry: 9
-      Data: 17
+      Entry: 6
+      Data: 
     - Name: <SystemType>k__BackingField
       Entry: 9
       Data: 4
@@ -328,13 +322,13 @@ MonoBehaviour:
       Data: true
     - Name: _fieldAttributes
       Entry: 7
-      Data: 21|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 20|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 22|UnityEngine.SerializeField, UnityEngine.CoreModule
+      Data: 21|UnityEngine.SerializeField, UnityEngine.CoreModule
     - Name: 
       Entry: 8
       Data: 
@@ -358,13 +352,13 @@ MonoBehaviour:
       Data: _respawn
     - Name: $v
       Entry: 7
-      Data: 23|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 22|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
       Data: _respawn
     - Name: <UserType>k__BackingField
-      Entry: 9
-      Data: 17
+      Entry: 6
+      Data: 
     - Name: <SystemType>k__BackingField
       Entry: 9
       Data: 4
@@ -382,19 +376,19 @@ MonoBehaviour:
       Data: true
     - Name: _fieldAttributes
       Entry: 7
-      Data: 24|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 23|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 25|UnityEngine.SerializeField, UnityEngine.CoreModule
+      Data: 24|UnityEngine.SerializeField, UnityEngine.CoreModule
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 26|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
+      Data: 25|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
       Data: 'Normal : Respawn when OnEnable

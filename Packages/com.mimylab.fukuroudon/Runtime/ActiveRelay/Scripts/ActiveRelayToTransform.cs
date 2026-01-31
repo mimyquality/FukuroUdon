@@ -26,7 +26,7 @@ namespace MimyLab.FukuroUdon
     public class ActiveRelayToTransform : ActiveRelayTo
     {
         [SerializeField]
-        private ActiveRelayEventType _eventType = default;
+        private ActiveRelayActiveEvent _eventType = default;
         [SerializeField]
         private Transform[] _transforms = new Transform[0];
         [SerializeField, EnumFlag]
@@ -73,8 +73,8 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (_eventType == ActiveRelayEventType.ActiveAndInactive ||
-                _eventType == ActiveRelayEventType.Active)
+            if (_eventType == ActiveRelayActiveEvent.ActiveAndInactive ||
+                _eventType == ActiveRelayActiveEvent.Active)
             {
                 switch (_relativeTo)
                 {
@@ -86,8 +86,8 @@ namespace MimyLab.FukuroUdon
 
         private protected override void OnDisable()
         {
-            if (_eventType == ActiveRelayEventType.ActiveAndInactive ||
-                _eventType == ActiveRelayEventType.Inactive)
+            if (_eventType == ActiveRelayActiveEvent.ActiveAndInactive ||
+                _eventType == ActiveRelayActiveEvent.Inactive)
             {
                 switch (_relativeTo)
                 {
