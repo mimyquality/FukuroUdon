@@ -6,6 +6,17 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.16.0] - 2026/2/1
+
+**Added**  
+
+- ActiveRelay by Video を追加しました。 [#44](https://github.com/mimyquality/FukuroUdon/issues/44)
+
+**Changed**  
+
+- ActiveRelay to, ActiveRelay with シリーズは ActiveRelayTo クラスを継承するようになりました。
+- その他、全体的に内部の命名規則の見直しを行いました。
+
 ## [3.15.0] - 2026/1/2
 
 **Added**  
@@ -804,6 +815,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.16.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.16.0
 [3.15.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.15.0
 [3.14.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.14.0
 [3.13.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.13.0

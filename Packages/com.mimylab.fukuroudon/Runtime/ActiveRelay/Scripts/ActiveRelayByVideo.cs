@@ -9,19 +9,18 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    using VRC.SDK3.Components;
+    using VRC.SDK3.Components.Video;
 
     [System.Flags]
     public enum ActiveRelayVideoEvents
     {
-        None = 0,
-        Ready,
-        Start,
-        Play,
-        Pause,
-        Error,
-        End,
-        Loop,
+        Ready = 1 << 0,
+        Start = 1 << 1,
+        Play = 1 << 2,
+        Pause = 1 << 3,
+        End = 1 << 4,
+        Loop = 1 << 5,
+        Error = 1 << 6,
     }
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-video")]
@@ -33,20 +32,60 @@ namespace MimyLab.FukuroUdon
         [SerializeField, EnumFlag]
         private ActiveRelayVideoEvents _eventType;
 
-        private bool _initialized = false;
-        private void Initialize()
+        public override void OnVideoReady()
         {
-            if (_initialized) { return; }
-
-
-
-            _initialized = true;
+            if (((int)_eventType & (int)ActiveRelayVideoEvents.Ready) > 0)
+            {
+                DoAction(Networking.LocalPlayer);
+            }
         }
-        private void Start()
+
+        public override void OnVideoStart()
         {
-            Initialize();
+            if (((int)_eventType & (int)ActiveRelayVideoEvents.Start) > 0)
+            {
+                DoAction(Networking.LocalPlayer);
+            }
+        }
 
+        public override void OnVideoPlay()
+        {
+            if (((int)_eventType & (int)ActiveRelayVideoEvents.Play) > 0)
+            {
+                DoAction(Networking.LocalPlayer);
+            }
+        }
 
+        public override void OnVideoPause()
+        {
+            if (((int)_eventType & (int)ActiveRelayVideoEvents.Pause) > 0)
+            {
+                DoAction(Networking.LocalPlayer);
+            }
+        }
+
+        public override void OnVideoEnd()
+        {
+            if (((int)_eventType & (int)ActiveRelayVideoEvents.End) > 0)
+            {
+                DoAction(Networking.LocalPlayer);
+            }
+        }
+
+        public override void OnVideoLoop()
+        {
+            if (((int)_eventType & (int)ActiveRelayVideoEvents.Loop) > 0)
+            {
+                DoAction(Networking.LocalPlayer);
+            }
+        }
+
+        public override void OnVideoError(VideoError videoError)
+        {
+            if (((int)_eventType & (int)ActiveRelayVideoEvents.Error) > 0)
+            {
+                DoAction(Networking.LocalPlayer);
+            }
         }
     }
 }
