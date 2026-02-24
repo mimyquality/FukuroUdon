@@ -14,8 +14,9 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grab-SlideDoor#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/General/Pickup Handle")]
+    [AddComponentMenu("Fukuro Udon/Fix Pickup Up/Pickup Handle")]
     [RequireComponent(typeof(VRCPickup))]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
     public class PickupHandle : UdonSharpBehaviour
     {
         [SerializeField]

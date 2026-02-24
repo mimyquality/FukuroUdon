@@ -11,9 +11,9 @@ namespace MimyLab.FukuroUdon
     //using VRC.SDK3.Components;
     using VRC.Udon;
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#pickupevent-transfer")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Fix-Pickup-Up#pickupevent-transfer")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Pickup Event Transfer")]
+    [AddComponentMenu("Fukuro Udon/Fix Pickup Up/Pickup Event Transfer")]
     //[RequireComponent(typeof(VRCPickup))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
     public class PickupEventTransfer : UdonSharpBehaviour
