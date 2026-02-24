@@ -65,7 +65,7 @@ namespace MimyLab.FukuroUdon
 
                 foreach (IViewPointReceiver target in _viewPointReceiver)
                 {
-                    if (target && target.enabled && target.gameObject.activeInHierarchy)
+                    if (target && target.isActiveAndEnabled)
                     {
                         target.OnViewPointChanged();
                     }
@@ -75,7 +75,7 @@ namespace MimyLab.FukuroUdon
                 {
                     foreach (UdonBehaviour target in _positionReceiver)
                     {
-                        if (target && target.enabled && target.gameObject.activeInHierarchy)
+                        if (target && target.isActiveAndEnabled)
                         {
                             target.SetProgramVariable(ValNameViewPointPosition, viewPointPosition);
                         }
@@ -86,7 +86,7 @@ namespace MimyLab.FukuroUdon
                 {
                     foreach (UdonBehaviour target in _rotationReceiver)
                     {
-                        if (target && target.enabled && target.gameObject.activeInHierarchy)
+                        if (target && target.isActiveAndEnabled)
                         {
                             target.SetProgramVariable(ValNameViewPointRotation, viewPointRotation);
                         }

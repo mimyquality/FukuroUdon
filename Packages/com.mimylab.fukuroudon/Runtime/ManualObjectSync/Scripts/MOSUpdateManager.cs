@@ -63,7 +63,7 @@ namespace MimyLab.FukuroUdon
             {
                 if (mos)
                 {
-                    if (mos.enabled && mos.gameObject.activeInHierarchy)
+                    if (mos.isActiveAndEnabled)
                     {
                         mos._OnPostLateUpdate();
                     }
