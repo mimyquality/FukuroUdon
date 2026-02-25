@@ -13,9 +13,8 @@ namespace MimyLab.FukuroUdon
 
     public enum SwivelChairPlayerPlatform
     {
-        PCVR,
+        VR,
         Desktop,
-        StandaloneVR,
         Mobile
     }
 

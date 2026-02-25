@@ -29,7 +29,7 @@ namespace MimyLab.FukuroUdon
 
         internal SC2SeatAdjuster _seatAdjuster;
         internal SC2Caster _caster;
-        
+
         private Rigidbody _casterRigidbody;
         private Animator[] _tooltipAnimator;
         private SwivelChairPlayerPlatform _platform = default;
@@ -53,11 +53,9 @@ namespace MimyLab.FukuroUdon
         {
             if (_initialized) { return; }
 
-#if UNITY_STANDALONE_WIN
-            _platform = Networking.LocalPlayer.IsUserInVR() ? SwivelChairPlayerPlatform.PCVR : SwivelChairPlayerPlatform.Desktop;
-#endif
+            _platform = Networking.LocalPlayer.IsUserInVR() ? SwivelChairPlayerPlatform.VR : SwivelChairPlayerPlatform.Desktop;
 #if UNITY_ANDROID || UNITY_IOS
-            _platform = Networking.LocalPlayer.IsUserInVR() ? SwivelChairPlayerPlatform.StandaloneVR : SwivelChairPlayerPlatform.Mobile;
+            _platform = Networking.LocalPlayer.IsUserInVR() ? SwivelChairPlayerPlatform.VR : SwivelChairPlayerPlatform.Mobile;
 #endif
 
             if (_caster) { _casterRigidbody = _caster.GetComponent<Rigidbody>(); }
@@ -191,8 +189,7 @@ namespace MimyLab.FukuroUdon
 
         public override void InputMoveHorizontal(float value, UdonInputEventArgs args)
         {
-            if (_platform == SwivelChairPlayerPlatform.PCVR
-             || _platform == SwivelChairPlayerPlatform.StandaloneVR)
+            if (_platform == SwivelChairPlayerPlatform.VR)
             {
                 _moveValue.x = value;
                 return;
@@ -213,8 +210,7 @@ namespace MimyLab.FukuroUdon
         {
             if (_inputMode == SwivelChairInputMode.Disable) { return; }
 
-            if (_platform == SwivelChairPlayerPlatform.PCVR
-             || _platform == SwivelChairPlayerPlatform.StandaloneVR)
+            if (_platform == SwivelChairPlayerPlatform.VR)
             {
                 _turnValue = value;
             }

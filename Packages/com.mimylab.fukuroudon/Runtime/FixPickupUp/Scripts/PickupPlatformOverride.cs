@@ -11,6 +11,13 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.SDK3.Components;
 
+    public enum PickupPlatformOverridePlatform
+    {
+        VR,
+        Desktop,
+        Mobile
+    }
+
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Fix-Pickup-Up#pickup-platform-override")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Fix Pickup Up/Pickup Platform Override")]
@@ -18,95 +25,45 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
     public class PickupPlatformOverride : UdonSharpBehaviour
     {
-        [Header("VR")]
         [SerializeField]
-        private bool _vrAutoHold = false;
-        [SerializeField]
-        private string _vrUseText = string.Empty;
-        [SerializeField]
-        private string _vrInteractionText = string.Empty;
+        private PickupPlatformOverridePlatform _overridePlatform = PickupPlatformOverridePlatform.VR;
 
-        [Header("Desktop")]
+        [Space]
         [SerializeField]
-        private bool _desktopAutoHold = true;
+        private VRCPickup.AutoHoldMode _autoHold = VRCPickup.AutoHoldMode.Sometimes;
         [SerializeField]
-        private string _desktopUseText = string.Empty;
+        private string _useText = string.Empty;
         [SerializeField]
-        private string _desktopInteractionText = string.Empty;
-
-        [Header("Mobile")]
+        private string _interactionText = string.Empty;
         [SerializeField]
-        private bool _mobileAutoHold = true;
+        private float _proximity = 2.0f;
         [SerializeField]
-        private string _mobileUseText = string.Empty;
+        private VRCPickup.PickupOrientation _orientation = VRCPickup.PickupOrientation.Any;
         [SerializeField]
-        private string _mobileInteractionText = string.Empty;
-
-        private VRCPickup _pickup;
+        private bool _allowManipulationWhenEquipped = true;
 
         private void Reset()
         {
             var pickup = GetComponent<VRCPickup>();
-            _vrUseText = pickup.UseText;
-            _vrInteractionText = pickup.InteractionText;
-            _desktopUseText = pickup.UseText;
-            _desktopInteractionText = pickup.InteractionText;
-            _mobileUseText = pickup.UseText;
-            _mobileInteractionText = pickup.InteractionText;
+            _proximity = pickup.proximity;
+            _orientation = pickup.orientation;
+            _allowManipulationWhenEquipped = pickup.allowManipulationWhenEquipped;
         }
 
-        private bool _initialized = false;
-        private void Initialize()
+        private void Start()
         {
-            if (_initialized) { return; }
+            PickupPlatformOverridePlatform currentPlatform = Networking.LocalPlayer.IsUserInVR() ? PickupPlatformOverridePlatform.VR : PickupPlatformOverridePlatform.Desktop;
+            if (InputManager.GetLastUsedInputMethod() == VRCInputMethod.Touch) { currentPlatform = PickupPlatformOverridePlatform.Mobile; }
 
-            _pickup = GetComponent<VRCPickup>();
-
-            _initialized = true;
-        }
-
-        public override void OnInputMethodChanged(VRCInputMethod inputMethod)
-        {
-            Initialize();
-
-            switch (inputMethod)
+            if (currentPlatform == _overridePlatform)
             {
-                // VR
-                case VRCInputMethod.Oculus:
-                case VRCInputMethod.ViveXr:
-                case VRCInputMethod.Index:
-                case VRCInputMethod.HPMotionController:
-                case VRCInputMethod.Osc:
-                case VRCInputMethod.QuestHands:
-                case VRCInputMethod.OpenXRGeneric:
-                case VRCInputMethod.Pico:
-                case VRCInputMethod.SteamVR2:
-                    _pickup.AutoHold = _vrAutoHold ? VRCPickup.AutoHoldMode.Yes : VRCPickup.AutoHoldMode.No;
-                    _pickup.UseText = _vrUseText;
-                    _pickup.InteractionText = _vrInteractionText;
-                    break;
-
-                // モバイル
-                case VRCInputMethod.Touch:
-                    _pickup.AutoHold = _mobileAutoHold ? VRCPickup.AutoHoldMode.Yes : VRCPickup.AutoHoldMode.No;
-                    _pickup.UseText = _mobileUseText;
-                    _pickup.InteractionText = _mobileInteractionText;
-                    break;
-
-                // Desktop、その他
-                /* 
-                case VRCInputMethod.Keyboard:
-                case VRCInputMethod.Mouse:
-                case VRCInputMethod.Controller:
-                case VRCInputMethod.Gaze:
-                case VRCInputMethod.Vive:
-                case VRCInputMethod.Generic:
-                */
-                default:
-                    _pickup.AutoHold = _desktopAutoHold ? VRCPickup.AutoHoldMode.Yes : VRCPickup.AutoHoldMode.No;
-                    _pickup.UseText = _desktopUseText;
-                    _pickup.InteractionText = _desktopInteractionText;
-                    break;
+                var pickup = GetComponent<VRCPickup>();
+                pickup.AutoHold = _autoHold;
+                if (!string.IsNullOrEmpty(_useText)) { pickup.UseText = _useText; }
+                if (!string.IsNullOrEmpty(_interactionText)) { pickup.InteractionText = _interactionText; }
+                pickup.proximity = _proximity;
+                pickup.orientation = _orientation;
+                pickup.allowManipulationWhenEquipped = _allowManipulationWhenEquipped;
             }
         }
     }
