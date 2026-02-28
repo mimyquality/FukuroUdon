@@ -39,10 +39,6 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
-        private void Start()
-        {
-            Initialize();
-        }
 
         public void Move(Vector3 inputValue)
         {

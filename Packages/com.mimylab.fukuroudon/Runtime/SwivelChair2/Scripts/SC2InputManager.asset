@@ -97,7 +97,7 @@ MonoBehaviour:
       Data: 6|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: "0 = PCVR \n1 = Desktop \n2 = Quest \n3 = Android"
+      Data: "0 = VR \n1 = Desktop \n2 = Quest \n3 = Mobile"
     - Name: 
       Entry: 8
       Data: 

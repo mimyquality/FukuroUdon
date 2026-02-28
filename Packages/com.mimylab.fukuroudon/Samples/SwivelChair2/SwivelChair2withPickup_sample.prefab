@@ -626,6 +626,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 681244557837654784, guid: 1f0b8f9d2f91a8a4cafd1b1f6b840380, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 1161241949629056307, guid: 1f0b8f9d2f91a8a4cafd1b1f6b840380, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -779,7 +783,7 @@ MonoBehaviour:
   DisallowTheft: 1
   ExactGun: {fileID: 0}
   ExactGrip: {fileID: 0}
-  allowManipulationWhenEquipped: 0
+  allowManipulationWhenEquipped: 1
   orientation: 0
   AutoHold: 2
   InteractionText: Pickup

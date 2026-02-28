@@ -19,7 +19,7 @@ namespace MimyLab.FukuroUdon
     public class SC2InputManager : UdonSharpBehaviour
     {
         [SerializeField]
-        [Tooltip("0 = PCVR \n1 = Desktop \n2 = Quest \n3 = Android")]
+        [Tooltip("0 = VR \n1 = Desktop \n2 = Quest \n3 = Mobile")]
         private GameObject[] _tooltip = new GameObject[0];
 
         [Min(0.0f), Tooltip("sec")]
@@ -54,9 +54,7 @@ namespace MimyLab.FukuroUdon
             if (_initialized) { return; }
 
             _platform = Networking.LocalPlayer.IsUserInVR() ? SwivelChairPlayerPlatform.VR : SwivelChairPlayerPlatform.Desktop;
-#if UNITY_ANDROID || UNITY_IOS
-            _platform = Networking.LocalPlayer.IsUserInVR() ? SwivelChairPlayerPlatform.VR : SwivelChairPlayerPlatform.Mobile;
-#endif
+            if (InputManager.GetLastUsedInputMethod() == VRCInputMethod.Touch) { _platform = SwivelChairPlayerPlatform.Mobile; }
 
             if (_caster) { _casterRigidbody = _caster.GetComponent<Rigidbody>(); }
 

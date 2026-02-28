@@ -14,7 +14,7 @@
   "dependencies": {},
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.worlds": "^3.10.0"
+    "com.vrchat.worlds": "^3.10.2"
   },
   "legacyFolders": {
     "Assets\\MimyLab/ActiveRelay": "",

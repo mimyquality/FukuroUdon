@@ -42,8 +42,6 @@ namespace MimyLab.FukuroUdon
         internal SC2SeatAdjuster _seatAdjuster;
         internal SC2InputManager _inputManager;
 
-        private bool _isSit = false;
-
         private bool _initialized = false;
         private void Initialize()
         {
@@ -52,7 +50,7 @@ namespace MimyLab.FukuroUdon
             _seatAdjuster = GetComponentInChildren<SC2SeatAdjuster>(true);
             _inputManager = GetComponentInChildren<SC2InputManager>(true);
             if (!_pickup) { _pickup = GetComponentInParent<VRCPickup>(); }
-            if (!_caster) { _caster = GetComponentInChildren<SC2Caster>(true); }
+            if (!_caster) { _caster = GetComponentInParent<SC2Caster>(); }
 
             _seatAdjuster._swivelChair2 = this;
             _inputManager._seatAdjuster = _seatAdjuster;
@@ -79,7 +77,7 @@ namespace MimyLab.FukuroUdon
 
         public override void OnDrop()
         {
-            if (!_isSit) { _seatAdjuster.DisableInteractive = false; }
+            if (!_seatAdjuster._isSitting) { _seatAdjuster.DisableInteractive = false; }
 
             if (_caster)
             {
@@ -90,7 +88,6 @@ namespace MimyLab.FukuroUdon
 
         public void OnSitDown()
         {
-            _isSit = true;
             _seatAdjuster.DisableInteractive = true;
             _inputManager.enabled = true;
             if (_pickup) { _pickup.pickupable = false; }
@@ -99,7 +96,6 @@ namespace MimyLab.FukuroUdon
 
         public void OnStandUp()
         {
-            _isSit = false;
             _seatAdjuster.DisableInteractive = false;
             _inputManager.enabled = false;
             if (_pickup) { _pickup.pickupable = true; }

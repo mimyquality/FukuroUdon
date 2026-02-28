@@ -39,7 +39,7 @@
       "dependencies": {}
     },
     "dev.onevr.vrworldtoolkit": {
-      "version": "3.3.2",
+      "version": "3.4.0",
       "dependencies": {}
     },
     "net.ureishi.qvpen": {
@@ -49,13 +49,13 @@
       }
     },
     "com.vrchat.worlds": {
-      "version": "3.10.2-beta.1",
+      "version": "3.10.2",
       "dependencies": {
-        "com.vrchat.base": "3.10.2-beta.1"
+        "com.vrchat.base": "3.10.2"
       }
     },
     "com.vrchat.base": {
-      "version": "3.10.2-beta.1",
+      "version": "3.10.2",
       "dependencies": {}
     },
     "jp.lilxyzw.editortoolbox": {
