@@ -24,30 +24,12 @@ namespace MimyLab.FukuroUdon
         [UdonSynced]
         internal bool _hasSaved = false;
         [UdonSynced]
-        private Vector3 _localOffset;
+        internal Vector3 _localOffset = Vector3.zero;
+        [UdonSynced]
+        internal float _avatarEyeHeight = 0.0f;
 
         private SC2SeatAdjuster _adjuster;
         private SC2AdjustmentSync[] _linkedAdjustmentSyncs = null;
-
-        // SC2SeatAdjusterとのやりとり用、FieldChangeCallbackで連携しない
-        public Vector3 LocalOffset
-        {
-            get => _localOffset;
-            set
-            {
-                SetLocalOffset(value);
-
-                if (enableLink)
-                {
-                    if (_linkedAdjustmentSyncs == null) { _linkedAdjustmentSyncs = GetLinkedAdjustmentSyncs(); }
-
-                    foreach (SC2AdjustmentSync linkee in _linkedAdjustmentSyncs)
-                    {
-                        linkee.LinkLocalOffset(this);
-                    }
-                }
-            }
-        }
 
         private void Start()
         {
@@ -61,14 +43,30 @@ namespace MimyLab.FukuroUdon
             _adjuster._adjustmentSync = this;
         }
 
-        public void LinkLocalOffset(SC2AdjustmentSync linker)
+        public void Save(Vector3 offset, float avatarEyeHeight)
         {
-            SetLocalOffset(linker.LocalOffset);
+            SetParameters(offset, avatarEyeHeight);
+
+            if (enableLink)
+            {
+                if (_linkedAdjustmentSyncs == null) { _linkedAdjustmentSyncs = GetLinkedAdjustmentSyncs(); }
+
+                foreach (SC2AdjustmentSync linkee in _linkedAdjustmentSyncs)
+                {
+                    linkee.LinkLocalOffset(this);
+                }
+            }
         }
 
-        private void SetLocalOffset(Vector3 value)
+        public void LinkLocalOffset(SC2AdjustmentSync linker)
         {
-            _localOffset = value;
+            SetParameters(linker._localOffset, linker._avatarEyeHeight);
+        }
+
+        private void SetParameters(Vector3 localOffset, float avatarEyeHeight)
+        {
+            _localOffset = localOffset;
+            _avatarEyeHeight = avatarEyeHeight;
             _hasSaved = true;
             RequestSerialization();
         }

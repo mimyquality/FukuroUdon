@@ -6,6 +6,22 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.17.0] - 2026/3/1
+
+**Added**  
+
+- SwivelChair2 に、座った際(と着座中にアバターを切り替えた時)に座位置を Offset の範囲内で自動調整する機能を追加しました。 [#45](https://github.com/mimyquality/FukuroUdon/issues/45)
+- Fix Pickup Up 枠を新設、Pickup Playform Override を追加しました。 [#46](https://github.com/mimyquality/FukuroUdon/issues/46)
+
+**Changed**  
+
+- Pickup Handle (Grab SlideDoor) と Pickup Event Transfer (Manual ObjectSync) は Fix Pickup Up に移りました。
+- ActiveRelay to Component の内部処理を最適化し、だいたい全部のコンポーネントが対象になりました。
+
+**Fixed**  
+
+VRCSDK 3.10.2 に沿ったいくつかの微修正を行いました。
+
 ## [3.16.0] - 2026/2/1
 
 **Added**  
@@ -815,6 +831,7 @@
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.17.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.17.0
 [3.16.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.16.0
 [3.15.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.15.0
 [3.14.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.14.0

@@ -49,8 +49,8 @@ namespace MimyLab.FukuroUdon
 
             _seatAdjuster = GetComponentInChildren<SC2SeatAdjuster>(true);
             _inputManager = GetComponentInChildren<SC2InputManager>(true);
-            if (!_pickup) { _pickup = GetComponentInParent<VRCPickup>(); }
-            if (!_caster) { _caster = GetComponentInParent<SC2Caster>(); }
+            if (!_pickup) { _pickup = GetComponentInParent<VRCPickup>(); }  // 何故か includeInactive 引数が渡せない
+            if (!_caster) { _caster = GetComponentInParent<SC2Caster>(true); }
 
             _seatAdjuster._swivelChair2 = this;
             _inputManager._seatAdjuster = _seatAdjuster;

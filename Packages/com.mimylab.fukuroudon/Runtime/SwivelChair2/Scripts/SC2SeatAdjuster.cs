@@ -49,6 +49,7 @@ namespace MimyLab.FukuroUdon
         private Transform _enterPoint;
         private Vector3 _localOffset;
         private bool _hasAvatarChangedSinceStandUp = false;
+        private float _avatarEyeHeight = 0.0f;
 
         private Vector3 Offset
         {
@@ -75,15 +76,8 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        private Vector3 LocalOffset
-        {
-            get => _adjustmentSync && _adjustmentSync._hasSaved ? _adjustmentSync.LocalOffset : _localOffset;
-            set
-            {
-                _localOffset = value;
-                if (_adjustmentSync) { _adjustmentSync.LocalOffset = value; }
-            }
-        }
+        private Vector3 LocalOffset { get => _adjustmentSync && _adjustmentSync._hasSaved ? _adjustmentSync._localOffset : _localOffset; }
+        private float AvatarEyeHeight { get => _adjustmentSync && _adjustmentSync._hasSaved ? _adjustmentSync._avatarEyeHeight : _avatarEyeHeight; }
 
         private bool _initialized = false;
         private void Initialize()
@@ -122,7 +116,9 @@ namespace MimyLab.FukuroUdon
 
             _swivelChair2.OnSitDown();
 
-            if (autoAdjustWhenSitting && _hasAvatarChangedSinceStandUp)
+            if (autoAdjustWhenSitting &&
+                _hasAvatarChangedSinceStandUp &&
+                player.GetAvatarEyeHeightAsMeters() != AvatarEyeHeight)
             {
                 SendCustomEventDelayedSeconds(nameof(AutoAdjust), 1.0f);
             }
@@ -134,7 +130,10 @@ namespace MimyLab.FukuroUdon
 
             _isSitting = false;
             _hasAvatarChangedSinceStandUp = false;
-            LocalOffset = Offset;
+
+            _localOffset = _offset;
+            _avatarEyeHeight = player.GetAvatarEyeHeightAsMeters();
+            if (_adjustmentSync) { _adjustmentSync.Save(_offset, _avatarEyeHeight); }
 
             _swivelChair2.OnStandUp();
         }
@@ -142,11 +141,10 @@ namespace MimyLab.FukuroUdon
         public override void OnAvatarChanged(VRCPlayerApi player)
         {
             if (!player.isLocal) { return; }
-            if (!autoAdjustWhenSitting) { return; }
 
             _hasAvatarChangedSinceStandUp = true;
 
-            if (_isSitting)
+            if (autoAdjustWhenSitting && _isSitting)
             {
                 SendCustomEventDelayedSeconds(nameof(AutoAdjust), 1.0f);
             }
