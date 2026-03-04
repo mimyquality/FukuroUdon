@@ -6,6 +6,13 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.17.1] - 2026/3/4
+
+**Fixed**  
+
+- SwivelChair2 に座っている時に出るツールチップの表記を改良しました。
+  - ジャンプボタン長押し中に進捗ゲージが表示されるようになりました。
+
 ## [3.17.0] - 2026/3/1
 
 **Added**  
@@ -831,6 +838,7 @@ VRCSDK 3.10.2 に沿ったいくつかの微修正を行いました。
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.17.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.17.1
 [3.17.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.17.0
 [3.16.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.16.0
 [3.15.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.15.0
