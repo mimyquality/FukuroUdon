@@ -16,40 +16,88 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlayerAudioRegulatorArea : PlayerAudioRegulator
     {
-        private Collider _collider;
+        [Header("Bounds Settings")]
+        [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
+        private Collider[] _area = new Collider[0];
+        [SerializeField]
+        private bool _areaIsStatic = true;
+
+        private Bounds _areaBounds;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
-        private void Reset()
+        private void OnValidate()
         {
-            this.gameObject.layer = 5;
-            if (!GetComponent<Collider>())
+            var collider = GetComponent<Collider>();
+            if (collider)
             {
-                _collider = this.gameObject.AddComponent<BoxCollider>();
-                _collider.isTrigger = true;
+                if (System.Array.IndexOf(_area, collider) < 0)
+                {
+                    Collider[] tmp_area = new Collider[_area.Length + 1];
+                    _area.CopyTo(tmp_area, 0);
+                    tmp_area[_area.Length] = collider;
+                    _area = tmp_area;
+                }
             }
         }
 #endif
 
-        private bool _initialized = false;
-        private void Initialize()
+        private void OnEnable()
         {
-            if (_initialized) { return; }
+            RecalculateAreaBounds();
+        }
 
-            _collider = GetComponent<Collider>();
-            _collider.isTrigger = true;
+        public void RecalculateAreaBounds()
+        {
+            var compoundMin = Vector3.positiveInfinity;
+            var compoundMax = Vector3.negativeInfinity;
+            foreach (Collider collider in _area)
+            {
+                if (!collider) { continue; }
 
-            _initialized = true;
+                Bounds bounds = collider.bounds;
+                if (bounds.extents.Equals(Vector3.zero)) { continue; }
+
+                compoundMin = Vector3.Min(compoundMin, bounds.min);
+                compoundMax = Vector3.Max(compoundMax, bounds.max);
+            }
+
+            if (compoundMin.Equals(Vector3.positiveInfinity))
+            {
+                _areaBounds = new Bounds();
+                return;
+            }
+
+            Vector3 center = (compoundMin + compoundMax) / 2f;
+            Vector3 size = compoundMax - compoundMin;
+            _areaBounds = new Bounds(center, size);
         }
 
         protected override bool CheckUniqueApplicable(VRCPlayerApi target)
         {
-            Initialize();
+            Vector3 position = target.GetPosition();
+            bool isIn = _areaIsStatic ?
+                        _areaBounds.Contains(position) && CheckInArea(position) :
+                        CheckInArea(position);
 
-            if (!_collider.enabled) { return false; }
+            return isIn;
+        }
 
-            Vector3 pos = target.GetPosition();
+        private bool CheckInArea(Vector3 position)
+        {
+            foreach (Collider collider in _area)
+            {
+                if (!collider) { continue; }
+                if (!collider.enabled) { continue; }
+                if (!collider.gameObject.activeInHierarchy) { continue; }
 
-            return _collider.bounds.Contains(pos) && (pos == _collider.ClosestPoint(pos));
+                Vector3 point = collider.ClosestPoint(position);
+                if (point == position)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

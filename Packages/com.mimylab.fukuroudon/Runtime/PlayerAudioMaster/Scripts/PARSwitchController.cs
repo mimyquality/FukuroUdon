@@ -24,7 +24,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PAR Switch Controller for Pickup")]
     [RequireComponent(typeof(VRCPickup))]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
     public class PARSwitchController : UdonSharpBehaviour
     {
         [SerializeField]
