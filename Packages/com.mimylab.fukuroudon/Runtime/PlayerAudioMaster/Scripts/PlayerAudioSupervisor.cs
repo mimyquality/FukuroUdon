@@ -25,6 +25,7 @@ namespace MimyLab.FukuroUdon
         public PlayerAudioRegulator[] playerAudioRegulators;
 
         [Header("Player Voice Settings")]
+        public bool enablePlayerVoiceControl = true;
         [Range(0f, 24f)]
         public float defaultVoiceGain = 15f;
         [Range(0f, 1000000.0f)]
@@ -38,6 +39,7 @@ namespace MimyLab.FukuroUdon
         public bool defaultVoiceLowpass = true;
 
         [Header("Avatar Audio Settings")]
+        public bool enableAvatarAudioControl = false;
         [Range(0f, 10f)]
         public float defaultAvatarAudioGain = 10f;
         [Min(0f)]
@@ -49,6 +51,7 @@ namespace MimyLab.FukuroUdon
         [Min(0f)]
         public float defaultAvatarAudioVolumetricRadius = 0f;
         public bool defaultAvatarAudioForceSpatial = false;
+        [HideInInspector]
         public bool defaultAvatarAudioCustomCurve = false;
 
         // キャッシュ用
@@ -127,12 +130,12 @@ namespace MimyLab.FukuroUdon
                     return;
                 }
 
-                if (!overrideRegulator.OverridePlayerVoice(chosenPlayer))
+                if (enablePlayerVoiceControl && !overrideRegulator.OverridePlayerVoice(chosenPlayer))
                 {
                     SetDefaultPlayerVoice(chosenPlayer);
                 }
 
-                if (!overrideRegulator.OverrideAvatarAudio(chosenPlayer))
+                if (enableAvatarAudioControl && !overrideRegulator.OverrideAvatarAudio(chosenPlayer))
                 {
                     SetDefaultAvatarAudio(chosenPlayer);
                 }
@@ -156,21 +159,27 @@ namespace MimyLab.FukuroUdon
 
         private void SetDefaultPlayerVoice(VRCPlayerApi selectPlayer)
         {
-            selectPlayer.SetVoiceGain(defaultVoiceGain);
-            selectPlayer.SetVoiceDistanceNear(defaultVoiceDistanceNear);
-            selectPlayer.SetVoiceDistanceFar(defaultVoiceDistanceFar);
-            selectPlayer.SetVoiceVolumetricRadius(defaultVoiceVolumetricRadius);
-            selectPlayer.SetVoiceLowpass(defaultVoiceLowpass);
+            if (enablePlayerVoiceControl)
+            {
+                selectPlayer.SetVoiceGain(defaultVoiceGain);
+                selectPlayer.SetVoiceDistanceNear(defaultVoiceDistanceNear);
+                selectPlayer.SetVoiceDistanceFar(defaultVoiceDistanceFar);
+                selectPlayer.SetVoiceVolumetricRadius(defaultVoiceVolumetricRadius);
+                selectPlayer.SetVoiceLowpass(defaultVoiceLowpass);
+            }
         }
 
         private void SetDefaultAvatarAudio(VRCPlayerApi selectPlayer)
         {
-            selectPlayer.SetAvatarAudioGain(defaultAvatarAudioGain);
-            selectPlayer.SetAvatarAudioNearRadius(defaultAvatarAudioDistanceNear);
-            selectPlayer.SetAvatarAudioFarRadius(defaultAvatarAudioDistanceFar);
-            selectPlayer.SetAvatarAudioVolumetricRadius(defaultAvatarAudioVolumetricRadius);
-            selectPlayer.SetAvatarAudioForceSpatial(defaultAvatarAudioForceSpatial);
-            selectPlayer.SetAvatarAudioCustomCurve(defaultAvatarAudioCustomCurve);
+            if (enableAvatarAudioControl)
+            {
+                selectPlayer.SetAvatarAudioGain(defaultAvatarAudioGain);
+                selectPlayer.SetAvatarAudioNearRadius(defaultAvatarAudioDistanceNear);
+                selectPlayer.SetAvatarAudioFarRadius(defaultAvatarAudioDistanceFar);
+                selectPlayer.SetAvatarAudioVolumetricRadius(defaultAvatarAudioVolumetricRadius);
+                selectPlayer.SetAvatarAudioForceSpatial(defaultAvatarAudioForceSpatial);
+                //selectPlayer.SetAvatarAudioCustomCurve(defaultAvatarAudioCustomCurve);
+            }
         }
 
         public void _RefreshPlayerList()

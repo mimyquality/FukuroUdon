@@ -58,6 +58,7 @@ namespace MimyLab.FukuroUdon
         [Min(0f)]
         public float avatarAudioVolumetricRadius = 0f;
         public bool avatarAudioForceSpatial = false;
+        [HideInInspector]
         public bool avatarAudioCustomCurve = false;
 
         public virtual bool NeedRealtimeOverride { get => false; }
@@ -102,7 +103,7 @@ namespace MimyLab.FukuroUdon
                 target.SetAvatarAudioFarRadius(avatarAudioDistanceFar);
                 target.SetAvatarAudioVolumetricRadius(avatarAudioVolumetricRadius);
                 target.SetAvatarAudioForceSpatial(avatarAudioForceSpatial);
-                target.SetAvatarAudioCustomCurve(avatarAudioCustomCurve);
+                //target.SetAvatarAudioCustomCurve(avatarAudioCustomCurve);
             }
 
             return enableAvatarAudioOverride;
