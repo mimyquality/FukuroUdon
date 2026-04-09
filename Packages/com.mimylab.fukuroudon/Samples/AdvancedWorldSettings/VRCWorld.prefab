@@ -188,7 +188,7 @@ MonoBehaviour:
   _voiceDistanceFar: 25
   _voiceVolumetricRadius: 0
   _voiceLowpass: 1
-  _initializeAvatarAudio: 1
+  _initializeAvatarAudio: 0
   _avatarAudioGain: 10
   _avatarAudioDistanceNear: 0
   _avatarAudioDistanceFar: 40

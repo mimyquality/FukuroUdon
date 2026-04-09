@@ -54,7 +54,7 @@ namespace MimyLab.FukuroUdon
 
         [Header("Avatar Audio")]
         [Tooltip("Note that this is compared to the audio source's settings, and the smaller value is used.")]
-        [SerializeField] private bool _initializeAvatarAudio = true;
+        [SerializeField] private bool _initializeAvatarAudio = false;
         [SerializeField][Range(0f, 10f)] private float _avatarAudioGain = 10f;
         [SerializeField][Min(0f)] private float _avatarAudioDistanceNear = 0f;
         [SerializeField][Min(0f)] private float _avatarAudioDistanceFar = 40f;
@@ -111,7 +111,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField][Range(0.0f, 1.0f)] private float _shadowCascade4Split2 = 14f / 30f;
 
         private VRCPlayerApi _localPlayer;
-        private bool _hasFirstAvatarChanged = false;
+        private bool _isFirstAvatarChanged = true;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnValidate()
@@ -223,21 +223,21 @@ namespace MimyLab.FukuroUdon
         {
             if (!player.isLocal) { return; }
 
-            if (_hasFirstAvatarChanged)
-            {
-                if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightTypes.AvatarChange) > 0)
-                {
-                    ClampAvatarEyeHeight();
-                }
-            }
-            else
+            if (_isFirstAvatarChanged)
             {
                 if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightTypes.Join) > 0)
                 {
                     ClampAvatarEyeHeight();
                 }
 
-                _hasFirstAvatarChanged = true;
+                _isFirstAvatarChanged = false;
+            }
+            else
+            {
+                if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightTypes.AvatarChange) > 0)
+                {
+                    ClampAvatarEyeHeight();
+                }
             }
         }
 
