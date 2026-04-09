@@ -6,6 +6,26 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.18.0] - 2026/4/9
+
+**Added**  
+
+- PA Regulator Area に Area 配列を追加しました。この配列にセットされたコライダーを複合コライダーとして範囲内判定するようになります。 [#49](https://github.com/mimyquality/FukuroUdon/issues/49)
+  - 合わせて Area Is Static オプションも追加しました。Area 配列にセットしたコライダーの有効無効を動的に切り替えている場合はチェックを外してください。
+  - 同じオブジェクトに付いていたコライダーは自動的に Area 配列にセットされます。
+
+**Changed**  
+
+- Advanced World Settings の Initialize Avatar Audio のデフォルト値は false になりました。 [#51](https://github.com/mimyquality/FukuroUdon/issues/51)
+- Area Culling は同じオブジェクトに付いているコライダーを自動的に Area 配列にセットするようになりました。
+- PlayerAudio Master 全体としてプレイヤー声量とアバター音量を制御するかどうかを設定する項目を PA Supervisor に追加しました。デフォルトではプレイヤー声量が有効、アバター音量が無効です。
+- Advanced World Settings, PlayerAudio Master から AvatarAudio Custom Curve が設定できなくなりました。
+  - [#41](https://github.com/mimyquality/FukuroUdon/issues/41) [#50](https://github.com/mimyquality/FukuroUdon/issues/50) のバグ回避として、暫定的に無効にします。
+
+**Fixed**  
+
+- SwivelChair2 のサンプルにある Sit 判定のインタラクションテキストを "Sit" に修正しました。
+
 ## [3.17.1] - 2026/3/4
 
 **Fixed**  
@@ -838,6 +858,7 @@ VRCSDK 3.10.2 に沿ったいくつかの微修正を行いました。
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.18.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.18.0
 [3.17.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.17.1
 [3.17.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.17.0
 [3.16.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.16.0

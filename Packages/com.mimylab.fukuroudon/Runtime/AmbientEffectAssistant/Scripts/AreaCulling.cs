@@ -37,6 +37,23 @@ namespace MimyLab.FukuroUdon
         private VRCCameraSettings _photoCamera;
         private bool _wasIn = false;
 
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
+        private void OnValidate()
+        {
+            var collider = GetComponent<Collider>();
+            if (collider)
+            {
+                if (System.Array.IndexOf(_area, collider) < 0)
+                {
+                    Collider[] tmp_area = new Collider[_area.Length + 1];
+                    _area.CopyTo(tmp_area, 0);
+                    tmp_area[_area.Length] = collider;
+                    _area = tmp_area;
+                }
+            }
+        }
+#endif
+
         private bool _initialized = false;
         private void Initialize()
         {
