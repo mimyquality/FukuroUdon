@@ -14,7 +14,8 @@
   "dependencies": {},
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.worlds": "^3.10.2"
+    "com.vrchat.worlds": "^3.10.2",
+    "net.narazaka.vrchat.tmp-fallback-fonts-jp": ">=1.0.0"
   },
   "legacyFolders": {
     "Assets\\MimyLab/ActiveRelay": "",
@@ -34,7 +35,7 @@
     },
     {
       "displayName": "GameObject Celler",
-      "description": "VRC Object Poolのラッパースクリプトとその操作スイッチ",
+      "description": "VRC Object Pool のラッパースクリプトとその操作スイッチ",
       "path": "Samples/GameObjectCeller"
     },
     {
@@ -44,12 +45,12 @@
     },
     {
       "displayName": "Input Flying System",
-      "description": "UIを必要としない、直感操作で飛べる飛行システム",
+      "description": "UI を必要としない、直感操作で飛べる飛行システム",
       "path": "Samples/InputFlyingSystem"
     },
     {
       "displayName": "Manual ObjectSync",
-      "description": "VRC ObjectSyncの置き換えを目指した、ManualSyncモードで動作するTransform同期用コンポーネント",
+      "description": "VRC ObjectSync の置き換えを目指した、ManualSync モードで動作する Transform 同期用コンポーネント",
       "path": "Samples/ManualObjectSync"
     },
     {
@@ -79,12 +80,12 @@
     },
     {
       "displayName": "Advanced World Settings",
-      "description": "Joinしたプレイヤーの各種初期化処理ができるギミック",
+      "description": "Join したプレイヤーの各種初期化処理ができるギミック",
       "path": "Samples/AdvancedWorldSettings"
     },
     {
       "displayName": "Better AvatarPedestal",
-      "description": "3Dモデルで展示できるアバターペデスタル",
+      "description": "3D モデルで展示できるアバターペデスタル",
       "path": "Samples/BetterAvatarPedestal"
     }
   ]
