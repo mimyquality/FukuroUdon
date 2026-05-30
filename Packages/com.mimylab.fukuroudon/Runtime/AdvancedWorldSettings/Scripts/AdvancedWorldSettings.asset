@@ -799,7 +799,7 @@ MonoBehaviour:
       Data: 0
     - Name: max
       Entry: 4
-      Data: 999999
+      Data: 1000000
     - Name: 
       Entry: 8
       Data: 
@@ -865,7 +865,7 @@ MonoBehaviour:
       Data: 0
     - Name: max
       Entry: 4
-      Data: 999999
+      Data: 1000000
     - Name: 
       Entry: 8
       Data: 
@@ -940,7 +940,7 @@ MonoBehaviour:
       Data: 0
     - Name: max
       Entry: 4
-      Data: 999999
+      Data: 1000
     - Name: 
       Entry: 8
       Data: 
@@ -1845,10 +1845,10 @@ MonoBehaviour:
       Data: 116|UnityEngine.RangeAttribute, UnityEngine.CoreModule
     - Name: min
       Entry: 4
-      Data: 0.1
+      Data: 0.01
     - Name: max
       Entry: 4
-      Data: 100
+      Data: 10000
     - Name: 
       Entry: 8
       Data: 
@@ -1912,10 +1912,10 @@ MonoBehaviour:
       Data: 120|UnityEngine.RangeAttribute, UnityEngine.CoreModule
     - Name: min
       Entry: 4
-      Data: 0.1
+      Data: 0.01
     - Name: max
       Entry: 4
-      Data: 100
+      Data: 10000
     - Name: 
       Entry: 8
       Data: 

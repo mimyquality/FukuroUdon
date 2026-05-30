@@ -25,12 +25,10 @@ namespace MimyLab.FukuroUdon
         [SerializeField, Range(0.0f, 5.0f)]
         private float _overScaleMultiplier = 1.0f;
 
-        private float _baseVoiceGain;
         private float _baseVoiceDistanceNear;
         private float _baseVoiceDistanceFar;
         private float _baseVoiceVolumetricRadius;
 
-        private float _baseAvatarAudioGain;
         private float _baseAvatarAudioDistanceNear;
         private float _baseAvatarAudioDistanceFar;
         private float _baseAvatarAudioVolumetricRadius;
@@ -42,12 +40,10 @@ namespace MimyLab.FukuroUdon
         {
             if (_initialized) { return; }
 
-            _baseVoiceGain = voiceGain;
             _baseVoiceDistanceNear = voiceDistanceNear;
             _baseVoiceDistanceFar = voiceDistanceFar;
             _baseVoiceVolumetricRadius = voiceVolumetricRadius;
 
-            _baseAvatarAudioGain = avatarAudioGain;
             _baseAvatarAudioDistanceNear = avatarAudioDistanceNear;
             _baseAvatarAudioDistanceFar = avatarAudioDistanceFar;
             _baseAvatarAudioVolumetricRadius = avatarAudioVolumetricRadius;
@@ -59,15 +55,13 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            float targetScale = target.GetAvatarEyeHeightAsMeters() / _baseEyeHeight;
-            float multiply = targetScale < 1.0f ? 1f - _underScaleMultiplier * (1 - targetScale) : _overScaleMultiplier * targetScale;
+            float avatarScale = target.GetAvatarEyeHeightAsMeters() / _baseEyeHeight;
+            float multiply = avatarScale < 1.0f ? 1f - _underScaleMultiplier * (1 - avatarScale) : _overScaleMultiplier * (avatarScale - 1f) + 1f;
 
-            voiceGain = Mathf.Clamp(multiply * _baseVoiceGain, 0f, 24f);
-            voiceDistanceNear = Mathf.Clamp(multiply * _baseVoiceDistanceNear, 0f, 999999.9f);
-            voiceDistanceFar = Mathf.Clamp(multiply * _baseVoiceDistanceFar, 0f, 999999.9f);
+            voiceDistanceNear = Mathf.Clamp(multiply * _baseVoiceDistanceNear, 0f, 1000000f);
+            voiceDistanceFar = Mathf.Clamp(multiply * _baseVoiceDistanceFar, 0f, 1000000f);
             voiceVolumetricRadius = Mathf.Clamp(multiply * _baseVoiceVolumetricRadius, 0f, 1000f);
 
-            avatarAudioGain = Mathf.Clamp(multiply * _baseAvatarAudioGain, 0f, 10f);
             avatarAudioDistanceNear = Mathf.Max(multiply * _baseAvatarAudioDistanceNear, 0f);
             avatarAudioDistanceFar = Mathf.Max(multiply * _baseAvatarAudioDistanceFar, 0f);
             avatarAudioVolumetricRadius = Mathf.Max(multiply * _baseAvatarAudioVolumetricRadius, 0f);

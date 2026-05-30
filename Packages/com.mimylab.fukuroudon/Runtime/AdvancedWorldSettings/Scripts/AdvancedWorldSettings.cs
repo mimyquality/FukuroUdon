@@ -46,10 +46,10 @@ namespace MimyLab.FukuroUdon
         [Header("Player Voice")]
         [SerializeField] private bool _initializePlayerVoice = true;
         [SerializeField][Range(0f, 24f)] private float _voiceGain = 15f;
-        [SerializeField][Range(0f, 999999f)] private float _voiceDistanceNear = 0f;
-        [SerializeField][Range(0f, 999999f)] private float _voiceDistanceFar = 25f;
+        [SerializeField][Range(0f, 1000000f)] private float _voiceDistanceNear = 0f;
+        [SerializeField][Range(0f, 1000000f)] private float _voiceDistanceFar = 25f;
         [Space]
-        [SerializeField][Range(0f, 999999f)] private float _voiceVolumetricRadius = 0f;
+        [SerializeField][Range(0f, 1000f)] private float _voiceVolumetricRadius = 0f;
         [SerializeField] private bool _voiceLowpass = true;
 
         [Header("Avatar Audio")]
@@ -61,7 +61,7 @@ namespace MimyLab.FukuroUdon
         [Space]
         [SerializeField][Min(0f)] private float _avatarAudioVolumetricRadius = 0f;
         [SerializeField] private bool _avatarAudioForceSpatial = false;
-        [SerializeField] private bool _avatarAudioCustomCurve = false;
+        [HideInInspector][SerializeField] private bool _avatarAudioCustomCurve = false;
 
         [Header("Avatar Scaling")]
         [SerializeField] private bool _initializeAvatarScaling = true;
@@ -71,8 +71,8 @@ namespace MimyLab.FukuroUdon
         [Space]
         [Tooltip("When the button is checked, the Avatar Eye Height is Clamped at that point.")]
         [SerializeField][EnumFlag] private AdvancedWorldSettingsInitializeEyeHeightTypes _initializeAvatarEyeHight = 0;
-        [SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeightLowerLimit = 1.3f;
-        [SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeightUpperLimit = 1.3f;
+        [SerializeField][Range(0.01f, 10000f)] private float _avatarEyeHeightLowerLimit = 0.1f;
+        [SerializeField][Range(0.01f, 10000f)] private float _avatarEyeHeightUpperLimit = 100f;
 
         [Header("Screen Camera Settings")]
         [SerializeField] private bool _initializeScreenCameraSettings = false;
@@ -215,7 +215,7 @@ namespace MimyLab.FukuroUdon
                 player.SetAvatarAudioFarRadius(_avatarAudioDistanceFar);
                 player.SetAvatarAudioVolumetricRadius(_avatarAudioVolumetricRadius);
                 player.SetAvatarAudioForceSpatial(_avatarAudioForceSpatial);
-                player.SetAvatarAudioCustomCurve(_avatarAudioCustomCurve);
+                //player.SetAvatarAudioCustomCurve(_avatarAudioCustomCurve);
             }
         }
 
