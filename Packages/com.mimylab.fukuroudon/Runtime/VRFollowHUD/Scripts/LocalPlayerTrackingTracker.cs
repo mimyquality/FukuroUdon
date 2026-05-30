@@ -37,7 +37,7 @@ namespace MimyLab.FukuroUdon
 
         public override void PostLateUpdate()
         {
-            if (!enablePosition & !enableRotation) { return; }
+            if (!enablePosition && !enableRotation) { return; }
             if (!Utilities.IsValid(_localPlayer)) { return; }
 
             Vector3 pos = enablePosition ? GetTrackingPosition(trackingPoint) : transform.position;

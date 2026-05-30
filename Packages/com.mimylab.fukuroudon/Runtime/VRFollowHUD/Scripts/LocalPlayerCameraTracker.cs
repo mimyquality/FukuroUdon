@@ -43,7 +43,7 @@ namespace MimyLab.FukuroUdon
 
         public override void PostLateUpdate()
         {
-            if (!enablePosition & !enableRotation) { return; }
+            if (!enablePosition && !enableRotation) { return; }
 
             VRCCameraSettings camera = GetCamera(trackingPoint);
             if (Utilities.IsValid(camera))
