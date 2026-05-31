@@ -10,7 +10,6 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
     using VRC.SDK3.Components;
-    using VRC.Udon;
 
     public enum UdonRaycastBehaviorOnMiss
     {
@@ -41,32 +40,51 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private bool _applyRotation = false;
         [SerializeField]
+        private Vector3 _alignmentAxis = Vector3.up;
+        [SerializeField]
         private UdonRaycastBehaviorOnMiss _behaviorOnMiss = UdonRaycastBehaviorOnMiss.DoNothing;
 
-        private Vector3 _localDirection;
         private RaycastHit _hitInfo;
+        private bool _hit = false;
+        private float _distanceToHit = 0.0f;
+        private float _ratio = 0.0f;
 
-        private void Start()
+        public bool Hit { get => _hit; }
+        public float Distance { get => _distanceToHit; }
+        public float Ratio { get => _ratio; }
+
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
+        private Color _gizmoColor = new Color(1.0f, 0.5f, 0.0f);
+
+        private void OnDrawGizmosSelected()
         {
-            _localDirection = _raycastDirection.normalized;
+            Vector3 startPoint = transform.position;
+            Vector3 direction = transform.rotation * _raycastDirection.normalized;
+            float maxDistance = _applyTransformScale ? transform.lossyScale.z * _distance : _distance;
+            Vector3 endPoint = maxDistance * direction + startPoint;
+
+            Gizmos.color = _gizmoColor;
+            Gizmos.DrawLine(startPoint, endPoint);
         }
+#endif
 
         private void FixedUpdate()
         {
             if (!_resultTransform) { return; }
 
             Vector3 startPoint = transform.position;
-            Vector3 direction = transform.rotation * _localDirection;
-            float distance = _applyTransformScale ? transform.lossyScale.z * _distance : _distance;
+            Vector3 direction = transform.rotation * _raycastDirection.normalized;
+            float maxDistance = _applyTransformScale ? transform.lossyScale.z * _distance : _distance;
 
-            if (Physics.Raycast(startPoint, direction, out _hitInfo, _distance, _collisionLayers))
+            if (_hit = Physics.Raycast(startPoint, direction, out _hitInfo, maxDistance, _collisionLayers, QueryTriggerInteraction.Ignore))
             {
                 _resultTransform.position = _hitInfo.point;
                 if (_applyRotation)
                 {
-                    // ToDo: 軸変換が未実装
-                    _resultTransform.rotation = Quaternion.LookRotation(_hitInfo.normal);
+                    _resultTransform.rotation = Quaternion.LookRotation(_hitInfo.normal) * Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
                 }
+                _distanceToHit = _hitInfo.distance;
+                _ratio = Mathf.Clamp01(maxDistance > 0.0f ? _distanceToHit / maxDistance : 0.0f);
             }
             else
             {
@@ -76,18 +94,19 @@ namespace MimyLab.FukuroUdon
                         _resultTransform.position = startPoint;
                         if (_applyRotation)
                         {
-                            // ToDo: 軸変換が未実装
-                            _resultTransform.rotation = transform.rotation;
+                            _resultTransform.rotation = Quaternion.LookRotation(-direction) * Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
                         }
+                        _distanceToHit = 0.0f;
+                        _ratio = 0.0f;
                         break;
                     case UdonRaycastBehaviorOnMiss.SnapToEnd:
-                        Vector3 endPoint = distance * direction + startPoint;
-                        _resultTransform.position = endPoint;
+                        _resultTransform.position = maxDistance * direction + startPoint;
                         if (_applyRotation)
                         {
-                            // ToDo: 軸変換が未実装
-                            _resultTransform.rotation = transform.rotation;
+                            _resultTransform.rotation = Quaternion.LookRotation(-direction) * Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
                         }
+                        _distanceToHit = maxDistance;
+                        _ratio = 1.0f;
                         break;
                     case UdonRaycastBehaviorOnMiss.DoNothing:
                     default:
@@ -96,7 +115,5 @@ namespace MimyLab.FukuroUdon
                 }
             }
         }
-
-        // ToDo: Animator Parameter 渡し用の変数が必要
     }
 }

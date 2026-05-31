@@ -21,6 +21,7 @@ namespace MimyLab.FukuroUdon
         private Animator _animator;
         private VRCPhysBone[] _physbones = new VRCPhysBone[0];
         private ContactReceiverInfomation[] _contacts = new ContactReceiverInfomation[0];
+        private UdonRaycast[] _raycasts = new UdonRaycast[0];
 
         private VRCPhysBone[] _pbs_IsGrabbed = new VRCPhysBone[0];
         private int[] _pbs_IsGrabbedType = new int[0];
@@ -48,6 +49,16 @@ namespace MimyLab.FukuroUdon
         private int[] _crs_ProximityType = new int[0];
         private int[] _crs_ProximityHash = new int[0];
 
+        private UdonRaycast[] _urcs_Hit = new UdonRaycast[0];
+        private int[] _urcs_HitType = new int[0];
+        private int[] _urcs_HitHash = new int[0];
+        private UdonRaycast[] _urcs_Distance = new UdonRaycast[0];
+        private int[] _urcs_DistanceType = new int[0];
+        private int[] _urcs_DistanceHash = new int[0];
+        private UdonRaycast[] _urcs_Ratio = new UdonRaycast[0];
+        private int[] _urcs_RatioType = new int[0];
+        private int[] _urcs_RatioHash = new int[0];
+
         private bool _initialized = false;
         private void Initialize()
         {
@@ -56,6 +67,7 @@ namespace MimyLab.FukuroUdon
             _animator = GetComponent<Animator>();
             _physbones = GetComponentsInChildren<VRCPhysBone>(true);
             _contacts = GetComponentsInChildren<ContactReceiverInfomation>(true);
+            _raycasts = GetComponentsInChildren<UdonRaycast>(true);
 
             _pbs_IsGrabbed = GetPhysbonesInAnimatorParameter("_IsGrabbed", out _pbs_IsGrabbedType, out _pbs_IsGrabbedHash);
             _pbs_IsPosed = GetPhysbonesInAnimatorParameter("_IsPosed", out _pbs_IsPosedType, out _pbs_IsPosedHash);
@@ -63,9 +75,13 @@ namespace MimyLab.FukuroUdon
             _pbs_Stretch = GetPhysbonesInAnimatorParameter("_Stretch", out _pbs_StretchType, out _pbs_StretchHash);
             _pbs_Squish = GetPhysbonesInAnimatorParameter("_Squish", out _pbs_SquishType, out _pbs_SquishHash);
 
-            _crs_Constant = GetContactInAnimatorParameter("_Constant", out _crs_ConstantType, out _crs_ConstantHash);
-            _crs_OnEnter = GetContactInAnimatorParameter("_OnEnter", out _crs_OnEnterType, out _crs_OnEnterHash);
-            _crs_Proximity = GetContactInAnimatorParameter("_Proximity", out _crs_ProximityType, out _crs_ProximityHash);
+            _crs_Constant = GetContactsInAnimatorParameter("_Constant", out _crs_ConstantType, out _crs_ConstantHash);
+            _crs_OnEnter = GetContactsInAnimatorParameter("_OnEnter", out _crs_OnEnterType, out _crs_OnEnterHash);
+            _crs_Proximity = GetContactsInAnimatorParameter("_Proximity", out _crs_ProximityType, out _crs_ProximityHash);
+
+            _urcs_Hit = GetRaycastsInAnimatorParameter("_Hit", out _urcs_HitType, out _urcs_HitHash);
+            _urcs_Distance = GetRaycastsInAnimatorParameter("_Distance", out _urcs_DistanceType, out _urcs_DistanceHash);
+            _urcs_Ratio = GetRaycastsInAnimatorParameter("_Ratio", out _urcs_RatioType, out _urcs_RatioHash);
 
             _initialized = true;
         }
@@ -111,6 +127,20 @@ namespace MimyLab.FukuroUdon
             {
                 SetAnimatorParameter((AnimatorControllerParameterType)_crs_ProximityType[i], _crs_ProximityHash[i], _crs_Proximity[i].CalculateProximity());
             }
+
+            // Raycasts
+            for (int i = 0; i < _urcs_Hit.Length; i++)
+            {
+                SetAnimatorParameter((AnimatorControllerParameterType)_urcs_HitType[i], _urcs_HitHash[i], _urcs_Hit[i].Hit);
+            }
+            for (int i = 0; i < _urcs_Distance.Length; i++)
+            {
+                SetAnimatorParameter((AnimatorControllerParameterType)_urcs_DistanceType[i], _urcs_DistanceHash[i], _urcs_Distance[i].Distance);
+            }
+            for (int i = 0; i < _urcs_Ratio.Length; i++)
+            {
+                SetAnimatorParameter((AnimatorControllerParameterType)_urcs_RatioType[i], _urcs_RatioHash[i], _urcs_Ratio[i].Ratio);
+            }
         }
 
         private VRCPhysBone[] GetPhysbonesInAnimatorParameter(string suffix, out int[] physboneTypes, out int[] physboneHashes)
@@ -150,7 +180,7 @@ namespace MimyLab.FukuroUdon
             return physbones;
         }
 
-        private ContactReceiverInfomation[] GetContactInAnimatorParameter(string suffix, out int[] contactTypes, out int[] contactHashes)
+        private ContactReceiverInfomation[] GetContactsInAnimatorParameter(string suffix, out int[] contactTypes, out int[] contactHashes)
         {
             var referenceContactHashes = new int[_contacts.Length];
             for (int i = 0; i < _contacts.Length; i++)
@@ -185,6 +215,43 @@ namespace MimyLab.FukuroUdon
             System.Array.Copy(tmp_contactHashes, contactHashes, contactCount);
 
             return contacts;
+        }
+
+        private UdonRaycast[] GetRaycastsInAnimatorParameter(string suffix, out int[] raycastTypes, out int[] raycastHashes)
+        {
+            var referenceRaycastHashes = new int[_raycasts.Length];
+            for (int i = 0; i < _raycasts.Length; i++)
+            {
+                string urcName = _raycasts[i] ? (_raycasts[i].gameObject.name + suffix) : "";
+                referenceRaycastHashes[i] = Animator.StringToHash(urcName);
+            }
+
+            AnimatorControllerParameter[] parameters = _animator.parameters;
+            int parameterCount = _animator.parameterCount;
+
+            var tmp_raycasts = new UdonRaycast[parameterCount];
+            var tmp_raycastTypes = new int[parameterCount];
+            var tmp_raycastHashes = new int[parameterCount];
+            var raycastCount = 0;
+            for (int i = 0; i < parameterCount; i++)
+            {
+                int hash = parameters[i].nameHash;
+                int index = System.Array.IndexOf(referenceRaycastHashes, hash);
+                if (index < 0) { continue; }
+
+                tmp_raycasts[raycastCount] = _raycasts[index];
+                tmp_raycastTypes[raycastCount] = (int)parameters[i].type;
+                tmp_raycastHashes[raycastCount] = hash;
+                raycastCount++;
+            }
+            var raycasts = new UdonRaycast[raycastCount];
+            raycastTypes = new int[raycastCount];
+            raycastHashes = new int[raycastCount];
+            System.Array.Copy(tmp_raycasts, raycasts, raycastCount);
+            System.Array.Copy(tmp_raycastTypes, raycastTypes, raycastCount);
+            System.Array.Copy(tmp_raycastHashes, raycastHashes, raycastCount);
+
+            return raycasts;
         }
 
         private void SetAnimatorParameter(AnimatorControllerParameterType type, int hash, bool value)
