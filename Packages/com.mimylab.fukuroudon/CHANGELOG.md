@@ -6,6 +6,27 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.19.0-beta.1] - 2026/6/15
+
+**Added**  
+
+- Better AvatarPedestal 枠に UdonRaycast を追加しました。VRCRaycast とほぼ同じ事ができるコンポーネントです。 [#54](https://github.com/mimyquality/FukuroUdon/issues/54)
+  - Dynamics Parameter Transfer との連携にも対応しています。
+
+**Change**  
+
+- [TextMesh Pro VRC Fallback Font JP](https://github.com/Narazaka/tmp-fallback-fonts-jp) に依存するようになりました。
+  - サンプル等で使っている TextMesh Pro のフォントを全て、TextMesh Pro VRC Fallback Font JP の Empty フォントに置き換えました。
+- 全体的に SendCustomEventDelayedSecond() を使っている箇所を VRCTween に置き換えました。
+
+**Fixed**  
+
+- PA Regulator AvatarScale の上限・下限を VRChat の仕様変更に合わせて拡張しました。
+- PA Regulator AvatarScale の大きくなる側の倍率計算を見直しました。
+- VR Follow HUD の条件判定を短絡評価に最適化しました。 [#57](https://github.com/mimyquality/FukuroUdon/pull/57)
+- AudioPlayerSync の同期がループ跨ぐ前後でズレる事があるのを修正
+- AnimatorParameterSync の同期補間間隔の見直し
+
 ## [3.18.0] - 2026/4/9
 
 **Added**  
@@ -858,6 +879,7 @@ VRCSDK 3.10.2 に沿ったいくつかの微修正を行いました。
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.19.0-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.0-beta.1
 [3.18.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.18.0
 [3.17.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.17.1
 [3.17.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.17.0

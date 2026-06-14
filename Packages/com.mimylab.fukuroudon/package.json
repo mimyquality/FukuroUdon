@@ -1,7 +1,7 @@
 {
   "name": "com.mimylab.fukuroudon",
   "displayName": "Fukuro Udon",
-  "version": "3.18.0",
+  "version": "3.19.0-beta.1",
   "description": "MimyLab's U# utilitiy pack for VPM.",
   "unity": "2022.3",
   "author": {
@@ -14,7 +14,7 @@
   "dependencies": {},
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.worlds": "^3.10.2",
+    "com.vrchat.worlds": "^3.10.4-beta.3",
     "net.narazaka.vrchat.tmp-fallback-fonts-jp": ">=1.0.0"
   },
   "legacyFolders": {
