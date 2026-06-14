@@ -9,10 +9,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 422426354404137075, guid: c804c86fa2229564690216a408cf92b1, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 422426354404137075, guid: c804c86fa2229564690216a408cf92b1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -45,7 +41,8 @@ PrefabInstance:
       value: Double-Tap JUMP button to exit.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7310610534581398859, guid: c804c86fa2229564690216a408cf92b1, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c804c86fa2229564690216a408cf92b1, type: 3}

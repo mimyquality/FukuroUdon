@@ -11,6 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.SDKBase.Editor.Attributes;
     using VRC.Udon.Common.Interfaces;
+    using VRC.SDK3.Components;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-gameobject-in-playerobject")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -34,11 +35,23 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private bool _delayLatestOnly = false;
 
-        private int _activateDelayedCount = 0;
-        private int _deactivateDelayedCount = 0;
-
+        private VRCTweenHandle _activateTweenHandle;
+        private VRCTweenHandle _deactivateTweenHandle;
         private VRCPlayerApi[] _playersEmpty = new VRCPlayerApi[0];
         private VRCPlayerApi[] _playersSolo = new VRCPlayerApi[1];
+
+        private bool _initialized = false;
+        private void Initialize()
+        {
+            if (_initialized) { return; }
+
+            _activateTweenHandle = VRCTween.DelayedCall(this, nameof(_ActivateDelayed), _delayTime)
+                .Pause();
+            _deactivateTweenHandle = VRCTween.DelayedCall(this, nameof(_DeactivateDelayed), _delayTime)
+                .Pause();
+
+            _initialized = true;
+        }
 
         private protected override void OnEnable()
         {
@@ -47,16 +60,7 @@ namespace MimyLab.FukuroUdon
             {
                 if (_delayTime > 0.0f)
                 {
-                    if (_invert)
-                    {
-                        _deactivateDelayedCount++;
-                        SendCustomEventDelayedSeconds(nameof(_DeactivateDelayed), _delayTime);
-                    }
-                    else
-                    {
-                        _activateDelayedCount++;
-                        SendCustomEventDelayedSeconds(nameof(_ActivateDelayerd), _delayTime);
-                    }
+                    ToggleActiveDelayed(!_invert);
                     return;
                 }
 
@@ -71,16 +75,7 @@ namespace MimyLab.FukuroUdon
             {
                 if (_delayTime > 0.0f)
                 {
-                    if (_invert)
-                    {
-                        _activateDelayedCount++;
-                        SendCustomEventDelayedSeconds(nameof(_ActivateDelayerd), _delayTime);
-                    }
-                    else
-                    {
-                        _deactivateDelayedCount++;
-                        SendCustomEventDelayedSeconds(nameof(_DeactivateDelayed), _delayTime);
-                    }
+                    ToggleActiveDelayed(_invert);
                     return;
                 }
 
@@ -88,19 +83,46 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        public void _ActivateDelayerd()
+        private void OnDestroy()
         {
-            _activateDelayedCount--;
-            if (_delayLatestOnly && _activateDelayedCount > 0) { return; }
+            gameObject.KillAllTweens();
+        }
 
+        private void ToggleActiveDelayed(bool value)
+        {
+            if (value)
+            {
+                if (_delayLatestOnly)
+                {
+                    Initialize();
+                    _activateTweenHandle.SetDuration(_delayTime).Restart();
+                }
+                else
+                {
+                    VRCTween.DelayedCall(this, nameof(_ActivateDelayed), _delayTime);
+                }
+            }
+            else
+            {
+                if (_delayLatestOnly)
+                {
+                    Initialize();
+                    _deactivateTweenHandle.SetDuration(_delayTime).Restart();
+                }
+                else
+                {
+                    VRCTween.DelayedCall(this, nameof(_DeactivateDelayed), _delayTime);
+                }
+            }
+        }
+
+        public void _ActivateDelayed()
+        {
             ToggleActive(true);
         }
 
         public void _DeactivateDelayed()
         {
-            _deactivateDelayedCount--;
-            if (_delayLatestOnly && _deactivateDelayedCount > 0) { return; }
-
             ToggleActive(false);
         }
 

@@ -8,6 +8,7 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
+    using VRC.SDK3.Components;
 
     [RequireComponent(typeof(Collider))]
     public class ImpactEffect : UdonSharpBehaviour
@@ -79,6 +80,11 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
         }
+        
+        private void OnDestroy()
+        {
+            gameObject.KillAllTweens();
+        }
 
         protected void PlayEffect(Vector3 collideePosition, Vector3 collideeVelocity)
         {
@@ -120,7 +126,7 @@ namespace MimyLab.FukuroUdon
             _effectTransforms[index].position = position;
             _effectPool[index].SetActive(true);
 
-            SendCustomEventDelayedSeconds(nameof(_ReturnEffect), _effectTime);
+            VRCTween.DelayedCall(this, nameof(_ReturnEffect), _effectTime);
         }
 
         private void SpawnHighEffect(Vector3 position)
@@ -134,7 +140,7 @@ namespace MimyLab.FukuroUdon
             _highEffectTransforms[index].position = position;
             _highEffectPool[index].SetActive(true);
 
-            SendCustomEventDelayedSeconds(nameof(_ReturnEffect), _effectTime);
+            VRCTween.DelayedCall(this, nameof(_ReturnEffect), _effectTime);
         }
 
         public void _ReturnEffect()

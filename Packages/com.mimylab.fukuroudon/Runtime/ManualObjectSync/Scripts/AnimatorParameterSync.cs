@@ -9,6 +9,8 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
+    using VRC.SDK3.Components;
+    using VRC.SDK3.Network;
     using VRC.Udon.Common;
 
     public enum AnimatorParameterSyncSmoothingMode
@@ -26,7 +28,7 @@ namespace MimyLab.FukuroUdon
     public class AnimatorParameterSync : UdonSharpBehaviour
     {
         private const float ParameterCheckTickRate = 0.1f;  // 10Hz
-        private const float SmoothingDuration = 0.2f;
+        private const float SmoothingDuration = 1.0f;
 
         [SerializeField]
         private string[] _parameterNames = new string[0];
@@ -56,8 +58,10 @@ namespace MimyLab.FukuroUdon
         private int[] _intParameterValues = new int[0];
         private int[] _floatParameterHashes = new int[0];
         private float[] _floatParameterValues = new float[0];
-        private float _elapsedTime = SmoothingDuration;
-        private float _checkTiming;
+        private VRCTweenHandle _parameterCheckHandle;
+        private VRCTweenHandle _floatSmoothingHandle;
+        private float _floatElapsed;
+        private float _lastReceiveTime;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnValidate()
@@ -111,35 +115,35 @@ namespace MimyLab.FukuroUdon
             _floatParameterValues = new float[floatCount];
             System.Array.Copy(tmp_floatParameterHashes, _floatParameterHashes, floatCount);
 
-            _checkTiming = Time.time + ParameterCheckTickRate + (Random.value * ParameterCheckTickRate);
+            _floatSmoothingHandle = VRCTween.TweenFloat(0.0f, 1.0f, SmoothingDuration, this, nameof(_floatElapsed), nameof(_SmoothingFloat), VRCTweenEase.Linear).Pause();
 
             _initialized = true;
         }
-        private void Start()
+        private void OnEnable()
         {
             Initialize();
+
+            BeginParameterCheck();
         }
 
         private void Update()
         {
-            if (Networking.IsOwner(this.gameObject))
-            {
-                if (_checkTiming > Time.time) { return; }
-                _checkTiming = Time.time + ParameterCheckTickRate;
-
-                if (Networking.IsClogged) { return; }
-
-                if (CheckAnimatorParameterChange())
-                {
-                    RequestSerialization();
-                }
-            }
-            else
+            if (!Networking.IsOwner(this.gameObject))
             {
                 if (_smoothingMode == AnimatorParameterSyncSmoothingMode.None) { return; }
 
-                SmoothingFloat();
+                _SmoothingFloat();
             }
+        }
+
+        private void OnDestroy()
+        {
+            gameObject.KillAllTweens();
+        }
+
+        public override void OnOwnershipTransferred(VRCPlayerApi player)
+        {
+            BeginParameterCheck();
         }
 
         public override void OnPreSerialization()
@@ -206,6 +210,7 @@ namespace MimyLab.FukuroUdon
                 }
             }
 
+            var floatIsSync = false;
             for (int i = 0; i < _floatParameterHashes.Length; i++)
             {
                 int index = System.Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
@@ -214,7 +219,6 @@ namespace MimyLab.FukuroUdon
                 float animatorFloatParameter = _animator.GetFloat(_floatParameterHashes[i]);
                 if (Mathf.Approximately(animatorFloatParameter, sync_floatParameterValues[index])) { continue; }
 
-                // スムージング処理ありなら Update() でやるので、ここでは行わない
                 if (_smoothingMode == AnimatorParameterSyncSmoothingMode.None)
                 {
                     _floatParameterValues[i] = sync_floatParameterValues[index];
@@ -223,9 +227,49 @@ namespace MimyLab.FukuroUdon
                 else
                 {
                     _floatParameterValues[i] = animatorFloatParameter;
-                    _elapsedTime = 0.0f;
+                    floatIsSync = true;
                 }
             }
+            if (floatIsSync)
+            {
+                var ease = _smoothingMode == AnimatorParameterSyncSmoothingMode.Smooth ? VRCTweenEase.InOutSine : VRCTweenEase.Linear;
+                float duration = result.receiveTime - _lastReceiveTime;
+                duration = Mathf.Min(Stats.ReceiveInterval(gameObject), duration, SmoothingDuration);
+                _floatSmoothingHandle.SetEase(ease).SetDuration(duration).Restart();
+
+                _lastReceiveTime = result.receiveTime;
+            }
+        }
+
+        public void _SmoothingFloat()
+        {
+            for (int i = 0; i < _floatParameterHashes.Length; i++)
+            {
+                int index = System.Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
+                if (index < 0) { continue; }
+
+                float currentFloatValue = Mathf.Lerp(_floatParameterValues[i], sync_floatParameterValues[index], _floatElapsed);
+                _animator.SetFloat(_floatParameterHashes[i], currentFloatValue);
+            }
+        }
+
+        private void BeginParameterCheck()
+        {
+            if (_parameterCheckHandle.IsActive) { _parameterCheckHandle.Kill(); }
+            if (Networking.IsOwner(this.gameObject))
+            {
+                float duration = ParameterCheckTickRate + Random.value;
+                _parameterCheckHandle = VRCTween.DelayedCall(this, nameof(_RepeatParameterCheck), duration);
+            }
+        }
+
+        public void _RepeatParameterCheck()
+        {
+            if (!this.isActiveAndEnabled) { return; }
+
+            if (CheckAnimatorParameterChange()) { RequestSerialization(); }
+
+            _parameterCheckHandle.SetDuration(ParameterCheckTickRate).Restart();
         }
 
         private bool CheckAnimatorParameterChange()
@@ -260,34 +304,6 @@ namespace MimyLab.FukuroUdon
             }
 
             return result;
-        }
-
-        private void SmoothingFloat()
-        {
-            if (_elapsedTime >= SmoothingDuration) { return; }
-            _elapsedTime += Time.deltaTime;
-
-            float t = _elapsedTime / SmoothingDuration;
-            for (int i = 0; i < _floatParameterHashes.Length; i++)
-            {
-                int index = System.Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
-                if (index < 0) { continue; }
-
-                float currentFloatValue;
-                switch (_smoothingMode)
-                {
-                    case AnimatorParameterSyncSmoothingMode.Linear:
-                        currentFloatValue = Mathf.Lerp(_floatParameterValues[i], sync_floatParameterValues[index], t);
-                        break;
-                    case AnimatorParameterSyncSmoothingMode.Smooth:
-                        currentFloatValue = Mathf.SmoothStep(_floatParameterValues[i], sync_floatParameterValues[index], t);
-                        break;
-                    default:
-                        currentFloatValue = sync_floatParameterValues[index];
-                        break;
-                }
-                _animator.SetFloat(_floatParameterHashes[i], currentFloatValue);
-            }
         }
     }
 }

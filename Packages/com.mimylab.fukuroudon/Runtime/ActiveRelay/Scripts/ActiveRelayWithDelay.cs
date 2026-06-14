@@ -9,6 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase.Editor.Attributes;
+    using VRC.SDK3.Components;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-with-delay")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -22,48 +23,45 @@ namespace MimyLab.FukuroUdon
         [SerializeField, Min(0.0f), Tooltip("sec")]
         private float _delayTimeToActive = 0.0f;
 
-        private int _activateDelayedCount = 0;
-        private int _deactivateDelayedCount = 0;
+        private VRCTweenHandle _activateTweenHandle;
+        private VRCTweenHandle _deactivateTweenHandle;
+
+        private bool _initialized = false;
+        private void Initialize()
+        {
+            if (_initialized) { return; }
+
+            _activateTweenHandle = VRCTween.DelayedSetActive(gameObject, true, _delayTimeToActive)
+                .Pause();
+            _deactivateTweenHandle = VRCTween.DelayedSetActive(gameObject, false, _delayTimeToInactive)
+                .Pause();
+
+            _initialized = true;
+        }
 
         private void OnEnable()
         {
+            Initialize();
+
             if (_delayTimeToInactive > 0.0f)
             {
-                _deactivateDelayedCount++;
-                SendCustomEventDelayedSeconds(nameof(_DeactivateDelayed), _delayTimeToInactive);
+                _deactivateTweenHandle.SetDuration(_delayTimeToInactive).Restart();
             }
         }
 
         private void OnDisable()
         {
+            Initialize();
 
             if (_delayTimeToActive > 0.0f)
             {
-                _activateDelayedCount++;
-                SendCustomEventDelayedSeconds(nameof(_ActivateDelayed), _delayTimeToActive);
+                _activateTweenHandle.SetDuration(_delayTimeToActive).Restart();
             }
         }
 
-        public void _ActivateDelayed()
+        private void OnDestroy()
         {
-            _activateDelayedCount--;
-
-            if (_activateDelayedCount < 1)
-            {
-                _activateDelayedCount = 0;
-                this.gameObject.SetActive(true);
-            }
-        }
-
-        public void _DeactivateDelayed()
-        {
-            _deactivateDelayedCount--;
-
-            if (_deactivateDelayedCount < 1)
-            {
-                _deactivateDelayedCount = 0;
-                this.gameObject.SetActive(false);
-            }
+            gameObject.KillAllTweens();
         }
     }
 }

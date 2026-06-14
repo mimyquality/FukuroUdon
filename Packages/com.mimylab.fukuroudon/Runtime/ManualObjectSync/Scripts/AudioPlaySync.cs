@@ -9,6 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
+    using VRC.SDK3.Components;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#audio-play-sync")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -17,9 +18,9 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class AudioPlaySync : UdonSharpBehaviour
     {
-        private const double TimeTolerance = 0.05d;   // 単位：sec
+        private const float TimeTolerance = 0.05f;   // 単位：sec
 
-        [SerializeField, Min(0.0f), Tooltip("sec")]
+        [SerializeField, Min(1.0f), Tooltip("sec")]
         private float _playCheckInterval = 5.0f;
         [SerializeField]
         private bool _syncVolume = false;
@@ -32,9 +33,9 @@ namespace MimyLab.FukuroUdon
         private float sync_volume = 0.5f;
 
         private AudioSource _audioSource;
-        private double _latestPlayStartTime = 0.0f;
+        private double _latestPlayStartTime = 0.0d;
 
-        private bool _isWaitingAudioCheck = false;
+        private VRCTweenHandle _audioCheckHandle;
 
         private bool _initialized = false;
         private void Initialize()
@@ -45,22 +46,21 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
-        private void Start()
+        private void OnEnable()
         {
             Initialize();
 
-            if (Networking.IsOwner(this.gameObject))
-            {
-                BeginAudioCheck();
-            }
+            BeginAudioCheck();
+        }
+
+        private void OnDestroy()
+        {
+            gameObject.KillAllTweens();
         }
 
         public override void OnOwnershipTransferred(VRCPlayerApi player)
         {
-            if (player.isLocal)
-            {
-                BeginAudioCheck();
-            }
+            BeginAudioCheck();
         }
 
         public override void OnDeserialization()
@@ -81,33 +81,40 @@ namespace MimyLab.FukuroUdon
             if (_latestPlayStartTime != sync_latestPlayStartTime)
             {
                 _latestPlayStartTime = sync_latestPlayStartTime;
-                _audioSource.time = (float)Networking.CalculateServerDeltaTime(Networking.GetServerTimeInSeconds(), sync_latestPlayStartTime);
+
+                float audioTime = (float)Networking.CalculateServerDeltaTime(Networking.GetServerTimeInSeconds(), sync_latestPlayStartTime);
+                float audioLength = _audioSource.clip.length;
+                if (audioTime > audioLength)
+                {
+                    audioTime -= audioLength;
+                }
+                _audioSource.time = Mathf.Clamp(audioTime, 0.0f, audioLength);
             }
 
             if (_syncVolume)
             {
-                _audioSource.volume = sync_volume;
+                _audioSource.volume = Mathf.Clamp01(sync_volume);
             }
         }
 
         private void BeginAudioCheck()
         {
-            if (_isWaitingAudioCheck) { return; }
-
-            _isWaitingAudioCheck = true;
-            SendCustomEventDelayedSeconds(nameof(_RepeatAudioCheck), Random.Range(0.0f, _playCheckInterval));
+            if (_audioCheckHandle.IsActive) { _audioCheckHandle.Kill(); }
+            if (Networking.IsOwner(this.gameObject))
+            {
+                float duration = _playCheckInterval + Random.Range(0.0f, _playCheckInterval);
+                _audioCheckHandle = VRCTween.DelayedCall(this, nameof(_RepeatAudioCheck), duration);
+            }
         }
+
         public void _RepeatAudioCheck()
         {
-            _isWaitingAudioCheck = false;
+            if (!this.isActiveAndEnabled) { return; }
+            if (!Networking.IsOwner(this.gameObject)) { return; }
 
-            if (CheckAudioChange())
-            {
-                RequestSerialization();
-            }
+            if (CheckAudioChange()) { RequestSerialization(); }
 
-            _isWaitingAudioCheck = true;
-            SendCustomEventDelayedSeconds(nameof(_RepeatAudioCheck), _playCheckInterval);
+            _audioCheckHandle.SetDuration(_playCheckInterval).Restart();
         }
 
         private bool CheckAudioChange()
@@ -115,7 +122,6 @@ namespace MimyLab.FukuroUdon
             var result = false;
 
             if (!_audioSource) { return result; }
-            if (!Networking.IsOwner(this.gameObject)) { return result; }
 
             if (sync_isPlaying != _audioSource.isPlaying)
             {
@@ -127,7 +133,7 @@ namespace MimyLab.FukuroUdon
             {
                 double currentPlayStartTime = Networking.GetServerTimeInSeconds() - _audioSource.time;
                 double differenceTime = Networking.CalculateServerDeltaTime(currentPlayStartTime, sync_latestPlayStartTime);
-                if (differenceTime > TimeTolerance || differenceTime < -TimeTolerance)
+                if (!(-TimeTolerance <= differenceTime && differenceTime <= TimeTolerance))
                 {
                     sync_latestPlayStartTime = currentPlayStartTime;
                     result = true;

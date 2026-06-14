@@ -9,6 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
+    using VRC.SDK3.Components;
     using VRC.SDK3.Rendering;
     using VRC.Udon.Common;
 
@@ -27,6 +28,9 @@ namespace MimyLab.FukuroUdon
         [Min(0.0f), Tooltip("sec")]
         public float doubleTapDuration = 0.2f;
 
+        [System.NonSerialized]
+        public float _exitProgress;
+
         internal SC2SeatAdjuster _seatAdjuster;
         internal SC2Caster _caster;
 
@@ -36,9 +40,7 @@ namespace MimyLab.FukuroUdon
         private SwivelChairInputMode _inputMode = SwivelChairInputMode.Vertical;
         private float _turnValue, _prevTurnValue;
         private Vector3 _moveValue, _prevMoveValue;
-        private bool _isJump;
-        private float _inputJumpInterval;
-        private float _inputDoubleJumpInterval;
+        private VRCTweenHandle _exitProgressHandle;
 
         // Tooltipアニメーター用
         private int _param_OnStationEnter = Animator.StringToHash("OnStationEnter");
@@ -57,6 +59,11 @@ namespace MimyLab.FukuroUdon
 
             _platform = Networking.LocalPlayer.IsUserInVR() ? SwivelChairPlayerPlatform.VR : SwivelChairPlayerPlatform.Desktop;
             if (InputManager.GetLastUsedInputMethod() == VRCInputMethod.Touch) { _platform = SwivelChairPlayerPlatform.Mobile; }
+
+            float duration = _platform == SwivelChairPlayerPlatform.Mobile ? doubleTapDuration : longPushDuration;
+            _exitProgressHandle = VRCTween.TweenFloat(0.0f, 1.0f, duration, this, nameof(_exitProgress), nameof(_OnExitProgressUpdate), VRCTweenEase.Linear)
+                .OnComplete(this, nameof(_OnExitProgressComplete))
+                .Pause();
 
             if (_caster) { _casterRigidbody = _caster.GetComponent<Rigidbody>(); }
 
@@ -80,9 +87,6 @@ namespace MimyLab.FukuroUdon
             _prevTurnValue = 0.0f;
             _moveValue = Vector3.zero;
             _prevMoveValue = Vector3.zero;
-            _isJump = false;
-            _inputJumpInterval = 0.0f;
-            _inputDoubleJumpInterval = doubleTapDuration;
 
             for (int i = 0; i < _tooltip.Length; i++)
             {
@@ -97,6 +101,8 @@ namespace MimyLab.FukuroUdon
 
         private void OnDisable()
         {
+            _exitProgressHandle.Goto(0.0f, false);
+
             for (int i = 0; i < _tooltip.Length; i++)
             {
                 if (_tooltip[i]) { _tooltip[i].SetActive(false); }
@@ -105,17 +111,6 @@ namespace MimyLab.FukuroUdon
 
         private void Update()
         {
-            // ジャンプボタン長押し処理
-            if (_isJump) { _inputJumpInterval += Time.deltaTime; }
-            if (_tooltipAnimator[(int)_platform] && longPushDuration > 0.0f)
-            {
-                _tooltipAnimator[(int)_platform].SetFloat(_param_ExitProgress, Mathf.Clamp01(_inputJumpInterval / longPushDuration));
-            }
-            if (_inputJumpInterval > longPushDuration) { _seatAdjuster.Exit(); }
-
-            // ジャンプボタン二度押し処理
-            if (!_isJump && _inputDoubleJumpInterval < doubleTapDuration) { _inputDoubleJumpInterval += Time.deltaTime; }
-
             // カメラを出してる間は動かさない
             if (_existPhotoCamera && _photoCamera.Active) { return; }
 
@@ -174,6 +169,11 @@ namespace MimyLab.FukuroUdon
                 _prevMoveValue = _moveValue;
             }
         }
+        
+        private void OnDestroy()
+        {
+            gameObject.KillAllTweens();
+        }
 
         public override void InputMoveVertical(float value, UdonInputEventArgs args)
         {
@@ -219,24 +219,30 @@ namespace MimyLab.FukuroUdon
 
         public override void InputJump(bool value, UdonInputEventArgs args)
         {
-            _isJump = value;
-            _inputJumpInterval = 0.0f;
-
             if (value)
             {
+                // スマホは長押しできないため、ダブルタップで Exit する
+                if (_platform == SwivelChairPlayerPlatform.Mobile && _exitProgressHandle.IsPlaying)
+                {
+                    _exitProgressHandle.Goto(0.0f, false);
+                    _seatAdjuster.Exit();
+
+                    return;
+                }
+
+                _exitProgressHandle.Restart();
+
                 if (_tooltipAnimator[(int)_platform])
                 {
                     _tooltipAnimator[(int)_platform].SetTrigger(_param_OnExitStart);
                 }
-
-                if (_platform == SwivelChairPlayerPlatform.Mobile)
-                {
-                    if (_inputDoubleJumpInterval < doubleTapDuration) { _seatAdjuster.Exit(); }
-                }
             }
             else
             {
-                _inputDoubleJumpInterval = 0.0f;
+                if (_platform != SwivelChairPlayerPlatform.Mobile)
+                {
+                    _exitProgressHandle.Goto(0.0f, false);
+                }
 
                 var tmpInputMode = (SwivelChairInputMode)default;
                 switch (_inputMode)
@@ -263,6 +269,24 @@ namespace MimyLab.FukuroUdon
                 }
 
                 ChangeInputMode(_inputMode);
+            }
+        }
+
+        public void _OnExitProgressUpdate()
+        {
+            if (_tooltipAnimator[(int)_platform])
+            {
+                _tooltipAnimator[(int)_platform].SetFloat(_param_ExitProgress, _exitProgress);
+            }
+        }
+
+        public void _OnExitProgressComplete()
+        {
+            _exitProgressHandle.Goto(0.0f, false);
+
+            if (_platform != SwivelChairPlayerPlatform.Mobile)
+            {
+                _seatAdjuster.Exit();
             }
         }
 

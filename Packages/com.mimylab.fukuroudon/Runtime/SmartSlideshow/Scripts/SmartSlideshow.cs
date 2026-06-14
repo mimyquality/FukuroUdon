@@ -9,6 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
+    using VRC.SDK3.Components;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Smart-Slideshow#smart-slideshow")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -86,15 +87,21 @@ namespace MimyLab.FukuroUdon
             {
                 PageLoop = true;
 
-                if (!_activeAutoSlide)
+                _autoSlideHandle.SetDuration(v);
+                if (!_autoSlideHandle.IsPlaying)
                 {
-                    _activeAutoSlide = true;
-                    SendCustomEventDelayedSeconds(nameof(PageAutoIncrement), v);
+                    _autoSlideHandle.Play();
                 }
+
                 // PageSelectでFeedbackするので省略
                 // FeedbackController();
             }
-            else { FeedbackController(); }
+            else
+            {
+                _autoSlideHandle.Pause();
+
+                FeedbackController();
+            }
         }
 
         // 同期用変数
@@ -107,7 +114,7 @@ namespace MimyLab.FukuroUdon
         private int _selectedIndex = 0;
         private int[] _selectedPage;
         private int[] _endPage;
-        private bool _activeAutoSlide = false;
+        private VRCTweenHandle _autoSlideHandle;
 
         private void OnValidate()
         {
@@ -123,16 +130,17 @@ namespace MimyLab.FukuroUdon
             {
                 _endPage[i] = literatures[i].EndPage;
             }
+            _autoSlideHandle = VRCTween.DelayedCall(this, nameof(PageAutoIncrement), 1.0f)
+                .SetLoops(-1, VRCTweenLoopType.Restart);
+            AutoSlide = _autoSlide;
 
             RefreshView();
             FeedbackController();
+        }
 
-            // 自動ページ送り開始
-            if (AutoSlide > 0.0f)
-            {
-                _activeAutoSlide = true;
-                SendCustomEventDelayedSeconds(nameof(PageAutoIncrement), AutoSlide);
-            }
+        private void OnDestroy()
+        {
+            gameObject.KillAllTweens();
         }
 
         /******************************
@@ -166,7 +174,10 @@ namespace MimyLab.FukuroUdon
         ******************************/
         public void PageSelect(int num)
         {
-            if (IsGlobal && !Networking.IsOwner(this.gameObject)) { Networking.SetOwner(Networking.LocalPlayer, this.gameObject); }
+            if (IsGlobal && !Networking.IsOwner(this.gameObject))
+            {
+                Networking.SetOwner(Networking.LocalPlayer, this.gameObject);
+            }
 
             if (PageLink)
             {
@@ -210,7 +221,10 @@ namespace MimyLab.FukuroUdon
 
         public void IndexSelect(int num)
         {
-            if (IsGlobal && !Networking.IsOwner(this.gameObject)) { Networking.SetOwner(Networking.LocalPlayer, this.gameObject); }
+            if (IsGlobal && !Networking.IsOwner(this.gameObject))
+            {
+                Networking.SetOwner(Networking.LocalPlayer, this.gameObject);
+            }
 
             _selectedIndex = Mathf.Clamp(num, 0, literatures.Length - 1);
 
@@ -232,23 +246,9 @@ namespace MimyLab.FukuroUdon
 
         public void PageAutoIncrement()
         {
-            if (AutoSlide > 0.0f)
-            {
-                // 自動ページ送り継続
-                _activeAutoSlide = true;
-                SendCustomEventDelayedSeconds(nameof(PageAutoIncrement), AutoSlide);
-            }
-            else
-            {
-                // AutoSlide無効中なら停止
-                _activeAutoSlide = false;
-                return;
-            }
+            if (IsGlobal && !Networking.IsOwner(this.gameObject)) { return; }
 
-            if (!IsGlobal || Networking.IsOwner(this.gameObject))
-            {
-                PageIncrement();
-            }
+            PageIncrement();
         }
 
         /******************************
