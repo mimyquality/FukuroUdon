@@ -31,10 +31,17 @@ namespace MimyLab.FukuroUdon
         {
             if (_initialized) { return; }
 
-            _activateTweenHandle = VRCTween.DelayedSetActive(gameObject, true, _delayTimeToActive)
-                .Pause();
-            _deactivateTweenHandle = VRCTween.DelayedSetActive(gameObject, false, _delayTimeToInactive)
-                .Pause();
+            if (_delayTimeToActive > 0.0f)
+            {
+                _activateTweenHandle = VRCTween.DelayedSetActive(gameObject, true, _delayTimeToActive)
+                    .Pause();
+            }
+
+            if (_delayTimeToInactive > 0.0f)
+            {
+                _deactivateTweenHandle = VRCTween.DelayedSetActive(gameObject, false, _delayTimeToInactive)
+                    .Pause();
+            }
 
             _initialized = true;
         }

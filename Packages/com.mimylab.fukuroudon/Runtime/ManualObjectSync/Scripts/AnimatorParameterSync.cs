@@ -38,6 +38,9 @@ namespace MimyLab.FukuroUdon
         [SerializeField, HideInInspector]
         private int[] _parameterHashes = new int[0];
 
+        [System.NonSerialized]
+        public float _floatElapsed;
+
         [UdonSynced]
         private int[] sync_boolParameterHashes = new int[0];
         [UdonSynced]
@@ -60,7 +63,6 @@ namespace MimyLab.FukuroUdon
         private float[] _floatParameterValues = new float[0];
         private VRCTweenHandle _parameterCheckHandle;
         private VRCTweenHandle _floatSmoothingHandle;
-        private float _floatElapsed;
         private float _lastReceiveTime;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR

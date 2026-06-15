@@ -24,7 +24,7 @@
 - PA Regulator AvatarScale の上限・下限を VRChat の仕様変更に合わせて拡張しました。
 - PA Regulator AvatarScale の大きくなる側の倍率計算を見直しました。
 - VR Follow HUD の条件判定を短絡評価に最適化しました。 [#57](https://github.com/mimyquality/FukuroUdon/pull/57)
-- AudioPlayerSync の同期がループ跨ぐ前後でズレる事があるのを修正
+- AudioPlaySync の同期がループ跨ぐ前後でズレる事があるのを修正
 - AnimatorParameterSync の同期補間間隔の見直し
 
 ## [3.18.0] - 2026/4/9
