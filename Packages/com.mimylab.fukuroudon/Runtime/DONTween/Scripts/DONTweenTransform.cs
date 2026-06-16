@@ -11,7 +11,7 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Components;
 
     [System.Flags]
-    public enum DONTweenTransformChangeProperties
+    public enum DONTweenTransformProperties
     {
         //None = 0,
         Position = 1 << 0,
@@ -27,7 +27,7 @@ namespace MimyLab.FukuroUdon
     {
         [Header("Value Settings")]
         [SerializeField, EnumFlag]
-        private DONTweenTransformChangeProperties _changeProperty;
+        private DONTweenTransformProperties _changeProperty;
         public Vector3 position = Vector3.zero;
         public Quaternion rotation = Quaternion.identity;
         public Vector3 scale = Vector3.one;
@@ -40,9 +40,9 @@ namespace MimyLab.FukuroUdon
         private VRCTweenHandle _positionHandle;
         private VRCTweenHandle _rotationHandle;
         private VRCTweenHandle _scaleHandle;
-        private bool _changePosition;
-        private bool _changeRotation;
-        private bool _changeScale;
+        private bool _isChangePosition;
+        private bool _isChangeRotation;
+        private bool _isChangeScale;
 
         private bool _initialized = false;
         private void Initialize()
@@ -51,9 +51,9 @@ namespace MimyLab.FukuroUdon
 
             if (!_target) { _target = gameObject; }
 
-            _changePosition = ((int)_changeProperty & (int)DONTweenTransformChangeProperties.Position) > 0;
-            _changeRotation = ((int)_changeProperty & (int)DONTweenTransformChangeProperties.Rotation) > 0;
-            _changeScale = ((int)_changeProperty & (int)DONTweenTransformChangeProperties.Scale) > 0;
+            _isChangePosition = ((int)_changeProperty & (int)DONTweenTransformProperties.Position) > 0;
+            _isChangeRotation = ((int)_changeProperty & (int)DONTweenTransformProperties.Rotation) > 0;
+            _isChangeScale = ((int)_changeProperty & (int)DONTweenTransformProperties.Scale) > 0;
 
             _initialized = true;
         }
@@ -68,13 +68,12 @@ namespace MimyLab.FukuroUdon
                 scale = _referenceTransform.localScale;
             }
 
-            if (_changePosition)
+            if (_isChangePosition)
             {
                 _positionHandle = _relativeTo == Space.World ?
                     _target.TweenPosition(position, duration, easeType) :
                     _target.TweenLocalPosition(position, duration, easeType);
-                _positionHandle.SetDelay(delay).SetLoops(loops, loopType)
-                    .OnComplete(_callback, nameof(_callbackEventName));
+                _positionHandle.SetDelay(delay).SetLoops(loops, loopType);
                 if (easeType == VRCTweenEase.None)
                 {
                     _positionHandle.SetEase(customEase);
@@ -83,15 +82,23 @@ namespace MimyLab.FukuroUdon
                 {
                     _positionHandle.From();
                 }
+                // Position のみ有効＝他で実行されない
+                if (!_isChangeRotation && !_isChangeScale)
+                {
+                    _positionHandle.OnComplete(_callback, nameof(_callbackEventName));
+                }
+                if (!playOnAwake)
+                {
+                    _positionHandle.Pause();
+                }
             }
 
-            if (_changeRotation)
+            if (_isChangeRotation)
             {
                 _rotationHandle = _relativeTo == Space.World ?
                     _target.TweenRotation(rotation.eulerAngles, duration, easeType) :
                     _target.TweenLocalRotation(rotation.eulerAngles, duration, easeType);
-                _rotationHandle.SetDelay(delay).SetLoops(loops, loopType)
-                    .OnComplete(_callback, nameof(_callbackEventName));
+                _rotationHandle.SetDelay(delay).SetLoops(loops, loopType);
                 if (easeType == VRCTweenEase.None)
                 {
                     _rotationHandle.SetEase(customEase);
@@ -100,9 +107,18 @@ namespace MimyLab.FukuroUdon
                 {
                     _rotationHandle.From();
                 }
+                // Scale が無効＝後で実行されない
+                if (!_isChangeScale)
+                {
+                    _positionHandle.OnComplete(_callback, nameof(_callbackEventName));
+                }
+                if (!playOnAwake)
+                {
+                    _rotationHandle.Pause();
+                }
             }
 
-            if (_changeScale)
+            if (_isChangeScale)
             {
                 _scaleHandle = _target.TweenScale(position, duration, easeType)
                     .SetDelay(delay).SetLoops(loops, loopType)
@@ -115,13 +131,10 @@ namespace MimyLab.FukuroUdon
                 {
                     _scaleHandle.From();
                 }
-            }
-
-            if (!playOnAwake)
-            {
-                _positionHandle.Pause();
-                _rotationHandle.Pause();
-                _scaleHandle.Pause();
+                if (!playOnAwake)
+                {
+                    _scaleHandle.Pause();
+                }
             }
         }
 
@@ -137,63 +150,63 @@ namespace MimyLab.FukuroUdon
         {
             if (!isActiveAndEnabled) { return; }
 
-            if (_changePosition) { _positionHandle.Play(); }
-            if (_changeRotation) { _rotationHandle.Play(); }
-            if (_changeScale) { _scaleHandle.Play(); }
+            if (_isChangePosition) { _positionHandle.Play(); }
+            if (_isChangeRotation) { _rotationHandle.Play(); }
+            if (_isChangeScale) { _scaleHandle.Play(); }
         }
 
         public override void Pause()
         {
             if (!isActiveAndEnabled) { return; }
 
-            if (_changePosition) { _positionHandle.Pause(); }
-            if (_changeRotation) { _rotationHandle.Pause(); }
-            if (_changeScale) { _scaleHandle.Pause(); }
+            if (_isChangePosition) { _positionHandle.Pause(); }
+            if (_isChangeRotation) { _rotationHandle.Pause(); }
+            if (_isChangeScale) { _scaleHandle.Pause(); }
         }
 
         public override void Complete()
         {
             if (!isActiveAndEnabled) { return; }
 
-            if (_changePosition) { _positionHandle.Complete(); }
-            if (_changeRotation) { _rotationHandle.Complete(); }
-            if (_changeScale) { _scaleHandle.Complete(); }
+            if (_isChangePosition) { _positionHandle.Complete(); }
+            if (_isChangeRotation) { _rotationHandle.Complete(); }
+            if (_isChangeScale) { _scaleHandle.Complete(); }
         }
 
         public override void Restart()
         {
             if (!isActiveAndEnabled) { return; }
 
-            if (_changePosition) { _positionHandle.Restart(); }
-            if (_changeRotation) { _rotationHandle.Restart(); }
-            if (_changeScale) { _scaleHandle.Restart(); }
+            if (_isChangePosition) { _positionHandle.Restart(); }
+            if (_isChangeRotation) { _rotationHandle.Restart(); }
+            if (_isChangeScale) { _scaleHandle.Restart(); }
         }
 
         public override void Flip()
         {
             if (!isActiveAndEnabled) { return; }
 
-            if (_changePosition) { _positionHandle.Flip(); }
-            if (_changeRotation) { _rotationHandle.Flip(); }
-            if (_changeScale) { _scaleHandle.Flip(); }
+            if (_isChangePosition) { _positionHandle.Flip(); }
+            if (_isChangeRotation) { _rotationHandle.Flip(); }
+            if (_isChangeScale) { _scaleHandle.Flip(); }
         }
 
         public override void PlayBackwards()
         {
             if (!isActiveAndEnabled) { return; }
 
-            if (_changePosition) { _positionHandle.PlayBackwards(); }
-            if (_changeRotation) { _rotationHandle.PlayBackwards(); }
-            if (_changeScale) { _scaleHandle.PlayBackwards(); }
+            if (_isChangePosition) { _positionHandle.PlayBackwards(); }
+            if (_isChangeRotation) { _rotationHandle.PlayBackwards(); }
+            if (_isChangeScale) { _scaleHandle.PlayBackwards(); }
         }
 
         public override void PlayForwards()
         {
             if (!isActiveAndEnabled) { return; }
 
-            if (_changePosition) { _positionHandle.PlayForwards(); }
-            if (_changeRotation) { _rotationHandle.PlayForwards(); }
-            if (_changeScale) { _scaleHandle.PlayForwards(); }
+            if (_isChangePosition) { _positionHandle.PlayForwards(); }
+            if (_isChangeRotation) { _rotationHandle.PlayForwards(); }
+            if (_isChangeScale) { _scaleHandle.PlayForwards(); }
         }
     }
 }
