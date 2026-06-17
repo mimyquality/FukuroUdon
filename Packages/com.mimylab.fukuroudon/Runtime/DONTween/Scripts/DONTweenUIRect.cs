@@ -6,7 +6,6 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
-    using System.Drawing;
     using UdonSharp;
     using UnityEngine;
     using VRC.SDK3.Components;
@@ -73,10 +72,13 @@ namespace MimyLab.FukuroUdon
                 {
                     _anchorPosHandle.From();
                 }
-                // SizeDelta が無効＝後で実行されない
-                if (!_isChangeSizeDelta)
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
                 {
-                    _anchorPosHandle.OnComplete(_callback, nameof(_callbackEventName));
+                    // SizeDelta が無効＝後で実行されない
+                    if (!_isChangeSizeDelta)
+                    {
+                        _anchorPosHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                    }
                 }
                 if (!playOnAwake)
                 {
@@ -87,8 +89,7 @@ namespace MimyLab.FukuroUdon
             if (_isChangeSizeDelta)
             {
                 _sizeDeltaHandle = _targetRect.TweenSizeDelta(sizeDelta, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType)
-                    .OnComplete(_callback, nameof(_callbackEventName));
+                    .SetDelay(delay).SetLoops(loops, loopType);
                 if (easeType == VRCTweenEase.None)
                 {
                     _sizeDeltaHandle.SetEase(customEase);
@@ -96,6 +97,10 @@ namespace MimyLab.FukuroUdon
                 if (tweenDirection == DONTweenTweenDirection.From)
                 {
                     _sizeDeltaHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    _sizeDeltaHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
                 }
                 if (!playOnAwake)
                 {
@@ -109,7 +114,6 @@ namespace MimyLab.FukuroUdon
             _anchorPosHandle.Kill();
             _sizeDeltaHandle.Kill();
         }
-
 
         public override void Play()
         {

@@ -10,34 +10,41 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDK3.Components;
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/DON-Tween#don-tween-sprite")]
+    public enum DONTweenLightProperties
+    {
+        //None = 0,
+        Color = 1 << 0,
+        Intensity = 1 << 1,
+    }
+
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/DON-Tween#don-tween-light")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/DON Tween/DON Tween Sprite")]
+    [AddComponentMenu("Fukuro Udon/DON Tween/DON Tween Light")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class DONTweenSprite : DONTween
+    public class DONTweenLight : DONTween
     {
         [Header("Value Settings")]
         [SerializeField, EnumFlag]
-        private DONTweenGraphicProperties _changeProperty;
+        private DONTweenLightProperties _changeProperty;
         public Color color = Color.white;
-        [Range(0.0f, 1.0f)]
-        public float fade = 0.0f;
+        [Min(0.0f)]
+        public float intensity = 1.0f;
 
-        private SpriteRenderer _targetSprite;
+        private Light _targetLight;
         private VRCTweenHandle _colorHandle;
-        private VRCTweenHandle _fadeHandle;
+        private VRCTweenHandle _intensityHandle;
         private bool _isChangeColor;
-        private bool _isChangeFade;
+        private bool _isChangeIntensity;
 
         private bool _initialized = false;
         private void Initialize()
         {
             if (_initialized) { return; }
 
-            _targetSprite = _target ? _target.GetComponent<SpriteRenderer>() : GetComponent<SpriteRenderer>();
+            _targetLight = _target ? _target.GetComponent<Light>() : GetComponent<Light>();
 
-            _isChangeColor = ((int)_changeProperty & (int)DONTweenGraphicProperties.Color) > 0 && _targetSprite;
-            _isChangeFade = ((int)_changeProperty & (int)DONTweenGraphicProperties.Fade) > 0 && _targetSprite;
+            _isChangeColor = ((int)_changeProperty & (int)DONTweenLightProperties.Color) > 0 && _targetLight;
+            _isChangeIntensity = ((int)_changeProperty & (int)DONTweenLightProperties.Intensity) > 0 && _targetLight;
 
             _initialized = true;
         }
@@ -47,7 +54,7 @@ namespace MimyLab.FukuroUdon
 
             if (_isChangeColor)
             {
-                _colorHandle = _targetSprite.TweenColor(color, duration, easeType)
+                _colorHandle = _targetLight.TweenColor(color, duration, easeType)
                     .SetDelay(delay).SetLoops(loops, loopType);
                 if (easeType == VRCTweenEase.None)
                 {
@@ -60,7 +67,7 @@ namespace MimyLab.FukuroUdon
                 if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
                 {
                     // Fade が無効＝後で実行されない
-                    if (!_isChangeFade)
+                    if (!_isChangeIntensity)
                     {
                         _colorHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
                     }
@@ -71,25 +78,25 @@ namespace MimyLab.FukuroUdon
                 }
             }
 
-            if (_isChangeFade)
+            if (_isChangeIntensity)
             {
-                _fadeHandle = _targetSprite.TweenFade(fade, duration, easeType)
+                _intensityHandle = _targetLight.TweenIntensity(intensity, duration, easeType)
                     .SetDelay(delay).SetLoops(loops, loopType);
                 if (easeType == VRCTweenEase.None)
                 {
-                    _fadeHandle.SetEase(customEase);
+                    _intensityHandle.SetEase(customEase);
                 }
                 if (tweenDirection == DONTweenTweenDirection.From)
                 {
-                    _fadeHandle.From();
+                    _intensityHandle.From();
                 }
                 if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
                 {
-                    _fadeHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                    _intensityHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
                 }
                 if (!playOnAwake)
                 {
-                    _fadeHandle.Pause();
+                    _intensityHandle.Pause();
                 }
             }
         }
@@ -97,7 +104,7 @@ namespace MimyLab.FukuroUdon
         private void OnDisable()
         {
             _colorHandle.Kill();
-            _fadeHandle.Kill();
+            _intensityHandle.Kill();
         }
 
         public override void Play()
@@ -105,7 +112,7 @@ namespace MimyLab.FukuroUdon
             if (!isActiveAndEnabled) { return; }
 
             if (_isChangeColor) { _colorHandle.Play(); }
-            if (_isChangeFade) { _fadeHandle.Play(); }
+            if (_isChangeIntensity) { _intensityHandle.Play(); }
         }
 
         public override void Pause()
@@ -113,7 +120,7 @@ namespace MimyLab.FukuroUdon
             if (!isActiveAndEnabled) { return; }
 
             if (_isChangeColor) { _colorHandle.Pause(); }
-            if (_isChangeFade) { _fadeHandle.Pause(); }
+            if (_isChangeIntensity) { _intensityHandle.Pause(); }
         }
 
         public override void Complete()
@@ -121,7 +128,7 @@ namespace MimyLab.FukuroUdon
             if (!isActiveAndEnabled) { return; }
 
             if (_isChangeColor) { _colorHandle.Complete(); }
-            if (_isChangeFade) { _fadeHandle.Complete(); }
+            if (_isChangeIntensity) { _intensityHandle.Complete(); }
         }
 
         public override void Restart()
@@ -129,7 +136,7 @@ namespace MimyLab.FukuroUdon
             if (!isActiveAndEnabled) { return; }
 
             if (_isChangeColor) { _colorHandle.Restart(); }
-            if (_isChangeFade) { _fadeHandle.Restart(); }
+            if (_isChangeIntensity) { _intensityHandle.Restart(); }
         }
 
         public override void Flip()
@@ -137,7 +144,7 @@ namespace MimyLab.FukuroUdon
             if (!isActiveAndEnabled) { return; }
 
             if (_isChangeColor) { _colorHandle.Flip(); }
-            if (_isChangeFade) { _fadeHandle.Flip(); }
+            if (_isChangeIntensity) { _intensityHandle.Flip(); }
         }
 
         public override void PlayBackwards()
@@ -145,7 +152,7 @@ namespace MimyLab.FukuroUdon
             if (!isActiveAndEnabled) { return; }
 
             if (_isChangeColor) { _colorHandle.PlayBackwards(); }
-            if (_isChangeFade) { _fadeHandle.PlayBackwards(); }
+            if (_isChangeIntensity) { _intensityHandle.PlayBackwards(); }
         }
 
         public override void PlayForwards()
@@ -153,7 +160,7 @@ namespace MimyLab.FukuroUdon
             if (!isActiveAndEnabled) { return; }
 
             if (_isChangeColor) { _colorHandle.PlayForwards(); }
-            if (_isChangeFade) { _fadeHandle.PlayForwards(); }
+            if (_isChangeIntensity) { _intensityHandle.PlayForwards(); }
         }
     }
 }

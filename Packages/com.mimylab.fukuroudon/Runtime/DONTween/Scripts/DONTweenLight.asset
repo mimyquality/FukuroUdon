@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
-  m_Name: DONTweenSprite
+  m_Name: DONTweenLight
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: ce005ef4c7067a54598668d77250a15a, type: 2}
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 9ef404f1f94ae924f8124e1dcd0f3b4e, type: 2}
   udonAssembly: 
   assemblyError: 
-  sourceCsScript: {fileID: 11500000, guid: 93e90c4c5295b0646b6b0b2690bafce6, type: 3}
+  sourceCsScript: {fileID: 11500000, guid: 2afb736b742c0ad4088e3da09727f069, type: 3}
   scriptVersion: 2
   compiledVersion: 2
   behaviourSyncMode: 1
   hasInteractEvent: 0
-  scriptID: -7811017123655048759
+  scriptID: -9158473570547897731
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -712,7 +712,7 @@ MonoBehaviour:
       Data: 43|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: MimyLab.FukuroUdon.DONTweenGraphicProperties, FukuroUdon
+      Data: MimyLab.FukuroUdon.DONTweenLightProperties, FukuroUdon
     - Name: 
       Entry: 8
       Data: 
@@ -829,13 +829,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: fade
+      Data: intensity
     - Name: $v
       Entry: 7
       Data: 51|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: fade
+      Data: intensity
     - Name: <UserType>k__BackingField
       Entry: 9
       Data: 8
@@ -862,13 +862,10 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 7
-      Data: 53|UnityEngine.RangeAttribute, UnityEngine.CoreModule
+      Data: 53|UnityEngine.MinAttribute, UnityEngine.CoreModule
     - Name: min
       Entry: 4
       Data: 0
-    - Name: max
-      Entry: 4
-      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -889,19 +886,19 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: _targetSprite
+      Data: _targetLight
     - Name: $v
       Entry: 7
       Data: 54|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: _targetSprite
+      Data: _targetLight
     - Name: <UserType>k__BackingField
       Entry: 7
       Data: 55|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: UnityEngine.SpriteRenderer, UnityEngine.CoreModule
+      Data: UnityEngine.Light, UnityEngine.CoreModule
     - Name: 
       Entry: 8
       Data: 
@@ -997,13 +994,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: _fadeHandle
+      Data: _intensityHandle
     - Name: $v
       Entry: 7
       Data: 60|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: _fadeHandle
+      Data: _intensityHandle
     - Name: <UserType>k__BackingField
       Entry: 9
       Data: 58
@@ -1093,13 +1090,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: _isChangeFade
+      Data: _isChangeIntensity
     - Name: $v
       Entry: 7
       Data: 64|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: _isChangeFade
+      Data: _isChangeIntensity
     - Name: <UserType>k__BackingField
       Entry: 9
       Data: 31

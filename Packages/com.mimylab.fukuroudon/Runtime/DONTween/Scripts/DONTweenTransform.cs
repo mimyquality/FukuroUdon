@@ -82,10 +82,13 @@ namespace MimyLab.FukuroUdon
                 {
                     _positionHandle.From();
                 }
-                // Position のみ有効＝他で実行されない
-                if (!_isChangeRotation && !_isChangeScale)
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
                 {
-                    _positionHandle.OnComplete(_callback, nameof(_callbackEventName));
+                    // Position のみ有効＝他で実行されない
+                    if (!_isChangeRotation && !_isChangeScale)
+                    {
+                        _positionHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                    }
                 }
                 if (!playOnAwake)
                 {
@@ -107,10 +110,13 @@ namespace MimyLab.FukuroUdon
                 {
                     _rotationHandle.From();
                 }
-                // Scale が無効＝後で実行されない
-                if (!_isChangeScale)
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
                 {
-                    _positionHandle.OnComplete(_callback, nameof(_callbackEventName));
+                    // Scale が無効＝後で実行されない
+                    if (!_isChangeScale)
+                    {
+                        _positionHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                    }
                 }
                 if (!playOnAwake)
                 {
@@ -121,8 +127,7 @@ namespace MimyLab.FukuroUdon
             if (_isChangeScale)
             {
                 _scaleHandle = _target.TweenScale(position, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType)
-                    .OnComplete(_callback, nameof(_callbackEventName));
+                    .SetDelay(delay).SetLoops(loops, loopType);
                 if (easeType == VRCTweenEase.None)
                 {
                     _scaleHandle.SetEase(customEase);
@@ -130,6 +135,10 @@ namespace MimyLab.FukuroUdon
                 if (tweenDirection == DONTweenTweenDirection.From)
                 {
                     _scaleHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    _scaleHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
                 }
                 if (!playOnAwake)
                 {
@@ -144,7 +153,6 @@ namespace MimyLab.FukuroUdon
             _rotationHandle.Kill();
             _scaleHandle.Kill();
         }
-
 
         public override void Play()
         {

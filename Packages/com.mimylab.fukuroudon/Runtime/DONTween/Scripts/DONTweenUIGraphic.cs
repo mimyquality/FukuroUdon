@@ -11,7 +11,7 @@ namespace MimyLab.FukuroUdon
     using UnityEngine.UI;
     using VRC.SDK3.Components;
 
-    public enum DONTweenGraphics
+    public enum DONTweenGraphicProperties
     {
         //None = 0,
         Color = 1 << 0,
@@ -26,8 +26,9 @@ namespace MimyLab.FukuroUdon
     {
         [Header("Value Settings")]
         [SerializeField, EnumFlag]
-        private DONTweenGraphics _changeProperty;
+        private DONTweenGraphicProperties _changeProperty;
         public Color color = Color.white;
+        [Range(0.0f, 1.0f)]
         public float fade = 0.0f;
 
         private MaskableGraphic _targetGraphic;
@@ -45,8 +46,8 @@ namespace MimyLab.FukuroUdon
             _targetGraphic = _target ? _target.GetComponent<MaskableGraphic>() : GetComponent<MaskableGraphic>();
             _targetCanvasGroup = _target ? _target.GetComponent<CanvasGroup>() : GetComponent<CanvasGroup>();
 
-            _isChangeColor = ((int)_changeProperty & (int)DONTweenGraphics.Color) > 0 && _targetGraphic;
-            _isChangeFade = ((int)_changeProperty & (int)DONTweenGraphics.Fade) > 0 && (_targetGraphic || _targetCanvasGroup);
+            _isChangeColor = ((int)_changeProperty & (int)DONTweenGraphicProperties.Color) > 0 && _targetGraphic;
+            _isChangeFade = ((int)_changeProperty & (int)DONTweenGraphicProperties.Fade) > 0 && (_targetGraphic || _targetCanvasGroup);
 
             _initialized = true;
         }
@@ -66,10 +67,13 @@ namespace MimyLab.FukuroUdon
                 {
                     _colorHandle.From();
                 }
-                // Fade が無効＝後で実行されない
-                if (!_isChangeFade)
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
                 {
-                    _colorHandle.OnComplete(_callback, nameof(_callbackEventName));
+                    // Fade が無効＝後で実行されない
+                    if (!_isChangeFade)
+                    {
+                        _colorHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                    }
                 }
                 if (!playOnAwake)
                 {
@@ -82,9 +86,7 @@ namespace MimyLab.FukuroUdon
                 _fadeHandle = _targetGraphic ?
                     _targetGraphic.TweenFade(fade, duration, easeType) :
                     _targetCanvasGroup.TweenFade(fade, duration, easeType);
-
-                _fadeHandle.SetDelay(delay).SetLoops(loops, loopType)
-                    .OnComplete(_callback, nameof(_callbackEventName));
+                _fadeHandle.SetDelay(delay).SetLoops(loops, loopType);
                 if (easeType == VRCTweenEase.None)
                 {
                     _fadeHandle.SetEase(customEase);
@@ -92,6 +94,10 @@ namespace MimyLab.FukuroUdon
                 if (tweenDirection == DONTweenTweenDirection.From)
                 {
                     _fadeHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    _fadeHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
                 }
                 if (!playOnAwake)
                 {
@@ -105,7 +111,6 @@ namespace MimyLab.FukuroUdon
             _colorHandle.Kill();
             _fadeHandle.Kill();
         }
-
 
         public override void Play()
         {

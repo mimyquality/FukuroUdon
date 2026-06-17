@@ -23,19 +23,22 @@ namespace MimyLab.FukuroUdon
         [Header("Tween Settings")]
         [SerializeField]
         private protected GameObject _target = null;
+        [Min(0.0f)]
         public float duration = 1.0f;
+        [Min(0.0f)]
         public float delay = 0.0f;
-        public int loops = 1;
-        public VRCTweenLoopType loopType = VRCTweenLoopType.Restart;
         public VRCTweenEase easeType = VRCTweenEase.Linear;
         public AnimationCurve customEase = AnimationCurve.Linear(0f, 0f, 1f, 1);
+        [Min(-1)]
+        public int loops = 1;
+        public VRCTweenLoopType loopType = VRCTweenLoopType.Restart;
         public DONTweenTweenDirection tweenDirection = DONTweenTweenDirection.To;
         public bool playOnAwake = true;
         [Space]
         [SerializeField]
-        private protected UdonBehaviour _callback;
+        private protected UdonBehaviour _callback = null;
         [SerializeField]
-        private protected string _callbackEventName;
+        private protected string _callbackNameOnComplete = "";
 
         abstract public void Play();
         abstract public void Pause();
