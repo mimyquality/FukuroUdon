@@ -53,59 +53,23 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (_isChangeVolume)
-            {
-                _volumeHandle = _targetAudio.TweenVolume(volume, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _volumeHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _volumeHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    // Pitch が無効＝後で実行されない
-                    if (!_isChangePitch)
-                    {
-                        _volumeHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                    }
-                }
-                if (!playOnAwake)
-                {
-                    _volumeHandle.Pause();
-                }
-            }
-
-            if (_isChangePitch)
-            {
-                _pitchHandle = _targetAudio.TweenPitch(pitch, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _pitchHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _pitchHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    _pitchHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                }
-                if (!playOnAwake)
-                {
-                    _pitchHandle.Pause();
-                }
-            }
+            Configure();
+            if (playOnAwake) { Restart(); }
         }
 
         private void OnDisable()
         {
             _volumeHandle.Kill();
             _pitchHandle.Kill();
+        }
+
+        public override void Reconfigure()
+        {
+            if (!isActiveAndEnabled) { return; }
+
+            _volumeHandle.Kill();
+            _pitchHandle.Kill();
+            Configure();
         }
 
         public override void Play()
@@ -162,6 +126,57 @@ namespace MimyLab.FukuroUdon
 
             if (_isChangeVolume) { _volumeHandle.PlayForwards(); }
             if (_isChangePitch) { _pitchHandle.PlayForwards(); }
+        }
+
+        private void Configure()
+        {
+            if (_isChangeVolume)
+            {
+                _volumeHandle = _targetAudio.TweenVolume(volume, duration, easeType)
+                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _volumeHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _volumeHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _volumeHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    // Pitch が無効＝後で実行されない
+                    if (!_isChangePitch)
+                    {
+                        _volumeHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                    }
+                }
+            }
+
+            if (_isChangePitch)
+            {
+                _pitchHandle = _targetAudio.TweenPitch(pitch, duration, easeType)
+                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _pitchHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _pitchHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _pitchHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    _pitchHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                }
+            }
         }
     }
 }

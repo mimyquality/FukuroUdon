@@ -61,90 +61,8 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (_referenceTransform)
-            {
-                position = _relativeTo == Space.World ? _referenceTransform.position : _referenceTransform.localPosition;
-                rotation = _relativeTo == Space.World ? _referenceTransform.rotation : _referenceTransform.localRotation;
-                scale = _referenceTransform.localScale;
-            }
-
-            if (_isChangePosition)
-            {
-                _positionHandle = _relativeTo == Space.World ?
-                    _target.TweenPosition(position, duration, easeType) :
-                    _target.TweenLocalPosition(position, duration, easeType);
-                _positionHandle.SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _positionHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _positionHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    // Position のみ有効＝他で実行されない
-                    if (!_isChangeRotation && !_isChangeScale)
-                    {
-                        _positionHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                    }
-                }
-                if (!playOnAwake)
-                {
-                    _positionHandle.Pause();
-                }
-            }
-
-            if (_isChangeRotation)
-            {
-                _rotationHandle = _relativeTo == Space.World ?
-                    _target.TweenRotation(rotation.eulerAngles, duration, easeType) :
-                    _target.TweenLocalRotation(rotation.eulerAngles, duration, easeType);
-                _rotationHandle.SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _rotationHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _rotationHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    // Scale が無効＝後で実行されない
-                    if (!_isChangeScale)
-                    {
-                        _positionHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                    }
-                }
-                if (!playOnAwake)
-                {
-                    _rotationHandle.Pause();
-                }
-            }
-
-            if (_isChangeScale)
-            {
-                _scaleHandle = _target.TweenScale(position, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _scaleHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _scaleHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    _scaleHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                }
-                if (!playOnAwake)
-                {
-                    _scaleHandle.Pause();
-                }
-            }
+            Configure();
+            if (playOnAwake) { Restart(); }
         }
 
         private void OnDisable()
@@ -152,6 +70,16 @@ namespace MimyLab.FukuroUdon
             _positionHandle.Kill();
             _rotationHandle.Kill();
             _scaleHandle.Kill();
+        }
+
+        public override void Reconfigure()
+        {
+            if (!isActiveAndEnabled) { return; }
+
+            _positionHandle.Kill();
+            _rotationHandle.Kill();
+            _scaleHandle.Kill();
+            Configure();
         }
 
         public override void Play()
@@ -215,6 +143,94 @@ namespace MimyLab.FukuroUdon
             if (_isChangePosition) { _positionHandle.PlayForwards(); }
             if (_isChangeRotation) { _rotationHandle.PlayForwards(); }
             if (_isChangeScale) { _scaleHandle.PlayForwards(); }
+        }
+
+        private void Configure()
+        {
+            if (_referenceTransform)
+            {
+                position = _relativeTo == Space.World ? _referenceTransform.position : _referenceTransform.localPosition;
+                rotation = _relativeTo == Space.World ? _referenceTransform.rotation : _referenceTransform.localRotation;
+                scale = _referenceTransform.localScale;
+            }
+
+            if (_isChangePosition)
+            {
+                _positionHandle = _relativeTo == Space.World ?
+                    _target.TweenPosition(position, duration, easeType) :
+                    _target.TweenLocalPosition(position, duration, easeType);
+                _positionHandle.SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _positionHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _positionHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _positionHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    // Position のみ有効＝他で実行されない
+                    if (!_isChangeRotation && !_isChangeScale)
+                    {
+                        _positionHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                    }
+                }
+            }
+
+            if (_isChangeRotation)
+            {
+                _rotationHandle = _relativeTo == Space.World ?
+                    _target.TweenRotation(rotation.eulerAngles, duration, easeType) :
+                    _target.TweenLocalRotation(rotation.eulerAngles, duration, easeType);
+                _rotationHandle.SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _rotationHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _rotationHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _rotationHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    // Scale が無効＝後で実行されない
+                    if (!_isChangeScale)
+                    {
+                        _positionHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                    }
+                }
+            }
+
+            if (_isChangeScale)
+            {
+                _scaleHandle = _target.TweenScale(position, duration, easeType)
+                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _scaleHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _scaleHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _scaleHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    _scaleHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                }
+            }
         }
     }
 }

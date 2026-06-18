@@ -39,33 +39,21 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (!_targetSlider) { return; }
-
-            if (_referenceSlider) { tweenValue = _referenceSlider.value; }
-
-            _tweenHandle = _targetSlider.TweenValue(tweenValue, duration, easeType)
-                .SetDelay(delay).SetLoops(loops, loopType);
-            if (easeType == VRCTweenEase.None)
-            {
-                _tweenHandle.SetEase(customEase);
-            }
-            if (tweenDirection == DONTweenTweenDirection.From)
-            {
-                _tweenHandle.From();
-            }
-            if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-            {
-                _tweenHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-            }
-            if (!playOnAwake)
-            {
-                _tweenHandle.Pause();
-            }
+            Configure();
+            if (playOnAwake) { Restart(); }
         }
 
         private void OnDisable()
         {
             _tweenHandle.Kill();
+        }
+
+        public override void Reconfigure()
+        {
+            if (!isActiveAndEnabled) { return; }
+
+            _tweenHandle.Kill();
+            Configure();
         }
 
         public override void Play()
@@ -115,6 +103,32 @@ namespace MimyLab.FukuroUdon
             if (!isActiveAndEnabled) { return; }
 
             if (_targetSlider) { _tweenHandle.PlayForwards(); }
+        }
+
+        private void Configure()
+        {
+            if (!_targetSlider) { return; }
+
+            if (_referenceSlider) { tweenValue = _referenceSlider.value; }
+
+            _tweenHandle = _targetSlider.TweenValue(tweenValue, duration, easeType)
+                .SetDelay(delay).SetLoops(loops, loopType).Pause();
+            if (!fixedDuration)
+            {
+                _tweenHandle.SetSpeedBased();
+            }
+            if (easeType == VRCTweenEase.None)
+            {
+                _tweenHandle.SetEase(customEase);
+            }
+            if (tweenDirection == DONTweenTweenDirection.From)
+            {
+                _tweenHandle.From();
+            }
+            if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+            {
+                _tweenHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+            }
         }
     }
 }

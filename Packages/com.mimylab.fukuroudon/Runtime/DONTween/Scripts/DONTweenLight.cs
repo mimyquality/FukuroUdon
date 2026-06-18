@@ -52,59 +52,23 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (_isChangeColor)
-            {
-                _colorHandle = _targetLight.TweenColor(color, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _colorHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _colorHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    // Fade が無効＝後で実行されない
-                    if (!_isChangeIntensity)
-                    {
-                        _colorHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                    }
-                }
-                if (!playOnAwake)
-                {
-                    _colorHandle.Pause();
-                }
-            }
-
-            if (_isChangeIntensity)
-            {
-                _intensityHandle = _targetLight.TweenIntensity(intensity, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _intensityHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _intensityHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    _intensityHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                }
-                if (!playOnAwake)
-                {
-                    _intensityHandle.Pause();
-                }
-            }
+            Configure();
+            if (playOnAwake) { Restart(); }
         }
 
         private void OnDisable()
         {
             _colorHandle.Kill();
             _intensityHandle.Kill();
+        }
+
+        public override void Reconfigure()
+        {
+            if (!isActiveAndEnabled) { return; }
+
+            _colorHandle.Kill();
+            _intensityHandle.Kill();
+            Configure();
         }
 
         public override void Play()
@@ -161,6 +125,57 @@ namespace MimyLab.FukuroUdon
 
             if (_isChangeColor) { _colorHandle.PlayForwards(); }
             if (_isChangeIntensity) { _intensityHandle.PlayForwards(); }
+        }
+
+        private void Configure()
+        {
+            if (_isChangeColor)
+            {
+                _colorHandle = _targetLight.TweenColor(color, duration, easeType)
+                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _colorHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _colorHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _colorHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    // Fade が無効＝後で実行されない
+                    if (!_isChangeIntensity)
+                    {
+                        _colorHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                    }
+                }
+            }
+
+            if (_isChangeIntensity)
+            {
+                _intensityHandle = _targetLight.TweenIntensity(intensity, duration, easeType)
+                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _intensityHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _intensityHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _intensityHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    _intensityHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                }
+            }
         }
     }
 }

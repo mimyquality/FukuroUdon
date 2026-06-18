@@ -54,65 +54,23 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (_referenceTransform)
-            {
-                anchorPos = _referenceTransform.anchoredPosition;
-                sizeDelta = _referenceTransform.sizeDelta;
-            }
-
-            if (_isChangeAnchorPos)
-            {
-                _anchorPosHandle = _targetRect.TweenAnchorPos(anchorPos, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _anchorPosHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _anchorPosHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    // SizeDelta が無効＝後で実行されない
-                    if (!_isChangeSizeDelta)
-                    {
-                        _anchorPosHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                    }
-                }
-                if (!playOnAwake)
-                {
-                    _anchorPosHandle.Pause();
-                }
-            }
-
-            if (_isChangeSizeDelta)
-            {
-                _sizeDeltaHandle = _targetRect.TweenSizeDelta(sizeDelta, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _sizeDeltaHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _sizeDeltaHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    _sizeDeltaHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                }
-                if (!playOnAwake)
-                {
-                    _sizeDeltaHandle.Pause();
-                }
-            }
+            Configure();
+            if (playOnAwake) { Restart(); }
         }
 
         private void OnDisable()
         {
             _anchorPosHandle.Kill();
             _sizeDeltaHandle.Kill();
+        }
+
+        public override void Reconfigure()
+        {
+            if (!isActiveAndEnabled) { return; }
+
+            _anchorPosHandle.Kill();
+            _sizeDeltaHandle.Kill();
+            Configure();
         }
 
         public override void Play()
@@ -169,6 +127,63 @@ namespace MimyLab.FukuroUdon
 
             if (_isChangeAnchorPos) { _anchorPosHandle.PlayForwards(); }
             if (_isChangeSizeDelta) { _sizeDeltaHandle.PlayForwards(); }
+        }
+
+        private void Configure()
+        {
+            if (_referenceTransform)
+            {
+                anchorPos = _referenceTransform.anchoredPosition;
+                sizeDelta = _referenceTransform.sizeDelta;
+            }
+
+            if (_isChangeAnchorPos)
+            {
+                _anchorPosHandle = _targetRect.TweenAnchorPos(anchorPos, duration, easeType)
+                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _anchorPosHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _anchorPosHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _anchorPosHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    // SizeDelta が無効＝後で実行されない
+                    if (!_isChangeSizeDelta)
+                    {
+                        _anchorPosHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                    }
+                }
+            }
+
+            if (_isChangeSizeDelta)
+            {
+                _sizeDeltaHandle = _targetRect.TweenSizeDelta(sizeDelta, duration, easeType)
+                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _sizeDeltaHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _sizeDeltaHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _sizeDeltaHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    _sizeDeltaHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                }
+            }
         }
     }
 }

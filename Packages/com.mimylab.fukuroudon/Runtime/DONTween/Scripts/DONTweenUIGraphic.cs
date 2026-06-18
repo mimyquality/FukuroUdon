@@ -55,61 +55,23 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (_isChangeColor)
-            {
-                _colorHandle = _targetGraphic.TweenColor(color, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _colorHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _colorHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    // Fade が無効＝後で実行されない
-                    if (!_isChangeFade)
-                    {
-                        _colorHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                    }
-                }
-                if (!playOnAwake)
-                {
-                    _colorHandle.Pause();
-                }
-            }
-
-            if (_isChangeFade)
-            {
-                _fadeHandle = _targetGraphic ?
-                    _targetGraphic.TweenFade(fade, duration, easeType) :
-                    _targetCanvasGroup.TweenFade(fade, duration, easeType);
-                _fadeHandle.SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _fadeHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _fadeHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    _fadeHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                }
-                if (!playOnAwake)
-                {
-                    _fadeHandle.Pause();
-                }
-            }
+            Configure();
+            if (playOnAwake) { Restart(); }
         }
 
         private void OnDisable()
         {
             _colorHandle.Kill();
             _fadeHandle.Kill();
+        }
+
+        public override void Reconfigure()
+        {
+            if (!isActiveAndEnabled) { return; }
+
+            _colorHandle.Kill();
+            _fadeHandle.Kill();
+            Configure();
         }
 
         public override void Play()
@@ -166,6 +128,59 @@ namespace MimyLab.FukuroUdon
 
             if (_isChangeColor) { _colorHandle.PlayForwards(); }
             if (_isChangeFade) { _fadeHandle.PlayForwards(); }
+        }
+
+        private void Configure()
+        {
+            if (_isChangeColor)
+            {
+                _colorHandle = _targetGraphic.TweenColor(color, duration, easeType)
+                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _colorHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _colorHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _colorHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    // Fade が無効＝後で実行されない
+                    if (!_isChangeFade)
+                    {
+                        _colorHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                    }
+                }
+            }
+
+            if (_isChangeFade)
+            {
+                _fadeHandle = _targetGraphic ?
+                    _targetGraphic.TweenFade(fade, duration, easeType) :
+                    _targetCanvasGroup.TweenFade(fade, duration, easeType);
+                _fadeHandle.SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _fadeHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _fadeHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _fadeHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    _fadeHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                }
+            }
         }
     }
 }

@@ -41,39 +41,21 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            Vector3[] waypointsPosition = new Vector3[waypoints.Length];
-            for (int i = 0; i < waypointsPosition.Length; i++)
-            {
-                if (!waypoints[i]) { continue; }
-
-                waypointsPosition[i] = _relativeTo == Space.World ? waypoints[i].position : waypoints[i].localPosition;
-            }
-
-            _pathHandle = _relativeTo == Space.World ?
-                _target.TweenPath(waypointsPosition, duration, pathType, closePath, pathResolution, easeType) :
-                _target.TweenLocalPath(waypointsPosition, duration, pathType, closePath, pathResolution, easeType);
-            _pathHandle.SetDelay(delay).SetLoops(loops, loopType);
-            if (easeType == VRCTweenEase.None)
-            {
-                _pathHandle.SetEase(customEase);
-            }
-            if (tweenDirection == DONTweenTweenDirection.From)
-            {
-                _pathHandle.From();
-            }
-            if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-            {
-                _pathHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-            }
-            if (!playOnAwake)
-            {
-                _pathHandle.Pause();
-            }
+            Configure();
+            if (playOnAwake) { Restart(); }
         }
 
         private void OnDisable()
         {
             _pathHandle.Kill();
+        }
+
+        public override void Reconfigure()
+        {
+            if (!isActiveAndEnabled) { return; }
+
+            _pathHandle.Kill();
+            Configure();
         }
 
         public override void Play()
@@ -123,6 +105,38 @@ namespace MimyLab.FukuroUdon
             if (!isActiveAndEnabled) { return; }
 
             _pathHandle.PlayForwards();
+        }
+
+        private void Configure()
+        {
+            Vector3[] waypointsPosition = new Vector3[waypoints.Length];
+            for (int i = 0; i < waypointsPosition.Length; i++)
+            {
+                if (!waypoints[i]) { continue; }
+
+                waypointsPosition[i] = _relativeTo == Space.World ? waypoints[i].position : waypoints[i].localPosition;
+            }
+
+            _pathHandle = _relativeTo == Space.World ?
+                _target.TweenPath(waypointsPosition, duration, pathType, closePath, pathResolution, easeType) :
+                _target.TweenLocalPath(waypointsPosition, duration, pathType, closePath, pathResolution, easeType);
+            _pathHandle.SetDelay(delay).SetLoops(loops, loopType).Pause();
+            if (!fixedDuration)
+            {
+                _pathHandle.SetSpeedBased();
+            }
+            if (easeType == VRCTweenEase.None)
+            {
+                _pathHandle.SetEase(customEase);
+            }
+            if (tweenDirection == DONTweenTweenDirection.From)
+            {
+                _pathHandle.From();
+            }
+            if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+            {
+                _pathHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+            }
         }
     }
 }

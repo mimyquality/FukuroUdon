@@ -52,60 +52,23 @@ namespace MimyLab.FukuroUdon
         private void OnEnable()
         {
             Initialize();
-
-            if (_isChangeColor)
-            {
-                _colorHandle = _targetRenderer.TweenColor(colorName, color, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _colorHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _colorHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    // Float が無効＝後で実行されない
-                    if (!_isChangeFloat)
-                    {
-                        _colorHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                    }
-                }
-                if (!playOnAwake)
-                {
-                    _colorHandle.Pause();
-                }
-            }
-
-            if (_isChangeFloat)
-            {
-                _floatHandle = _targetRenderer.TweenFloat(floatName, floatValue, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType);
-                if (easeType == VRCTweenEase.None)
-                {
-                    _floatHandle.SetEase(customEase);
-                }
-                if (tweenDirection == DONTweenTweenDirection.From)
-                {
-                    _floatHandle.From();
-                }
-                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
-                {
-                    _floatHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
-                }
-                if (!playOnAwake)
-                {
-                    _floatHandle.Pause();
-                }
-            }
+            Configure();
+            if (playOnAwake) { Restart(); }
         }
 
         private void OnDisable()
         {
             _colorHandle.Kill();
             _floatHandle.Kill();
+        }
+
+        public override void Reconfigure()
+        {
+            if (!isActiveAndEnabled) { return; }
+
+            _colorHandle.Kill();
+            _floatHandle.Kill();
+            Configure();
         }
 
         public override void Play()
@@ -162,6 +125,57 @@ namespace MimyLab.FukuroUdon
 
             if (_isChangeColor) { _colorHandle.PlayForwards(); }
             if (_isChangeFloat) { _floatHandle.PlayForwards(); }
+        }
+
+        private void Configure()
+        {
+            if (_isChangeColor)
+            {
+                _colorHandle = _targetRenderer.TweenColor(colorName, color, duration, easeType)
+                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _colorHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _colorHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _colorHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    // Float が無効＝後で実行されない
+                    if (!_isChangeFloat)
+                    {
+                        _colorHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                    }
+                }
+            }
+
+            if (_isChangeFloat)
+            {
+                _floatHandle = _targetRenderer.TweenFloat(floatName, floatValue, duration, easeType)
+                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
+                if (!fixedDuration)
+                {
+                    _floatHandle.SetSpeedBased();
+                }
+                if (easeType == VRCTweenEase.None)
+                {
+                    _floatHandle.SetEase(customEase);
+                }
+                if (tweenDirection == DONTweenTweenDirection.From)
+                {
+                    _floatHandle.From();
+                }
+                if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
+                {
+                    _floatHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                }
+            }
         }
     }
 }
