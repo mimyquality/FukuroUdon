@@ -23,6 +23,7 @@ namespace MimyLab.FukuroUdon
         [Header("Tween Settings")]
         [SerializeField]
         private protected GameObject _target = null;
+        [Space]
         public bool fixedDuration = true;
         [Min(0.0f)]
         public float duration = 1.0f;

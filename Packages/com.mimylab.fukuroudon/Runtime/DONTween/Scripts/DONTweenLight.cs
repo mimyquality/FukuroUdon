@@ -26,9 +26,9 @@ namespace MimyLab.FukuroUdon
         [Header("Value Settings")]
         [SerializeField, EnumFlag]
         private DONTweenLightProperties _changeProperty;
+        public float intensity = 1.0f;
         public Color color = Color.white;
         [Min(0.0f)]
-        public float intensity = 1.0f;
 
         private Light _targetLight;
         private VRCTweenHandle _colorHandle;
