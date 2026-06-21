@@ -100,16 +100,8 @@ namespace MimyLab.FukuroUdon
 
         private void Configure()
         {
-            _activeHandle = VRCTween.DelayedSetActive(_target, objectActive, duration)
-                .SetDelay(delay).SetLoops(loops, loopType).Pause();
-            if (!fixedDuration)
-            {
-                _activeHandle.SetSpeedBased();
-            }
-            if (easeType == VRCTweenEase.None)
-            {
-                _activeHandle.SetEase(customEase);
-            }
+            _activeHandle = VRCTween.DelayedSetActive(_target, objectActive, delay)
+                .SetLoops(loops, loopType).Pause();
             if (tweenDirection == DONTweenTweenDirection.From)
             {
                 _activeHandle.From();

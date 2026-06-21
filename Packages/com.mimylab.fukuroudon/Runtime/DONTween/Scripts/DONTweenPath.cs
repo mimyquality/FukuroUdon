@@ -14,11 +14,11 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/DON Tween/DON Tween Path")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class DONTweenPath : DONTween
+    public partial class DONTweenPath : DONTween
     {
         [Header("Value Settings")]
         [SerializeField]
-        private Transform[] waypoints = new Transform[2];
+        private Transform[] waypoints = new Transform[0];
         public VRCTweenPathType pathType = VRCTweenPathType.Linear;
         [Range(0, 25)]
         public int pathResolution = 10;
@@ -26,6 +26,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private Space _relativeTo = Space.World;
 
+        private Vector3[] _waypointsPosition = new Vector3[0];
         private VRCTweenHandle _pathHandle;
 
         private bool _initialized = false;
@@ -109,17 +110,25 @@ namespace MimyLab.FukuroUdon
 
         private void Configure()
         {
-            Vector3[] waypointsPosition = new Vector3[waypoints.Length];
-            for (int i = 0; i < waypointsPosition.Length; i++)
+            if (_waypointsPosition.Length != waypoints.Length)
             {
-                if (!waypoints[i]) { continue; }
-
-                waypointsPosition[i] = _relativeTo == Space.World ? waypoints[i].position : waypoints[i].localPosition;
+                _waypointsPosition = new Vector3[waypoints.Length];
+            }
+            for (int i = 0; i < _waypointsPosition.Length; i++)
+            {
+                if (waypoints[i])
+                {
+                    _waypointsPosition[i] = _relativeTo == Space.World ? waypoints[i].position : waypoints[i].localPosition;
+                }
+                else
+                {
+                    _waypointsPosition[i] = Vector3.zero;
+                }
             }
 
             _pathHandle = _relativeTo == Space.World ?
-                _target.TweenPath(waypointsPosition, duration, pathType, closePath, pathResolution, easeType) :
-                _target.TweenLocalPath(waypointsPosition, duration, pathType, closePath, pathResolution, easeType);
+                _target.TweenPath(_waypointsPosition, duration, pathType, closePath, pathResolution, easeType) :
+                _target.TweenLocalPath(_waypointsPosition, duration, pathType, closePath, pathResolution, easeType);
             _pathHandle.SetDelay(delay).SetLoops(loops, loopType).Pause();
             if (!fixedDuration)
             {

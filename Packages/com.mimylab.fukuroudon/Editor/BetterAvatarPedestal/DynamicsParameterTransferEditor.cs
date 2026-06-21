@@ -4,10 +4,10 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
+using UdonSharpEditor;
+using UnityEditor;
 using UnityEngine;
 using VRC.SDK3.Dynamics.Contact.Components;
-using UnityEditor;
-using UdonSharpEditor;
 
 namespace MimyLab.FukuroUdon
 {
