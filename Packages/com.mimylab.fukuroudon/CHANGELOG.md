@@ -6,25 +6,12 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
-## [3.19.0-beta.3] - 2026/6/21
-
-**Added**  
-
-- DON Tween に Fixed Duration, Reconfigure() 追加しました。
-- DON Tween Delayed Active を追加しました。
-- DOn Tween Path に経路のガイドギズモを追加しました。今のところ CatmullRom にしても直線表示です。
-
-## [3.19.0-beta.2] - 2026/6/17
+## [3.19.0] - 2026/6/23
 
 **Added**  
 
 - DON Tween ファミリーを追加しました。
   - 一言で言うとジェネリック DO Tween Pro です。
-
-## [3.19.0-beta.1] - 2026/6/15
-
-**Added**  
-
 - Better AvatarPedestal 枠に UdonRaycast を追加しました。VRCRaycast とほぼ同じ事ができるコンポーネントです。 [#54](https://github.com/mimyquality/FukuroUdon/issues/54)
   - Dynamics Parameter Transfer との連携にも対応しています。
 
@@ -894,9 +881,7 @@ VRCSDK 3.10.2 に沿ったいくつかの微修正を行いました。
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
-[3.19.0-beta.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.0-beta.3
-[3.19.0-beta.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.0-beta.2
-[3.19.0-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.0-beta.1
+[3.19.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.0
 [3.18.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.18.0
 [3.17.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.17.1
 [3.17.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.17.0
