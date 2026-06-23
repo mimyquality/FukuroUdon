@@ -6,6 +6,7 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
+    using BestHTTP.SecureProtocol.Org.BouncyCastle.Asn1.X509;
     using UdonSharp;
     using UnityEngine;
     using VRC.SDK3.Components;
@@ -14,20 +15,40 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/DON Tween/DON Tween Path")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public partial class DONTweenPath : DONTween
+    public class DONTweenPath : DONTween
     {
         [Header("Value Settings")]
         [SerializeField]
-        private Transform[] waypoints = new Transform[0];
+        private Transform[] _waypoints = new Transform[0];
         public VRCTweenPathType pathType = VRCTweenPathType.Linear;
-        [Range(0, 25)]
+        [Range(1, 25)]
         public int pathResolution = 10;
         public bool closePath = false;
         [SerializeField]
         private Space _relativeTo = Space.World;
 
-        private Vector3[] _waypointsPosition = new Vector3[0];
+        private Vector3[] _route = new Vector3[0];
         private VRCTweenHandle _pathHandle;
+
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
+        private void OnValidate()
+        {
+            var tmp_waypoints = new Transform[_waypoints.Length];
+            var waypointsCount = 0;
+            for (int i = 0; i < _waypoints.Length; i++)
+            {
+                if (_waypoints[i])
+                {
+                    tmp_waypoints[waypointsCount++] = _waypoints[i];
+                }
+            }
+            if (waypointsCount != _waypoints.Length)
+            {
+                System.Array.Resize(ref tmp_waypoints, waypointsCount);
+                _waypoints = tmp_waypoints;
+            }
+        }
+#endif
 
         private bool _initialized = false;
         private void Initialize()
@@ -110,25 +131,25 @@ namespace MimyLab.FukuroUdon
 
         private void Configure()
         {
-            if (_waypointsPosition.Length != waypoints.Length)
+            if (_route.Length != _waypoints.Length)
             {
-                _waypointsPosition = new Vector3[waypoints.Length];
+                _route = new Vector3[_waypoints.Length];
             }
-            for (int i = 0; i < _waypointsPosition.Length; i++)
+            for (int i = 0; i < _route.Length; i++)
             {
-                if (waypoints[i])
+                if (_waypoints[i])
                 {
-                    _waypointsPosition[i] = _relativeTo == Space.World ? waypoints[i].position : waypoints[i].localPosition;
+                    _route[i] = _relativeTo == Space.World ? _waypoints[i].position : _waypoints[i].localPosition;
                 }
                 else
                 {
-                    _waypointsPosition[i] = Vector3.zero;
+                    _route[i] = Vector3.zero;
                 }
             }
 
             _pathHandle = _relativeTo == Space.World ?
-                _target.TweenPath(_waypointsPosition, duration, pathType, closePath, pathResolution, easeType) :
-                _target.TweenLocalPath(_waypointsPosition, duration, pathType, closePath, pathResolution, easeType);
+                _target.TweenPath(_route, duration, pathType, closePath, pathResolution, easeType) :
+                _target.TweenLocalPath(_route, duration, pathType, closePath, pathResolution, easeType);
             _pathHandle.SetDelay(delay).SetLoops(loops, loopType).Pause();
             if (!fixedDuration)
             {
