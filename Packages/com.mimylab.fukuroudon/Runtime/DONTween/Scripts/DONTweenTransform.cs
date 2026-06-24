@@ -182,7 +182,7 @@ namespace MimyLab.FukuroUdon
                 _positionHandle = _relativeTo == Space.World ?
                     _target.TweenPosition(position, duration, easeType) :
                     _target.TweenLocalPosition(position, duration, easeType);
-                _positionHandle.SetDelay(delay).SetLoops(loops, loopType).Pause();
+                _positionHandle.SetDelay(delay).SetLoops(loops, loopType).SetUpdate(_updateMode).Pause();
                 if (!fixedDuration)
                 {
                     _positionHandle.SetSpeedBased();
@@ -215,7 +215,7 @@ namespace MimyLab.FukuroUdon
                 float start = tweenDirection == DONTweenTweenDirection.From ? 1.0f : 0.0f;
                 float goal = 1.0f - start;
                 _rotationHandle = VRCTween.TweenFloat(start, goal, duration, this, nameof(_rotateElapse), nameof(_OnRotationUpdate), easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
+                    .SetDelay(delay).SetLoops(loops, loopType).SetUpdate(_updateMode).Pause();
                 if (!fixedDuration)
                 {
                     _rotationHandle.SetSpeedBased();
@@ -242,7 +242,7 @@ namespace MimyLab.FukuroUdon
             if (_isChangeScale)
             {
                 _scaleHandle = _target.TweenScale(position, duration, easeType)
-                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
+                    .SetDelay(delay).SetLoops(loops, loopType).SetUpdate(_updateMode).Pause();
                 if (!fixedDuration)
                 {
                     _scaleHandle.SetSpeedBased();
