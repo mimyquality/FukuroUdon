@@ -33,9 +33,14 @@ namespace MimyLab.FukuroUdon
         public Vector3 scale = Vector3.one;
         [SerializeField]
         private Space _relativeTo = Space.Self;
+        [SerializeField]
+        private VRCTweenUpdateType _updateMode = VRCTweenUpdateType.Update;
         [Space]
         [SerializeField]
         private Transform _referenceTransform = null;
+
+        [System.NonSerialized]
+        public float _rotateElapse;
 
         private VRCTweenHandle _positionHandle;
         private VRCTweenHandle _rotationHandle;
@@ -43,6 +48,10 @@ namespace MimyLab.FukuroUdon
         private bool _isChangePosition;
         private bool _isChangeRotation;
         private bool _isChangeScale;
+
+        private Quaternion _startRotation;
+        private Quaternion _goalRotation;
+        private Space _rotateSpace;
 
         private bool _initialized = false;
         private void Initialize()
@@ -145,6 +154,20 @@ namespace MimyLab.FukuroUdon
             if (_isChangeScale) { _scaleHandle.PlayForwards(); }
         }
 
+        public void _OnRotationUpdate()
+        {
+            Quaternion currentRotation = Quaternion.Slerp(_startRotation, _goalRotation, _rotateElapse);
+
+            if (_relativeTo == Space.World)
+            {
+                _target.transform.rotation = currentRotation;
+            }
+            else
+            {
+                _target.transform.localRotation = currentRotation;
+            }
+        }
+
         private void Configure()
         {
             if (_referenceTransform)
@@ -184,10 +207,15 @@ namespace MimyLab.FukuroUdon
 
             if (_isChangeRotation)
             {
-                _rotationHandle = _relativeTo == Space.World ?
-                    _target.TweenRotation(rotation.eulerAngles, duration, easeType) :
-                    _target.TweenLocalRotation(rotation.eulerAngles, duration, easeType);
-                _rotationHandle.SetDelay(delay).SetLoops(loops, loopType).Pause();
+                // VRCTweenRotation は何故かオイラー角で計算するので、自前計算
+                _startRotation = _relativeTo == Space.World ? _target.transform.rotation : _target.transform.localRotation;
+                _goalRotation = rotation;
+                _rotateSpace = _relativeTo;
+
+                float start = tweenDirection == DONTweenTweenDirection.From ? 1.0f : 0.0f;
+                float goal = 1.0f - start;
+                _rotationHandle = VRCTween.TweenFloat(start, goal, duration, this, nameof(_rotateElapse), nameof(_OnRotationUpdate), easeType)
+                    .SetDelay(delay).SetLoops(loops, loopType).Pause();
                 if (!fixedDuration)
                 {
                     _rotationHandle.SetSpeedBased();
@@ -196,10 +224,11 @@ namespace MimyLab.FukuroUdon
                 {
                     _rotationHandle.SetEase(customEase);
                 }
-                if (tweenDirection == DONTweenTweenDirection.From)
+                // バーチャルツイーンに効果無いため
+                /* if (tweenDirection == DONTweenTweenDirection.From)
                 {
                     _rotationHandle.From();
-                }
+                } */
                 if (_callback && !string.IsNullOrEmpty(_callbackNameOnComplete))
                 {
                     // Scale が無効＝後で実行されない
