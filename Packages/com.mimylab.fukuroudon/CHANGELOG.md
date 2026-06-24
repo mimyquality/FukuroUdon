@@ -6,6 +6,12 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.19.3] - 2026/6/24
+
+**Added**  
+
+- DON Tween Path にも Update Mode を追加しました。
+
 ## [3.19.2] - 2026/6/24
 
 **Added**  
@@ -894,6 +900,7 @@ VRCSDK 3.10.2 に沿ったいくつかの微修正を行いました。
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[3.19.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.3
 [3.19.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.2
 [3.19.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.1
 [3.19.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.0

@@ -25,6 +25,8 @@ namespace MimyLab.FukuroUdon
         public bool closePath = false;
         [SerializeField]
         private Space _relativeTo = Space.World;
+        [SerializeField]
+        private VRCTweenUpdateType _updateMode = VRCTweenUpdateType.Update;
 
         private Vector3[] _route = new Vector3[0];
         private VRCTweenHandle _pathHandle;
@@ -149,7 +151,7 @@ namespace MimyLab.FukuroUdon
             _pathHandle = _relativeTo == Space.World ?
                 _target.TweenPath(_route, duration, pathType, closePath, pathResolution, easeType) :
                 _target.TweenLocalPath(_route, duration, pathType, closePath, pathResolution, easeType);
-            _pathHandle.SetDelay(delay).SetLoops(loops, loopType).Pause();
+            _pathHandle.SetDelay(delay).SetLoops(loops, loopType).SetUpdate(_updateMode).Pause();
             if (!fixedDuration)
             {
                 _pathHandle.SetSpeedBased();
