@@ -40,7 +40,7 @@ namespace MimyLab.FukuroUdon
         private Transform _referenceTransform = null;
 
         [System.NonSerialized]
-        public float _rotateElapse;
+        public float _rotateAngle;
 
         private VRCTweenHandle _positionHandle;
         private VRCTweenHandle _rotationHandle;
@@ -52,6 +52,7 @@ namespace MimyLab.FukuroUdon
         private Quaternion _startRotation;
         private Quaternion _goalRotation;
         private Space _rotateSpace;
+        private float _goalAngle;
 
         private bool _initialized = false;
         private void Initialize()
@@ -156,9 +157,11 @@ namespace MimyLab.FukuroUdon
 
         public void _OnRotationUpdate()
         {
-            Quaternion currentRotation = Quaternion.Slerp(_startRotation, _goalRotation, _rotateElapse);
+            if (Mathf.Approximately(_goalAngle, 0.0f)) { return; }
 
-            if (_relativeTo == Space.World)
+            Quaternion currentRotation = Quaternion.SlerpUnclamped(_startRotation, _goalRotation, _rotateAngle / _goalAngle);
+
+            if (_rotateSpace == Space.World)
             {
                 _target.transform.rotation = currentRotation;
             }
@@ -211,10 +214,11 @@ namespace MimyLab.FukuroUdon
                 _startRotation = _relativeTo == Space.World ? _target.transform.rotation : _target.transform.localRotation;
                 _goalRotation = rotation;
                 _rotateSpace = _relativeTo;
+                _goalAngle = Quaternion.Angle(_startRotation, _goalRotation);
 
-                float start = tweenDirection == DONTweenTweenDirection.From ? 1.0f : 0.0f;
-                float goal = 1.0f - start;
-                _rotationHandle = VRCTween.TweenFloat(start, goal, duration, this, nameof(_rotateElapse), nameof(_OnRotationUpdate), easeType)
+                float start = tweenDirection == DONTweenTweenDirection.To ? 0.0f : _goalAngle;
+                float goal = tweenDirection == DONTweenTweenDirection.To ? _goalAngle : 0.0f;
+                _rotationHandle = VRCTween.TweenFloat(start, goal, duration, this, nameof(_rotateAngle), nameof(_OnRotationUpdate), easeType)
                     .SetDelay(delay).SetLoops(loops, loopType).SetUpdate(_updateMode).Pause();
                 if (!fixedDuration)
                 {
@@ -234,7 +238,7 @@ namespace MimyLab.FukuroUdon
                     // Scale が無効＝後で実行されない
                     if (!_isChangeScale)
                     {
-                        _positionHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
+                        _rotationHandle.OnComplete(_callback, nameof(_callbackNameOnComplete));
                     }
                 }
             }
