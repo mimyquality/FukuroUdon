@@ -13,7 +13,7 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grab-SlideDoor#limited-lookat-constraint")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Limited Constraint/Limited LookAt Constraint")]
+    [AddComponentMenu("Fukuro Udon/Grab SlideDoor/Grab SwingDoor")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class LimitedLookConstraint : UdonSharpBehaviour
     {
