@@ -16,16 +16,14 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ActiveRelayToPlayerTeleport : ActiveRelayTo
     {
-        [SerializeField]
-        private ActiveRelayActiveEvent _eventType = default;
-        [SerializeField]
-        private Transform _teleportTarget = null;
+        [SerializeField] private ActiveRelayActiveEvent _eventType = default;
+        [SerializeField] private Transform _teleportTarget = null;
+
         [SerializeField]
         private VRC_SceneDescriptor.SpawnOrientation _spawnOrientation = VRC_SceneDescriptor.SpawnOrientation.Default;
-        [SerializeField]
-        private bool _lerpOnRemote = false;
-        [SerializeField]
-        private bool _enableOnDeserializationBugFix = false;
+
+        [SerializeField] private bool _lerpOnRemote = false;
+        [SerializeField] private bool _enableOnDeserializationBugFix = false;
 
         private void Reset()
         {
@@ -35,15 +33,15 @@ namespace MimyLab.FukuroUdon
         private protected override void OnEnable()
         {
             if (_eventType == ActiveRelayActiveEvent.ActiveAndInactive
-             || _eventType == ActiveRelayActiveEvent.Active)
+                || _eventType == ActiveRelayActiveEvent.Active)
             {
                 if (_enableOnDeserializationBugFix)
                 {
-                    SendCustomEventDelayedFrames(nameof(Teleport), 1);
+                    SendCustomEventDelayedFrames(nameof(_Teleport), 1);
                 }
                 else
                 {
-                    Teleport();
+                    _Teleport();
                 }
             }
         }
@@ -51,20 +49,20 @@ namespace MimyLab.FukuroUdon
         private protected override void OnDisable()
         {
             if (_eventType == ActiveRelayActiveEvent.ActiveAndInactive
-             || _eventType == ActiveRelayActiveEvent.Inactive)
+                || _eventType == ActiveRelayActiveEvent.Inactive)
             {
                 if (_enableOnDeserializationBugFix)
                 {
-                    SendCustomEventDelayedFrames(nameof(Teleport), 1);
+                    SendCustomEventDelayedFrames(nameof(_Teleport), 1);
                 }
                 else
                 {
-                    Teleport();
+                    _Teleport();
                 }
             }
         }
 
-        public void Teleport()
+        public void _Teleport()
         {
             VRCPlayerApi localPlayer = Networking.LocalPlayer;
 

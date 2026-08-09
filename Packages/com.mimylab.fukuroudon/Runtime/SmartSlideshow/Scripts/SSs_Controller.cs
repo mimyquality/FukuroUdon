@@ -10,6 +10,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using UnityEngine.UI;
+
     //using VRC.SDKBase;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Smart-Slideshow#sss_controller")]
@@ -19,48 +20,30 @@ namespace MimyLab.FukuroUdon
     public class SSs_Controller : UdonSharpBehaviour
     {
         [Header("Reference")]
-        [SerializeField]
-        private SmartSlideshow target;    // 操作対象のスライドショー
-        [SerializeField]
-        private SmartSlideshow[] subTarget = new SmartSlideshow[0];    // 同時操作対象のスライドショー
+        [SerializeField] private SmartSlideshow target; // 操作対象のスライドショー
+        [SerializeField] private SmartSlideshow[] subTarget = new SmartSlideshow[0]; // 同時操作対象のスライドショー
 
         [Header("Paging UI")]
-        [SerializeField]
-        private Button pageNext;  // ページ送り操作用
-        [SerializeField]
-        private Button pagePrev;  // ページ戻し操作用
-        [SerializeField]
-        private Slider pageSlider;  // ページ直指定用
-        [SerializeField]
-        private Text pageNumber;    // ページ数表示用
-        [SerializeField]
-        private TextMeshProUGUI pageNumberTMP;    // ページ数表示用
+        [SerializeField] private Button pageNext; // ページ送り操作用
+        [SerializeField] private Button pagePrev; // ページ戻し操作用
+        [SerializeField] private Slider pageSlider; // ページ直指定用
+        [SerializeField] private Text pageNumber; // ページ数表示用
+        [SerializeField] private TextMeshProUGUI pageNumberTMP; // ページ数表示用
 
         [Header("Indexing UI")]
-        [SerializeField]
-        private Button indexNext;   // 巻送り操作用
-        [SerializeField]
-        private Button indexPrev;    // 巻戻し操作用
-        [SerializeField]
-        private Slider indexSlider; // 巻の直指定用
-        [SerializeField]
-        private Text indexNumber;   // 巻数表示用
-        [SerializeField]
-        private TextMeshProUGUI indexNumberTMP;   // 巻数表示用
+        [SerializeField] private Button indexNext; // 巻送り操作用
+        [SerializeField] private Button indexPrev; // 巻戻し操作用
+        [SerializeField] private Slider indexSlider; // 巻の直指定用
+        [SerializeField] private Text indexNumber; // 巻数表示用
+        [SerializeField] private TextMeshProUGUI indexNumberTMP; // 巻数表示用
 
         [Header("Setting UI")]
-        [SerializeField]
-        private Toggle isGlobal;    // isGlobal変更用
-        [SerializeField]
-        private Toggle pageLink;    // pageLink変更用
-        [SerializeField]
-        private Toggle pageLoop;    // pageLoop変更用
-        [SerializeField]
-        private Slider autoSlideSlider; // AutoSlide値変更用
-        [SerializeField]
-        private Text autoSlideCount;    // AutoSlide秒数表示用
-        [SerializeField]
-        private TextMeshProUGUI autoSlideCountTMP;  // AutoSlide秒数表示用
+        [SerializeField] private Toggle isGlobal; // isGlobal変更用
+        [SerializeField] private Toggle pageLink; // pageLink変更用
+        [SerializeField] private Toggle pageLoop; // pageLoop変更用
+        [SerializeField] private Slider autoSlideSlider; // AutoSlide値変更用
+        [SerializeField] private Text autoSlideCount; // AutoSlide秒数表示用
+        [SerializeField] private TextMeshProUGUI autoSlideCountTMP; // AutoSlide秒数表示用
 
         /******************************
          UI input events
@@ -160,8 +143,15 @@ namespace MimyLab.FukuroUdon
         ******************************/
         public void SetPageInteractable(bool next, bool prev)
         {
-            if (pageNext) { pageNext.interactable = next; }
-            if (pagePrev) { pagePrev.interactable = prev; }
+            if (pageNext)
+            {
+                pageNext.interactable = next;
+            }
+
+            if (pagePrev)
+            {
+                pagePrev.interactable = prev;
+            }
         }
 
         public void SetPageSlider(int num, int min, int max)
@@ -180,14 +170,29 @@ namespace MimyLab.FukuroUdon
                     pageSlider.SetValueWithoutNotify((float)num);
                 }
             }
-            if (pageNumber) { pageNumber.text = num.ToString(); }
-            if (pageNumberTMP) { pageNumberTMP.text = num.ToString(); }
+
+            if (pageNumber)
+            {
+                pageNumber.text = num.ToString();
+            }
+
+            if (pageNumberTMP)
+            {
+                pageNumberTMP.text = num.ToString();
+            }
         }
 
         public void SetIndexInteractable(bool next, bool prev)
         {
-            if (indexNext) { indexNext.interactable = next; }
-            if (indexPrev) { indexPrev.interactable = prev; }
+            if (indexNext)
+            {
+                indexNext.interactable = next;
+            }
+
+            if (indexPrev)
+            {
+                indexPrev.interactable = prev;
+            }
         }
 
         public void SetIndexSlider(int num, int min, int max)
@@ -204,32 +209,72 @@ namespace MimyLab.FukuroUdon
                 {
                     indexSlider.maxValue = (float)max;
                     indexSlider.SetValueWithoutNotify((float)num);
-
                 }
             }
-            if (indexNumber) { indexNumber.text = num.ToString(); }
-            if (indexNumberTMP) { indexNumberTMP.text = num.ToString(); }
+
+            if (indexNumber)
+            {
+                indexNumber.text = num.ToString();
+            }
+
+            if (indexNumberTMP)
+            {
+                indexNumberTMP.text = num.ToString();
+            }
         }
 
         public void SetSettingsInteractable(bool global, bool link, bool loop)
         {
-            if (isGlobal) { isGlobal.interactable = global; }
-            if (pageLink) { pageLink.interactable = link; }
-            if (pageLoop) { pageLoop.interactable = loop; }
+            if (isGlobal)
+            {
+                isGlobal.interactable = global;
+            }
+
+            if (pageLink)
+            {
+                pageLink.interactable = link;
+            }
+
+            if (pageLoop)
+            {
+                pageLoop.interactable = loop;
+            }
         }
 
         public void SetSettingsToggle(bool global, bool link, bool loop)
         {
-            if (isGlobal) { isGlobal.SetIsOnWithoutNotify(global); }
-            if (pageLink) { pageLink.SetIsOnWithoutNotify(link); }
-            if (pageLoop) { pageLoop.SetIsOnWithoutNotify(loop); }
+            if (isGlobal)
+            {
+                isGlobal.SetIsOnWithoutNotify(global);
+            }
+
+            if (pageLink)
+            {
+                pageLink.SetIsOnWithoutNotify(link);
+            }
+
+            if (pageLoop)
+            {
+                pageLoop.SetIsOnWithoutNotify(loop);
+            }
         }
 
         public void SetAutoSlider(float auto)
         {
-            if (autoSlideSlider) { autoSlideSlider.SetValueWithoutNotify(auto); }
-            if (autoSlideCount) { autoSlideCount.text = (auto > 0.0f) ? auto.ToString("f2") + " sec" : "Stop"; }
-            if (autoSlideCountTMP) { autoSlideCountTMP.text = (auto > 0.0f) ? auto.ToString("f2") + " sec" : "Stop"; }
+            if (autoSlideSlider)
+            {
+                autoSlideSlider.SetValueWithoutNotify(auto);
+            }
+
+            if (autoSlideCount)
+            {
+                autoSlideCount.text = (auto > 0.0f) ? auto.ToString("f2") + " sec" : "Stop";
+            }
+
+            if (autoSlideCountTMP)
+            {
+                autoSlideCountTMP.text = (auto > 0.0f) ? auto.ToString("f2") + " sec" : "Stop";
+            }
         }
     }
 }
