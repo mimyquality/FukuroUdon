@@ -6,6 +6,18 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [3.19.5] - 2026/8/12
+
+**Added**  
+
+- DON Tween Path に、設定した道筋が分かる gizmo を追加しました。
+  - `Catmull Rom` タイプを選んでいても、表示上は `Linear` と同じ表示がされます。再生モード中は適切な gizmo 表示がされます。
+
+**Fixed**  
+
+- ActiveRelay to Player Teleport の `Enable OnDeserialization Bug Fix` を有効にするとテレポートしなかったのを修正しました。 [#59](https://github.com/mimyquality/FukuroUdon/pull/59)
+- Smart Slideshow の自動ページ送りが1回しか実行されないのを修正しました。 [#60](https://github.com/mimyquality/FukuroUdon/issues/60)
+
 ## [3.19.4] - 2026/6/25
 
 **Fixed**  
