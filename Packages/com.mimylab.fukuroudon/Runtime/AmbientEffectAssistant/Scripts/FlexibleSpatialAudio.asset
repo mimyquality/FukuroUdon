@@ -442,7 +442,7 @@ MonoBehaviour:
       Data: 30|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: Only Sphere, Capsule, Box, and Convexed Mesh Colliders
+      Data: "Sphere, Capsule, Box, Mesh(Convex \u6709\u52B9) \u306E\u30B3\u30E9\u30A4\u30C0\u30FC\u304C\u4F7F\u3048\u307E\u3059\u3002"
     - Name: 
       Entry: 8
       Data: 

@@ -9,7 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
 
-    abstract public class IViewPointReceiver : UdonSharpBehaviour
+    public abstract class IViewPointReceiver : UdonSharpBehaviour
     {
         protected internal Transform viewPointTracker = null;
 

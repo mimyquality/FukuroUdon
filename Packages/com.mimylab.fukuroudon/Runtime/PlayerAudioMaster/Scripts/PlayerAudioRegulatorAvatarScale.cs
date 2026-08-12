@@ -9,7 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-
+    
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#pa-regulator-avatarscale")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator AvatarScale")]
@@ -38,7 +38,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _baseVoiceDistanceNear = voiceDistanceNear;
             _baseVoiceDistanceFar = voiceDistanceFar;
@@ -56,7 +56,9 @@ namespace MimyLab.FukuroUdon
             Initialize();
 
             float avatarScale = target.GetAvatarEyeHeightAsMeters() / _baseEyeHeight;
-            float multiply = avatarScale < 1.0f ? 1f - _underScaleMultiplier * (1 - avatarScale) : _overScaleMultiplier * (avatarScale - 1f) + 1f;
+            float multiply = avatarScale < 1.0f 
+                ? 1f - _underScaleMultiplier * (1 - avatarScale) 
+                : _overScaleMultiplier * (avatarScale - 1f) + 1f;
 
             voiceDistanceNear = Mathf.Clamp(multiply * _baseVoiceDistanceNear, 0f, 1000000f);
             voiceDistanceFar = Mathf.Clamp(multiply * _baseVoiceDistanceFar, 0f, 1000000f);

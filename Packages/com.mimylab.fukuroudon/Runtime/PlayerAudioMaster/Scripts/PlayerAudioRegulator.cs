@@ -6,6 +6,7 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
+    using System;
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
@@ -22,7 +23,7 @@ namespace MimyLab.FukuroUdon
     {
         [Header("Filter Settings")]
         public bool othersOnly = false;
-        public string[] allowedPlayerNameList = new string[0];
+        public string[] allowedPlayerNameList =Array.Empty<string>();
 
         [Header("Channel Settings")]
         public bool enableChannelMode = false;
@@ -65,17 +66,17 @@ namespace MimyLab.FukuroUdon
 
         public bool CheckApplicable(VRCPlayerApi target)
         {
-            if (!this.isActiveAndEnabled) { return false; }
-            if (othersOnly && target.isLocal) { return false; }
-            if (!EligiblePlayer(target)) { return false; }
+            if (!isActiveAndEnabled) return false;
+            if (othersOnly && target.isLocal) return false;
+            if (!EligiblePlayer(target)) return false;
 
             return CheckUniqueApplicable(target);
         }
 
         public bool EligiblePlayer(VRCPlayerApi target)
         {
-            if (allowedPlayerNameList.Length == 0) { return true; }
-            if (System.Array.IndexOf(allowedPlayerNameList, target.displayName) > -1) { return true; }
+            if (allowedPlayerNameList.Length == 0) return true;
+            if (Array.IndexOf(allowedPlayerNameList, target.displayName) > -1) return true;
 
             return false;
         }

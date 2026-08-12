@@ -28,7 +28,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private ActiveRelayActiveEvent _eventType = default;
         [SerializeField]
-        private Transform[] _transforms = new Transform[0];
+        private Transform[] _transforms = System.Array.Empty<Transform>();
         [SerializeField, EnumFlag]
         private ActiveRelayToTransformChangeProperties _changeProperty =
             ActiveRelayToTransformChangeProperties.Position |

@@ -8,8 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.SDK3.Components;
+    using VRC.SDKBase;
 
     public enum ActiveRelayPickupEvent
     {

@@ -9,7 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-
+    
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#mos-attacher")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/MOS Attacher")]
@@ -17,7 +17,7 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class MOSAttacher : UdonSharpBehaviour
     {
-        public ManualObjectSync[] target = new ManualObjectSync[0];
+        public ManualObjectSync[] target = System.Array.Empty<ManualObjectSync>();
 
         private void OnCollisionEnter(Collision other)
         {

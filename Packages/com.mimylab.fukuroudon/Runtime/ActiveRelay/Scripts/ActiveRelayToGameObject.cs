@@ -8,8 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase.Editor.Attributes;
     using VRC.SDK3.Components;
+    using VRC.SDKBase.Editor.Attributes;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-to-gameobject")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -20,12 +20,12 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private ActiveRelayActiveEvent _eventType = default;
         [SerializeField]
-        private GameObject[] _gameObjects = new GameObject[0];
+        private GameObject[] _gameObjects = System.Array.Empty<GameObject>();
         [SerializeField]
         private bool _invert = false;
 
         [Space]
-        [HelpBox("Disable delay if Dlelay Time is 0", HelpBoxAttribute.MessageType.Info)]
+        [HelpBox("Delay Time を 0 に設定すると遅延せずに実行します。", HelpBoxAttribute.MessageType.Info)]
         [SerializeField, Min(0.0f), Tooltip("sec")]
         private float _delayTime = 0.0f;
         [SerializeField]

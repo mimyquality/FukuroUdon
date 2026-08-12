@@ -8,8 +8,6 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
-    //using VRC.SDK3.Components;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Mirror-Tuner#mirror-toggle-switch")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -17,8 +15,7 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MirrorToggleSwitch : UdonSharpBehaviour
     {
-        [SerializeField]
-        GameObject[] _targetList;
+        [SerializeField] GameObject[] _targetList;
 
         public override void Interact()
         {

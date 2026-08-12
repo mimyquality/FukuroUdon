@@ -151,7 +151,8 @@ MonoBehaviour:
       Data: 9|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: When set to this, its Udon Enable is linked to the pickup.
+      Data: "\u30D4\u30C3\u30AF\u30A2\u30C3\u30D7\u3057\u3066\u3044\u308B\u9593\u3060\u3051\u3001\u30BB\u30C3\u30C8\u3057\u305F
+        UdonBehaviour \u3092\u6709\u52B9\u306B\u306A\u308B\u3088\u3046\u5236\u5FA1\u3057\u307E\u3059\u3002"
     - Name: 
       Entry: 8
       Data: 

@@ -9,7 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-
+    
     public enum PlayerAudioRegulatorSwitchMode
     {
         Toggle,
@@ -34,7 +34,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _localPlayer = Networking.LocalPlayer;
 
@@ -47,9 +47,9 @@ namespace MimyLab.FukuroUdon
 
         public override void Interact()
         {
-            if (!EligiblePlayer(_localPlayer)) { return; }
+            if (!EligiblePlayer(_localPlayer)) return;
 
-            Networking.SetOwner(_localPlayer, this.gameObject);
+            Networking.SetOwner(_localPlayer, gameObject);
 
             if (switchMode == PlayerAudioRegulatorSwitchMode.Toggle)
             {
@@ -79,7 +79,7 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (!_localPlayer.IsOwner(this.gameObject)) { return; }
+            if (!_localPlayer.IsOwner(gameObject)) return;
 
             _assignedPlayerId = target.playerId;
             RequestSerialization();
@@ -93,7 +93,7 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (!_localPlayer.IsOwner(this.gameObject)) { return; }
+            if (!_localPlayer.IsOwner(gameObject)) return;
 
             _assignedPlayerId = -1;
             RequestSerialization();

@@ -21,7 +21,7 @@ namespace MimyLab.FukuroUdon
     {
         [SerializeField]
         [Tooltip("0 = VR \n1 = Desktop \n2 = Quest \n3 = Mobile")]
-        private GameObject[] _tooltip = new GameObject[0];
+        private GameObject[] _tooltip = System.Array.Empty<GameObject>();
 
         [Min(0.0f), Tooltip("sec")]
         public float longPushDuration = 0.8f;
@@ -55,7 +55,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _platform = Networking.LocalPlayer.IsUserInVR() ? SwivelChairPlayerPlatform.VR : SwivelChairPlayerPlatform.Desktop;
             if (InputManager.GetLastUsedInputMethod() == VRCInputMethod.Touch) { _platform = SwivelChairPlayerPlatform.Mobile; }
@@ -112,7 +112,7 @@ namespace MimyLab.FukuroUdon
         private void Update()
         {
             // カメラを出してる間は動かさない
-            if (_existPhotoCamera && _photoCamera.Active) { return; }
+            if (_existPhotoCamera && _photoCamera.Active) return;
 
             // 入力値を各種操作に反映
             if (!(_turnValue == 0.0f && _prevTurnValue == 0.0f))
@@ -150,11 +150,11 @@ namespace MimyLab.FukuroUdon
 
         private void FixedUpdate()
         {
-            if (!_casterRigidbody) { return; }
-            if (_inputMode != SwivelChairInputMode.CasterMove) { return; }
+            if (!_casterRigidbody) return;
+            if (_inputMode != SwivelChairInputMode.CasterMove) return;
 
             // カメラを出してる間は動かさない
-            if (_existPhotoCamera && _photoCamera.Active) { return; }
+            if (_existPhotoCamera && _photoCamera.Active) return;
 
             // 入力値を各種操作に反映
             if (!(_turnValue == 0.0f && _prevTurnValue == 0.0f))
@@ -209,7 +209,7 @@ namespace MimyLab.FukuroUdon
 
         public override void InputLookHorizontal(float value, UdonInputEventArgs args)
         {
-            if (_inputMode == SwivelChairInputMode.Disable) { return; }
+            if (_inputMode == SwivelChairInputMode.Disable) return;
 
             if (_platform == SwivelChairPlayerPlatform.VR)
             {

@@ -29,7 +29,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _targetSlider = _target ? _target.GetComponent<Slider>() : GetComponent<Slider>();
 
@@ -40,7 +40,10 @@ namespace MimyLab.FukuroUdon
             Initialize();
 
             Configure();
-            if (playOnAwake) { Restart(); }
+            if (playOnAwake)
+            {
+                Restart();
+            }
         }
 
         private void OnDisable()
@@ -50,7 +53,7 @@ namespace MimyLab.FukuroUdon
 
         public override void Reconfigure()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _tweenHandle.Kill();
             Configure();
@@ -58,58 +61,58 @@ namespace MimyLab.FukuroUdon
 
         public override void Play()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_targetSlider) { _tweenHandle.Play(); }
+            if (_targetSlider) _tweenHandle.Play();
         }
 
         public override void Pause()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_targetSlider) { _tweenHandle.Pause(); }
+            if (_targetSlider) _tweenHandle.Pause();
         }
 
         public override void Complete()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_targetSlider) { _tweenHandle.Complete(); }
+            if (_targetSlider) _tweenHandle.Complete();
         }
 
         public override void Restart()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_targetSlider) { _tweenHandle.Restart(); }
+            if (_targetSlider) _tweenHandle.Restart();
         }
 
         public override void Flip()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_targetSlider) { _tweenHandle.Flip(); }
+            if (_targetSlider) _tweenHandle.Flip();
         }
 
         public override void PlayBackwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_targetSlider) { _tweenHandle.PlayBackwards(); }
+            if (_targetSlider) _tweenHandle.PlayBackwards();
         }
 
         public override void PlayForwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_targetSlider) { _tweenHandle.PlayForwards(); }
+            if (_targetSlider) _tweenHandle.PlayForwards();
         }
 
         private void Configure()
         {
-            if (!_targetSlider) { return; }
+            if (!_targetSlider) return;
 
-            if (_referenceSlider) { tweenValue = _referenceSlider.value; }
+            if (_referenceSlider) tweenValue = _referenceSlider.value;
 
             _tweenHandle = _targetSlider.TweenValue(tweenValue, duration, easeType)
                 .SetDelay(delay).SetLoops(loops, loopType).Pause();

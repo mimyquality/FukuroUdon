@@ -8,8 +8,9 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.SDK3.Components;
+    using VRC.SDKBase;
+    using VRC.Udon.Common.Interfaces;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#equip-with-mos")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -18,40 +19,52 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
     public class EquipWithMOS : UdonSharpBehaviour
     {
-        [SerializeField]
-        private Transform snapPoint = null;
-        [SerializeField]
-        private ManualObjectSync target = null;
+        [SerializeField] private Transform snapPoint = null;
+        [SerializeField] private ManualObjectSync target = null;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         void Reset()
         {
-            if (!snapPoint) { snapPoint = this.transform; }
-            if (!target) { target = GetComponent<ManualObjectSync>(); }
+            if (!snapPoint)
+            {
+                snapPoint = transform;
+            }
+
+            if (!target)
+            {
+                target = GetComponent<ManualObjectSync>();
+            }
         }
 #endif
 
         private void Start()
         {
-            if (!snapPoint) { snapPoint = this.transform; }
-            if (!target) { target = GetComponent<ManualObjectSync>(); }
+            if (!snapPoint)
+            {
+                snapPoint = transform;
+            }
+
+            if (!target)
+            {
+                target = GetComponent<ManualObjectSync>();
+            }
         }
 
         public override void OnPickup()
         {
-            if (!target) { return; }
+            if (!target) return;
 
-            target.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(ManualObjectSync.CallUnequip));
+            target.SendCustomNetworkEvent(NetworkEventTarget.All, nameof(ManualObjectSync.CallUnequip));
         }
 
         public override void OnPickupUseDown()
         {
-            if (!target) { return; }
-            if (target.IsEquiped) { return; }
+            if (!target) return;
+            if (target.IsEquiped) return;
 
             Networking.SetOwner(Networking.LocalPlayer, target.gameObject);
             HumanBodyBones mostNearBone = MostNearBone(Networking.LocalPlayer);
-            if (mostNearBone == HumanBodyBones.LastBone) { return; }
+            if (mostNearBone == HumanBodyBones.LastBone) return;
 
             target.Equip(mostNearBone);
         }
@@ -66,7 +79,7 @@ namespace MimyLab.FukuroUdon
             for (int i = 0; i < lastBone; i++)
             {
                 Vector3 bonePosition = pl.GetBonePosition((HumanBodyBones)i);
-                if (bonePosition.Equals(Vector3.zero)) { continue; }
+                if (bonePosition.Equals(Vector3.zero)) continue;
 
                 float sqrtDistance = (snapPosition - bonePosition).sqrMagnitude;
                 if (sqrtDistance < mostNearSqrtDistance)

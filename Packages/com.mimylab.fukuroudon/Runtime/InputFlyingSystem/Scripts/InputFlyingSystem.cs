@@ -18,27 +18,20 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class InputFlyingSystem : UdonSharpBehaviour
     {
-        [Header("General Settings")]
-        [SerializeField]
-        [FieldChangeCallback(nameof(EnableFlight))]
+        [Header("General Settings")] 
+        [SerializeField] [FieldChangeCallback(nameof(EnableFlight))]
         private bool _enableFlight = true;
-        public bool flipInput = false;  // 上下入力を反転する
-        [Range(0.0f, 10.0f)]
-        public float flightSpeed = 6.0f;    // 飛行速度
-        [Range(0.0f, 10.0f)]
-        public float flightGravity = 0.1f;    // 飛行中の重力
-        [Range(0.0f, 10.0f)]
-        public float dampTime = 0.5f;   // 飛行速度の減衰時間
+        public bool flipInput = false; // 上下入力を反転する
+        [Range(0.0f, 10.0f)] public float flightSpeed = 6.0f; // 飛行速度
+        [Range(0.0f, 10.0f)] public float flightGravity = 0.1f; // 飛行中の重力
+        [Range(0.0f, 10.0f)] public float dampTime = 0.5f; // 飛行速度の減衰時間
 
-        [Header("Input config for VR")]
-        [Range(0.0f, 0.5f)]
-        public float deadZone = 0.05f;   // 不感帯、入力がこれ以下なら無効
+        [Header("Input config for VR")] 
+        [Range(0.0f, 0.5f)] public float deadZone = 0.05f; // 不感帯、入力がこれ以下なら無効
 
         [Header("Input config for desktop")]
-        [SerializeField]
-        private KeyCode riseKeyCode = KeyCode.E;    // 上昇
-        [SerializeField]
-        private KeyCode fallKeyCode = KeyCode.Q;    // 下降
+        [SerializeField] private KeyCode riseKeyCode = KeyCode.E; // 上昇
+        [SerializeField] private KeyCode fallKeyCode = KeyCode.Q; // 下降
 
         private VRCPlayerApi _localPlayer;
         private VRCCameraSettings _camera;
@@ -51,7 +44,7 @@ namespace MimyLab.FukuroUdon
         private Vector3 _velocity;
         private float _elapsedTime = 0.0f;
 
-        public bool EnableFlight    // 飛行システムを有効化する
+        public bool EnableFlight // 飛行システムを有効化する
         {
             get => _enableFlight;
             set
@@ -73,7 +66,10 @@ namespace MimyLab.FukuroUdon
 
         private void OnDisable()
         {
-            if (_isFlying) { Fly(false); }
+            if (_isFlying)
+            {
+                Fly(false);
+            }
         }
 
         private void Update()
@@ -102,18 +98,20 @@ namespace MimyLab.FukuroUdon
         private void InputKeyboard()
         {
             // 非VRのみキーボード入力受付
-            if (_localPlayer.IsUserInVR()) { return; }
-
+            if (_localPlayer.IsUserInVR()) return;
+            
             if (Input.GetKeyDown(fallKeyCode))
             {
                 // 下降
                 _inputDirection.y = flipInput ? 1.0f : -1.0f;
             }
+
             if (Input.GetKeyDown(riseKeyCode))
             {
                 // 上昇
                 _inputDirection.y = flipInput ? -1.0f : 1.0f;
             }
+
             if (Input.GetKeyUp(fallKeyCode))
             {
                 if (Input.GetKey(riseKeyCode))
@@ -127,6 +125,7 @@ namespace MimyLab.FukuroUdon
                     _inputDirection.y = 0.0f;
                 }
             }
+
             if (Input.GetKeyUp(riseKeyCode))
             {
                 if (Input.GetKey(fallKeyCode))
@@ -155,14 +154,14 @@ namespace MimyLab.FukuroUdon
         public override void InputLookVertical(float value, UdonInputEventArgs args)
         {
             // 非VRは無効
-            if (!_localPlayer.IsUserInVR()) { return; }
-
+            if (!_localPlayer.IsUserInVR()) return;
+            
             _inputDirection.y = (Mathf.Abs(value) >= deadZone) ? flipInput ? -value : value : 0.0f;
         }
 
         public override void InputJump(bool value, UdonInputEventArgs args)
         {
-            if (!_enableFlight) { return; }
+            if (!_enableFlight) return;
 
             // 飛行モードへの移行判定
             if (!_isFlying && value && !_localPlayer.IsPlayerGrounded())

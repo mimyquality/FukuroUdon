@@ -8,13 +8,11 @@ namespace MimyLab.FukuroUdon
 {
     using UnityEngine;
     using VRC.SDK3.Components;
-
+    
 #if UNITY_EDITOR
     using UnityEditor;
     using UnityEditor.SceneManagement;
     using UnityEngine.SceneManagement;
-
-    //using UdonSharpEditor;
 #endif
 
     [ExecuteAlways]
@@ -28,24 +26,24 @@ namespace MimyLab.FukuroUdon
 
         private void Start()
         {
-            this.gameObject.tag = "EditorOnly";
-            this.gameObject.hideFlags = HideFlags.HideInHierarchy;
+            gameObject.tag = "EditorOnly";
+            gameObject.hideFlags = HideFlags.HideInHierarchy;
             _updateManager = GetComponentInParent<MOSUpdateManager>();
         }
 
         private void Update()
         {
-            if (EditorApplication.isPlayingOrWillChangePlaymode) { return; }
-            if (PrefabStageUtility.GetCurrentPrefabStage() != null) { return; }
-            if (PrefabUtility.IsPartOfPrefabAsset(this)) { return; }
+            if (EditorApplication.isPlayingOrWillChangePlaymode) return;
+            if (PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+            if (PrefabUtility.IsPartOfPrefabAsset(this)) return;
 
-            Scene scene = this.gameObject.scene;
-            if (!scene.IsValid()) { return; }
-            if (!scene.isLoaded) { return; }
+            Scene scene = gameObject.scene;
+            if (!scene.IsValid()) return;
+            if (!scene.isLoaded) return;
 
             if (!_sceneDescriptor)
             {
-                if (!(_sceneDescriptor = FindObjectOfType<VRCSceneDescriptor>())) { return; }
+                if (!(_sceneDescriptor = FindObjectOfType<VRCSceneDescriptor>())) return;
             }
 
             if (_respawnHeightY != _sceneDescriptor.RespawnHeightY)

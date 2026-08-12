@@ -23,17 +23,16 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PARListController : UdonSharpBehaviour
     {
-        [SerializeField]
-        private PlayerAudioRegulatorList targetList;
-        [SerializeField]
-        private PlayerAudioRegulatorListControllerSwitchMode switchMode;
+        [SerializeField] private PlayerAudioRegulatorList targetList;
+        [SerializeField] private PlayerAudioRegulatorListControllerSwitchMode switchMode;
 
         private VRCPlayerApi _localPlayer;
 
         private bool _initialized = false;
+
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _localPlayer = Networking.LocalPlayer;
 

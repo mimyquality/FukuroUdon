@@ -8,8 +8,6 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
-    //using VRC.SDK3.Components;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Mirror-Tuner#mirrorprofile-change-switch")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -17,11 +15,9 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MirrorProfileChangeSwitch : UdonSharpBehaviour
     {
-        [SerializeField]
-        private MirrorTuner _mirrorTuner;
+        [SerializeField] private MirrorTuner _mirrorTuner;
 
-        [SerializeField]
-        private int _targetNumber = 0;
+        [SerializeField] private int _targetNumber = 0;
 
         public override void Interact()
         {

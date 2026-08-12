@@ -8,9 +8,9 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.SDK3.Components;
-
+    using VRC.SDKBase;
+    
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#audio-play-sync")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Audio Play Sync")]
@@ -18,19 +18,16 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class AudioPlaySync : UdonSharpBehaviour
     {
-        private const float TimeTolerance = 0.05f;   // 単位：sec
+        private const float TimeTolerance = 0.05f; // 単位：sec
 
         [SerializeField, Min(1.0f), Tooltip("sec")]
         private float _playCheckInterval = 5.0f;
-        [SerializeField]
-        private bool _syncVolume = false;
 
-        [UdonSynced]
-        private bool sync_isPlaying = false;
-        [UdonSynced]
-        private double sync_latestPlayStartTime = 0.0d;
-        [UdonSynced]
-        private float sync_volume = 0.5f;
+        [SerializeField] private bool _syncVolume = false;
+
+        [UdonSynced] private bool sync_isPlaying = false;
+        [UdonSynced] private double sync_latestPlayStartTime = 0.0d;
+        [UdonSynced] private float sync_volume = 0.5f;
 
         private AudioSource _audioSource;
         private double _latestPlayStartTime = 0.0d;
@@ -38,14 +35,16 @@ namespace MimyLab.FukuroUdon
         private VRCTweenHandle _audioCheckHandle;
 
         private bool _initialized = false;
+
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _audioSource = GetComponent<AudioSource>();
 
             _initialized = true;
         }
+
         private void OnEnable()
         {
             Initialize();
@@ -67,12 +66,13 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (!_audioSource) { return; }
+            if (!_audioSource) return;
 
             if (sync_isPlaying && !_audioSource.isPlaying)
             {
                 _audioSource.Play();
             }
+
             if (!sync_isPlaying && _audioSource.isPlaying)
             {
                 _audioSource.Pause();
@@ -82,12 +82,14 @@ namespace MimyLab.FukuroUdon
             {
                 _latestPlayStartTime = sync_latestPlayStartTime;
 
-                float audioTime = (float)Networking.CalculateServerDeltaTime(Networking.GetServerTimeInSeconds(), sync_latestPlayStartTime);
+                float audioTime = (float)Networking.CalculateServerDeltaTime(Networking.GetServerTimeInSeconds(),
+                    sync_latestPlayStartTime);
                 float audioLength = _audioSource.clip.length;
                 if (audioTime > audioLength)
                 {
                     audioTime -= audioLength;
                 }
+
                 _audioSource.time = Mathf.Clamp(audioTime, 0.0f, audioLength);
             }
 
@@ -99,8 +101,12 @@ namespace MimyLab.FukuroUdon
 
         private void BeginAudioCheck()
         {
-            if (_audioCheckHandle.IsActive) { _audioCheckHandle.Kill(); }
-            if (Networking.IsOwner(this.gameObject))
+            if (_audioCheckHandle.IsActive)
+            {
+                _audioCheckHandle.Kill();
+            }
+
+            if (Networking.IsOwner(gameObject))
             {
                 float duration = _playCheckInterval + Random.Range(0.0f, _playCheckInterval);
                 _audioCheckHandle = VRCTween.DelayedCall(this, nameof(_RepeatAudioCheck), duration);
@@ -109,19 +115,22 @@ namespace MimyLab.FukuroUdon
 
         public void _RepeatAudioCheck()
         {
-            if (!this.isActiveAndEnabled) { return; }
-            if (!Networking.IsOwner(this.gameObject)) { return; }
+            if (!isActiveAndEnabled) return;
+            if (!Networking.IsOwner(gameObject)) return;
 
-            if (CheckAudioChange()) { RequestSerialization(); }
+            if (CheckAudioChange())
+            {
+                RequestSerialization();
+            }
 
             _audioCheckHandle.SetDuration(_playCheckInterval).Restart();
         }
 
         private bool CheckAudioChange()
         {
+            if (!_audioSource) return false;
+            
             var result = false;
-
-            if (!_audioSource) { return result; }
 
             if (sync_isPlaying != _audioSource.isPlaying)
             {
@@ -132,7 +141,8 @@ namespace MimyLab.FukuroUdon
             if (sync_isPlaying)
             {
                 double currentPlayStartTime = Networking.GetServerTimeInSeconds() - _audioSource.time;
-                double differenceTime = Networking.CalculateServerDeltaTime(currentPlayStartTime, sync_latestPlayStartTime);
+                double differenceTime =
+                    Networking.CalculateServerDeltaTime(currentPlayStartTime, sync_latestPlayStartTime);
                 if (!(-TimeTolerance <= differenceTime && differenceTime <= TimeTolerance))
                 {
                     sync_latestPlayStartTime = currentPlayStartTime;

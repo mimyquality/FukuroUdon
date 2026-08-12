@@ -12,16 +12,16 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.SDK3.Dynamics.Contact.Components;
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Better-AvatarPedestal#contact-receiver-infomation")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Better-AvatarPedestal#contact-receiver-information")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Better AvatarPedestal/Contact Receiver Infomation")]
+    [AddComponentMenu("Fukuro Udon/Better AvatarPedestal/Contact Receiver Information")]
     [RequireComponent(typeof(VRCContactReceiver))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ContactReceiverInfomation : UdonSharpBehaviour
     {
         private const int MaxSenderCache = 128;
 
-        [SerializeField, Min(0.0f), Tooltip("Minimum collision velocity to trigger OnEnter. m/s")]
+        [SerializeField, Min(0.0f), Tooltip("OnEnter 判定に最低限必要な衝突速度. m/s")]
         private float _minVelocity = 0.0f;
 
         private VRCContactReceiver _receiver;

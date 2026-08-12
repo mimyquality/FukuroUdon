@@ -41,7 +41,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _targetGraphic = _target ? _target.GetComponent<MaskableGraphic>() : GetComponent<MaskableGraphic>();
             _targetCanvasGroup = _target ? _target.GetComponent<CanvasGroup>() : GetComponent<CanvasGroup>();
@@ -56,7 +56,10 @@ namespace MimyLab.FukuroUdon
             Initialize();
 
             Configure();
-            if (playOnAwake) { Restart(); }
+            if (playOnAwake)
+            {
+                Restart();
+            }
         }
 
         private void OnDisable()
@@ -67,7 +70,7 @@ namespace MimyLab.FukuroUdon
 
         public override void Reconfigure()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _colorHandle.Kill();
             _fadeHandle.Kill();
@@ -76,58 +79,58 @@ namespace MimyLab.FukuroUdon
 
         public override void Play()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Play(); }
-            if (_isChangeFade) { _fadeHandle.Play(); }
+            if (_isChangeColor) _colorHandle.Play();
+            if (_isChangeFade) _fadeHandle.Play();
         }
 
         public override void Pause()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Pause(); }
-            if (_isChangeFade) { _fadeHandle.Pause(); }
+            if (_isChangeColor) _colorHandle.Pause();
+            if (_isChangeFade) _fadeHandle.Pause();
         }
 
         public override void Complete()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Complete(); }
-            if (_isChangeFade) { _fadeHandle.Complete(); }
+            if (_isChangeColor) _colorHandle.Complete();
+            if (_isChangeFade) _fadeHandle.Complete();
         }
 
         public override void Restart()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Restart(); }
-            if (_isChangeFade) { _fadeHandle.Restart(); }
+            if (_isChangeColor) _colorHandle.Restart();
+            if (_isChangeFade) _fadeHandle.Restart();
         }
 
         public override void Flip()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Flip(); }
-            if (_isChangeFade) { _fadeHandle.Flip(); }
+            if (_isChangeColor) _colorHandle.Flip();
+            if (_isChangeFade) _fadeHandle.Flip();
         }
 
         public override void PlayBackwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.PlayBackwards(); }
-            if (_isChangeFade) { _fadeHandle.PlayBackwards(); }
+            if (_isChangeColor) _colorHandle.PlayBackwards();
+            if (_isChangeFade) _fadeHandle.PlayBackwards();
         }
 
         public override void PlayForwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.PlayForwards(); }
-            if (_isChangeFade) { _fadeHandle.PlayForwards(); }
+            if (_isChangeColor) _colorHandle.PlayForwards();
+            if (_isChangeFade) _fadeHandle.PlayForwards();
         }
 
         private void Configure()

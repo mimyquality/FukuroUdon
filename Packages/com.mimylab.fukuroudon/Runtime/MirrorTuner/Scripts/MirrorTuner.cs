@@ -8,7 +8,6 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
     using VRC.SDK3.Components;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Mirror-Tuner#mirror-tuner")]
@@ -18,8 +17,7 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MirrorTuner : UdonSharpBehaviour
     {
-        [SerializeField]
-        private MirrorProfile[] _profileList;
+        [SerializeField] private MirrorProfile[] _profileList;
 
         private VRCMirrorReflection _mirror;
         private Renderer _renderer;
@@ -79,8 +77,8 @@ namespace MimyLab.FukuroUdon
 
                 _customMaterial = value;
 
-                if (!_isStarted) { return; }
-                if (!_renderer) { return; }
+                if (!_isStarted) return;
+                if (!_renderer) return;
 
                 _renderer.sharedMaterial = value ? value : _defaultMaterial;
             }
@@ -89,7 +87,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _mirror = GetComponent<VRCMirrorReflection>();
             _renderer = _mirror.GetComponent<MeshRenderer>();
@@ -120,9 +118,9 @@ namespace MimyLab.FukuroUdon
         public void SetProfile9() { SetProfile(9); }
         public void SetProfile(int number)
         {
-            if (number < 0) { return; }
-            if (number >= _profileList.Length) { return; }
-            if (!_profileList[number]) { return; }
+            if (number < 0) return;
+            if (number >= _profileList.Length) return;
+            if (!_profileList[number]) return;
 
             // セッター内で Initialize() されるので省略
             //Initialize();

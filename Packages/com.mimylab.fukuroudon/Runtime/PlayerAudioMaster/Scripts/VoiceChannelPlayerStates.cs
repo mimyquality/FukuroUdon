@@ -9,24 +9,23 @@ namespace MimyLab.FukuroUdon
     using TMPro;
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.SDK3.Components;
-
+    using VRC.SDKBase;
+    
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#voicechannel-player-states")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [RequireComponent(typeof(VRCPlayerObject))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class VoiceChannelPlayerStates : UdonSharpBehaviour
     {
-        [SerializeField]
-        private VoiceChannelSelector _selector;
-        [SerializeField]
-        private TextMeshProUGUI _playersNameText;
+        [SerializeField] private VoiceChannelSelector _selector;
+        [SerializeField] private TextMeshProUGUI _playersNameText;
 
         private Transform _defaultParent;
 
         [FieldChangeCallback(nameof(VoiceChannel))]
         private int _voiceChannel = -1;
+
         public int VoiceChannel
         {
             get => _voiceChannel;
@@ -44,17 +43,23 @@ namespace MimyLab.FukuroUdon
         }
 
         private bool _initialized = false;
+
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
-            _defaultParent = this.transform.parent;
+            _defaultParent = transform.parent;
 
-            if (!_playersNameText) { _playersNameText = GetComponentInChildren<TextMeshProUGUI>(true); }
-            _playersNameText.text = Networking.GetOwner(this.gameObject).displayName;
+            if (!_playersNameText)
+            {
+                _playersNameText = GetComponentInChildren<TextMeshProUGUI>(true);
+            }
+
+            _playersNameText.text = Networking.GetOwner(gameObject).displayName;
 
             _initialized = true;
         }
+
         private void Start()
         {
             Initialize();
@@ -67,7 +72,7 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            this.transform.SetParent(_defaultParent, false);
+            transform.SetParent(_defaultParent, false);
         }
     }
 }

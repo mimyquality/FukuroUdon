@@ -11,8 +11,6 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using UnityEngine.UI;
 
-    //using VRC.SDKBase;
-
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Smart-Slideshow#sss_controller")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Smart Slideshow/SSs Controller")]

@@ -8,8 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.SDK3.Components.Video;
+    using VRC.SDKBase;
 
     [System.Flags]
     public enum ActiveRelayVideoEvents

@@ -25,25 +25,27 @@ namespace MimyLab.FukuroUdon
     public class LocalPlayerCameraTracker : UdonSharpBehaviour
     {
         [Header("General Settings")]
-        public LocalPlayerCameraTrackerCameraType trackingPoint = LocalPlayerCameraTrackerCameraType.ScreenCamera;    // 追跡対象
+        // 追跡対象
+        public LocalPlayerCameraTrackerCameraType trackingPoint = LocalPlayerCameraTrackerCameraType.ScreenCamera;
+
         public bool enablePosition = true;
         public bool enableRotation = true;
 
         private void OnEnable()
         {
-            VRCCameraSettings camera = GetCamera(trackingPoint);
-            if (Utilities.IsValid(camera))
+            VRCCameraSettings targetCamera = GetCamera(trackingPoint);
+            if (Utilities.IsValid(targetCamera))
             {
                 // 初期位置にリセット
-                Vector3 pos = enablePosition ? camera.Position : transform.position;
-                Quaternion rot = enableRotation ? camera.Rotation : transform.rotation;
+                Vector3 pos = enablePosition ? targetCamera.Position : transform.position;
+                Quaternion rot = enableRotation ? targetCamera.Rotation : transform.rotation;
                 transform.SetPositionAndRotation(pos, rot);
             }
         }
 
         public override void PostLateUpdate()
         {
-            if (!enablePosition && !enableRotation) { return; }
+            if (!enablePosition && !enableRotation) return;
 
             VRCCameraSettings camera = GetCamera(trackingPoint);
             if (Utilities.IsValid(camera))
@@ -55,8 +57,8 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        public void TrackingScreenCamera() { trackingPoint = LocalPlayerCameraTrackerCameraType.ScreenCamera; }
-        public void TrackingPhotoCamera() { trackingPoint = LocalPlayerCameraTrackerCameraType.PhotoCamera; }
+        public void TrackingScreenCamera() => trackingPoint = LocalPlayerCameraTrackerCameraType.ScreenCamera;
+        public void TrackingPhotoCamera() => trackingPoint = LocalPlayerCameraTrackerCameraType.PhotoCamera;
 
         protected virtual Vector3 GetTrackingPosition(VRCCameraSettings trackingTarget)
         {
@@ -70,18 +72,12 @@ namespace MimyLab.FukuroUdon
 
         private VRCCameraSettings GetCamera(LocalPlayerCameraTrackerCameraType cameraType)
         {
-            VRCCameraSettings camera = null;
-            switch (cameraType)
+            if (cameraType == LocalPlayerCameraTrackerCameraType.PhotoCamera)
             {
-                case LocalPlayerCameraTrackerCameraType.ScreenCamera:
-                    camera = VRCCameraSettings.ScreenCamera;
-                    break;
-                case LocalPlayerCameraTrackerCameraType.PhotoCamera:
-                    camera = VRCCameraSettings.PhotoCamera;
-                    break;
+                return VRCCameraSettings.PhotoCamera;
             }
-
-            return camera;
+            
+            return VRCCameraSettings.ScreenCamera;
         }
     }
 }

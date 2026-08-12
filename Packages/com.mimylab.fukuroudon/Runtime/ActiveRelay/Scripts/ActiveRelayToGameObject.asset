@@ -286,7 +286,7 @@ MonoBehaviour:
       Data: 19|VRC.SDKBase.Editor.Attributes.HelpBoxAttribute, VRCSDKBase
     - Name: text
       Entry: 1
-      Data: Disable delay if Dlelay Time is 0
+      Data: "Delay Time \u3092 0 \u306B\u8A2D\u5B9A\u3059\u308B\u3068\u9045\u5EF6\u305B\u305A\u306B\u5B9F\u884C\u3057\u307E\u3059\u3002"
     - Name: messageType
       Entry: 3
       Data: 1

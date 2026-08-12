@@ -82,7 +82,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _station = GetComponent<VRCStation>();
             _seat = _station.transform;
@@ -107,7 +107,7 @@ namespace MimyLab.FukuroUdon
 
         public override void OnStationEntered(VRCPlayerApi player)
         {
-            if (!player.isLocal) { return; }
+            if (!player.isLocal) return;
 
             _isSitting = true;
 
@@ -126,21 +126,24 @@ namespace MimyLab.FukuroUdon
 
         public override void OnStationExited(VRCPlayerApi player)
         {
-            if (!player.isLocal) { return; }
+            if (!player.isLocal) return;
 
             _isSitting = false;
             _hasAvatarChangedSinceStandUp = false;
 
             _localOffset = _offset;
             _avatarEyeHeight = player.GetAvatarEyeHeightAsMeters();
-            if (_adjustmentSync) { _adjustmentSync.Save(_offset, _avatarEyeHeight); }
+            if (_adjustmentSync)
+            {
+                _adjustmentSync.Save(_offset, _avatarEyeHeight); 
+            }
 
             _swivelChair2.OnStandUp();
         }
 
         public override void OnAvatarChanged(VRCPlayerApi player)
         {
-            if (!player.isLocal) { return; }
+            if (!player.isLocal) return;
 
             _hasAvatarChangedSinceStandUp = true;
 
@@ -185,13 +188,13 @@ namespace MimyLab.FukuroUdon
 
         public void AutoAdjust()
         {
-            if (!autoAdjustWhenSitting) { return; }
-            if (!_seatPoint) { return; }
-            if (!_isSitting) { return; }
+            if (!autoAdjustWhenSitting) return;
+            if (!_seatPoint) return;
+            if (!_isSitting) return;
 
             VRCPlayerApi localPlayer = Networking.LocalPlayer;
             Vector3 hipsPosition = localPlayer.GetBonePosition(HumanBodyBones.Hips);
-            if (hipsPosition.Equals(Vector3.zero)) { return; }
+            if (hipsPosition.Equals(Vector3.zero)) return;
 
             Transform parent = _enterPoint.parent;
             if (parent)

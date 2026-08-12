@@ -8,8 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.SDK3.Components;
+    using VRC.SDKBase;
 
     public enum PlayerAudioRegulatorPickupEventType
     {
@@ -27,8 +27,7 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
     public class PARSwitchController : UdonSharpBehaviour
     {
-        [SerializeField]
-        private PlayerAudioRegulatorSwitch linkedSwitch;
+        [SerializeField] private PlayerAudioRegulatorSwitch linkedSwitch;
 
         public PlayerAudioRegulatorPickupEventType assignEvent = PlayerAudioRegulatorPickupEventType.OnPickupUseDown;
         public PlayerAudioRegulatorPickupEventType releaseEvent = PlayerAudioRegulatorPickupEventType.OnPickupUseUp;
@@ -37,15 +36,17 @@ namespace MimyLab.FukuroUdon
         private VRCPlayerApi _localPlayer;
 
         private bool _initialized = false;
+
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _pickup = GetComponent<VRCPickup>();
             _localPlayer = Networking.LocalPlayer;
 
             _initialized = true;
         }
+
         private void Start()
         {
             Initialize();

@@ -34,23 +34,30 @@ namespace MimyLab.FukuroUdon
     public class SwivelChair2 : UdonSharpBehaviour
     {
         [Header("Additional Settings")]
-        [SerializeField]
-        private VRCPickup _pickup;
-        [SerializeField]
-        private SC2Caster _caster;
+        [SerializeField] private VRCPickup _pickup;
+        [SerializeField] private SC2Caster _caster;
 
         internal SC2SeatAdjuster _seatAdjuster;
         internal SC2InputManager _inputManager;
 
         private bool _initialized = false;
+
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _seatAdjuster = GetComponentInChildren<SC2SeatAdjuster>(true);
             _inputManager = GetComponentInChildren<SC2InputManager>(true);
-            if (!_pickup) { _pickup = GetComponentInParent<VRCPickup>(); }  // 何故か includeInactive 引数が渡せない
-            if (!_caster) { _caster = GetComponentInParent<SC2Caster>(true); }
+            if (!_pickup)
+            {
+                // 何故か includeInactive 引数が渡せない
+                _pickup = GetComponentInParent<VRCPickup>();
+            } 
+
+            if (!_caster)
+            {
+                _caster = GetComponentInParent<SC2Caster>(true);
+            }
 
             _seatAdjuster._swivelChair2 = this;
             _inputManager._seatAdjuster = _seatAdjuster;
@@ -58,6 +65,7 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
+
         private void Start()
         {
             Initialize();
@@ -77,7 +85,10 @@ namespace MimyLab.FukuroUdon
 
         public override void OnDrop()
         {
-            if (!_seatAdjuster._isSitting) { _seatAdjuster.DisableInteractive = false; }
+            if (!_seatAdjuster._isSitting)
+            {
+                _seatAdjuster.DisableInteractive = false;
+            }
 
             if (_caster)
             {
@@ -90,15 +101,25 @@ namespace MimyLab.FukuroUdon
         {
             _seatAdjuster.DisableInteractive = true;
             _inputManager.enabled = true;
-            if (_pickup) { _pickup.pickupable = false; }
-            if (_caster) { Networking.SetOwner(Networking.LocalPlayer, _caster.gameObject); }
+            if (_pickup)
+            {
+                _pickup.pickupable = false;
+            }
+
+            if (_caster)
+            {
+                Networking.SetOwner(Networking.LocalPlayer, _caster.gameObject);
+            }
         }
 
         public void OnStandUp()
         {
             _seatAdjuster.DisableInteractive = false;
             _inputManager.enabled = false;
-            if (_pickup) { _pickup.pickupable = true; }
+            if (_pickup)
+            {
+                _pickup.pickupable = true;
+            }
         }
     }
 }

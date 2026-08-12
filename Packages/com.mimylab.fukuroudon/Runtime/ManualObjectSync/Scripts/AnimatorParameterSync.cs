@@ -6,13 +6,14 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
+    using System;
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.SDK3.Components;
     using VRC.SDK3.Network;
+    using VRC.SDKBase;
     using VRC.Udon.Common;
-
+    
     public enum AnimatorParameterSyncSmoothingMode
     {
         None,
@@ -27,40 +28,32 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class AnimatorParameterSync : UdonSharpBehaviour
     {
-        private const float ParameterCheckTickRate = 0.1f;  // 10Hz
+        private const float ParameterCheckTickRate = 0.1f; // 10Hz
         private const float SmoothingDuration = 1.0f;
 
-        [SerializeField]
-        private string[] _parameterNames = new string[0];
-        [SerializeField, Tooltip("smoothing is only float parameters")]
+        [SerializeField] private string[] _parameterNames = new string[0];
+
+        [SerializeField, Tooltip("この設定は float パラメーターのみに影響します。")]
         private AnimatorParameterSyncSmoothingMode _smoothingMode = AnimatorParameterSyncSmoothingMode.None;
 
-        [SerializeField, HideInInspector]
-        private int[] _parameterHashes = new int[0];
+        [SerializeField, HideInInspector] private int[] _parameterHashes = Array.Empty<int>();
 
-        [System.NonSerialized]
-        public float _floatElapsed;
+        [NonSerialized] public float _floatElapsed;
 
-        [UdonSynced]
-        private int[] sync_boolParameterHashes = new int[0];
-        [UdonSynced]
-        private bool[] sync_boolParameterValues = new bool[0];
-        [UdonSynced]
-        private int[] sync_intParameterHashes = new int[0];
-        [UdonSynced]
-        private int[] sync_intParameterValues = new int[0];
-        [UdonSynced]
-        private int[] sync_floatParameterHashes = new int[0];
-        [UdonSynced]
-        private float[] sync_floatParameterValues = new float[0];
+        [UdonSynced] private int[] sync_boolParameterHashes = Array.Empty<int>();
+        [UdonSynced] private bool[] sync_boolParameterValues = Array.Empty<bool>();
+        [UdonSynced] private int[] sync_intParameterHashes = Array.Empty<int>();
+        [UdonSynced] private int[] sync_intParameterValues = Array.Empty<int>();
+        [UdonSynced] private int[] sync_floatParameterHashes = Array.Empty<int>();
+        [UdonSynced] private float[] sync_floatParameterValues = Array.Empty<float>();
 
         private Animator _animator;
-        private int[] _boolParameterHashes = new int[0];
-        private bool[] _boolParameterValues = new bool[0];
-        private int[] _intParameterHashes = new int[0];
-        private int[] _intParameterValues = new int[0];
-        private int[] _floatParameterHashes = new int[0];
-        private float[] _floatParameterValues = new float[0];
+        private int[] _boolParameterHashes = Array.Empty<int>();
+        private bool[] _boolParameterValues = Array.Empty<bool>();
+        private int[] _intParameterHashes = Array.Empty<int>();
+        private int[] _intParameterValues = Array.Empty<int>();
+        private int[] _floatParameterHashes = Array.Empty<int>();
+        private float[] _floatParameterValues = Array.Empty<float>();
         private VRCTweenHandle _parameterCheckHandle;
         private VRCTweenHandle _floatSmoothingHandle;
         private float _lastReceiveTime;
@@ -72,6 +65,7 @@ namespace MimyLab.FukuroUdon
             {
                 _parameterHashes = new int[_parameterNames.Length];
             }
+
             for (int i = 0; i < _parameterNames.Length; i++)
             {
                 _parameterHashes[i] = Animator.StringToHash(_parameterNames[i]);
@@ -80,9 +74,10 @@ namespace MimyLab.FukuroUdon
 #endif
 
         private bool _initialized = false;
+
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _animator = GetComponent<Animator>();
 
@@ -98,7 +93,7 @@ namespace MimyLab.FukuroUdon
             for (int i = 0; i < parameterCount; i++)
             {
                 var hash = parameters[i].nameHash;
-                if (System.Array.IndexOf(_parameterHashes, hash) < 0) { continue; }
+                if (Array.IndexOf(_parameterHashes, hash) < 0) continue;
 
                 switch (parameters[i].type)
                 {
@@ -107,20 +102,23 @@ namespace MimyLab.FukuroUdon
                     case AnimatorControllerParameterType.Float: tmp_floatParameterHashes[floatCount++] = hash; break;
                 }
             }
+
             _boolParameterHashes = new int[boolCount];
             _boolParameterValues = new bool[boolCount];
-            System.Array.Copy(tmp_boolParameterHashes, _boolParameterHashes, boolCount);
+            Array.Copy(tmp_boolParameterHashes, _boolParameterHashes, boolCount);
             _intParameterHashes = new int[intCount];
             _intParameterValues = new int[intCount];
-            System.Array.Copy(tmp_intParameterHashes, _intParameterHashes, intCount);
+            Array.Copy(tmp_intParameterHashes, _intParameterHashes, intCount);
             _floatParameterHashes = new int[floatCount];
             _floatParameterValues = new float[floatCount];
-            System.Array.Copy(tmp_floatParameterHashes, _floatParameterHashes, floatCount);
+            Array.Copy(tmp_floatParameterHashes, _floatParameterHashes, floatCount);
 
-            _floatSmoothingHandle = VRCTween.TweenFloat(0.0f, 1.0f, SmoothingDuration, this, nameof(_floatElapsed), nameof(_SmoothingFloat), VRCTweenEase.Linear).Pause();
+            _floatSmoothingHandle = VRCTween.TweenFloat(0.0f, 1.0f, SmoothingDuration, this, nameof(_floatElapsed),
+                nameof(_SmoothingFloat), VRCTweenEase.Linear).Pause();
 
             _initialized = true;
         }
+
         private void OnEnable()
         {
             Initialize();
@@ -130,9 +128,9 @@ namespace MimyLab.FukuroUdon
 
         private void Update()
         {
-            if (!Networking.IsOwner(this.gameObject))
+            if (!Networking.IsOwner(gameObject))
             {
-                if (_smoothingMode == AnimatorParameterSyncSmoothingMode.None) { return; }
+                if (_smoothingMode == AnimatorParameterSyncSmoothingMode.None) return;
 
                 _SmoothingFloat();
             }
@@ -155,6 +153,7 @@ namespace MimyLab.FukuroUdon
                 sync_boolParameterHashes = new int[_boolParameterHashes.Length];
                 sync_boolParameterValues = new bool[_boolParameterValues.Length];
             }
+
             if (_boolParameterHashes.Length > 0)
             {
                 _boolParameterHashes.CopyTo(sync_boolParameterHashes, 0);
@@ -166,6 +165,7 @@ namespace MimyLab.FukuroUdon
                 sync_intParameterHashes = new int[_intParameterHashes.Length];
                 sync_intParameterValues = new int[_intParameterValues.Length];
             }
+
             if (_intParameterHashes.Length > 0)
             {
                 _intParameterHashes.CopyTo(sync_intParameterHashes, 0);
@@ -177,6 +177,7 @@ namespace MimyLab.FukuroUdon
                 sync_floatParameterHashes = new int[_floatParameterHashes.Length];
                 sync_floatParameterValues = new float[_floatParameterValues.Length];
             }
+
             if (_floatParameterHashes.Length > 0)
             {
                 _floatParameterHashes.CopyTo(sync_floatParameterHashes, 0);
@@ -190,8 +191,8 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _boolParameterHashes.Length; i++)
             {
-                int index = System.Array.IndexOf(sync_boolParameterHashes, _boolParameterHashes[i]);
-                if (index < 0) { continue; }
+                int index = Array.IndexOf(sync_boolParameterHashes, _boolParameterHashes[i]);
+                if (index < 0) continue;
 
                 if (_animator.GetBool(_boolParameterHashes[i]) != sync_boolParameterValues[index])
                 {
@@ -202,8 +203,8 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _intParameterHashes.Length; i++)
             {
-                int index = System.Array.IndexOf(sync_intParameterHashes, _intParameterHashes[i]);
-                if (index < 0) { continue; }
+                int index = Array.IndexOf(sync_intParameterHashes, _intParameterHashes[i]);
+                if (index < 0) continue;
 
                 if (_animator.GetInteger(_intParameterHashes[i]) != sync_intParameterValues[index])
                 {
@@ -215,11 +216,11 @@ namespace MimyLab.FukuroUdon
             var floatIsSync = false;
             for (int i = 0; i < _floatParameterHashes.Length; i++)
             {
-                int index = System.Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
-                if (index < 0) { continue; }
+                int index = Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
+                if (index < 0) continue;
 
                 float animatorFloatParameter = _animator.GetFloat(_floatParameterHashes[i]);
-                if (Mathf.Approximately(animatorFloatParameter, sync_floatParameterValues[index])) { continue; }
+                if (Mathf.Approximately(animatorFloatParameter, sync_floatParameterValues[index])) continue;
 
                 if (_smoothingMode == AnimatorParameterSyncSmoothingMode.None)
                 {
@@ -232,9 +233,12 @@ namespace MimyLab.FukuroUdon
                     floatIsSync = true;
                 }
             }
+
             if (floatIsSync)
             {
-                var ease = _smoothingMode == AnimatorParameterSyncSmoothingMode.Smooth ? VRCTweenEase.InOutSine : VRCTweenEase.Linear;
+                var ease = _smoothingMode == AnimatorParameterSyncSmoothingMode.Smooth
+                    ? VRCTweenEase.InOutSine
+                    : VRCTweenEase.Linear;
                 float duration = result.receiveTime - _lastReceiveTime;
                 duration = Mathf.Min(Stats.ReceiveInterval(gameObject), duration, SmoothingDuration);
                 _floatSmoothingHandle.SetEase(ease).SetDuration(duration).Restart();
@@ -247,29 +251,37 @@ namespace MimyLab.FukuroUdon
         {
             for (int i = 0; i < _floatParameterHashes.Length; i++)
             {
-                int index = System.Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
-                if (index < 0) { continue; }
+                int index = Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
+                if (index < 0) continue;
 
-                float currentFloatValue = Mathf.Lerp(_floatParameterValues[i], sync_floatParameterValues[index], _floatElapsed);
+                float currentFloatValue = Mathf.Lerp(_floatParameterValues[i], sync_floatParameterValues[index],
+                    _floatElapsed);
                 _animator.SetFloat(_floatParameterHashes[i], currentFloatValue);
             }
         }
 
         private void BeginParameterCheck()
         {
-            if (_parameterCheckHandle.IsActive) { _parameterCheckHandle.Kill(); }
-            if (Networking.IsOwner(this.gameObject))
+            if (_parameterCheckHandle.IsActive)
             {
-                float duration = ParameterCheckTickRate + Random.value;
+                _parameterCheckHandle.Kill();
+            }
+
+            if (Networking.IsOwner(gameObject))
+            {
+                float duration = ParameterCheckTickRate + UnityEngine.Random.value;
                 _parameterCheckHandle = VRCTween.DelayedCall(this, nameof(_RepeatParameterCheck), duration);
             }
         }
 
         public void _RepeatParameterCheck()
         {
-            if (!this.isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (CheckAnimatorParameterChange()) { RequestSerialization(); }
+            if (CheckAnimatorParameterChange())
+            {
+                RequestSerialization();
+            }
 
             _parameterCheckHandle.SetDuration(ParameterCheckTickRate).Restart();
         }
@@ -281,7 +293,7 @@ namespace MimyLab.FukuroUdon
             for (int i = 0; i < _boolParameterHashes.Length; i++)
             {
                 bool boolValue = _animator.GetBool(_boolParameterHashes[i]);
-                if (_boolParameterValues[i] == boolValue) { continue; }
+                if (_boolParameterValues[i] == boolValue) continue;
 
                 _boolParameterValues[i] = boolValue;
                 result = true;
@@ -290,7 +302,7 @@ namespace MimyLab.FukuroUdon
             for (int i = 0; i < _intParameterHashes.Length; i++)
             {
                 int intValue = _animator.GetInteger(_intParameterHashes[i]);
-                if (_intParameterValues[i] == intValue) { continue; }
+                if (_intParameterValues[i] == intValue) continue;
 
                 _intParameterValues[i] = intValue;
                 result = true;
@@ -299,7 +311,7 @@ namespace MimyLab.FukuroUdon
             for (int i = 0; i < _floatParameterHashes.Length; i++)
             {
                 float floatValue = _animator.GetFloat(_floatParameterHashes[i]);
-                if (Mathf.Approximately(_floatParameterValues[i], floatValue)) { continue; }
+                if (Mathf.Approximately(_floatParameterValues[i], floatValue)) continue;
 
                 _floatParameterValues[i] = floatValue;
                 result = true;

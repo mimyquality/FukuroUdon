@@ -6,6 +6,7 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
+    using System;
     using UdonSharp;
     using UnityEngine;
     using VRC.SDK3.Components;
@@ -21,13 +22,13 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private ActiveRelayActiveEvent _eventType = default;
         [SerializeField, Tooltip("Toggle \"ChangeAvatarOnUse\" bool value")]
-        private VRCAvatarPedestal[] _avatarPedestals = new VRCAvatarPedestal[0];
+        private VRCAvatarPedestal[] _avatarPedestals = Array.Empty<VRCAvatarPedestal>();
         [SerializeField, Tooltip("Toggle pickupable")]
-        private VRCPickup[] _pickups = new VRCPickup[0];
+        private VRCPickup[] _pickups = Array.Empty<VRCPickup>();
         [SerializeField, Tooltip("Toggle disableStationExit")]
-        private VRCStation[] _stations = new VRCStation[0];
+        private VRCStation[] _stations = Array.Empty<VRCStation>();
         [SerializeField, Tooltip("Toggle \"DisableInteractive\" bool value")]
-        private UdonBehaviour[] _udonBehaviours = new UdonBehaviour[0];
+        private UdonBehaviour[] _udonBehaviours = Array.Empty<UdonBehaviour>();
         [SerializeField]
         private bool _invert = false;
 

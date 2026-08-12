@@ -22,13 +22,13 @@ namespace MimyLab.FukuroUdon
 
         [Header("For IViewPointReceivers")]
         [SerializeField]
-        private IViewPointReceiver[] _viewPointReceiver = new IViewPointReceiver[0];
+        private IViewPointReceiver[] _viewPointReceiver = System.Array.Empty<IViewPointReceiver>();
 
         [Header("For UdonBehaviours")]
         [SerializeField]
-        private UdonBehaviour[] _positionReceiver = new UdonBehaviour[0];
+        private UdonBehaviour[] _positionReceiver = System.Array.Empty<UdonBehaviour>();
         [SerializeField]
-        private UdonBehaviour[] _rotationReceiver = new UdonBehaviour[0];
+        private UdonBehaviour[] _rotationReceiver = System.Array.Empty<UdonBehaviour>();
 
         private VRCCameraSettings _screenCamera;
         private Vector3 _prevViewPointPosition;

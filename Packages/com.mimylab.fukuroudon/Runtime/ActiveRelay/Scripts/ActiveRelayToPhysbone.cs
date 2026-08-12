@@ -21,7 +21,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private ActiveRelayActiveEvent _eventType = default;
         [SerializeField]
-        private VRCPhysBone[] _physbones = new VRCPhysBone[0];
+        private VRCPhysBone[] _physbones = System.Array.Empty<VRCPhysBone>();
         [SerializeField]
         private bool _releaseGrabs = true;
         [SerializeField]

@@ -57,7 +57,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             if (!_target) { _target = gameObject; }
 
@@ -72,7 +72,10 @@ namespace MimyLab.FukuroUdon
             Initialize();
 
             Configure();
-            if (playOnAwake) { Restart(); }
+            if (playOnAwake)
+            {
+                Restart();
+            }
         }
 
         private void OnDisable()
@@ -84,7 +87,7 @@ namespace MimyLab.FukuroUdon
 
         public override void Reconfigure()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _positionHandle.Kill();
             _rotationHandle.Kill();
@@ -94,70 +97,70 @@ namespace MimyLab.FukuroUdon
 
         public override void Play()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangePosition) { _positionHandle.Play(); }
-            if (_isChangeRotation) { _rotationHandle.Play(); }
-            if (_isChangeScale) { _scaleHandle.Play(); }
+            if (_isChangePosition) _positionHandle.Play();
+            if (_isChangeRotation) _rotationHandle.Play();
+            if (_isChangeScale) _scaleHandle.Play();
         }
 
         public override void Pause()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangePosition) { _positionHandle.Pause(); }
-            if (_isChangeRotation) { _rotationHandle.Pause(); }
-            if (_isChangeScale) { _scaleHandle.Pause(); }
+            if (_isChangePosition) _positionHandle.Pause();
+            if (_isChangeRotation) _rotationHandle.Pause();
+            if (_isChangeScale) _scaleHandle.Pause();
         }
 
         public override void Complete()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangePosition) { _positionHandle.Complete(); }
-            if (_isChangeRotation) { _rotationHandle.Complete(); }
-            if (_isChangeScale) { _scaleHandle.Complete(); }
+            if (_isChangePosition) _positionHandle.Complete();
+            if (_isChangeRotation) _rotationHandle.Complete();
+            if (_isChangeScale) _scaleHandle.Complete();
         }
 
         public override void Restart()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangePosition) { _positionHandle.Restart(); }
-            if (_isChangeRotation) { _rotationHandle.Restart(); }
-            if (_isChangeScale) { _scaleHandle.Restart(); }
+            if (_isChangePosition) _positionHandle.Restart();
+            if (_isChangeRotation) _rotationHandle.Restart();
+            if (_isChangeScale) _scaleHandle.Restart();
         }
 
         public override void Flip()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangePosition) { _positionHandle.Flip(); }
-            if (_isChangeRotation) { _rotationHandle.Flip(); }
-            if (_isChangeScale) { _scaleHandle.Flip(); }
+            if (_isChangePosition) _positionHandle.Flip();
+            if (_isChangeRotation) _rotationHandle.Flip();
+            if (_isChangeScale) _scaleHandle.Flip();
         }
 
         public override void PlayBackwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangePosition) { _positionHandle.PlayBackwards(); }
-            if (_isChangeRotation) { _rotationHandle.PlayBackwards(); }
-            if (_isChangeScale) { _scaleHandle.PlayBackwards(); }
+            if (_isChangePosition) _positionHandle.PlayBackwards();
+            if (_isChangeRotation) _rotationHandle.PlayBackwards();
+            if (_isChangeScale) _scaleHandle.PlayBackwards();
         }
 
         public override void PlayForwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangePosition) { _positionHandle.PlayForwards(); }
-            if (_isChangeRotation) { _rotationHandle.PlayForwards(); }
-            if (_isChangeScale) { _scaleHandle.PlayForwards(); }
+            if (_isChangePosition) _positionHandle.PlayForwards();
+            if (_isChangeRotation) _rotationHandle.PlayForwards();
+            if (_isChangeScale) _scaleHandle.PlayForwards();
         }
 
         public void _OnRotationUpdate()
         {
-            if (Mathf.Approximately(_goalAngle, 0.0f)) { return; }
+            if (Mathf.Approximately(_goalAngle, 0.0f)) return;
 
             Quaternion currentRotation = Quaternion.SlerpUnclamped(_startRotation, _goalRotation, _rotateAngle / _goalAngle);
 

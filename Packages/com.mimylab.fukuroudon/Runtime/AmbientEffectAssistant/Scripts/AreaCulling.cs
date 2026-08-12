@@ -18,18 +18,18 @@ namespace MimyLab.FukuroUdon
     public class AreaCulling : UdonSharpBehaviour
     {
         [SerializeField]
-        private Renderer[] _renderers = new Renderer[0];
+        private Renderer[] _renderers = System.Array.Empty<Renderer>();
         [SerializeField]
-        private GameObject[] _gameObjects = new GameObject[0];
+        private GameObject[] _gameObjects = System.Array.Empty<GameObject>();
 
         [Header("Bounds Settings")]
-        [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
-        private Collider[] _area = new Collider[0];
+        [SerializeField, Tooltip("Sphere, Capsule, Box, Mesh(Convex 有効) のコライダーが使えます。")]
+        private Collider[] _area = System.Array.Empty<Collider>();
         [SerializeField]
         private bool _areaIsStatic = true;
         [SerializeField]
         private bool _invert = false;
-        [SerializeField, Tooltip("Include the VRC Camera and Drone for culling checks")]
+        [SerializeField, Tooltip("有効にすると、VRCカメラ//ドローンも視界として評価に含めます。")]
         private bool _includeVRCCamera = false;
 
         private Bounds _areaBounds;
@@ -40,14 +40,14 @@ namespace MimyLab.FukuroUdon
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnValidate()
         {
-            var collider = GetComponent<Collider>();
-            if (collider)
+            var col = GetComponent<Collider>();
+            if (col)
             {
-                if (System.Array.IndexOf(_area, collider) < 0)
+                if (System.Array.IndexOf(_area, col) < 0)
                 {
                     Collider[] tmp_area = new Collider[_area.Length + 1];
                     _area.CopyTo(tmp_area, 0);
-                    tmp_area[_area.Length] = collider;
+                    tmp_area[_area.Length] = col;
                     _area = tmp_area;
                 }
             }
@@ -102,11 +102,11 @@ namespace MimyLab.FukuroUdon
         {
             var compoundMin = Vector3.positiveInfinity;
             var compoundMax = Vector3.negativeInfinity;
-            foreach (Collider collider in _area)
+            foreach (Collider col in _area)
             {
-                if (!collider) { continue; }
+                if (!col) { continue; }
 
-                Bounds bounds = collider.bounds;
+                Bounds bounds = col.bounds;
                 if (bounds.extents.Equals(Vector3.zero)) { continue; }
 
                 compoundMin = Vector3.Min(compoundMin, bounds.min);
@@ -126,13 +126,13 @@ namespace MimyLab.FukuroUdon
 
         private bool CheckInArea(Vector3 position)
         {
-            foreach (Collider collider in _area)
+            foreach (Collider col in _area)
             {
-                if (!collider) { continue; }
-                if (!collider.enabled) { continue; }
-                if (!collider.gameObject.activeInHierarchy) { continue; }
+                if (!col) { continue; }
+                if (!col.enabled) { continue; }
+                if (!col.gameObject.activeInHierarchy) { continue; }
 
-                Vector3 point = collider.ClosestPoint(position);
+                Vector3 point = col.ClosestPoint(position);
                 if (point == position)
                 {
                     return true;

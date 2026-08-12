@@ -1057,11 +1057,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 65|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
-    - Name: tooltip
+      Data: 65|VRC.SDKBase.Editor.Attributes.HelpBoxAttribute, VRCSDKBase
+    - Name: text
       Entry: 1
-      Data: Note that this is compared to the audio source's settings, and the smaller
-        value is used.
+      Data: "\u30A2\u30D0\u30BF\u30FC\u5074\u306E\u97F3\u6E90\u306B\u8A2D\u5B9A\u3055\u308C\u305F\u5024\u3068\u3001\u3088\u308A\u5C0F\u3055\u3044\u65B9\u304C\u53CD\u6620\u3055\u308C\u307E\u3059\u3002"
+    - Name: messageType
+      Entry: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -1774,8 +1776,7 @@ MonoBehaviour:
       Data: 111|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: When the button is checked, the Avatar Eye Height is Clamped at that
-        point.
+      Data: "\u30C1\u30A7\u30C3\u30AF\u3092\u5165\u308C\u305F\u30BF\u30A4\u30DF\u30F3\u30B0\u3067\u3001\u30A2\u30D0\u30BF\u30FC\u306E\u76EE\u7DDA\u9AD8\u3055\u306E\u4E0A\u9650\u3068\u4E0B\u9650\u3092\u8A2D\u5B9A\u7BC4\u56F2\u306B\u5236\u9650\u3057\u307E\u3059\u3002"
     - Name: 
       Entry: 8
       Data: 
@@ -2397,7 +2398,7 @@ MonoBehaviour:
       Data: 150|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: The color to use when ClearFlags is set to SolidColor.
+      Data: "Screen Clear Flags \u304C SolidColor \u306B\u8A2D\u5B9A\u3055\u308C\u3066\u3044\u308B\u6642\u306E\u80CC\u666F\u8272\u3002"
     - Name: 
       Entry: 8
       Data: 
@@ -2522,7 +2523,7 @@ MonoBehaviour:
       Data: 158|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: A value of 0 for a layer means it will use the value of FarClipPlane.
+      Data: "\u5024\u304C0\u306E\u30EC\u30A4\u30E4\u30FC\u306F Far Clip Plane \u3068\u540C\u3058\u5024\u3068\u3057\u3066\u6271\u308F\u308C\u307E\u3059\u3002"
     - Name: 
       Entry: 8
       Data: 
@@ -2705,7 +2706,7 @@ MonoBehaviour:
       Data: 169|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: Depth must always be enabled
+      Data: "Photo Camera \u3067\u306F None \u306B\u3059\u308B\u3053\u3068\u306F\u3067\u304D\u307E\u305B\u3093\u3002"
     - Name: 
       Entry: 8
       Data: 
@@ -2934,7 +2935,7 @@ MonoBehaviour:
       Data: 182|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: The color to use when ClearFlags is set to SolidColor.
+      Data: "Screen Clear Flags \u304C SolidColor \u306B\u8A2D\u5B9A\u3055\u308C\u3066\u3044\u308B\u6642\u306E\u80CC\u666F\u8272\u3002"
     - Name: 
       Entry: 8
       Data: 
@@ -3053,7 +3054,7 @@ MonoBehaviour:
       Data: 189|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: A value of 0 for a layer means it will use the value of FarClipPlane.
+      Data: "\u5024\u304C0\u306E\u30EC\u30A4\u30E4\u30FC\u306F Far Clip Plane \u3068\u540C\u3058\u5024\u3068\u3057\u3066\u6271\u308F\u308C\u307E\u3059\u3002"
     - Name: 
       Entry: 8
       Data: 

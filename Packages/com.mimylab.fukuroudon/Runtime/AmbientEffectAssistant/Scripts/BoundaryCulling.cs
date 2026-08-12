@@ -22,16 +22,16 @@ namespace MimyLab.FukuroUdon
     public class BoundaryCulling : UdonSharpBehaviour
     {
         [SerializeField]
-        private Renderer[] _renderers = new Renderer[0];
+        private Renderer[] _renderers = System.Array.Empty<Renderer>();
         [SerializeField]
-        private GameObject[] _gameObjects = new GameObject[0];
+        private GameObject[] _gameObjects = System.Array.Empty<GameObject>();
 
         [Header("Bound Settings")]
         [SerializeField]
         private Transform _point;
         [SerializeField]
         private Vector3 _normal = Vector3.up;
-        [SerializeField, Tooltip("Include the VRC Camera and Drone for culling checks")]
+        [SerializeField, Tooltip("有効にすると、VRCカメラ//ドローンも視界として評価に含めます。")]
         private bool _includeVRCCamera = false;
 
         private VRCCameraSettings _screenCamera;

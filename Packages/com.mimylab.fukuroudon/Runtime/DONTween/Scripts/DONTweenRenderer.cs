@@ -40,7 +40,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _targetRenderer = _target ? _target.GetComponent<Renderer>() : GetComponent<Renderer>();
 
@@ -53,7 +53,10 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
             Configure();
-            if (playOnAwake) { Restart(); }
+            if (playOnAwake)
+            {
+                Restart(); 
+            }
         }
 
         private void OnDisable()
@@ -64,7 +67,7 @@ namespace MimyLab.FukuroUdon
 
         public override void Reconfigure()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _colorHandle.Kill();
             _floatHandle.Kill();
@@ -73,58 +76,58 @@ namespace MimyLab.FukuroUdon
 
         public override void Play()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Play(); }
-            if (_isChangeFloat) { _floatHandle.Play(); }
+            if (_isChangeColor) _colorHandle.Play();
+            if (_isChangeFloat) _floatHandle.Play();
         }
 
         public override void Pause()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Pause(); }
-            if (_isChangeFloat) { _floatHandle.Pause(); }
+            if (_isChangeColor) _colorHandle.Pause();
+            if (_isChangeFloat) _floatHandle.Pause();
         }
 
         public override void Complete()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Complete(); }
-            if (_isChangeFloat) { _floatHandle.Complete(); }
+            if (_isChangeColor) _colorHandle.Complete();
+            if (_isChangeFloat) _floatHandle.Complete();
         }
 
         public override void Restart()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Restart(); }
-            if (_isChangeFloat) { _floatHandle.Restart(); }
+            if (_isChangeColor) _colorHandle.Restart();
+            if (_isChangeFloat) _floatHandle.Restart();
         }
 
         public override void Flip()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Flip(); }
-            if (_isChangeFloat) { _floatHandle.Flip(); }
+            if (_isChangeColor) _colorHandle.Flip();
+            if (_isChangeFloat) _floatHandle.Flip();
         }
 
         public override void PlayBackwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.PlayBackwards(); }
-            if (_isChangeFloat) { _floatHandle.PlayBackwards(); }
+            if (_isChangeColor) _colorHandle.PlayBackwards();
+            if (_isChangeFloat) _floatHandle.PlayBackwards();
         }
 
         public override void PlayForwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.PlayForwards(); }
-            if (_isChangeFloat) { _floatHandle.PlayForwards(); }
+            if (_isChangeColor) _colorHandle.PlayForwards();
+            if (_isChangeFloat) _floatHandle.PlayForwards();
         }
 
         private void Configure()

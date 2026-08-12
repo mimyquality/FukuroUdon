@@ -8,10 +8,10 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
-    using VRC.Udon.Common.Interfaces;
     using VRC.SDK3.Components;
     using VRC.SDK3.UdonNetworkCalling;
+    using VRC.SDKBase;
+    using VRC.Udon.Common.Interfaces;
 
     public enum ActiveRelayToObjectSyncRigidbodyState
     {
@@ -29,9 +29,9 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private ActiveRelayActiveEvent _eventType = default;
         [SerializeField]
-        private VRCObjectSync[] _vrcObjectSyncs = new VRCObjectSync[0];
+        private VRCObjectSync[] _vrcObjectSyncs = System.Array.Empty<VRCObjectSync>();
         [SerializeField]
-        private ManualObjectSync[] _manualObjectSyncs = new ManualObjectSync[0];
+        private ManualObjectSync[] _manualObjectSyncs = System.Array.Empty<ManualObjectSync>();
         [SerializeField]
         private ActiveRelayToObjectSyncRigidbodyState _isKinematic = default;
         [SerializeField]

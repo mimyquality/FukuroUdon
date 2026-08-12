@@ -6,9 +6,9 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
+    using System;
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
     using VRC.SDK3.Dynamics.PhysBone.Components;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Better-AvatarPedestal#dynamics-parameter-transfer")]
@@ -19,45 +19,45 @@ namespace MimyLab.FukuroUdon
     public class DynamicsParameterTransfer : UdonSharpBehaviour
     {
         private Animator _animator;
-        private VRCPhysBone[] _physbones = new VRCPhysBone[0];
-        private ContactReceiverInfomation[] _contacts = new ContactReceiverInfomation[0];
-        private UdonRaycast[] _raycasts = new UdonRaycast[0];
+        private VRCPhysBone[] _physbones = Array.Empty<VRCPhysBone>();
+        private ContactReceiverInfomation[] _contacts = Array.Empty<ContactReceiverInfomation>();
+        private UdonRaycast[] _raycasts = Array.Empty<UdonRaycast>();
 
-        private VRCPhysBone[] _pbs_IsGrabbed = new VRCPhysBone[0];
-        private int[] _pbs_IsGrabbedType = new int[0];
-        private int[] _pbs_IsGrabbedHash = new int[0];
-        private VRCPhysBone[] _pbs_IsPosed = new VRCPhysBone[0];
-        private int[] _pbs_IsPosedType = new int[0];
-        private int[] _pbs_IsPosedHash = new int[0];
-        private VRCPhysBone[] _pbs_Angle = new VRCPhysBone[0];
-        private int[] _pbs_AngleType = new int[0];
-        private int[] _pbs_AngleHash = new int[0];
-        private VRCPhysBone[] _pbs_Stretch = new VRCPhysBone[0];
-        private int[] _pbs_StretchType = new int[0];
-        private int[] _pbs_StretchHash = new int[0];
-        private VRCPhysBone[] _pbs_Squish = new VRCPhysBone[0];
-        private int[] _pbs_SquishType = new int[0];
-        private int[] _pbs_SquishHash = new int[0];
+        private VRCPhysBone[] _pbs_IsGrabbed = Array.Empty<VRCPhysBone>();
+        private int[] _pbs_IsGrabbedType = Array.Empty<int>();
+        private int[] _pbs_IsGrabbedHash = Array.Empty<int>();
+        private VRCPhysBone[] _pbs_IsPosed = Array.Empty<VRCPhysBone>();
+        private int[] _pbs_IsPosedType = Array.Empty<int>();
+        private int[] _pbs_IsPosedHash = Array.Empty<int>();
+        private VRCPhysBone[] _pbs_Angle = Array.Empty<VRCPhysBone>();
+        private int[] _pbs_AngleType = Array.Empty<int>();
+        private int[] _pbs_AngleHash = Array.Empty<int>();
+        private VRCPhysBone[] _pbs_Stretch = Array.Empty<VRCPhysBone>();
+        private int[] _pbs_StretchType = Array.Empty<int>();
+        private int[] _pbs_StretchHash = Array.Empty<int>();
+        private VRCPhysBone[] _pbs_Squish = Array.Empty<VRCPhysBone>();
+        private int[] _pbs_SquishType = Array.Empty<int>();
+        private int[] _pbs_SquishHash = Array.Empty<int>();
 
-        private ContactReceiverInfomation[] _crs_Constant = new ContactReceiverInfomation[0];
-        private int[] _crs_ConstantType = new int[0];
-        private int[] _crs_ConstantHash = new int[0];
-        private ContactReceiverInfomation[] _crs_OnEnter = new ContactReceiverInfomation[0];
-        private int[] _crs_OnEnterType = new int[0];
-        private int[] _crs_OnEnterHash = new int[0];
-        private ContactReceiverInfomation[] _crs_Proximity = new ContactReceiverInfomation[0];
-        private int[] _crs_ProximityType = new int[0];
-        private int[] _crs_ProximityHash = new int[0];
+        private ContactReceiverInfomation[] _crs_Constant = Array.Empty<ContactReceiverInfomation>();
+        private int[] _crs_ConstantType = Array.Empty<int>();
+        private int[] _crs_ConstantHash = Array.Empty<int>();
+        private ContactReceiverInfomation[] _crs_OnEnter = Array.Empty<ContactReceiverInfomation>();
+        private int[] _crs_OnEnterType = Array.Empty<int>();
+        private int[] _crs_OnEnterHash = Array.Empty<int>();
+        private ContactReceiverInfomation[] _crs_Proximity = Array.Empty<ContactReceiverInfomation>();
+        private int[] _crs_ProximityType = Array.Empty<int>();
+        private int[] _crs_ProximityHash = Array.Empty<int>();
 
-        private UdonRaycast[] _urcs_Hit = new UdonRaycast[0];
-        private int[] _urcs_HitType = new int[0];
-        private int[] _urcs_HitHash = new int[0];
-        private UdonRaycast[] _urcs_Distance = new UdonRaycast[0];
-        private int[] _urcs_DistanceType = new int[0];
-        private int[] _urcs_DistanceHash = new int[0];
-        private UdonRaycast[] _urcs_Ratio = new UdonRaycast[0];
-        private int[] _urcs_RatioType = new int[0];
-        private int[] _urcs_RatioHash = new int[0];
+        private UdonRaycast[] _urcs_Hit = Array.Empty<UdonRaycast>();
+        private int[] _urcs_HitType = Array.Empty<int>();
+        private int[] _urcs_HitHash = Array.Empty<int>();
+        private UdonRaycast[] _urcs_Distance = Array.Empty<UdonRaycast>();
+        private int[] _urcs_DistanceType = Array.Empty<int>();
+        private int[] _urcs_DistanceHash = Array.Empty<int>();
+        private UdonRaycast[] _urcs_Ratio = Array.Empty<UdonRaycast>();
+        private int[] _urcs_RatioType = Array.Empty<int>();
+        private int[] _urcs_RatioHash = Array.Empty<int>();
 
         private bool _initialized = false;
         private void Initialize()

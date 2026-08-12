@@ -8,8 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.SDK3.Components;
+    using VRC.SDKBase;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#par-register-player")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -18,19 +18,19 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class PARRegisterPlayer : UdonSharpBehaviour
     {
-        [SerializeField]
-        private PlayerAudioRegulatorRegister _parRegister;
+        [SerializeField] private PlayerAudioRegulatorRegister _parRegister;
 
         private VRCPlayerApi _owner;
 
         [UdonSynced, FieldChangeCallback(nameof(IsAssigned))]
         private bool _isAssigned = false;
+
         public bool IsAssigned
         {
             get => _isAssigned;
             set
             {
-                if (_isAssigned == value) { return; }
+                if (_isAssigned == value) return;
 
                 Initialize();
 
@@ -48,12 +48,13 @@ namespace MimyLab.FukuroUdon
         }
 
         private bool _initialized = false;
+
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             // PlayerObjectはオーナー不変なのでキャッシュ
-            _owner = Networking.GetOwner(this.gameObject);
+            _owner = Networking.GetOwner(gameObject);
 
             if (_owner.isLocal)
             {
@@ -62,6 +63,7 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
+
         private void Start()
         {
             Initialize();

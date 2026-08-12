@@ -9,6 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
+    using VRC.SDKBase.Editor.Attributes;
     using VRC.SDK3.Rendering;
 
     [System.Flags]
@@ -53,7 +54,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField] private bool _voiceLowpass = true;
 
         [Header("Avatar Audio")]
-        [Tooltip("Note that this is compared to the audio source's settings, and the smaller value is used.")]
+        [HelpBox("アバター側の音源に設定された値と、より小さい方が反映されます。", HelpBoxAttribute.MessageType.Info)]
         [SerializeField] private bool _initializeAvatarAudio = false;
         [SerializeField][Range(0f, 10f)] private float _avatarAudioGain = 10f;
         [SerializeField][Min(0f)] private float _avatarAudioDistanceNear = 0f;
@@ -69,7 +70,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMinimum = 0.2f;
         [SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMaximum = 5f;
         [Space]
-        [Tooltip("When the button is checked, the Avatar Eye Height is Clamped at that point.")]
+        [Tooltip("チェックを入れたタイミングで、アバターの目線高さの上限と下限を設定範囲に制限します。")]
         [SerializeField][EnumFlag] private AdvancedWorldSettingsInitializeEyeHeightTypes _initializeAvatarEyeHight = 0;
         [SerializeField][Range(0.01f, 10000f)] private float _avatarEyeHeightLowerLimit = 0.1f;
         [SerializeField][Range(0.01f, 10000f)] private float _avatarEyeHeightUpperLimit = 100f;
@@ -82,24 +83,24 @@ namespace MimyLab.FukuroUdon
         [SerializeField] private bool _screenAllowMSAA = true;
         [SerializeField] private LayerMask _screenCullingMask = ~ForceScreenInvisible;
         [SerializeField] private CameraClearFlags _screenClearFlags = CameraClearFlags.Skybox;
-        [Tooltip("The color to use when ClearFlags is set to SolidColor.")]
+        [Tooltip("Screen Clear Flags が SolidColor に設定されている時の背景色。")]
         [SerializeField] private Color _screenBackgroundColor = Color.black;
         [SerializeField] private bool _screenLayerCullSpherical = false;
-        [Tooltip("A value of 0 for a layer means it will use the value of FarClipPlane.")]
+        [Tooltip("値が0のレイヤーは Far Clip Plane と同じ値として扱われます。")]
         [SerializeField] private float[] _screenLayerCullDistances = new float[32];
 
         [Header("Photo Camera Settings")]
         [SerializeField] private bool _initializePhotoCameraSettings = false;
         [SerializeField] private bool _photoAllowHDR = false;
-        [Tooltip("Depth must always be enabled")]
+        [Tooltip("Photo Camera では None にすることはできません。")]
         [SerializeField] private DepthTextureMode _photoDepthTextureMode = DepthTextureMode.Depth;
         [SerializeField] private bool _photoUseOcclusionCulling = true;
         [SerializeField] private bool _photoAllowMSAA = true;
         [SerializeField] private CameraClearFlags _photoClearFlags = CameraClearFlags.Skybox;
-        [Tooltip("The color to use when ClearFlags is set to SolidColor.")]
+        [Tooltip("Screen Clear Flags が SolidColor に設定されている時の背景色。")]
         [SerializeField] private Color _photoBackgroundColor = Color.black;
         [SerializeField] private bool _photoLayerCullSpherical = false;
-        [Tooltip("A value of 0 for a layer means it will use the value of FarClipPlane.")]
+        [Tooltip("値が0のレイヤーは Far Clip Plane と同じ値として扱われます。")]
         [SerializeField] private float[] _photoLayerCullDistances = new float[32];
 
         [Header("Quality Settings")]

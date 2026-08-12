@@ -9,8 +9,8 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.Dynamics;
-    using VRC.SDKBase;
     using VRC.SDK3.Dynamics.Contact.Components;
+    using VRC.SDKBase;
     using VRC.Udon.Common.Interfaces;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Active-Relay#activerelay-by-contact")]
@@ -25,7 +25,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private NetworkEventTarget _acceptPlayerType = NetworkEventTarget.All;
         [SerializeField]
-        [Min(0.0f), Tooltip("Minimum collision velocity to trigger OnEnter. m/s")]
+        [Min(0.0f), Tooltip("OnEnter 判定に最低限必要な衝突速度. m/s")]
         private float _minVelocity = 0.0f;
 
         public override void OnContactEnter(ContactEnterInfo contactInfo)
@@ -43,7 +43,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        override public void OnContactExit(ContactExitInfo contactInfo)
+        public override void OnContactExit(ContactExitInfo contactInfo)
         {
             switch (_eventType)
             {

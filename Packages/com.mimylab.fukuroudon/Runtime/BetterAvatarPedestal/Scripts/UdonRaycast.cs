@@ -52,8 +52,6 @@ namespace MimyLab.FukuroUdon
         public float Ratio { get => _ratio; }
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
-        private Color _gizmoColor = new Color(1.0f, 0.5f, 0.0f);
-
         private void OnDrawGizmosSelected()
         {
             Vector3 startPoint = transform.position;
@@ -61,7 +59,7 @@ namespace MimyLab.FukuroUdon
             float maxDistance = _applyTransformScale ? transform.lossyScale.z * _distance : _distance;
             Vector3 endPoint = maxDistance * direction + startPoint;
 
-            Gizmos.color = _gizmoColor;
+            Gizmos.color = new Color(1.0f, 0.5f, 0.0f);
             Gizmos.DrawLine(startPoint, endPoint);
         }
 #endif
@@ -74,7 +72,8 @@ namespace MimyLab.FukuroUdon
             Vector3 direction = transform.rotation * _raycastDirection.normalized;
             float maxDistance = _applyTransformScale ? transform.lossyScale.z * _distance : _distance;
 
-            if (_hit = Physics.Raycast(startPoint, direction, out _hitInfo, maxDistance, _collisionLayers, QueryTriggerInteraction.Ignore))
+            _hit = Physics.Raycast(startPoint, direction, out _hitInfo, maxDistance, _collisionLayers, QueryTriggerInteraction.Ignore);
+            if (_hit)
             {
                 _resultTransform.position = _hitInfo.point;
                 if (_applyRotation)

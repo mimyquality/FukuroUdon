@@ -36,10 +36,10 @@ namespace MimyLab.FukuroUdon
         private int _spawnCount = 0;
         private int _returnCount = 0;
         private int[] _spawnedEffects = new int[0];
-        private GameObject[] _effectPool = new GameObject[0];
-        private GameObject[] _highEffectPool = new GameObject[0];
-        private Transform[] _effectTransforms = new Transform[0];
-        private Transform[] _highEffectTransforms = new Transform[0];
+        private GameObject[] _effectPool = System.Array.Empty<GameObject>();
+        private GameObject[] _highEffectPool = System.Array.Empty<GameObject>();
+        private Transform[] _effectTransforms = System.Array.Empty<Transform>();
+        private Transform[] _highEffectTransforms = System.Array.Empty<Transform>();
 
         private bool _isNormalCheck;
 

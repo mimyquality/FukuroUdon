@@ -9,7 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    //using VRC.SDK3.Rendering;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Ambient-Effect-Assistant#flexible-reverb-zone")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -21,8 +20,8 @@ namespace MimyLab.FukuroUdon
         AudioReverbZone _reverbZone;
 
         [Header("Bounds Settings")]
-        [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
-        private Collider[] _area = new Collider[0];
+        [SerializeField, Tooltip("Sphere, Capsule, Box, Mesh(Convex 有効) のコライダーが使えます。")]
+        private Collider[] _area = System.Array.Empty<Collider>();
         [SerializeField]
         private bool _areaIsStatic = true;
 
@@ -79,11 +78,11 @@ namespace MimyLab.FukuroUdon
         {
             Vector3 compoundMin = Vector3.positiveInfinity;
             Vector3 compoundMax = Vector3.negativeInfinity;
-            foreach (Collider collider in _area)
+            foreach (Collider col in _area)
             {
-                if (!collider) { continue; }
+                if (!col) { continue; }
 
-                Bounds bounds = collider.bounds;
+                Bounds bounds = col.bounds;
                 if (bounds.extents.Equals(Vector3.zero)) { continue; }
 
                 compoundMin = Vector3.Min(compoundMin, bounds.min);
@@ -110,13 +109,13 @@ namespace MimyLab.FukuroUdon
         private bool CheckInArea(Vector3 position, out Vector3 nearest)
         {
             nearest = Vector3.positiveInfinity;
-            foreach (Collider collider in _area)
+            foreach (Collider col in _area)
             {
-                if (!collider) { continue; }
-                if (!collider.enabled) { continue; }
-                if (!collider.gameObject.activeInHierarchy) { continue; }
+                if (!col) { continue; }
+                if (!col.enabled) { continue; }
+                if (!col.gameObject.activeInHierarchy) { continue; }
 
-                Vector3 point = collider.ClosestPoint(position);
+                Vector3 point = col.ClosestPoint(position);
                 nearest = (point - position).sqrMagnitude < (nearest - position).sqrMagnitude ? point : nearest;
 
                 if (point == position)

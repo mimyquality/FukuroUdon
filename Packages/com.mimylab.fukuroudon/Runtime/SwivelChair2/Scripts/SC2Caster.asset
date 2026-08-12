@@ -145,8 +145,7 @@ MonoBehaviour:
       Data: 8|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: meter/sec (If physics Rigidbody is attached, the units for this parameter
-        are [N].)
+      Data: "meter/sec (Rigidbody \u304C\u3042\u308B\u5834\u5408\u306F[N])"
     - Name: 
       Entry: 8
       Data: 
@@ -203,8 +202,7 @@ MonoBehaviour:
       Data: 11|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: degree/sec (If physics Rigidbody is attached, the units for this parameter
-        are [Nm].)
+      Data: "degree/sec (Rigidbody \u304C\u3042\u308B\u5834\u5408\u306F[Nm])"
     - Name: 
       Entry: 8
       Data: 

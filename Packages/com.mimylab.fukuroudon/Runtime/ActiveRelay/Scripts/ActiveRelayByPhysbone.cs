@@ -9,8 +9,8 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.Dynamics;
-    using VRC.SDKBase;
     using VRC.SDK3.Dynamics.PhysBone.Components;
+    using VRC.SDKBase;
     using VRC.Udon.Common.Interfaces;
 
     public enum ActiveRelayPhysboneEvent

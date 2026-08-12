@@ -6,6 +6,7 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
+    using System;
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
@@ -18,7 +19,7 @@ namespace MimyLab.FukuroUdon
     {
         [Header("Bounds Settings")]
         [SerializeField, Tooltip("Only Sphere, Capsule, Box, and Convexed Mesh Colliders")]
-        private Collider[] _area = new Collider[0];
+        private Collider[] _area = Array.Empty<Collider>();
         [SerializeField]
         private bool _areaIsStatic = true;
 
@@ -27,14 +28,14 @@ namespace MimyLab.FukuroUdon
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnValidate()
         {
-            var collider = GetComponent<Collider>();
-            if (collider)
+            var col = GetComponent<Collider>();
+            if (col)
             {
-                if (System.Array.IndexOf(_area, collider) < 0)
+                if (Array.IndexOf(_area, col) < 0)
                 {
                     Collider[] tmp_area = new Collider[_area.Length + 1];
                     _area.CopyTo(tmp_area, 0);
-                    tmp_area[_area.Length] = collider;
+                    tmp_area[_area.Length] = col;
                     _area = tmp_area;
                 }
             }
@@ -50,12 +51,12 @@ namespace MimyLab.FukuroUdon
         {
             var compoundMin = Vector3.positiveInfinity;
             var compoundMax = Vector3.negativeInfinity;
-            foreach (Collider collider in _area)
+            foreach (Collider col in _area)
             {
-                if (!collider) { continue; }
+                if (!col) continue;
 
-                Bounds bounds = collider.bounds;
-                if (bounds.extents.Equals(Vector3.zero)) { continue; }
+                Bounds bounds = col.bounds;
+                if (bounds.extents.Equals(Vector3.zero)) continue;
 
                 compoundMin = Vector3.Min(compoundMin, bounds.min);
                 compoundMax = Vector3.Max(compoundMax, bounds.max);
@@ -75,26 +76,23 @@ namespace MimyLab.FukuroUdon
         protected override bool CheckUniqueApplicable(VRCPlayerApi target)
         {
             Vector3 position = target.GetPosition();
-            bool isIn = _areaIsStatic ?
-                        _areaBounds.Contains(position) && CheckInArea(position) :
-                        CheckInArea(position);
+            bool isIn = _areaIsStatic 
+                ? _areaBounds.Contains(position) && CheckInArea(position) 
+                : CheckInArea(position);
 
             return isIn;
         }
 
         private bool CheckInArea(Vector3 position)
         {
-            foreach (Collider collider in _area)
+            foreach (Collider col in _area)
             {
-                if (!collider) { continue; }
-                if (!collider.enabled) { continue; }
-                if (!collider.gameObject.activeInHierarchy) { continue; }
+                if (!col) continue;
+                if (!col.enabled) continue;
+                if (!col.gameObject.activeInHierarchy) continue;
 
-                Vector3 point = collider.ClosestPoint(position);
-                if (point == position)
-                {
-                    return true;
-                }
+                Vector3 point = col.ClosestPoint(position);
+                if (point == position) return true;
             }
 
             return false;

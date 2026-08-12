@@ -18,7 +18,7 @@ namespace MimyLab.FukuroUdon
     public class CanvasDistanceFade : UdonSharpBehaviour
     {
         [SerializeField]
-        private CanvasGroup[] _canvasGroups = new CanvasGroup[0];
+        private CanvasGroup[] _canvasGroups = System.Array.Empty<CanvasGroup>();
 
         [Space]
         [SerializeField, Min(0.0f)]

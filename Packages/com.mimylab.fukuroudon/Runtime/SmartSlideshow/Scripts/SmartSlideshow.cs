@@ -18,12 +18,12 @@ namespace MimyLab.FukuroUdon
     public class SmartSlideshow : UdonSharpBehaviour
     {
         [Header("Reference")] 
-        [SerializeField] private Literature[] literatures = new Literature[0]; // 切替対象のスライドセット
-        [SerializeField] private SSs_Controller[] controllers = new SSs_Controller[0]; // 入力フィードバック用
+        [SerializeField] private Literature[] literatures =System.Array.Empty<Literature>(); // 切替対象のスライドセット
+        [SerializeField] private SSs_Controller[] controllers = System.Array.Empty<SSs_Controller>(); // 入力フィードバック用
 
-        [Header("Settings")]
-        [FieldChangeCallback(nameof(IsGlobal))]
-        [SerializeField] private bool _isGlobal = false; // プレイヤー間で同期するか
+        [Header("Settings")] 
+        [SerializeField] [FieldChangeCallback(nameof(IsGlobal))] 
+        private bool _isGlobal = false; // プレイヤー間で同期するか
 
         public bool IsGlobal
         {
@@ -62,8 +62,7 @@ namespace MimyLab.FukuroUdon
         }
 
         [Tooltip("When Auto Slide is enabled, this is forced to be enabled")]
-        [SerializeField]
-        [FieldChangeCallback(nameof(PageLoop))]
+        [SerializeField] [FieldChangeCallback(nameof(PageLoop))]
         private bool _pageLoop = false; // ページの最初と最後をつなぐか
 
         public bool PageLoop
@@ -80,8 +79,7 @@ namespace MimyLab.FukuroUdon
 
         [Tooltip("If this value is greater than 0, Auto slide is enabled.")]
         [Range(0.0f, 9999.0f)]
-        [SerializeField]
-        [FieldChangeCallback(nameof(AutoSlide))]
+        [SerializeField] [FieldChangeCallback(nameof(AutoSlide))]
         private float _autoSlide = 0.0f; // 自動でページ送りするか　(0以上で有効、pageLoop強制的に有効化する)
 
         public float AutoSlide
@@ -115,8 +113,8 @@ namespace MimyLab.FukuroUdon
         }
 
         // 同期用変数
-        [UdonSynced(UdonSyncMode.None)] private int sync_selectedIndex = 0;
-        [UdonSynced(UdonSyncMode.None)] private int[] sync_selectedPage;
+        [UdonSynced] private int sync_selectedIndex = 0;
+        [UdonSynced] private int[] sync_selectedPage;
 
         // ローカル用変数
         private int _selectedIndex = 0;
@@ -265,8 +263,8 @@ namespace MimyLab.FukuroUdon
             if (IsGlobal && !Networking.IsOwner(this.gameObject)) return;
 
             PageIncrement();
-            
-            if(_autoSlide > 0.0f)
+
+            if (_autoSlide > 0.0f)
             {
                 _autoSlideHandle.Restart();
             }

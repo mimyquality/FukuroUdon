@@ -24,7 +24,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _initialized = true;
         }
@@ -33,7 +33,10 @@ namespace MimyLab.FukuroUdon
             Initialize();
 
             Configure();
-            if (playOnAwake) { Restart(); }
+            if (playOnAwake)
+            {
+                Restart(); 
+            }
         }
 
         private void OnDisable()
@@ -43,7 +46,7 @@ namespace MimyLab.FukuroUdon
 
         public override void Reconfigure()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _activeHandle.Kill();
             Configure();
@@ -51,49 +54,49 @@ namespace MimyLab.FukuroUdon
 
         public override void Play()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _activeHandle.Play();
         }
 
         public override void Pause()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _activeHandle.Pause();
         }
 
         public override void Complete()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _activeHandle.Complete();
         }
 
         public override void Restart()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _activeHandle.Restart();
         }
 
         public override void Flip()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _activeHandle.Flip();
         }
 
         public override void PlayBackwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _activeHandle.PlayBackwards();
         }
 
         public override void PlayForwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _activeHandle.PlayForwards();
         }

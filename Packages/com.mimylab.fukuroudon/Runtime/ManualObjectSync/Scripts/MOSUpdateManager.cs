@@ -6,16 +6,14 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
+    using System;
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
 
 #if UNITY_EDITOR
     using UnityEditor;
     using UnityEditor.SceneManagement;
     using UnityEngine.SceneManagement;
-
-    //using UdonSharpEditor;
 #endif
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#%E6%9B%B4%E6%96%B0%E7%AE%A1%E7%90%86%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88")]
@@ -24,7 +22,7 @@ namespace MimyLab.FukuroUdon
     public class MOSUpdateManager : UdonSharpBehaviour
     {
         internal float _respawnHeightY = -100.0f;
-        private ManualObjectSync[] _mosList = new ManualObjectSync[0];
+        private ManualObjectSync[] _mosList = Array.Empty<ManualObjectSync>();
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void Reset()
@@ -34,13 +32,13 @@ namespace MimyLab.FukuroUdon
 
         internal void SetupAllMOS()
         {
-            if (EditorApplication.isPlayingOrWillChangePlaymode) { return; }
-            if (PrefabStageUtility.GetCurrentPrefabStage() != null) { return; }
-            if (PrefabUtility.IsPartOfPrefabAsset(this)) { return; }
+            if (EditorApplication.isPlayingOrWillChangePlaymode) return;
+            if (PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+            if (PrefabUtility.IsPartOfPrefabAsset(this)) return;
 
-            Scene scene = this.gameObject.scene;
-            if (!scene.IsValid()) { return; }
-            if (!scene.isLoaded) { return; }
+            Scene scene = gameObject.scene;
+            if (!scene.IsValid()) return;
+            if (!scene.isLoaded) return;
 
             GameObject[] rootObjects = scene.GetRootGameObjects();
             foreach (GameObject obj in rootObjects)
@@ -72,17 +70,20 @@ namespace MimyLab.FukuroUdon
                 }
             }
 
-            if (pauseUpdate) { this.enabled = false; }
+            if (pauseUpdate)
+            {
+                enabled = false;
+            }
         }
 
         public void EnablePostLateUpdate(ManualObjectSync mos)
         {
-            this.enabled = true;
+            enabled = true;
 
-            int index = System.Array.IndexOf(_mosList, mos);
-            if (index > -1) { return; }
+            int index = Array.IndexOf(_mosList, mos);
+            if (index > -1) return;
 
-            index = System.Array.IndexOf(_mosList, null);
+            index = Array.IndexOf(_mosList, null);
             if (index > -1)
             {
                 _mosList[index] = mos;
@@ -98,9 +99,9 @@ namespace MimyLab.FukuroUdon
 
         public void DisablePostLateUpdate(ManualObjectSync mos)
         {
-            if (_mosList.Length < 1) { return; }
+            if (_mosList.Length < 1) return;
 
-            int index = System.Array.IndexOf(_mosList, mos);
+            int index = Array.IndexOf(_mosList, mos);
             if (index > -1)
             {
                 _mosList[index] = null;

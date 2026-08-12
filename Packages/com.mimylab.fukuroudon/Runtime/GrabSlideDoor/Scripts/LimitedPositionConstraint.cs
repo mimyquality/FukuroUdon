@@ -8,8 +8,6 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
-    //using VRC.Udon;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grab-SlideDoor#limited-position-constraint")]
     [Icon(ComponentIconPath.FukuroUdon)]

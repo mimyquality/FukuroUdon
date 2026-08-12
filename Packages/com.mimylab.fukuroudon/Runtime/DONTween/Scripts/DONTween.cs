@@ -18,7 +18,7 @@ namespace MimyLab.FukuroUdon
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    abstract public class DONTween : UdonSharpBehaviour
+    public abstract class DONTween : UdonSharpBehaviour
     {
         [Header("Tween Settings")]
         [SerializeField]
@@ -42,13 +42,13 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private protected string _callbackNameOnComplete = "";
 
-        abstract public void Reconfigure();
-        abstract public void Play();
-        abstract public void Pause();
-        abstract public void Complete();
-        abstract public void Restart();
-        abstract public void Flip();
-        abstract public void PlayBackwards();
-        abstract public void PlayForwards();
+        public abstract void Reconfigure();
+        public abstract void Play();
+        public abstract void Pause();
+        public abstract void Complete();
+        public abstract void Restart();
+        public abstract void Flip();
+        public abstract void PlayBackwards();
+        public abstract void PlayForwards();
     }
 }

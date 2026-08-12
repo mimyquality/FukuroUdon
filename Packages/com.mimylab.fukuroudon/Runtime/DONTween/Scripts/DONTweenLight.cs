@@ -29,7 +29,6 @@ namespace MimyLab.FukuroUdon
         public float intensity = 1.0f;
         public Color color = Color.white;
         [Min(0.0f)]
-
         private Light _targetLight;
         private VRCTweenHandle _colorHandle;
         private VRCTweenHandle _intensityHandle;
@@ -39,7 +38,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _targetLight = _target ? _target.GetComponent<Light>() : GetComponent<Light>();
 
@@ -53,7 +52,10 @@ namespace MimyLab.FukuroUdon
             Initialize();
 
             Configure();
-            if (playOnAwake) { Restart(); }
+            if (playOnAwake)
+            {
+                Restart(); 
+            }
         }
 
         private void OnDisable()
@@ -64,7 +66,7 @@ namespace MimyLab.FukuroUdon
 
         public override void Reconfigure()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _colorHandle.Kill();
             _intensityHandle.Kill();
@@ -73,58 +75,58 @@ namespace MimyLab.FukuroUdon
 
         public override void Play()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Play(); }
-            if (_isChangeIntensity) { _intensityHandle.Play(); }
+            if (_isChangeColor) _colorHandle.Play();
+            if (_isChangeIntensity) _intensityHandle.Play();
         }
 
         public override void Pause()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Pause(); }
-            if (_isChangeIntensity) { _intensityHandle.Pause(); }
+            if (_isChangeColor) _colorHandle.Pause();
+            if (_isChangeIntensity) _intensityHandle.Pause();
         }
 
         public override void Complete()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Complete(); }
-            if (_isChangeIntensity) { _intensityHandle.Complete(); }
+            if (_isChangeColor) _colorHandle.Complete();
+            if (_isChangeIntensity) _intensityHandle.Complete();
         }
 
         public override void Restart()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Restart(); }
-            if (_isChangeIntensity) { _intensityHandle.Restart(); }
+            if (_isChangeColor) _colorHandle.Restart();
+            if (_isChangeIntensity) _intensityHandle.Restart();
         }
 
         public override void Flip()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.Flip(); }
-            if (_isChangeIntensity) { _intensityHandle.Flip(); }
+            if (_isChangeColor) _colorHandle.Flip();
+            if (_isChangeIntensity) _intensityHandle.Flip();
         }
 
         public override void PlayBackwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.PlayBackwards(); }
-            if (_isChangeIntensity) { _intensityHandle.PlayBackwards(); }
+            if (_isChangeColor) _colorHandle.PlayBackwards();
+            if (_isChangeIntensity) _intensityHandle.PlayBackwards();
         }
 
         public override void PlayForwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeColor) { _colorHandle.PlayForwards(); }
-            if (_isChangeIntensity) { _intensityHandle.PlayForwards(); }
+            if (_isChangeColor) _colorHandle.PlayForwards();
+            if (_isChangeIntensity) _intensityHandle.PlayForwards();
         }
 
         private void Configure()

@@ -41,7 +41,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _targetRect = (RectTransform)(_target ? _target.transform : transform);
 
@@ -55,7 +55,10 @@ namespace MimyLab.FukuroUdon
             Initialize();
 
             Configure();
-            if (playOnAwake) { Restart(); }
+            if (playOnAwake)
+            {
+                Restart();
+            }
         }
 
         private void OnDisable()
@@ -66,7 +69,7 @@ namespace MimyLab.FukuroUdon
 
         public override void Reconfigure()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _anchorPosHandle.Kill();
             _sizeDeltaHandle.Kill();
@@ -75,50 +78,50 @@ namespace MimyLab.FukuroUdon
 
         public override void Play()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeAnchorPos) { _anchorPosHandle.Play(); }
-            if (_isChangeSizeDelta) { _sizeDeltaHandle.Play(); }
+            if (_isChangeAnchorPos) _anchorPosHandle.Play();
+            if (_isChangeSizeDelta) _sizeDeltaHandle.Play();
         }
 
         public override void Pause()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeAnchorPos) { _anchorPosHandle.Pause(); }
-            if (_isChangeSizeDelta) { _sizeDeltaHandle.Pause(); }
+            if (_isChangeAnchorPos) _anchorPosHandle.Pause();
+            if (_isChangeSizeDelta) _sizeDeltaHandle.Pause();
         }
 
         public override void Complete()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeAnchorPos) { _anchorPosHandle.Complete(); }
-            if (_isChangeSizeDelta) { _sizeDeltaHandle.Complete(); }
+            if (_isChangeAnchorPos) _anchorPosHandle.Complete();
+            if (_isChangeSizeDelta) _sizeDeltaHandle.Complete();
         }
 
         public override void Restart()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeAnchorPos) { _anchorPosHandle.Restart(); }
-            if (_isChangeSizeDelta) { _sizeDeltaHandle.Restart(); }
+            if (_isChangeAnchorPos) _anchorPosHandle.Restart();
+            if (_isChangeSizeDelta) _sizeDeltaHandle.Restart();
         }
 
         public override void Flip()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeAnchorPos) { _anchorPosHandle.Flip(); }
-            if (_isChangeSizeDelta) { _sizeDeltaHandle.Flip(); }
+            if (_isChangeAnchorPos) _anchorPosHandle.Flip();
+            if (_isChangeSizeDelta) _sizeDeltaHandle.Flip();
         }
 
         public override void PlayBackwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeAnchorPos) { _anchorPosHandle.PlayBackwards(); }
-            if (_isChangeSizeDelta) { _sizeDeltaHandle.PlayBackwards(); }
+            if (_isChangeAnchorPos) _anchorPosHandle.PlayBackwards();
+            if (_isChangeSizeDelta) _sizeDeltaHandle.PlayBackwards();
         }
 
         public override void PlayForwards()

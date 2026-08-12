@@ -19,18 +19,15 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class WebLiterature : Literature
     {
-        [Header("Reference")]
-        [SerializeField]
-        private VRCUrl[] imageUrl;    // 表示する画像リンクのリスト
-        [SerializeField]
-        private TextureInfo textureInfo;    // 読み込む画像の形式
-        [SerializeField]
-        private Texture2D textureLoading, textureLoadError; // 読み込むまでの表示用画像
+        [Header("Reference")] 
+        [SerializeField] private VRCUrl[] imageUrl; // 表示する画像リンクのリスト
+        [SerializeField] private TextureInfo textureInfo; // 読み込む画像の形式
+        [SerializeField] private Texture2D textureLoading, textureLoadError; // 読み込むまでの表示用画像
 
         private VRCImageDownloader _imageDownloader;
         private Texture2D[] _dlTextures;
 
-        private RawImage _rawImage = null;   // スライドを表示するuGUI
+        private RawImage _rawImage = null; // スライドを表示するuGUI
 
         public override int EndPage
         {
@@ -38,9 +35,10 @@ namespace MimyLab.FukuroUdon
         }
 
         private bool _initialized = false;
+
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _imageDownloader = new VRCImageDownloader();
             _dlTextures = new Texture2D[imageUrl.Length];

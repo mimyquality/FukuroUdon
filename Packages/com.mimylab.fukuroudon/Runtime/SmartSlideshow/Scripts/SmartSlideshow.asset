@@ -232,13 +232,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 16|UdonSharp.FieldChangeCallbackAttribute, UdonSharp.Runtime
+      Data: 16|UnityEngine.SerializeField, UnityEngine.CoreModule
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 17|UnityEngine.SerializeField, UnityEngine.CoreModule
+      Data: 17|UdonSharp.FieldChangeCallbackAttribute, UdonSharp.Runtime
     - Name: 
       Entry: 8
       Data: 

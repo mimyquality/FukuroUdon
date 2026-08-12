@@ -18,7 +18,9 @@ namespace MimyLab.FukuroUdon
     public class LocalPlayerTrackingTracker : UdonSharpBehaviour
     {
         [Header("General Settings")]
-        public VRCPlayerApi.TrackingDataType trackingPoint = VRCPlayerApi.TrackingDataType.Head;    // 追跡箇所
+        // 追跡箇所
+        public VRCPlayerApi.TrackingDataType trackingPoint = VRCPlayerApi.TrackingDataType.Head;
+
         public bool enablePosition = true;
         public bool enableRotation = true;
 
@@ -37,19 +39,19 @@ namespace MimyLab.FukuroUdon
 
         public override void PostLateUpdate()
         {
-            if (!enablePosition && !enableRotation) { return; }
-            if (!Utilities.IsValid(_localPlayer)) { return; }
+            if (!enablePosition && !enableRotation) return;
+            if (!Utilities.IsValid(_localPlayer)) return;
 
             Vector3 pos = enablePosition ? GetTrackingPosition(trackingPoint) : transform.position;
             Quaternion rot = enableRotation ? GetTrackingRotation(trackingPoint) : transform.rotation;
             transform.SetPositionAndRotation(pos, rot);
         }
 
-        public void TrackingHead() { trackingPoint = VRCPlayerApi.TrackingDataType.Head; }
-        public void TrackingLeftHand() { trackingPoint = VRCPlayerApi.TrackingDataType.LeftHand; }
-        public void TrackingRightHand() { trackingPoint = VRCPlayerApi.TrackingDataType.RightHand; }
-        public void TrackingOrigin() { trackingPoint = VRCPlayerApi.TrackingDataType.Origin; }
-        public void TrackingAvatarRoot() { trackingPoint = VRCPlayerApi.TrackingDataType.AvatarRoot; }
+        public void TrackingHead() => trackingPoint = VRCPlayerApi.TrackingDataType.Head;
+        public void TrackingLeftHand() => trackingPoint = VRCPlayerApi.TrackingDataType.LeftHand;
+        public void TrackingRightHand() => trackingPoint = VRCPlayerApi.TrackingDataType.RightHand;
+        public void TrackingOrigin() => trackingPoint = VRCPlayerApi.TrackingDataType.Origin;
+        public void TrackingAvatarRoot() => trackingPoint = VRCPlayerApi.TrackingDataType.AvatarRoot;
 
         protected virtual Vector3 GetTrackingPosition(VRCPlayerApi.TrackingDataType trackingTarget)
         {

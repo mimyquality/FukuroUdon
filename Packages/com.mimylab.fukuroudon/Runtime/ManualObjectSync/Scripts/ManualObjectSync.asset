@@ -100,7 +100,8 @@ MonoBehaviour:
       Data: 6|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: The tick rate depends on the fps of this game object owner's client.
+      Data: "\u3053\u306E\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u30AA\u30FC\u30CA\u30FC\u306E
+        fps \u306B\u4F9D\u5B58\u3057\u307E\u3059\u3002"
     - Name: 
       Entry: 8
       Data: 

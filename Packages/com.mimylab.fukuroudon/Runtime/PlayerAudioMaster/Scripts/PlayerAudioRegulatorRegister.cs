@@ -6,10 +6,11 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
+    using System;
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-
+    
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#pa-regulator-register")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator Register")]
@@ -56,9 +57,9 @@ namespace MimyLab.FukuroUdon
         internal void _OnPlayerAssigned(VRCPlayerApi target)
         {
             int playerId = target.playerId;
-            if (System.Array.IndexOf(_playerIds, playerId) > -1) { return; }
+            if (Array.IndexOf(_playerIds, playerId) > -1) return;
 
-            int vacantIndex = System.Array.IndexOf(_playerIds, 0);
+            int vacantIndex = Array.IndexOf(_playerIds, 0);
             // 空きがないのでリフレッシュ
             if (vacantIndex < 0)
             {
@@ -70,7 +71,7 @@ namespace MimyLab.FukuroUdon
                     }
                 }
 
-                vacantIndex = System.Array.IndexOf(_playerIds, 0);
+                vacantIndex = Array.IndexOf(_playerIds, 0);
                 // それでも空きがないので拡張
                 if (vacantIndex < 0)
                 {
@@ -88,7 +89,7 @@ namespace MimyLab.FukuroUdon
         {
             int playerId = target.playerId;
             int index;
-            while ((index = System.Array.IndexOf(_playerIds, playerId)) > -1)
+            while ((index = Array.IndexOf(_playerIds, playerId)) > -1)
             {
                 _playerIds[index] = 0;
             }
@@ -96,7 +97,7 @@ namespace MimyLab.FukuroUdon
 
         protected override bool CheckUniqueApplicable(VRCPlayerApi target)
         {
-            return System.Array.IndexOf(_playerIds, target.playerId) > -1;
+            return Array.IndexOf(_playerIds, target.playerId) > -1;
         }
     }
 }

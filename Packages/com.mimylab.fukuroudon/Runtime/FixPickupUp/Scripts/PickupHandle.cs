@@ -21,7 +21,7 @@ namespace MimyLab.FukuroUdon
     {
         [SerializeField]
         private Transform returnPoint = null;
-        [Tooltip("When set to this, its Udon Enable is linked to the pickup.")]
+        [Tooltip("ピックアップしている間だけ、セットした UdonBehaviour を有効になるよう制御します。")]
         [SerializeField]
         private UdonBehaviour workingTogether = null;
 
@@ -49,8 +49,8 @@ namespace MimyLab.FukuroUdon
         {
             _pickup = GetComponent<VRCPickup>();
 
-            _returnPosition = this.transform.position;
-            _returnRotation = this.transform.rotation;
+            _returnPosition = transform.position;
+            _returnRotation = transform.rotation;
             if (returnPoint)
             {
                 returnPoint.SetPositionAndRotation(_returnPosition, _returnRotation);
@@ -73,11 +73,11 @@ namespace MimyLab.FukuroUdon
         {
             if (returnPoint)
             {
-                this.transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
+                transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
             }
             else
             {
-                this.transform.SetPositionAndRotation(_returnPosition, _returnRotation);
+                transform.SetPositionAndRotation(_returnPosition, _returnRotation);
             }
         }
 
@@ -91,7 +91,7 @@ namespace MimyLab.FukuroUdon
 
         public void _DisableLinkUdon()
         {
-            if ((Position == transform.position) && !_pickup.IsHeld)
+            if ((_position == transform.position) && !_pickup.IsHeld)
             {
                 SetEnabledLinkUdon(false);
             }

@@ -9,7 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using UnityEngine.UI;
-    //using VRC.SDKBase;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Smart-Slideshow#literature")]
     [Icon(ComponentIconPath.FukuroUdon)]
@@ -18,8 +17,7 @@ namespace MimyLab.FukuroUdon
     public class Literature : UdonSharpBehaviour
     {
         [Header("Reference")]
-        [SerializeField]
-        private Sprite[] slide;    // 表示するスライドのリスト
+        [SerializeField] private Sprite[] slide; // 表示するスライドのリスト
 
         private protected Image _image = null; // スライドを表示するuGUI
 
@@ -28,13 +26,14 @@ namespace MimyLab.FukuroUdon
             get => slide.Length - 1;
         }
 
-        [FieldChangeCallback(nameof(Page))]
-        private protected int _page = 0;
+        [FieldChangeCallback(nameof(Page))] private protected int _page = 0;
+
         public int Page
         {
             get => _page;
             set => SetPage(value);
         }
+
         private protected virtual void SetPage(int v)
         {
             _page = Mathf.Clamp(v, 0, EndPage);

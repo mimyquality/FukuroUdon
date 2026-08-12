@@ -6,19 +6,19 @@ https://opensource.org/licenses/mit-license.php
 
 namespace MimyLab.FukuroUdon
 {
+    using System;
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.SDK3.UdonNetworkCalling;
-
+    using VRC.SDKBase;
+    
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#pa-regulator-list")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Regulator List")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class PlayerAudioRegulatorList : PlayerAudioRegulator
     {
-        [UdonSynced]
-        private int[] _playerIds = new int[PlayerAudioRegulatorRegister.MaxPlayerCount];
+        [UdonSynced] private int[] _playerIds = new int[PlayerAudioRegulatorRegister.MaxPlayerCount];
 
         public int[] PlayerIds { get => _playerIds; }
 
@@ -27,19 +27,19 @@ namespace MimyLab.FukuroUdon
          ******************************/
         public bool AssignPlayer(VRCPlayerApi target)
         {
-            if (!Networking.IsOwner(this.gameObject)) { return false; }
-            if (!Utilities.IsValid(target)) { return false; }
+            if (!Networking.IsOwner(gameObject)) return false;
+            if (!Utilities.IsValid(target)) return false;
 
             return AssignPlayer(target.playerId);
         }
 
         public bool AssignPlayer(int targetPlayerId)
         {
-            if (!Networking.IsOwner(this.gameObject)) { return false; }
-            if (targetPlayerId < 1) { return false; }
-            if (System.Array.IndexOf(_playerIds, targetPlayerId) > -1) { return false; }
+            if (!Networking.IsOwner(gameObject)) return false;
+            if (targetPlayerId < 1) return false;
+            if (Array.IndexOf(_playerIds, targetPlayerId) > -1) return false;
 
-            int vacantIndex = System.Array.IndexOf(_playerIds, 0);
+            int vacantIndex = Array.IndexOf(_playerIds, 0);
             // 空きがないのでリフレッシュ
             if (vacantIndex < 0)
             {
@@ -51,7 +51,7 @@ namespace MimyLab.FukuroUdon
                     }
                 }
 
-                vacantIndex = System.Array.IndexOf(_playerIds, 0);
+                vacantIndex = Array.IndexOf(_playerIds, 0);
                 // それでも空きがないので拡張
                 if (vacantIndex < 0)
                 {
@@ -70,19 +70,19 @@ namespace MimyLab.FukuroUdon
 
         public void ReleasePlayer(VRCPlayerApi target)
         {
-            if (!Networking.IsOwner(this.gameObject)) { return; }
-            if (!Utilities.IsValid(target)) { return; }
+            if (!Networking.IsOwner(gameObject)) return;
+            if (!Utilities.IsValid(target)) return;
 
             ReleasePlayer(target.playerId);
         }
 
         public void ReleasePlayer(int targetPlayerId)
         {
-            if (!Networking.IsOwner(this.gameObject)) { return; }
-            if (targetPlayerId < 1) { return; }
+            if (!Networking.IsOwner(gameObject)) return;
+            if (targetPlayerId < 1) return;
 
             int index;
-            while ((index = System.Array.IndexOf(_playerIds, targetPlayerId)) > -1)
+            while ((index = Array.IndexOf(_playerIds, targetPlayerId)) > -1)
             {
                 _playerIds[index] = 0;
                 RequestSerialization();
@@ -91,9 +91,9 @@ namespace MimyLab.FukuroUdon
 
         public void ReleaseAllPlayer()
         {
-            if (!Networking.IsOwner(this.gameObject)) { return; }
+            if (!Networking.IsOwner(gameObject)) return;
 
-            System.Array.Clear(_playerIds, 0, _playerIds.Length);
+            Array.Clear(_playerIds, 0, _playerIds.Length);
             RequestSerialization();
         }
 
@@ -108,7 +108,7 @@ namespace MimyLab.FukuroUdon
 
         protected override bool CheckUniqueApplicable(VRCPlayerApi target)
         {
-            return System.Array.IndexOf(_playerIds, target.playerId) > -1;
+            return Array.IndexOf(_playerIds, target.playerId) > -1;
         }
     }
 }

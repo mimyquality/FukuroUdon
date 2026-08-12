@@ -22,13 +22,13 @@ namespace MimyLab.FukuroUdon
 
         [Header("Settings when active")]
         [SerializeField]
-        private UdonBehaviour[] _udonBehaviourForActive = new UdonBehaviour[0];
+        private UdonBehaviour[] _udonBehaviourForActive = System.Array.Empty<UdonBehaviour>();
         [SerializeField]
         private string _customEventNameForActive = "";
 
         [Header("Settings when inactive")]
         [SerializeField]
-        private UdonBehaviour[] _udonBehaviourForInactive = new UdonBehaviour[0];
+        private UdonBehaviour[] _udonBehaviourForInactive = System.Array.Empty<UdonBehaviour>();
         [SerializeField]
         private string _customEventNameForInactive = "";
 

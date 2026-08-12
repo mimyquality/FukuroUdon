@@ -40,7 +40,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _targetAudio = _target ? _target.GetComponent<AudioSource>() : GetComponent<AudioSource>();
 
@@ -54,7 +54,11 @@ namespace MimyLab.FukuroUdon
             Initialize();
 
             Configure();
-            if (playOnAwake) { Restart(); }
+            if (playOnAwake)
+            {
+                Restart(); 
+                
+            }
         }
 
         private void OnDisable()
@@ -65,7 +69,7 @@ namespace MimyLab.FukuroUdon
 
         public override void Reconfigure()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
             _volumeHandle.Kill();
             _pitchHandle.Kill();
@@ -74,58 +78,58 @@ namespace MimyLab.FukuroUdon
 
         public override void Play()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeVolume) { _volumeHandle.Play(); }
-            if (_isChangePitch) { _pitchHandle.Play(); }
+            if (_isChangeVolume) _volumeHandle.Play();
+            if (_isChangePitch) _pitchHandle.Play();
         }
 
         public override void Pause()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeVolume) { _volumeHandle.Pause(); }
-            if (_isChangePitch) { _pitchHandle.Pause(); }
+            if (_isChangeVolume) _volumeHandle.Pause();
+            if (_isChangePitch) _pitchHandle.Pause();
         }
 
         public override void Complete()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeVolume) { _volumeHandle.Complete(); }
-            if (_isChangePitch) { _pitchHandle.Complete(); }
+            if (_isChangeVolume) _volumeHandle.Complete();
+            if (_isChangePitch) _pitchHandle.Complete();
         }
 
         public override void Restart()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeVolume) { _volumeHandle.Restart(); }
-            if (_isChangePitch) { _pitchHandle.Restart(); }
+            if (_isChangeVolume) _volumeHandle.Restart();
+            if (_isChangePitch) _pitchHandle.Restart();
         }
 
         public override void Flip()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeVolume) { _volumeHandle.Flip(); }
-            if (_isChangePitch) { _pitchHandle.Flip(); }
+            if (_isChangeVolume) _volumeHandle.Flip();
+            if (_isChangePitch) _pitchHandle.Flip();
         }
 
         public override void PlayBackwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeVolume) { _volumeHandle.PlayBackwards(); }
-            if (_isChangePitch) { _pitchHandle.PlayBackwards(); }
+            if (_isChangeVolume) _volumeHandle.PlayBackwards();
+            if (_isChangePitch) _pitchHandle.PlayBackwards();
         }
 
         public override void PlayForwards()
         {
-            if (!isActiveAndEnabled) { return; }
+            if (!isActiveAndEnabled) return;
 
-            if (_isChangeVolume) { _volumeHandle.PlayForwards(); }
-            if (_isChangePitch) { _pitchHandle.PlayForwards(); }
+            if (_isChangeVolume) _volumeHandle.PlayForwards();
+            if (_isChangePitch) _pitchHandle.PlayForwards();
         }
 
         private void Configure()

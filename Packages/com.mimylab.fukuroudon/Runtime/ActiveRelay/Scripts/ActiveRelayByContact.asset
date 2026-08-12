@@ -406,7 +406,8 @@ MonoBehaviour:
       Data: 27|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: Minimum collision velocity to trigger OnEnter. m/s
+      Data: "OnEnter \u5224\u5B9A\u306B\u6700\u4F4E\u9650\u5FC5\u8981\u306A\u885D\u7A81\u901F\u5EA6.
+        m/s"
     - Name: 
       Entry: 8
       Data: 

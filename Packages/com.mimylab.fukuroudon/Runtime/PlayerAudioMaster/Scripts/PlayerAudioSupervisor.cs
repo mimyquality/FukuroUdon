@@ -9,7 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-
+    
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#pa-supervisor")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Supervisor")]
@@ -61,15 +61,15 @@ namespace MimyLab.FukuroUdon
         private void Update()
         {
             VRCPlayerApi chosenPlayer = _players[Time.frameCount % _playerCount];
-            if (!Utilities.IsValid(chosenPlayer)) { return; }
+            if (!Utilities.IsValid(chosenPlayer)) return;
 
             string channel = TagIsEmpty;
             string overrideNumber = TagIsEmpty;
             PlayerAudioRegulator overrideRegulator = null;
             for (int i = 0; i < playerAudioRegulators.Length; i++)
             {
-                if (!playerAudioRegulators[i]) { continue; }
-                if (!playerAudioRegulators[i].CheckApplicable(chosenPlayer)) { continue; }
+                if (!playerAudioRegulators[i]) continue;
+                if (!playerAudioRegulators[i].CheckApplicable(chosenPlayer)) continue;
 
                 if (!playerAudioRegulators[i].enableChannelMode)
                 {
@@ -91,9 +91,10 @@ namespace MimyLab.FukuroUdon
                 switch (playerAudioRegulators[i].channelUnmatchMode)
                 {
                     case PlayerAudioRegulatorChannelUncmatchMode.Fallback:
-                        if (overrideRegulator = playerAudioRegulators[i].unmatchFallback)
+                        overrideRegulator = playerAudioRegulators[i].unmatchFallback;
+                        if (overrideRegulator)
                         {
-                            overrideNumber = i.ToString() + "fb";
+                            overrideNumber = i + "fb";
                         }
                         break;
                     case PlayerAudioRegulatorChannelUncmatchMode.Passthrough:
@@ -102,8 +103,6 @@ namespace MimyLab.FukuroUdon
                     case PlayerAudioRegulatorChannelUncmatchMode.Pretend:
                         overrideNumber = i.ToString();
                         overrideRegulator = playerAudioRegulators[i];
-                        break;
-                    default:
                         break;
                 }
                 break;
@@ -114,7 +113,7 @@ namespace MimyLab.FukuroUdon
                 chosenPlayer.SetPlayerTag(PlayerAudioChannelTagName, channel);
             }
 
-            var executeOverride = overrideRegulator && overrideRegulator.NeedRealtimeOverride;
+            bool executeOverride = overrideRegulator && overrideRegulator.NeedRealtimeOverride;
             if (chosenPlayer.GetPlayerTag(PlayerAudioOverrideTagName) != overrideNumber)
             {
                 chosenPlayer.SetPlayerTag(PlayerAudioOverrideTagName, overrideNumber);

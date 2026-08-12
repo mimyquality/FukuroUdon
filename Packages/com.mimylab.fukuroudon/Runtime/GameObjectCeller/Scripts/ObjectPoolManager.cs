@@ -25,7 +25,7 @@ namespace MimyLab.FukuroUdon
         private Quaternion[] _startRotations;
         private GameObject _lastSpawnedObject = null;
 
-        private GameObject[] _emptyGameObjects = new GameObject[0];
+        private GameObject[] _emptyGameObjects = System.Array.Empty<GameObject>();
 
         private bool _initialized = false;
         private void Initialize()
