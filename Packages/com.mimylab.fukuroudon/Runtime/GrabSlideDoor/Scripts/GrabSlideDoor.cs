@@ -9,11 +9,11 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grab-SlideDoor#limited-position-constraint")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grab-SlideDoor#grab-slidedoor")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Grab SlideDoor/Grab SlideDoor")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class LimitedPositionConstraint : UdonSharpBehaviour
+    public class GrabSlideDoor : UdonSharpBehaviour
     {
         [Header("Source")]
         [SerializeField]

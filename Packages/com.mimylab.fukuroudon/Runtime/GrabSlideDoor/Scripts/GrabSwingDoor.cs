@@ -9,11 +9,11 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grab-SlideDoor#limited-lookat-constraint")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grab-SlideDoor#grab-swingdoor")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Grab SlideDoor/Grab SwingDoor")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class LimitedLookConstraint : UdonSharpBehaviour
+    public class GrabSwingDoor : UdonSharpBehaviour
     {
         private const float AngleEpsilon = 0.01f;
 

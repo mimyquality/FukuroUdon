@@ -38,7 +38,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5298421657796292597, guid: c804c86fa2229564690216a408cf92b1, type: 3}
       propertyPath: m_text
-      value: Double-Tap JUMP button to exit.
+      value: "\u30B8\u30E3\u30F3\u30D7\u30DC\u30BF\u30F3 \u30C0\u30D6\u30EB\u30BF\u30C3\u30D7\u3067\u964D\u308A\u308B\nDouble-Tap
+        [JUMP] to EXIT"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5298421657796292597, guid: c804c86fa2229564690216a408cf92b1, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540138637427729473, guid: c804c86fa2229564690216a408cf92b1, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 450
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540138637427729473, guid: c804c86fa2229564690216a408cf92b1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

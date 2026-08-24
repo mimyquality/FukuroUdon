@@ -23,24 +23,30 @@ namespace MimyLab.FukuroUdon
         [Space]
         [SerializeField, Min(0.0f)]
         private float _fadeStart = 5.0f;
+
         [SerializeField, Min(0.0f)]
         private float _fadeEnd = 7.0f;
 
-        private bool _enableFade;
+        [SerializeField]
+        private bool _inactiveWhenFadeout = false;
+
+        private bool _disableFade;
         private AnimationCurve _fadeCurve;
         private VRCCameraSettings _camera;
 
         private bool _initialized = false;
+
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
-            _enableFade = !Mathf.Approximately(_fadeEnd - _fadeStart, 0.0f);
+            _disableFade = Mathf.Approximately(_fadeEnd - _fadeStart, 0.0f);
             _fadeCurve = AnimationCurve.Linear(_fadeStart, 1.0f, _fadeEnd, 0.0f);
             _camera = VRCCameraSettings.ScreenCamera;
 
             _initialized = true;
         }
+
         private void Start()
         {
             Initialize();
@@ -48,22 +54,29 @@ namespace MimyLab.FukuroUdon
 
         public override void PostLateUpdate()
         {
-            if (!Utilities.IsValid(_camera)) { return; }
+            if (!Utilities.IsValid(_camera)) return;
+
             Vector3 position = _camera.Position;
 
             foreach (CanvasGroup canvasGroup in _canvasGroups)
             {
-                if (!canvasGroup) { continue; }
+                if (!canvasGroup) continue;
 
                 Vector3 targetPoint = canvasGroup.transform.position;
                 float distance = Vector3.Distance(targetPoint, position);
-
-                float calculateFade = _enableFade ?
-                    _fadeCurve.Evaluate(distance) :
-                    Mathf.Sign(_fadeEnd - distance);
+                float calculateFade = _disableFade ? Mathf.Sign(_fadeEnd - distance) : _fadeCurve.Evaluate(distance);
 
                 canvasGroup.alpha = Mathf.Clamp01(calculateFade);
                 canvasGroup.interactable = calculateFade > 0.0f;
+
+                if (_inactiveWhenFadeout)
+                {
+                    GameObject obj = canvasGroup.gameObject;
+                    if (obj.activeSelf != calculateFade > 0.0f)
+                    {
+                        obj.SetActive(!obj.activeSelf);
+                    }
+                }
             }
         }
     }
