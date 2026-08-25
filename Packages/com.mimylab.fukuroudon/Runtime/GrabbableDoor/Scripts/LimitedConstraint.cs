@@ -8,9 +8,8 @@ https://opensource.org/licenses/mit-license.php
 namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
-    using UnityEngine;
-    
-    public abstract class LimitConstraint : UdonSharpBehaviour
+
+    public abstract class LimitedConstraint : UdonSharpBehaviour
     {
     }
 }

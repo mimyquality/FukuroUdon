@@ -8,8 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    //using VRC.SDKBase;
-
+    
+    [System.Obsolete("後続の Swivel Chair2 に移行します。\nこのコンポーネントは今後メンテされません。")]
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Swivel-Chair#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [DefaultExecutionOrder(10)]

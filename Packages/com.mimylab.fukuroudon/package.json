@@ -2,7 +2,7 @@
   "name": "com.mimylab.fukuroudon",
   "displayName": "Fukuro Udon",
   "version": "3.19.5",
-  "description": "MimyLab's U# utilitiy pack for VPM.",
+  "description": "MimyLab's U# utility pack for VPM.",
   "unity": "2022.3",
   "author": {
     "name": "Mimy Quality",
@@ -34,14 +34,9 @@
       "path": "Samples/ActiveRelay"
     },
     {
-      "displayName": "GameObject Celler",
+      "displayName": "GameObject Cellar",
       "description": "VRC Object Pool のラッパースクリプトとその操作スイッチ",
-      "path": "Samples/GameObjectCeller"
-    },
-    {
-      "displayName": "Grab SlideDoor",
-      "description": "掴んで開け閉めするスライドドア・スイングドアのギミック",
-      "path": "Samples/GrabSlideDoor"
+      "path": "Samples/GameObjectCellar"
     },
     {
       "displayName": "Input Flying System",
@@ -87,6 +82,11 @@
       "displayName": "Better AvatarPedestal",
       "description": "3D モデルで展示できるアバターペデスタル",
       "path": "Samples/BetterAvatarPedestal"
+    },
+    {
+      "displayName": "Grabbable Door",
+      "description": "掴んで開け閉めするスライドドア・スイングドアのギミック",
+      "path": "Samples/GrabbableDoor"
     }
   ]
 }

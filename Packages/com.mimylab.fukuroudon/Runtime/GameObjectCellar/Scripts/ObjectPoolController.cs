@@ -19,9 +19,9 @@ namespace MimyLab.FukuroUdon
         ReturnAll
     }
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/GameObject-Celler#objectpool-controller")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/GameObject-Cellar#objectpool-controller")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/GameObject Celler/ObjectPool Controller")]
+    [AddComponentMenu("Fukuro Udon/GameObject Cellar/ObjectPool Controller")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ObjectPoolController : UdonSharpBehaviour
     {

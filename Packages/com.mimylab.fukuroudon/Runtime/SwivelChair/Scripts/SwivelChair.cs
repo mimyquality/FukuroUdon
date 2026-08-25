@@ -22,7 +22,7 @@ namespace MimyLab.FukuroUdon
         Sagittal,    // 1：座深(前後)
         Vertical     // 2:座高(上下)
     }
-
+    [System.Obsolete("後続の Swivel Chair2 に移行します。\nこのコンポーネントは今後メンテされません。")]
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Swivel-Chair#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Swivel Chair/Swivel Chair")]

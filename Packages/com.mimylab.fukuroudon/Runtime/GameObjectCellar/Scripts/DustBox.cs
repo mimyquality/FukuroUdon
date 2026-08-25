@@ -12,9 +12,9 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Components;
     using VRC.Udon.Common.Interfaces;
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/GameObject-Celler#dust-box")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/GameObject-Cellar#dust-box")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/GameObject Celler/Dust Box")]
+    [AddComponentMenu("Fukuro Udon/GameObject Cellar/Dust Box")]
     [RequireComponent(typeof(Collider))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class DustBox : UdonSharpBehaviour

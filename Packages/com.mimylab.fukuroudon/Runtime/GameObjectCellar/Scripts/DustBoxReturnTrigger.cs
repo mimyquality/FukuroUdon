@@ -9,9 +9,9 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/GameObject-Celler#dust-box-return-trigger")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/GameObject-Cellar#dust-box-return-trigger")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/GameObject Celler/Dust Box Return Trigger")]
+    [AddComponentMenu("Fukuro Udon/GameObject Cellar/Dust Box Return Trigger")]
     [RequireComponent(typeof(Collider))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class DustBoxReturnTrigger : UdonSharpBehaviour

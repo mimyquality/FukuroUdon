@@ -8,7 +8,8 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-
+    
+    [System.Obsolete("Limited Constraint シリーズとして、後続の Grabbable Door に移行します。\nこのコンポーネントは今後メンテされません。")]
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grab-SlideDoor#grab-slidedoor")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Grab SlideDoor/Grab SlideDoor")]

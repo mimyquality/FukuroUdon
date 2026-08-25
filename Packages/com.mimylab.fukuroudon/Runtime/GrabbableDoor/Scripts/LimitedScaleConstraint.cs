@@ -8,18 +8,28 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
+    using VRC.SDKBase;
     using VRC.Udon;
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grabbable-Door#limit-position-constraint")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grabbable-Door#limited-scale-constraint")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Limit Constraint/Limit Position Constraint")]
+    [AddComponentMenu("Fukuro Udon/Limit Constraint/Limited Scale Constraint")]
+    [DefaultExecutionOrder(100)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class LimitPositionConstraint : LimitConstraint
+    public class LimitedScaleConstraint : LimitedConstraint
     {
-        [SerializeField] private Transform target;
-        [SerializeField] private Space relativeTo = Space.Self;
-        [SerializeField] private Vector3 minPosition = Vector3.negativeInfinity;
-        [SerializeField] private Vector3 maxPosition = Vector3.positiveInfinity;
+        [SerializeField]
+        private Transform sourceTransform;
+
+        [SerializeField]
+        private Vector3 minScale = Vector3.zero;
+
+        [SerializeField]
+        private Vector3 maxScale = Vector3.positiveInfinity;
+
+        [Header("Advanced Settings")]
+        [SerializeField]
+        private Transform targetTransform;
 
         private bool _isReachMinX;
         private bool _isReachMaxX;
@@ -36,12 +46,17 @@ namespace MimyLab.FukuroUdon
         {
             if (_initialized) return;
 
-            if (!target)
+            if (!sourceTransform)
             {
-                target = transform;
+                sourceTransform = transform;
             }
 
-            _eventReceivers = target.GetComponents<UdonBehaviour>();
+            if (!targetTransform)
+            {
+                targetTransform = transform;
+            }
+
+            _eventReceivers = transform.GetComponents<UdonBehaviour>();
 
             _initialized = true;
         }
@@ -53,27 +68,20 @@ namespace MimyLab.FukuroUdon
 
         private void LateUpdate()
         {
-            Vector3 currentPosition = relativeTo == Space.Self ? target.localPosition : target.position;
+            Vector3 scale = sourceTransform.localScale;
 
-            currentPosition.x = Mathf.Clamp(currentPosition.x, minPosition.x, maxPosition.x);
-            currentPosition.y = Mathf.Clamp(currentPosition.y, minPosition.y, maxPosition.y);
-            currentPosition.z = Mathf.Clamp(currentPosition.z, minPosition.z, maxPosition.z);
+            scale.x = Mathf.Clamp(scale.x, minScale.x, maxScale.x);
+            scale.y = Mathf.Clamp(scale.y, minScale.y, maxScale.y);
+            scale.z = Mathf.Clamp(scale.z, minScale.z, maxScale.z);
 
-            if (relativeTo == Space.Self)
-            {
-                target.localPosition = currentPosition;
-            }
-            else
-            {
-                target.position = currentPosition;
-            }
+            targetTransform.localScale = scale;
 
-            SetIsReachMinX(currentPosition.x <= minPosition.x);
-            SetIsReachMaxX(currentPosition.x >= maxPosition.x);
-            SetIsReachMinY(currentPosition.y <= minPosition.y);
-            SetIsReachMaxY(currentPosition.y >= maxPosition.y);
-            SetIsReachMinZ(currentPosition.z <= minPosition.z);
-            SetIsReachMaxZ(currentPosition.z >= maxPosition.z);
+            SetIsReachMinX(scale.x <= minScale.x);
+            SetIsReachMaxX(scale.x >= maxScale.x);
+            SetIsReachMinY(scale.y <= minScale.y);
+            SetIsReachMaxY(scale.y >= maxScale.y);
+            SetIsReachMinZ(scale.z <= minScale.z);
+            SetIsReachMaxZ(scale.z >= maxScale.z);
         }
 
         private void SetIsReachMinX(bool value)
@@ -140,7 +148,7 @@ namespace MimyLab.FukuroUdon
         {
             for (int i = 0; i < _eventReceivers.Length; i++)
             {
-                if (!_eventReceivers[i]) continue;
+                if (!Utilities.IsValid(_eventReceivers[i])) continue;
                 if (_eventReceivers[i] == this) continue;
 
                 _eventReceivers[i].SendCustomEvent(eventName);
