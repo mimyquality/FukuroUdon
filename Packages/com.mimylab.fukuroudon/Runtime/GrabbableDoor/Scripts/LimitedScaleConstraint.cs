@@ -13,24 +13,32 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grabbable-Door#limited-scale-constraint")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Limit Constraint/Limited Scale Constraint")]
+    [AddComponentMenu("Fukuro Udon/Limited Constraint/Limited Scale Constraint")]
     [DefaultExecutionOrder(100)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class LimitedScaleConstraint : LimitedConstraint
     {
         [SerializeField]
+        private Transform targetTransform;
+
+        [Header("Follow Settings")]
+        [SerializeField]
         private Transform sourceTransform;
 
         [SerializeField]
+        [Range(0.0f, 1.0f)]
+        private float weight = 1.0f;
+
+        [Header("Limit Settings")]
+        [SerializeField]
+        [Min(0.0f)]
         private Vector3 minScale = Vector3.zero;
 
         [SerializeField]
         private Vector3 maxScale = Vector3.positiveInfinity;
 
-        [Header("Advanced Settings")]
-        [SerializeField]
-        private Transform targetTransform;
-
+        private Vector3 _scaleAtRest;
+        
         private bool _isReachMinX;
         private bool _isReachMaxX;
         private bool _isReachMinY;
@@ -46,15 +54,12 @@ namespace MimyLab.FukuroUdon
         {
             if (_initialized) return;
 
-            if (!sourceTransform)
-            {
-                sourceTransform = transform;
-            }
-
             if (!targetTransform)
             {
                 targetTransform = transform;
             }
+
+            _scaleAtRest = targetTransform.localScale;
 
             _eventReceivers = transform.GetComponents<UdonBehaviour>();
 
@@ -68,14 +73,19 @@ namespace MimyLab.FukuroUdon
 
         private void LateUpdate()
         {
-            Vector3 scale = sourceTransform.localScale;
+            Vector3 scale = sourceTransform
+                ? Vector3.Lerp(_scaleAtRest, sourceTransform.localScale, weight)
+                : targetTransform.localScale;
 
+            // 範囲制限処理
             scale.x = Mathf.Clamp(scale.x, minScale.x, maxScale.x);
             scale.y = Mathf.Clamp(scale.y, minScale.y, maxScale.y);
             scale.z = Mathf.Clamp(scale.z, minScale.z, maxScale.z);
 
+            // 結果を Transform へ反映
             targetTransform.localScale = scale;
 
+            // 制限イベント
             SetIsReachMinX(scale.x <= minScale.x);
             SetIsReachMaxX(scale.x >= maxScale.x);
             SetIsReachMinY(scale.y <= minScale.y);

@@ -11,9 +11,9 @@ namespace MimyLab.FukuroUdon
     using VRC.SDK3.Rendering;
     using VRC.Udon;
 
+    [System.Obsolete("このコンポーネントは不要となりました。今後メンテされません。")]
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Ambient-Effect-Assistant#viewpoint-tracker")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/General/View Point Tracker (Obsolete)")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ViewPointTracker : UdonSharpBehaviour
     {
@@ -27,6 +27,7 @@ namespace MimyLab.FukuroUdon
         [Header("For UdonBehaviours")]
         [SerializeField]
         private UdonBehaviour[] _positionReceiver = System.Array.Empty<UdonBehaviour>();
+
         [SerializeField]
         private UdonBehaviour[] _rotationReceiver = System.Array.Empty<UdonBehaviour>();
 

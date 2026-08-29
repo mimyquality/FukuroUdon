@@ -25,7 +25,7 @@ namespace MimyLab.FukuroUdon
     [System.Obsolete("後続の Swivel Chair2 に移行します。\nこのコンポーネントは今後メンテされません。")]
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Swivel-Chair#%E4%BD%BF%E3%81%84%E6%96%B9")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Swivel Chair/Swivel Chair")]
+    [AddComponentMenu("Fukuro Udon/Swivel Chair/Swivel Chair (obsolete)")]
     [RequireComponent(typeof(SCKeyInputManager), typeof(VRCStation))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class SwivelChair : UdonSharpBehaviour

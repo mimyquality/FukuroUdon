@@ -11,25 +11,36 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.Udon;
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grabbable-Door#limited-angle-constraint")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grabbable-Door#limited-rotation-constraint")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Limit Constraint/Limited Angle Constraint")]
+    [AddComponentMenu("Fukuro Udon/Limited Constraint/Limited Rotation Constraint")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class LimitedAngleConstraint : LimitedConstraint
+    public class LimitedRotationConstraint : LimitedConstraint
     {
+        [SerializeField]
+        private Transform targetTransform;
+
+        [Header("Follow Settings")]
         [SerializeField]
         private Transform sourceTransform;
 
         [SerializeField]
-        private Space relativeTo = Space.Self;
+        [Range(0.0f, 1.0f)]
+        private float weight = 1.0f;
 
+        [SerializeField]
+        private bool solveInLocalSpace = false;
+
+        [Header("Limit Settings")]
+        [SerializeField]
+        private Vector3 limitBaseVector = Vector3.forward;
+        
         [SerializeField]
         [Range(0.0f, 180.0f)]
         private float maxAngle = 180.0f;
 
-        [Header("Advanced Settings")]
-        [SerializeField]
-        private Transform targetTransform;
+        private Transform _parent;
+        private Quaternion _rotationAtRest;
 
         private bool _isReachMaxAngle;
 
@@ -41,15 +52,13 @@ namespace MimyLab.FukuroUdon
         {
             if (_initialized) return;
 
-            if (!sourceTransform)
-            {
-                sourceTransform = transform;
-            }
-
             if (!targetTransform)
             {
                 targetTransform = transform;
             }
+
+            _parent = targetTransform.parent;
+            _rotationAtRest = targetTransform.localRotation;
 
             _eventReceivers = transform.GetComponents<UdonBehaviour>();
 
@@ -63,21 +72,31 @@ namespace MimyLab.FukuroUdon
 
         private void LateUpdate()
         {
-            Quaternion rotation = relativeTo == Space.Self ? sourceTransform.localRotation : sourceTransform.rotation;
-            float angle = 0; // ToDo:角度計算
+            Quaternion rotation = sourceTransform ? FollowRotation() : targetTransform.localRotation;
+
+            // 範囲制限処理
+            float angle = 0;
+            
+            // ToDo:角度計算
 
             angle = Mathf.Min(angle, maxAngle);
 
-            if (relativeTo == Space.Self)
-            {
-                targetTransform.localRotation = rotation;
-            }
-            else
-            {
-                targetTransform.rotation = rotation;
-            }
+            // 結果を Transform へ反映
+            targetTransform.localRotation = rotation;
 
+            // 制限イベント
             SetIsReachMaxAngle(angle >= maxAngle);
+        }
+
+        private Quaternion FollowRotation()
+        {
+            Quaternion sourceRotation = solveInLocalSpace
+                ? sourceTransform.localRotation
+                : _parent
+                    ? Quaternion.Inverse(_parent.rotation) * sourceTransform.rotation
+                    : sourceTransform.rotation;
+
+            return Quaternion.Slerp(_rotationAtRest, sourceRotation, weight);
         }
 
         private void SetIsReachMaxAngle(bool value)

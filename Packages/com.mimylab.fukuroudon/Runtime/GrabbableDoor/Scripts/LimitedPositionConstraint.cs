@@ -13,27 +13,38 @@ namespace MimyLab.FukuroUdon
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grabbable-Door#limited-position-constraint")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Limit Constraint/Limited Position Constraint")]
+    [AddComponentMenu("Fukuro Udon/Limited Constraint/Limited Position Constraint")]
     [DefaultExecutionOrder(100)]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class LimitedPositionConstraint : LimitedConstraint
     {
         [SerializeField]
+        private Transform targetTransform;
+
+        [Header("Follow Settings")]
+        [SerializeField]
         private Transform sourceTransform;
 
         [SerializeField]
-        private Space relativeTo = Space.Self;
-        
+        [Range(0.0f, 1.0f)]
+        private float weight = 1.0f;
+
+        [SerializeField]
+        private bool solveInLocalSpace = false;
+
+        [Header("Limit Settings")]
         [SerializeField]
         private Vector3 minPosition = Vector3.negativeInfinity;
 
         [SerializeField]
         private Vector3 maxPosition = Vector3.positiveInfinity;
 
-        [Header("Advanced Settings")]
         [SerializeField]
-        private Transform targetTransform;
+        private Space relativeTo = Space.Self;
 
+        private Transform _parent;
+        private Vector3 _positionAtRest;
+        
         private bool _isReachMinX;
         private bool _isReachMaxX;
         private bool _isReachMinY;
@@ -49,15 +60,13 @@ namespace MimyLab.FukuroUdon
         {
             if (_initialized) return;
 
-            if (!sourceTransform)
-            {
-                sourceTransform = transform;
-            }
-
             if (!targetTransform)
             {
                 targetTransform = transform;
             }
+
+            _parent = targetTransform.parent;
+            _positionAtRest = targetTransform.localPosition;
 
             _eventReceivers = transform.GetComponents<UdonBehaviour>();
 
@@ -71,27 +80,49 @@ namespace MimyLab.FukuroUdon
 
         private void LateUpdate()
         {
-            Vector3 position = relativeTo == Space.Self ? sourceTransform.localPosition : sourceTransform.position;
+            Vector3 position = sourceTransform ? FollowPosition() : targetTransform.localPosition;
+
+            // 範囲制限処理
+            if (relativeTo == Space.World)
+            {
+                if (_parent)
+                {
+                    position = _parent.TransformPoint(position);
+                }
+            }
 
             position.x = Mathf.Clamp(position.x, minPosition.x, maxPosition.x);
             position.y = Mathf.Clamp(position.y, minPosition.y, maxPosition.y);
             position.z = Mathf.Clamp(position.z, minPosition.z, maxPosition.z);
 
-            if (relativeTo == Space.Self)
-            {
-                targetTransform.localPosition = position;
-            }
-            else
+            // 結果を Transform へ反映
+            if (relativeTo == Space.World)
             {
                 targetTransform.position = position;
             }
+            else
+            {
+                targetTransform.localPosition = position;
+            }
 
+            // 制限イベント
             SetIsReachMinX(position.x <= minPosition.x);
             SetIsReachMaxX(position.x >= maxPosition.x);
             SetIsReachMinY(position.y <= minPosition.y);
             SetIsReachMaxY(position.y >= maxPosition.y);
             SetIsReachMinZ(position.z <= minPosition.z);
             SetIsReachMaxZ(position.z >= maxPosition.z);
+        }
+
+        private Vector3 FollowPosition()
+        {
+            Vector3 sourcePosition = solveInLocalSpace 
+                ? sourceTransform.localPosition 
+                : _parent
+                    ? _parent.InverseTransformPoint(sourceTransform.position)
+                    : sourceTransform.position;
+
+            return Vector3.Lerp(_positionAtRest, sourcePosition, weight);
         }
 
         private void SetIsReachMinX(bool value)
