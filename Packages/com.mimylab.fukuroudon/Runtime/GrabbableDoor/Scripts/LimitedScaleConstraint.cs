@@ -30,15 +30,14 @@ namespace MimyLab.FukuroUdon
         private float weight = 1.0f;
 
         [Header("Limit Settings")]
-        [SerializeField]
-        [Min(0.0f)]
+        [SerializeField, Min(0.0f)]
         private Vector3 minScale = Vector3.zero;
 
-        [SerializeField]
+        [SerializeField, Min(0.0f)]
         private Vector3 maxScale = Vector3.positiveInfinity;
 
         private Vector3 _scaleAtRest;
-        
+
         private bool _isReachMinX;
         private bool _isReachMaxX;
         private bool _isReachMinY;

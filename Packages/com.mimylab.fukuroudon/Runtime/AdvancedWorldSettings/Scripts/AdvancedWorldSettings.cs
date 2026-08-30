@@ -12,6 +12,10 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase.Editor.Attributes;
     using VRC.SDK3.Rendering;
 
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
+    using UnityEditor;
+#endif
+    
     [System.Flags]
     public enum AdvancedWorldSettingsInitializeEyeHeightTypes
     {
@@ -67,14 +71,17 @@ namespace MimyLab.FukuroUdon
         [Header("Avatar Scaling")]
         [SerializeField] private bool _initializeAvatarScaling = true;
         [SerializeField] private bool _allowManualAvatarScaling = true;
-        [SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMinimum = 0.2f;
-        [SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMaximum = 5f;
+        [SerializeField][MinMaxRange(0.2f, 5f)] private Vector2 _manualAvatarScalingRange = new Vector2(0.2f, 5f);
         [Space]
         [Tooltip("チェックを入れたタイミングで、アバターの目線高さの上限と下限を設定範囲に制限します。")]
         [SerializeField][EnumFlag] private AdvancedWorldSettingsInitializeEyeHeightTypes _initializeAvatarEyeHight = 0;
-        [SerializeField][Range(0.01f, 10000f)] private float _avatarEyeHeightLowerLimit = 0.1f;
-        [SerializeField][Range(0.01f, 10000f)] private float _avatarEyeHeightUpperLimit = 100f;
-
+        [SerializeField][MinMaxRange(0.01f, 10000f)] private Vector2 _avatarEyeHeightLimit = new Vector2(0.1f, 100f);
+        
+        [HideInInspector][SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMinimum = 0.2f;
+        [HideInInspector][SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMaximum = 5f;
+        [HideInInspector][SerializeField][Range(0.01f, 10000f)] private float _avatarEyeHeightLowerLimit = 0.1f;
+        [HideInInspector][SerializeField][Range(0.01f, 10000f)] private float _avatarEyeHeightUpperLimit = 100f;
+        
         [Header("Screen Camera Settings")]
         [SerializeField] private bool _initializeScreenCameraSettings = false;
         [SerializeField] private bool _screenAllowHDR = false;
@@ -105,6 +112,8 @@ namespace MimyLab.FukuroUdon
 
         [Header("Quality Settings")]
         [SerializeField] private bool _initializeQualitySettings = false;
+        [SerializeField] private bool _realtimeReflectionProbes = false;
+        [SerializeField] private ShadowmaskMode _shadowmaskMode = ShadowmaskMode.Shadowmask;
         [SerializeField][Range(0.1f, 10000f)] private float _shadowDistance = 50.0f;
         [SerializeField][Range(0.0f, 1.0f)] private float _shadowCascade2Split = 1.0f / 3.0f;
         [SerializeField][Range(0.0f, 1.0f)] private float _shadowCascade4Split0 = 2f / 30f;
@@ -117,6 +126,47 @@ namespace MimyLab.FukuroUdon
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnValidate()
         {
+            if (_voiceDistanceNear > _voiceDistanceFar)
+            {
+                _voiceDistanceNear = _voiceDistanceFar;
+            }
+            if (_voiceVolumetricRadius > _voiceDistanceFar)
+            {
+                _voiceVolumetricRadius = _voiceDistanceFar;
+            }
+
+            if (_avatarAudioDistanceNear > _avatarAudioDistanceFar)
+            {
+                _avatarAudioDistanceNear = _avatarAudioDistanceFar;
+            }
+            if (_avatarAudioVolumetricRadius > _avatarAudioDistanceFar)
+            {
+                _avatarAudioVolumetricRadius = _avatarAudioDistanceFar;
+            }
+            
+            if (_avatarEyeHeightMinimum != 0.2f)
+            {
+                _manualAvatarScalingRange.x = _avatarEyeHeightMinimum;
+                _avatarEyeHeightMinimum = 0.2f;
+            }
+            if (_avatarEyeHeightMaximum != 5f)
+            {
+                _manualAvatarScalingRange.y = _avatarEyeHeightMaximum;
+                _avatarEyeHeightMaximum = 5f;
+            }
+
+            if (_avatarEyeHeightLowerLimit != 0.1f)
+            {
+                _avatarEyeHeightLimit.x = _avatarEyeHeightLowerLimit;
+                _avatarEyeHeightLowerLimit = 0.1f;
+            }
+
+            if (_avatarEyeHeightUpperLimit != 100f)
+            {
+                _avatarEyeHeightLimit.y = _avatarEyeHeightUpperLimit;
+                _avatarEyeHeightUpperLimit = 100f;
+            }
+            
             if ((_screenCullingMask & ForceScreenVisible) != ForceScreenVisible)
             {
                 _screenCullingMask |= ForceScreenVisible;
@@ -130,6 +180,8 @@ namespace MimyLab.FukuroUdon
             {
                 _photoDepthTextureMode |= DepthTextureMode.Depth;
             }
+
+            EditorUtility.SetDirty(this);
         }
 #endif
 
@@ -167,6 +219,8 @@ namespace MimyLab.FukuroUdon
 
             if (_initializeQualitySettings)
             {
+                VRCQualitySettings.RealtimeReflectionProbes = _realtimeReflectionProbes;
+                VRCQualitySettings.ShadowmaskMode = _shadowmaskMode;
                 VRCQualitySettings.SetShadowDistance(_shadowDistance);
                 VRCQualitySettings.ShadowCascade2Split = _shadowCascade2Split;
                 VRCQualitySettings.ShadowCascade4Split = new Vector3(_shadowCascade4Split0, _shadowCascade4Split1, _shadowCascade4Split2);
@@ -195,8 +249,8 @@ namespace MimyLab.FukuroUdon
                 if (_initializeAvatarScaling)
                 {
                     player.SetManualAvatarScalingAllowed(_allowManualAvatarScaling);
-                    player.SetAvatarEyeHeightMinimumByMeters(_avatarEyeHeightMinimum);
-                    player.SetAvatarEyeHeightMaximumByMeters(_avatarEyeHeightMaximum);
+                    player.SetAvatarEyeHeightMinimumByMeters(_manualAvatarScalingRange.x);
+                    player.SetAvatarEyeHeightMaximumByMeters(_manualAvatarScalingRange.y);
                 }
             }
 
@@ -246,7 +300,7 @@ namespace MimyLab.FukuroUdon
         private void ClampAvatarEyeHeight()
         {
             float avatarEyeHeight = _localPlayer.GetAvatarEyeHeightAsMeters();
-            avatarEyeHeight = Mathf.Clamp(avatarEyeHeight, _avatarEyeHeightLowerLimit, _avatarEyeHeightUpperLimit);
+            avatarEyeHeight = Mathf.Clamp(avatarEyeHeight, _avatarEyeHeightLimit.x, _avatarEyeHeightLimit.y);
             _localPlayer.SetAvatarEyeHeightByMeters(avatarEyeHeight);
         }
     }

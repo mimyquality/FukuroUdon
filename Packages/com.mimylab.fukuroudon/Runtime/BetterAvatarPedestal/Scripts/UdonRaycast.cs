@@ -4,6 +4,8 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
+using System;
+
 namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
@@ -24,21 +26,30 @@ namespace MimyLab.FukuroUdon
     {
         [Header("Raycast Properties")]
         [SerializeField]
+        private Transform _rootTransform;
+
+        [SerializeField]
         private Vector3 _raycastDirection = Vector3.forward;
+
         [SerializeField, Range(0.0f, 10000.0f)]
         private float _distance = 10.0f;
+
         [SerializeField]
         private bool _applyTransformScale = false;
+
         [SerializeField]
         private LayerMask _collisionLayers = ~0;
 
         [Header("Results")]
         [SerializeField]
         private Transform _resultTransform = null;
+
         [SerializeField]
         private bool _applyRotation = false;
+
         [SerializeField]
         private Vector3 _alignmentAxis = Vector3.up;
+
         [SerializeField]
         private UdonRaycastBehaviorOnMiss _behaviorOnMiss = UdonRaycastBehaviorOnMiss.DoNothing;
 
@@ -47,16 +58,29 @@ namespace MimyLab.FukuroUdon
         private float _distanceToHit = 0.0f;
         private float _ratio = 0.0f;
 
-        public bool Hit { get => _hit; }
-        public float Distance { get => _distanceToHit; }
-        public float Ratio { get => _ratio; }
+        public bool Hit
+        {
+            get => _hit;
+        }
+
+        public float Distance
+        {
+            get => _distanceToHit;
+        }
+
+        public float Ratio
+        {
+            get => _ratio;
+        }
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            Vector3 startPoint = transform.position;
-            Vector3 direction = transform.rotation * _raycastDirection.normalized;
-            float maxDistance = _applyTransformScale ? transform.lossyScale.z * _distance : _distance;
+            Transform rootTransform = _rootTransform ? _rootTransform : transform;
+
+            Vector3 startPoint = rootTransform.position;
+            Vector3 direction = rootTransform.rotation * _raycastDirection.normalized;
+            float maxDistance = _applyTransformScale ? rootTransform.lossyScale.z * _distance : _distance;
             Vector3 endPoint = maxDistance * direction + startPoint;
 
             Gizmos.color = new Color(1.0f, 0.5f, 0.0f);
@@ -64,52 +88,88 @@ namespace MimyLab.FukuroUdon
         }
 #endif
 
+        private void Start()
+        {
+            if (!_rootTransform)
+            {
+                _rootTransform = transform;
+            }
+        }
+
+        private void OnDisable()
+        {
+            Vector3 direction = _rootTransform.rotation * _raycastDirection.normalized;
+            float maxDistance = _applyTransformScale ? _rootTransform.lossyScale.z * _distance : _distance;
+
+            RaycastMiss(_rootTransform.position, direction, maxDistance);
+        }
+
         private void FixedUpdate()
         {
-            if (!_resultTransform) { return; }
+            if (!_resultTransform) return;
 
-            Vector3 startPoint = transform.position;
-            Vector3 direction = transform.rotation * _raycastDirection.normalized;
-            float maxDistance = _applyTransformScale ? transform.lossyScale.z * _distance : _distance;
+            Vector3 startPoint = _rootTransform.position;
+            Vector3 direction = _rootTransform.rotation * _raycastDirection.normalized;
+            float maxDistance = _applyTransformScale ? _rootTransform.lossyScale.z * _distance : _distance;
 
-            _hit = Physics.Raycast(startPoint, direction, out _hitInfo, maxDistance, _collisionLayers, QueryTriggerInteraction.Ignore);
+            _hit = Physics.Raycast
+            (
+                startPoint,
+                direction,
+                out _hitInfo,
+                maxDistance,
+                _collisionLayers,
+                QueryTriggerInteraction.Ignore
+            );
+
             if (_hit)
             {
                 _resultTransform.position = _hitInfo.point;
                 if (_applyRotation)
                 {
-                    _resultTransform.rotation = Quaternion.LookRotation(_hitInfo.normal) * Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
+                    _resultTransform.rotation = Quaternion.LookRotation(_hitInfo.normal) *
+                                                Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
                 }
+
                 _distanceToHit = _hitInfo.distance;
                 _ratio = Mathf.Clamp01(maxDistance > 0.0f ? _distanceToHit / maxDistance : 0.0f);
             }
             else
             {
-                switch (_behaviorOnMiss)
-                {
-                    case UdonRaycastBehaviorOnMiss.SnapToStart:
-                        _resultTransform.position = startPoint;
-                        if (_applyRotation)
-                        {
-                            _resultTransform.rotation = Quaternion.LookRotation(-direction) * Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
-                        }
-                        _distanceToHit = 0.0f;
-                        _ratio = 0.0f;
-                        break;
-                    case UdonRaycastBehaviorOnMiss.SnapToEnd:
-                        _resultTransform.position = maxDistance * direction + startPoint;
-                        if (_applyRotation)
-                        {
-                            _resultTransform.rotation = Quaternion.LookRotation(-direction) * Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
-                        }
-                        _distanceToHit = maxDistance;
-                        _ratio = 1.0f;
-                        break;
-                    case UdonRaycastBehaviorOnMiss.DoNothing:
-                    default:
-                        // Do nothing
-                        break;
-                }
+                RaycastMiss(startPoint, direction, maxDistance);
+            }
+        }
+
+        private void RaycastMiss(Vector3 startPoint, Vector3 direction, float maxDistance)
+        {
+            switch (_behaviorOnMiss)
+            {
+                case UdonRaycastBehaviorOnMiss.SnapToStart:
+                    _resultTransform.position = startPoint;
+                    if (_applyRotation)
+                    {
+                        _resultTransform.rotation = Quaternion.LookRotation(-direction) *
+                                                    Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
+                    }
+
+                    _distanceToHit = 0.0f;
+                    _ratio = 0.0f;
+                    break;
+                case UdonRaycastBehaviorOnMiss.SnapToEnd:
+                    _resultTransform.position = maxDistance * direction + startPoint;
+                    if (_applyRotation)
+                    {
+                        _resultTransform.rotation = Quaternion.LookRotation(-direction) *
+                                                    Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
+                    }
+
+                    _distanceToHit = maxDistance;
+                    _ratio = 1.0f;
+                    break;
+                case UdonRaycastBehaviorOnMiss.DoNothing:
+                default:
+                    // Do nothing
+                    break;
             }
         }
     }

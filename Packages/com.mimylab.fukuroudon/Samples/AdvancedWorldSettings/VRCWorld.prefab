@@ -197,11 +197,13 @@ MonoBehaviour:
   _avatarAudioCustomCurve: 0
   _initializeAvatarScaling: 1
   _allowManualAvatarScaling: 1
+  _manualAvatarScalingRange: {x: 0.2, y: 5}
+  _initializeAvatarEyeHight: 0
+  _avatarEyeHeightLimit: {x: 0.1, y: 100}
   _avatarEyeHeightMinimum: 0.2
   _avatarEyeHeightMaximum: 5
-  _initializeAvatarEyeHight: 0
-  _avatarEyeHeightLowerLimit: 1.3
-  _avatarEyeHeightUpperLimit: 1.3
+  _avatarEyeHeightLowerLimit: 0.1
+  _avatarEyeHeightUpperLimit: 100
   _initializeScreenCameraSettings: 0
   _screenAllowHDR: 0
   _screenDepthTextureMode: 0
@@ -288,6 +290,8 @@ MonoBehaviour:
   - 0
   - 0
   _initializeQualitySettings: 0
+  _realtimeReflectionProbes: 0
+  _shadowmaskMode: 0
   _shadowDistance: 50
   _shadowCascade2Split: 0.33333334
   _shadowCascade4Split0: 0.06666667
