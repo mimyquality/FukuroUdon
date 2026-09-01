@@ -468,8 +468,10 @@ namespace MimyLab.FukuroUdon
 
             _syncPosition = transform.position;
             _syncRotation = transform.rotation;
+            _syncScale = transform.localScale;
             _localPosition = transform.localPosition;
             _localRotation = transform.localRotation;
+            _localScale = transform.localScale;
 
             RequestSerialization();
 
