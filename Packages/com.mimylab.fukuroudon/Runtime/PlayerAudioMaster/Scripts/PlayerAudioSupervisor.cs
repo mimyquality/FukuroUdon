@@ -9,7 +9,7 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using VRC.SDKBase;
-    
+
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/PlayerAudio-Master#pa-supervisor")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/PlayerAudio Master/PA Supervisor")]
@@ -28,9 +28,9 @@ namespace MimyLab.FukuroUdon
         public bool enablePlayerVoiceControl = true;
         [Range(0f, 24f)]
         public float defaultVoiceGain = 15f;
-        [Range(0f, 1000000.0f)]
+        [Range(0f, 1000000f)]
         public float defaultVoiceDistanceNear = 0f;
-        [Range(0f, 1000000.0f)]
+        [Range(0f, 1000000f)]
         public float defaultVoiceDistanceFar = 25f;
 
         [Header("Player Voice Advance Settings")]
@@ -57,6 +57,31 @@ namespace MimyLab.FukuroUdon
         // キャッシュ用
         private int _playerCount = 1;
         private VRCPlayerApi[] _players = new VRCPlayerApi[1];
+
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (defaultVoiceDistanceNear > defaultVoiceDistanceFar)
+            {
+                defaultVoiceDistanceNear =  defaultVoiceDistanceFar;
+            }
+
+            if (defaultVoiceVolumetricRadius > defaultVoiceDistanceFar)
+            {
+                defaultVoiceVolumetricRadius = defaultVoiceDistanceFar;
+            }
+
+            if (defaultAvatarAudioDistanceNear > defaultAvatarAudioDistanceFar)
+            {
+                defaultAvatarAudioDistanceNear = defaultAvatarAudioDistanceFar;
+            }
+
+            if (defaultAvatarAudioVolumetricRadius > defaultAvatarAudioDistanceFar)
+            {
+                defaultAvatarAudioVolumetricRadius = defaultAvatarAudioDistanceFar;
+            }
+        }
+#endif
 
         private void Update()
         {

@@ -25,8 +25,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private Transform sourceTransform;
 
-        [SerializeField]
-        [Range(0.0f, 1.0f)]
+        [SerializeField, Range(0.0f, 1.0f)]
         private float weight = 1.0f;
 
         [SerializeField]
@@ -45,12 +44,9 @@ namespace MimyLab.FukuroUdon
         private Transform _parent;
         private Vector3 _positionAtRest;
         
-        private bool _isReachMinX;
-        private bool _isReachMaxX;
-        private bool _isReachMinY;
-        private bool _isReachMaxY;
-        private bool _isReachMinZ;
-        private bool _isReachMaxZ;
+        private bool _isReachMinX, _isReachMaxX;
+        private bool _isReachMinY, _isReachMaxY;
+        private bool _isReachMaxZ, _isReachMinZ;
 
         private UdonBehaviour[] _eventReceivers;
 
@@ -80,6 +76,7 @@ namespace MimyLab.FukuroUdon
 
         private void LateUpdate()
         {
+            // 追従処理
             Vector3 position = sourceTransform ? FollowPosition() : targetTransform.localPosition;
 
             // 範囲制限処理

@@ -11,10 +11,6 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.SDKBase.Editor.Attributes;
     using VRC.SDK3.Rendering;
-
-#if !COMPILER_UDONSHARP && UNITY_EDITOR
-    using UnityEditor;
-#endif
     
     [System.Flags]
     public enum AdvancedWorldSettingsInitializeEyeHeightTypes
@@ -75,12 +71,12 @@ namespace MimyLab.FukuroUdon
         [Space]
         [Tooltip("チェックを入れたタイミングで、アバターの目線高さの上限と下限を設定範囲に制限します。")]
         [SerializeField][EnumFlag] private AdvancedWorldSettingsInitializeEyeHeightTypes _initializeAvatarEyeHight = 0;
-        [SerializeField][MinMaxRange(0.01f, 10000f)] private Vector2 _avatarEyeHeightLimit = new Vector2(0.1f, 100f);
+        [SerializeField][MinMaxRange(0.1f, 100f)] private Vector2 _avatarEyeHeightLimit = new Vector2(0.1f, 100f);
         
         [HideInInspector][SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMinimum = 0.2f;
         [HideInInspector][SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMaximum = 5f;
-        [HideInInspector][SerializeField][Range(0.01f, 10000f)] private float _avatarEyeHeightLowerLimit = 0.1f;
-        [HideInInspector][SerializeField][Range(0.01f, 10000f)] private float _avatarEyeHeightUpperLimit = 100f;
+        [HideInInspector][SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeightLowerLimit = 0.1f;
+        [HideInInspector][SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeightUpperLimit = 100f;
         
         [Header("Screen Camera Settings")]
         [SerializeField] private bool _initializeScreenCameraSettings = false;
@@ -180,8 +176,6 @@ namespace MimyLab.FukuroUdon
             {
                 _photoDepthTextureMode |= DepthTextureMode.Depth;
             }
-
-            EditorUtility.SetDirty(this);
         }
 #endif
 

@@ -29,7 +29,7 @@ namespace MimyLab.FukuroUdon
         public bool enableChannelMode = false;
         [Min(0)]
         public int channel = 0;
-        public PlayerAudioRegulatorChannelUncmatchMode channelUnmatchMode = default;
+        public PlayerAudioRegulatorChannelUncmatchMode channelUnmatchMode = PlayerAudioRegulatorChannelUncmatchMode.Default;
         public PlayerAudioRegulator unmatchFallback = null;
 
         [Header("Player Voice Settings")]
@@ -63,6 +63,31 @@ namespace MimyLab.FukuroUdon
         public bool avatarAudioCustomCurve = false;
 
         public virtual bool NeedRealtimeOverride { get => false; }
+
+#if !COMPILER_UDONSHARP && UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (voiceDistanceNear > voiceDistanceFar)
+            {
+                voiceDistanceNear =  voiceDistanceFar;
+            }
+
+            if (voiceVolumetricRadius > voiceDistanceFar)
+            {
+                voiceVolumetricRadius = voiceDistanceFar;
+            }
+
+            if (avatarAudioDistanceNear > avatarAudioDistanceFar)
+            {
+                avatarAudioDistanceNear = avatarAudioDistanceFar;
+            }
+
+            if (avatarAudioVolumetricRadius > avatarAudioDistanceFar)
+            {
+                avatarAudioVolumetricRadius = avatarAudioDistanceFar;
+            }
+        }
+#endif
 
         public bool CheckApplicable(VRCPlayerApi target)
         {

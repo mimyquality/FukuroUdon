@@ -25,8 +25,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private Transform sourceTransform;
 
-        [SerializeField]
-        [Range(0.0f, 1.0f)]
+        [SerializeField, Range(0.0f, 1.0f)]
         private float weight = 1.0f;
 
         [SerializeField]
@@ -46,10 +45,12 @@ namespace MimyLab.FukuroUdon
 
         [Header("Limit Settings")]
         [SerializeField]
-        private Vector3 limitBaseVector = Vector3.forward;
+        private RotationLimitType limitType = RotationLimitType.Angle;
 
         [SerializeField]
-        [Range(0.0f, 180.0f)]
+        private Vector3 limitBaseVector = Vector3.forward;
+
+        [SerializeField, Range(0.0f, 180.0f)]
         private float maxAngle = 180.0f;
 
         private Transform _parent;
@@ -88,17 +89,13 @@ namespace MimyLab.FukuroUdon
             // ワールド空間で計算
             Quaternion rotation = sourceTransform ? FollowRotation() : targetTransform.rotation;
 
-            // 範囲制限処理
-            float angle = 0;
-
             // ToDo:角度計算
-            angle = Mathf.Min(angle, maxAngle);
 
             // 結果を Transform へ反映
             targetTransform.rotation = rotation;
 
             // 制限イベント
-            SetIsReachMaxAngle(angle >= maxAngle);
+            SetIsReachMaxAngle(false);
         }
 
         private Quaternion FollowRotation()

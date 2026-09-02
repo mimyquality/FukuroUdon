@@ -1987,10 +1987,10 @@ MonoBehaviour:
       Data: 127|UnityEngine.RangeAttribute, UnityEngine.CoreModule
     - Name: min
       Entry: 4
-      Data: 0.01
+      Data: 0.1
     - Name: max
       Entry: 4
-      Data: 10000
+      Data: 100
     - Name: 
       Entry: 8
       Data: 
@@ -2060,10 +2060,10 @@ MonoBehaviour:
       Data: 132|UnityEngine.RangeAttribute, UnityEngine.CoreModule
     - Name: min
       Entry: 4
-      Data: 0.01
+      Data: 0.1
     - Name: max
       Entry: 4
-      Data: 10000
+      Data: 100
     - Name: 
       Entry: 8
       Data: 

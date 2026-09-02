@@ -56,11 +56,13 @@ MonoBehaviour:
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 2947867732128564760}
   playerAudioRegulators: []
+  enablePlayerVoiceControl: 1
   defaultVoiceGain: 15
   defaultVoiceDistanceNear: 0
   defaultVoiceDistanceFar: 25
   defaultVoiceVolumetricRadius: 0
   defaultVoiceLowpass: 1
+  enableAvatarAudioControl: 0
   defaultAvatarAudioGain: 10
   defaultAvatarAudioDistanceNear: 0
   defaultAvatarAudioDistanceFar: 40
