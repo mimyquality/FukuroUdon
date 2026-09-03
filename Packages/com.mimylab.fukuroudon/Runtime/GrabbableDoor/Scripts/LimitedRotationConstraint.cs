@@ -43,15 +43,15 @@ namespace MimyLab.FukuroUdon
         [SerializeField, Range(0.0f, 180.0f)]
         private float maxAngle = 180.0f;
 
-        [Tooltip("下限から上限までの角度が360°以上なら無制限扱いになります。")]
+        [Tooltip("下限から上限までの範囲が360°以上なら無制限扱いになります。")]
         [SerializeField, MinMaxRange(-360f, 360f)]
         private Vector2 xAxisRange = new Vector2(-180f, 180f);
 
-        [Tooltip("下限から上限までの角度が360°以上なら無制限扱いになります。")]
+        [Tooltip("下限から上限までの範囲が360°以上なら無制限扱いになります。")]
         [SerializeField, MinMaxRange(-360f, 360f)]
         private Vector2 yAxisRange = new Vector2(-180f, 180f);
 
-        [Tooltip("下限から上限までの角度が360°以上なら無制限扱いになります。")]
+        [Tooltip("下限から上限までの範囲が360°以上なら無制限扱いになります。")]
         [SerializeField, MinMaxRange(-360f, 360f)]
         private Vector2 zAxisRange = new Vector2(-180f, 180f);
 
@@ -106,14 +106,14 @@ namespace MimyLab.FukuroUdon
                 }
             }
 
-            var reachFlags = new bool[6];
+            Vector3 angles = Vector3.zero;
             switch (limitType)
             {
                 case RotationLimitType.Angle:
-                    rotation = LimitRotationByAngle(rotation, out reachFlags[0]);
+                    rotation = LimitRotationByAngle(rotation, out angles.x);
                     break;
                 case RotationLimitType.EulerAngles:
-                    rotation = LimitRotationByAxes(rotation, out reachFlags);
+                    rotation = LimitRotationByAxes(rotation, out angles);
                     break;
             }
 
@@ -131,15 +131,15 @@ namespace MimyLab.FukuroUdon
             switch (limitType)
             {
                 case RotationLimitType.Angle:
-                    SetIsReachMaxAngle(reachFlags[0]);
+                    SetIsReachMaxAngle(angles.x >= maxAngle);
                     break;
                 case RotationLimitType.EulerAngles:
-                    SetIsReachMinX(reachFlags[0]);
-                    SetIsReachMaxX(reachFlags[1]);
-                    SetIsReachMinY(reachFlags[2]);
-                    SetIsReachMaxY(reachFlags[3]);
-                    SetIsReachMinZ(reachFlags[4]);
-                    SetIsReachMaxZ(reachFlags[5]);
+                    SetIsReachMinX(angles.x <= xAxisRange.x);
+                    SetIsReachMaxX(angles.x >= xAxisRange.y);
+                    SetIsReachMinY(angles.y <= xAxisRange.x);
+                    SetIsReachMaxY(angles.y >= xAxisRange.y);
+                    SetIsReachMinZ(angles.z <= xAxisRange.x);
+                    SetIsReachMaxZ(angles.z >= xAxisRange.y);
                     break;
             }
         }
@@ -155,38 +155,37 @@ namespace MimyLab.FukuroUdon
             return Quaternion.Slerp(_rotationAtRest, sourceRotation, weight);
         }
 
-        private Quaternion LimitRotationByAngle(Quaternion rotation, out bool reachFlag)
+        private Quaternion LimitRotationByAngle(Quaternion rotation, out float angle)
         {
-            Quaternion rotate = Quaternion.Inverse(_rotationAtRest) * rotation;
-            rotate.ToAngleAxis(out float angle, out Vector3 axis);
+            Quaternion baseRotation = relativeTo == Space.World && _parent
+                ? _parent.rotation * _rotationAtRest
+                : _rotationAtRest;
+            rotation = Quaternion.Inverse(baseRotation) * rotation;
+            rotation.ToAngleAxis(out angle, out Vector3 axis);
             if (angle > 180f)
             {
                 angle = 360f - angle;
                 axis = -1f * axis;
             }
 
-            reachFlag = angle >= maxAngle;
             angle = Mathf.Clamp(angle, 0f, maxAngle);
 
-            return _rotationAtRest * Quaternion.AngleAxis(angle, axis);
+            return baseRotation * Quaternion.AngleAxis(angle, axis);
         }
 
-        private Quaternion LimitRotationByAxes(Quaternion rotation, out bool[] reachFlags)
+        private Quaternion LimitRotationByAxes(Quaternion rotation, out Vector3 angles)
         {
-            Vector3 eulerAngles = rotation.eulerAngles;
+            angles = rotation.eulerAngles;
             float offset, min, max, angle;
-            reachFlags = new bool[6];
 
             if (xAxisRange.y - xAxisRange.x < 360f)
             {
                 offset = 180f - 0.5f * (xAxisRange.x + xAxisRange.y);
                 min = xAxisRange.x + offset;
                 max = xAxisRange.y + offset;
-                angle = Mathf.Repeat(eulerAngles.x + offset, 360f);
+                angle = Mathf.Repeat(angles.x + offset, 360f);
 
-                reachFlags[0] = angle <= min;
-                reachFlags[1] = angle >= max;
-                eulerAngles.x = Mathf.Clamp(angle, min, max) - offset;
+                angles.x = Mathf.Clamp(angle, min, max) - offset;
             }
 
             if (yAxisRange.y - yAxisRange.x < 360f)
@@ -194,11 +193,9 @@ namespace MimyLab.FukuroUdon
                 offset = 180f - 0.5f * (yAxisRange.x + yAxisRange.y);
                 min = yAxisRange.x + offset;
                 max = yAxisRange.y + offset;
-                angle = Mathf.Repeat(eulerAngles.y + offset, 360f);
+                angle = Mathf.Repeat(angles.y + offset, 360f);
 
-                reachFlags[2] = angle <= min;
-                reachFlags[3] = angle >= max;
-                eulerAngles.y = Mathf.Clamp(angle, min, max) - offset;
+                angles.y = Mathf.Clamp(angle, min, max) - offset;
             }
 
             if (zAxisRange.y - zAxisRange.x < 360f)
@@ -206,14 +203,12 @@ namespace MimyLab.FukuroUdon
                 offset = 180f - 0.5f * (zAxisRange.x + zAxisRange.y);
                 min = zAxisRange.x + offset;
                 max = zAxisRange.y + offset;
-                angle = Mathf.Repeat(eulerAngles.z + offset, 360f);
+                angle = Mathf.Repeat(angles.z + offset, 360f);
 
-                reachFlags[4] = angle <= min;
-                reachFlags[5] = angle >= max;
-                eulerAngles.z = Mathf.Clamp(angle, min, max) - offset;
+                angles.z = Mathf.Clamp(angle, min, max) - offset;
             }
 
-            return Quaternion.Euler(eulerAngles);
+            return Quaternion.Euler(angles);
         }
 
         private void SetIsReachMaxAngle(bool value)

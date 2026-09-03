@@ -487,7 +487,7 @@ MonoBehaviour:
       Data: 32|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: "\u4E0B\u9650\u304B\u3089\u4E0A\u9650\u307E\u3067\u306E\u89D2\u5EA6\u304C360\xB0\u4EE5\u4E0A\u306A\u3089\u7121\u5236\u9650\u6271\u3044\u306B\u306A\u308A\u307E\u3059\u3002"
+      Data: "\u4E0B\u9650\u304B\u3089\u4E0A\u9650\u307E\u3067\u306E\u7BC4\u56F2\u304C360\xB0\u4EE5\u4E0A\u306A\u3089\u7121\u5236\u9650\u6271\u3044\u306B\u306A\u308A\u307E\u3059\u3002"
     - Name: 
       Entry: 8
       Data: 
@@ -550,7 +550,7 @@ MonoBehaviour:
       Data: 36|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: "\u4E0B\u9650\u304B\u3089\u4E0A\u9650\u307E\u3067\u306E\u89D2\u5EA6\u304C360\xB0\u4EE5\u4E0A\u306A\u3089\u7121\u5236\u9650\u6271\u3044\u306B\u306A\u308A\u307E\u3059\u3002"
+      Data: "\u4E0B\u9650\u304B\u3089\u4E0A\u9650\u307E\u3067\u306E\u7BC4\u56F2\u304C360\xB0\u4EE5\u4E0A\u306A\u3089\u7121\u5236\u9650\u6271\u3044\u306B\u306A\u308A\u307E\u3059\u3002"
     - Name: 
       Entry: 8
       Data: 
@@ -613,7 +613,7 @@ MonoBehaviour:
       Data: 40|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: "\u4E0B\u9650\u304B\u3089\u4E0A\u9650\u307E\u3067\u306E\u89D2\u5EA6\u304C360\xB0\u4EE5\u4E0A\u306A\u3089\u7121\u5236\u9650\u6271\u3044\u306B\u306A\u308A\u307E\u3059\u3002"
+      Data: "\u4E0B\u9650\u304B\u3089\u4E0A\u9650\u307E\u3067\u306E\u7BC4\u56F2\u304C360\xB0\u4EE5\u4E0A\u306A\u3089\u7121\u5236\u9650\u6271\u3044\u306B\u306A\u308A\u307E\u3059\u3002"
     - Name: 
       Entry: 8
       Data: 
