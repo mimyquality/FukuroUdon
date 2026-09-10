@@ -23,18 +23,18 @@ namespace MimyLab.FukuroUdon
         private VRCPlayerApi _owner;
 
         [UdonSynced, FieldChangeCallback(nameof(IsAssigned))]
-        private bool _isAssigned = false;
+        private bool n_isAssigned = false;
 
         public bool IsAssigned
         {
-            get => _isAssigned;
+            get => n_isAssigned;
             set
             {
-                if (_isAssigned == value) return;
+                if (n_isAssigned == value) return;
 
                 Initialize();
 
-                _isAssigned = value;
+                n_isAssigned = value;
 
                 if (value)
                 {

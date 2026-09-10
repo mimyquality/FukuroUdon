@@ -11,12 +11,6 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.Udon;
 
-    public enum RotationLimitType
-    {
-        Angle,
-        EulerAngles
-    }
-
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grabbable-Door#limited-rotation-constraint")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Limited Constraint/Limited Rotation Constraint")]
@@ -24,39 +18,39 @@ namespace MimyLab.FukuroUdon
     public class LimitedRotationConstraint : LimitedConstraint
     {
         [SerializeField]
-        private Transform targetTransform;
+        private Transform _targetTransform;
 
         [Header("Follow Settings")]
         [SerializeField]
-        private Transform sourceTransform;
+        private Transform _sourceTransform;
 
         [SerializeField, Range(0.0f, 1.0f)]
-        private float weight = 1.0f;
+        private float _weight = 1.0f;
 
         [SerializeField]
-        private bool solveInLocalSpace = false;
+        private bool _solveInLocalSpace = false;
 
         [Header("Limit Settings")]
         [SerializeField]
-        private RotationLimitType limitType = RotationLimitType.Angle;
+        private RotationLimitType _limitType = RotationLimitType.Rotate;
 
         [SerializeField, Range(0.0f, 180.0f)]
-        private float maxAngle = 180.0f;
+        private float _maxAngle = 180.0f;
 
         [Tooltip("下限から上限までの範囲が360°以上なら無制限扱いになります。")]
         [SerializeField, MinMaxRange(-360f, 360f)]
-        private Vector2 xAxisRange = new Vector2(-180f, 180f);
+        private Vector2 _xAxisRange = new Vector2(-180f, 180f);
 
         [Tooltip("下限から上限までの範囲が360°以上なら無制限扱いになります。")]
         [SerializeField, MinMaxRange(-360f, 360f)]
-        private Vector2 yAxisRange = new Vector2(-180f, 180f);
+        private Vector2 _yAxisRange = new Vector2(-180f, 180f);
 
         [Tooltip("下限から上限までの範囲が360°以上なら無制限扱いになります。")]
         [SerializeField, MinMaxRange(-360f, 360f)]
-        private Vector2 zAxisRange = new Vector2(-180f, 180f);
+        private Vector2 _zAxisRange = new Vector2(-180f, 180f);
 
         [SerializeField]
-        private Space relativeTo = Space.Self;
+        private Space _relativeTo = Space.Self;
 
         private Transform _parent;
         private Quaternion _rotationAtRest;
@@ -74,13 +68,13 @@ namespace MimyLab.FukuroUdon
         {
             if (_initialized) return;
 
-            if (!targetTransform)
+            if (!_targetTransform)
             {
-                targetTransform = transform;
+                _targetTransform = transform;
             }
 
-            _parent = targetTransform.parent;
-            _rotationAtRest = targetTransform.localRotation;
+            _parent = _targetTransform.parent;
+            _rotationAtRest = _targetTransform.localRotation;
 
             _eventReceivers = transform.GetComponents<UdonBehaviour>();
 
@@ -95,10 +89,10 @@ namespace MimyLab.FukuroUdon
         private void LateUpdate()
         {
             // 追従処理
-            Quaternion rotation = sourceTransform ? FollowRotation() : targetTransform.localRotation;
+            Quaternion rotation = _sourceTransform ? FollowRotation() : _targetTransform.localRotation;
 
             // 範囲制限処理
-            if (relativeTo == Space.World)
+            if (_relativeTo == Space.World)
             {
                 if (_parent)
                 {
@@ -107,9 +101,9 @@ namespace MimyLab.FukuroUdon
             }
 
             Vector3 angles = Vector3.zero;
-            switch (limitType)
+            switch (_limitType)
             {
-                case RotationLimitType.Angle:
+                case RotationLimitType.Rotate:
                     rotation = LimitRotationByAngle(rotation, out angles.x);
                     break;
                 case RotationLimitType.EulerAngles:
@@ -118,46 +112,52 @@ namespace MimyLab.FukuroUdon
             }
 
             // 結果を Transform へ反映
-            if (relativeTo == Space.World)
+            if (_relativeTo == Space.World)
             {
-                targetTransform.rotation = rotation;
+                _targetTransform.rotation = rotation;
             }
             else
             {
-                targetTransform.localRotation = rotation;
+                _targetTransform.localRotation = rotation;
             }
 
             // 制限イベント
-            switch (limitType)
+            switch (_limitType)
             {
-                case RotationLimitType.Angle:
-                    SetIsReachMaxAngle(angles.x >= maxAngle);
+                case RotationLimitType.Rotate:
+                    SetIsReachMaxAngle(angles.x >= _maxAngle);
                     break;
                 case RotationLimitType.EulerAngles:
-                    SetIsReachMinX(angles.x <= xAxisRange.x);
-                    SetIsReachMaxX(angles.x >= xAxisRange.y);
-                    SetIsReachMinY(angles.y <= xAxisRange.x);
-                    SetIsReachMaxY(angles.y >= xAxisRange.y);
-                    SetIsReachMinZ(angles.z <= xAxisRange.x);
-                    SetIsReachMaxZ(angles.z >= xAxisRange.y);
+                    SetIsReachMinX(angles.x <= _xAxisRange.x);
+                    SetIsReachMaxX(angles.x >= _xAxisRange.y);
+                    SetIsReachMinY(angles.y <= _xAxisRange.x);
+                    SetIsReachMaxY(angles.y >= _xAxisRange.y);
+                    SetIsReachMinZ(angles.z <= _xAxisRange.x);
+                    SetIsReachMaxZ(angles.z >= _xAxisRange.y);
                     break;
             }
         }
 
         private Quaternion FollowRotation()
         {
-            Quaternion sourceRotation = solveInLocalSpace
-                ? sourceTransform.localRotation
+            Quaternion sourceRotation = _solveInLocalSpace
+                ? _sourceTransform.localRotation
                 : _parent
-                    ? Quaternion.Inverse(_parent.rotation) * sourceTransform.rotation
-                    : sourceTransform.rotation;
+                    ? Quaternion.Inverse(_parent.rotation) * _sourceTransform.rotation
+                    : _sourceTransform.rotation;
 
-            return Quaternion.Slerp(_rotationAtRest, sourceRotation, weight);
+            return Quaternion.Slerp(_rotationAtRest, sourceRotation, _weight);
         }
 
         private Quaternion LimitRotationByAngle(Quaternion rotation, out float angle)
         {
-            Quaternion baseRotation = relativeTo == Space.World && _parent
+            if (_maxAngle >= 180f)
+            {
+                angle = 0f;
+                return rotation;
+            }
+            
+            Quaternion baseRotation = _relativeTo == Space.World && _parent
                 ? _parent.rotation * _rotationAtRest
                 : _rotationAtRest;
             rotation = Quaternion.Inverse(baseRotation) * rotation;
@@ -168,7 +168,7 @@ namespace MimyLab.FukuroUdon
                 axis = -1f * axis;
             }
 
-            angle = Mathf.Clamp(angle, 0f, maxAngle);
+            angle = Mathf.Clamp(angle, 0f, _maxAngle);
 
             return baseRotation * Quaternion.AngleAxis(angle, axis);
         }
@@ -178,31 +178,31 @@ namespace MimyLab.FukuroUdon
             angles = rotation.eulerAngles;
             float offset, min, max, angle;
 
-            if (xAxisRange.y - xAxisRange.x < 360f)
+            if (_xAxisRange.y - _xAxisRange.x < 360f)
             {
-                offset = 180f - 0.5f * (xAxisRange.x + xAxisRange.y);
-                min = xAxisRange.x + offset;
-                max = xAxisRange.y + offset;
+                offset = 180f - 0.5f * (_xAxisRange.x + _xAxisRange.y);
+                min = _xAxisRange.x + offset;
+                max = _xAxisRange.y + offset;
                 angle = Mathf.Repeat(angles.x + offset, 360f);
 
                 angles.x = Mathf.Clamp(angle, min, max) - offset;
             }
 
-            if (yAxisRange.y - yAxisRange.x < 360f)
+            if (_yAxisRange.y - _yAxisRange.x < 360f)
             {
-                offset = 180f - 0.5f * (yAxisRange.x + yAxisRange.y);
-                min = yAxisRange.x + offset;
-                max = yAxisRange.y + offset;
+                offset = 180f - 0.5f * (_yAxisRange.x + _yAxisRange.y);
+                min = _yAxisRange.x + offset;
+                max = _yAxisRange.y + offset;
                 angle = Mathf.Repeat(angles.y + offset, 360f);
 
                 angles.y = Mathf.Clamp(angle, min, max) - offset;
             }
 
-            if (zAxisRange.y - zAxisRange.x < 360f)
+            if (_zAxisRange.y - _zAxisRange.x < 360f)
             {
-                offset = 180f - 0.5f * (zAxisRange.x + zAxisRange.y);
-                min = zAxisRange.x + offset;
-                max = zAxisRange.y + offset;
+                offset = 180f - 0.5f * (_zAxisRange.x + _zAxisRange.y);
+                min = _zAxisRange.x + offset;
+                max = _zAxisRange.y + offset;
                 angle = Mathf.Repeat(angles.z + offset, 360f);
 
                 angles.z = Mathf.Clamp(angle, min, max) - offset;

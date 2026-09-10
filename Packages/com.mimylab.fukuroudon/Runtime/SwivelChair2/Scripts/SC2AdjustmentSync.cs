@@ -21,9 +21,9 @@ namespace MimyLab.FukuroUdon
         public bool enableLink = false;
         public int linkNumber = 0;
 
-        [UdonSynced] internal bool _hasSaved = false;
-        [UdonSynced] internal Vector3 _localOffset = Vector3.zero;
-        [UdonSynced] internal float _avatarEyeHeight = 0.0f;
+        [UdonSynced] internal bool n_hasSaved = false;
+        [UdonSynced] internal Vector3 n_localOffset = Vector3.zero;
+        [UdonSynced] internal float n_avatarEyeHeight = 0.0f;
 
         private SC2SeatAdjuster _adjuster;
         private SC2AdjustmentSync[] _linkedAdjustmentSyncs = null;
@@ -60,14 +60,14 @@ namespace MimyLab.FukuroUdon
 
         public void LinkLocalOffset(SC2AdjustmentSync linker)
         {
-            SetParameters(linker._localOffset, linker._avatarEyeHeight);
+            SetParameters(linker.n_localOffset, linker.n_avatarEyeHeight);
         }
 
         private void SetParameters(Vector3 localOffset, float avatarEyeHeight)
         {
-            _localOffset = localOffset;
-            _avatarEyeHeight = avatarEyeHeight;
-            _hasSaved = true;
+            n_localOffset = localOffset;
+            n_avatarEyeHeight = avatarEyeHeight;
+            n_hasSaved = true;
             RequestSerialization();
         }
 

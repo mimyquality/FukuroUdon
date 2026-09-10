@@ -20,7 +20,7 @@ namespace MimyLab.FukuroUdon
     {
         private Animator _animator;
         private VRCPhysBone[] _physbones = Array.Empty<VRCPhysBone>();
-        private ContactReceiverInfomation[] _contacts = Array.Empty<ContactReceiverInfomation>();
+        private ContactReceiverInformation[] _contacts = Array.Empty<ContactReceiverInformation>();
         private UdonRaycast[] _raycasts = Array.Empty<UdonRaycast>();
 
         private VRCPhysBone[] _pbs_IsGrabbed = Array.Empty<VRCPhysBone>();
@@ -39,13 +39,13 @@ namespace MimyLab.FukuroUdon
         private int[] _pbs_SquishType = Array.Empty<int>();
         private int[] _pbs_SquishHash = Array.Empty<int>();
 
-        private ContactReceiverInfomation[] _crs_Constant = Array.Empty<ContactReceiverInfomation>();
+        private ContactReceiverInformation[] _crs_Constant = Array.Empty<ContactReceiverInformation>();
         private int[] _crs_ConstantType = Array.Empty<int>();
         private int[] _crs_ConstantHash = Array.Empty<int>();
-        private ContactReceiverInfomation[] _crs_OnEnter = Array.Empty<ContactReceiverInfomation>();
+        private ContactReceiverInformation[] _crs_OnEnter = Array.Empty<ContactReceiverInformation>();
         private int[] _crs_OnEnterType = Array.Empty<int>();
         private int[] _crs_OnEnterHash = Array.Empty<int>();
-        private ContactReceiverInfomation[] _crs_Proximity = Array.Empty<ContactReceiverInfomation>();
+        private ContactReceiverInformation[] _crs_Proximity = Array.Empty<ContactReceiverInformation>();
         private int[] _crs_ProximityType = Array.Empty<int>();
         private int[] _crs_ProximityHash = Array.Empty<int>();
 
@@ -66,7 +66,7 @@ namespace MimyLab.FukuroUdon
 
             _animator = GetComponent<Animator>();
             _physbones = GetComponentsInChildren<VRCPhysBone>(true);
-            _contacts = GetComponentsInChildren<ContactReceiverInfomation>(true);
+            _contacts = GetComponentsInChildren<ContactReceiverInformation>(true);
             _raycasts = GetComponentsInChildren<UdonRaycast>(true);
 
             _pbs_IsGrabbed = GetPhysbonesInAnimatorParameter("_IsGrabbed", out _pbs_IsGrabbedType, out _pbs_IsGrabbedHash);
@@ -180,7 +180,7 @@ namespace MimyLab.FukuroUdon
             return physbones;
         }
 
-        private ContactReceiverInfomation[] GetContactsInAnimatorParameter(string suffix, out int[] contactTypes, out int[] contactHashes)
+        private ContactReceiverInformation[] GetContactsInAnimatorParameter(string suffix, out int[] contactTypes, out int[] contactHashes)
         {
             var referenceContactHashes = new int[_contacts.Length];
             for (int i = 0; i < _contacts.Length; i++)
@@ -192,7 +192,7 @@ namespace MimyLab.FukuroUdon
             AnimatorControllerParameter[] parameters = _animator.parameters;
             int parameterCount = _animator.parameterCount;
 
-            var tmp_contacts = new ContactReceiverInfomation[parameterCount];
+            var tmp_contacts = new ContactReceiverInformation[parameterCount];
             var tmp_contactTypes = new int[parameterCount];
             var tmp_contactHashes = new int[parameterCount];
             var contactCount = 0;
@@ -207,7 +207,7 @@ namespace MimyLab.FukuroUdon
                 tmp_contactHashes[contactCount] = hash;
                 contactCount++;
             }
-            var contacts = new ContactReceiverInfomation[contactCount];
+            var contacts = new ContactReceiverInformation[contactCount];
             contactTypes = new int[contactCount];
             contactHashes = new int[contactCount];
             System.Array.Copy(tmp_contacts, contacts, contactCount);

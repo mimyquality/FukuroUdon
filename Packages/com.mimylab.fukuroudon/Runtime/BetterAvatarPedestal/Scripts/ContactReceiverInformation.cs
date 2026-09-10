@@ -17,7 +17,7 @@ namespace MimyLab.FukuroUdon
     [AddComponentMenu("Fukuro Udon/Better AvatarPedestal/Contact Receiver Information")]
     [RequireComponent(typeof(VRCContactReceiver))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ContactReceiverInfomation : UdonSharpBehaviour
+    public class ContactReceiverInformation : UdonSharpBehaviour
     {
         private const int MaxSenderCache = 128;
 
@@ -32,7 +32,7 @@ namespace MimyLab.FukuroUdon
         private bool _initialized = false;
         private void Initialize()
         {
-            if (_initialized) { return; }
+            if (_initialized) return;
 
             _receiver = GetComponent<VRCContactReceiver>();
 
@@ -110,7 +110,7 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (!Utilities.IsValid(contactSender)) { return 0.0f; }
+            if (!Utilities.IsValid(contactSender)) return 0.0f;
 
             return _receiver.CalculateProximity(contactSender);
         }
@@ -119,8 +119,8 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (!Utilities.IsValid(contactSender)) { return 0.0f; }
-            if (!contactSender.isValid) { return 0.0f; }
+            if (!Utilities.IsValid(contactSender)) return 0.0f;
+            if (!contactSender.isValid) return 0.0f;
 
             return _receiver.CalculateProximity(contactSender);
         }
@@ -156,16 +156,15 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _senders.Length; i++)
             {
-                if (Utilities.IsValid(_senders[i]))
+                if (!Utilities.IsValid(_senders[i])) continue;
+                
+                if (!_senders[i].isValid)
                 {
-                    if (!_senders[i].isValid)
-                    {
-                        _senders[i] = null;
-                        continue;
-                    }
-
-                    last = i;
+                    _senders[i] = null;
+                    continue;
                 }
+
+                last = i;
             }
 
             return last;

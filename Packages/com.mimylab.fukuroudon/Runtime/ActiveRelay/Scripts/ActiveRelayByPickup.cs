@@ -28,36 +28,38 @@ namespace MimyLab.FukuroUdon
     {
         [SerializeField]
         private ActiveRelayPickupEvent _eventType = default;
+
         [SerializeField]
         private bool _localOnly = true;
 
         [UdonSynced]
-        private bool[] sync_objectsActive = new bool[0];
+        private bool[] n_objectsActive = System.Array.Empty<bool>();
 
         public override void OnPreSerialization()
         {
-            if (sync_objectsActive.Length != _gameObjects.Length)
+            if (n_objectsActive.Length != _gameObjects.Length)
             {
-                sync_objectsActive = new bool[_gameObjects.Length];
+                n_objectsActive = new bool[_gameObjects.Length];
             }
-            for (int i = 0; i < sync_objectsActive.Length; i++)
+
+            for (int i = 0; i < n_objectsActive.Length; i++)
             {
-                sync_objectsActive[i] = _gameObjects[i] && _gameObjects[i].activeSelf;
+                n_objectsActive[i] = _gameObjects[i] && _gameObjects[i].activeSelf;
             }
         }
 
         public override void OnDeserialization()
         {
-            if (_localOnly) { return; }
-            if (_gameObjects.Length != sync_objectsActive.Length) { return; }
+            if (_localOnly) return;
+            if (_gameObjects.Length != n_objectsActive.Length) return;
 
             for (int i = 0; i < _gameObjects.Length; i++)
             {
-                if (!_gameObjects[i]) { continue; }
+                if (!_gameObjects[i]) continue;
 
-                if (_gameObjects[i].activeSelf != sync_objectsActive[i])
+                if (_gameObjects[i].activeSelf != n_objectsActive[i])
                 {
-                    _gameObjects[i].SetActive(sync_objectsActive[i]);
+                    _gameObjects[i].SetActive(n_objectsActive[i]);
                 }
             }
         }
@@ -108,12 +110,13 @@ namespace MimyLab.FukuroUdon
 
         private void Sync()
         {
-            if (_localOnly) { return; }
+            if (_localOnly) return;
 
-            if (!Networking.IsOwner(this.gameObject))
+            if (!Networking.IsOwner(gameObject))
             {
-                Networking.SetOwner(Networking.LocalPlayer, this.gameObject);
+                Networking.SetOwner(Networking.LocalPlayer, gameObject);
             }
+
             RequestSerialization();
         }
     }

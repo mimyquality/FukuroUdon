@@ -30,9 +30,9 @@ namespace MimyLab.FukuroUdon
             var receivers = dptObject.GetComponentsInChildren<VRCContactReceiver>(true);
             foreach (var receiver in receivers)
             {
-                if (!receiver.TryGetComponent<ContactReceiverInfomation>(out var alreadyAdded))
+                if (!receiver.TryGetComponent<ContactReceiverInformation>(out var alreadyAdded))
                 {
-                    UdonSharpUndo.AddComponent<ContactReceiverInfomation>(receiver.gameObject);
+                    UdonSharpUndo.AddComponent<ContactReceiverInformation>(receiver.gameObject);
                 }
             }
         }

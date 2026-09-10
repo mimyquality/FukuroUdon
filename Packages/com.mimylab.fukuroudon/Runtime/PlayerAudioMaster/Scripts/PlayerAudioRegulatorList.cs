@@ -18,9 +18,9 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class PlayerAudioRegulatorList : PlayerAudioRegulator
     {
-        [UdonSynced] private int[] _playerIds = new int[PlayerAudioRegulatorRegister.MaxPlayerCount];
+        [UdonSynced] private int[] n_playerIds = new int[PlayerAudioRegulatorRegister.MaxPlayerCount];
 
-        public int[] PlayerIds { get => _playerIds; }
+        public int[] PlayerIds { get => n_playerIds; }
 
         /******************************
          public Method
@@ -37,32 +37,32 @@ namespace MimyLab.FukuroUdon
         {
             if (!Networking.IsOwner(gameObject)) return false;
             if (targetPlayerId < 1) return false;
-            if (Array.IndexOf(_playerIds, targetPlayerId) > -1) return false;
+            if (Array.IndexOf(n_playerIds, targetPlayerId) > -1) return false;
 
-            int vacantIndex = Array.IndexOf(_playerIds, 0);
+            int vacantIndex = Array.IndexOf(n_playerIds, 0);
             // 空きがないのでリフレッシュ
             if (vacantIndex < 0)
             {
-                for (int i = 0; i < _playerIds.Length; i++)
+                for (int i = 0; i < n_playerIds.Length; i++)
                 {
-                    if (!Utilities.IsValid(VRCPlayerApi.GetPlayerById(_playerIds[i])))
+                    if (!Utilities.IsValid(VRCPlayerApi.GetPlayerById(n_playerIds[i])))
                     {
-                        _playerIds[i] = 0;
+                        n_playerIds[i] = 0;
                     }
                 }
 
-                vacantIndex = Array.IndexOf(_playerIds, 0);
+                vacantIndex = Array.IndexOf(n_playerIds, 0);
                 // それでも空きがないので拡張
                 if (vacantIndex < 0)
                 {
-                    vacantIndex = _playerIds.Length;
+                    vacantIndex = n_playerIds.Length;
                     var tmp_PlayerIds = new int[vacantIndex + PlayerAudioRegulatorRegister.ExtendPlayerCount];
-                    _playerIds.CopyTo(tmp_PlayerIds, 0);
-                    _playerIds = tmp_PlayerIds;
+                    n_playerIds.CopyTo(tmp_PlayerIds, 0);
+                    n_playerIds = tmp_PlayerIds;
                 }
             }
 
-            _playerIds[vacantIndex] = targetPlayerId;
+            n_playerIds[vacantIndex] = targetPlayerId;
             RequestSerialization();
 
             return true;
@@ -82,9 +82,9 @@ namespace MimyLab.FukuroUdon
             if (targetPlayerId < 1) return;
 
             int index;
-            while ((index = Array.IndexOf(_playerIds, targetPlayerId)) > -1)
+            while ((index = Array.IndexOf(n_playerIds, targetPlayerId)) > -1)
             {
-                _playerIds[index] = 0;
+                n_playerIds[index] = 0;
                 RequestSerialization();
             }
         }
@@ -93,7 +93,7 @@ namespace MimyLab.FukuroUdon
         {
             if (!Networking.IsOwner(gameObject)) return;
 
-            Array.Clear(_playerIds, 0, _playerIds.Length);
+            Array.Clear(n_playerIds, 0, n_playerIds.Length);
             RequestSerialization();
         }
 
@@ -108,7 +108,7 @@ namespace MimyLab.FukuroUdon
 
         protected override bool CheckUniqueApplicable(VRCPlayerApi target)
         {
-            return Array.IndexOf(_playerIds, target.playerId) > -1;
+            return Array.IndexOf(n_playerIds, target.playerId) > -1;
         }
     }
 }

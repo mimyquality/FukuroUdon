@@ -27,7 +27,7 @@ namespace MimyLab.FukuroUdon
         public PlayerAudioRegulatorSwitchMode switchMode = default;
 
         [UdonSynced]
-        private int _assignedPlayerId = -1;
+        private int n_assignedPlayerId = -1;
 
         private VRCPlayerApi _localPlayer;
 
@@ -53,11 +53,11 @@ namespace MimyLab.FukuroUdon
 
             if (switchMode == PlayerAudioRegulatorSwitchMode.Toggle)
             {
-                if (_assignedPlayerId == _localPlayer.playerId)
+                if (n_assignedPlayerId == _localPlayer.playerId)
                 {
                     ReleasePlayer();
                 }
-                else if (_assignedPlayerId > 0)
+                else if (n_assignedPlayerId > 0)
                 {
                     AssignPlayer(_localPlayer);
                 }
@@ -81,7 +81,7 @@ namespace MimyLab.FukuroUdon
 
             if (!_localPlayer.IsOwner(gameObject)) return;
 
-            _assignedPlayerId = target.playerId;
+            n_assignedPlayerId = target.playerId;
             RequestSerialization();
 
         }
@@ -95,13 +95,13 @@ namespace MimyLab.FukuroUdon
 
             if (!_localPlayer.IsOwner(gameObject)) return;
 
-            _assignedPlayerId = -1;
+            n_assignedPlayerId = -1;
             RequestSerialization();
         }
 
         protected override bool CheckUniqueApplicable(VRCPlayerApi target)
         {
-            return target.playerId == _assignedPlayerId;
+            return target.playerId == n_assignedPlayerId;
         }
     }
 }

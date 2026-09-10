@@ -19,21 +19,21 @@ namespace MimyLab.FukuroUdon
     public class LimitedScaleConstraint : LimitedConstraint
     {
         [SerializeField]
-        private Transform targetTransform;
+        private Transform _targetTransform;
 
         [Header("Follow Settings")]
         [SerializeField]
-        private Transform sourceTransform;
+        private Transform _sourceTransform;
 
         [SerializeField, Range(0.0f, 1.0f)]
-        private float weight = 1.0f;
+        private float _weight = 1.0f;
 
         [Header("Limit Settings")]
         [SerializeField, Min(0.0f)]
-        private Vector3 minScale = Vector3.zero;
+        private Vector3 _minScale = Vector3.zero;
 
         [SerializeField, Min(0.0f)]
-        private Vector3 maxScale = Vector3.positiveInfinity;
+        private Vector3 _maxScale = Vector3.positiveInfinity;
 
         private Vector3 _scaleAtRest;
 
@@ -49,12 +49,12 @@ namespace MimyLab.FukuroUdon
         {
             if (_initialized) return;
 
-            if (!targetTransform)
+            if (!_targetTransform)
             {
-                targetTransform = transform;
+                _targetTransform = transform;
             }
 
-            _scaleAtRest = targetTransform.localScale;
+            _scaleAtRest = _targetTransform.localScale;
 
             _eventReceivers = transform.GetComponents<UdonBehaviour>();
 
@@ -69,25 +69,25 @@ namespace MimyLab.FukuroUdon
         private void LateUpdate()
         {
             // 追従処理
-            Vector3 scale = sourceTransform
-                ? Vector3.Lerp(_scaleAtRest, sourceTransform.localScale, weight)
-                : targetTransform.localScale;
+            Vector3 scale = _sourceTransform
+                ? Vector3.Lerp(_scaleAtRest, _sourceTransform.localScale, _weight)
+                : _targetTransform.localScale;
 
             // 範囲制限処理
-            scale.x = Mathf.Clamp(scale.x, minScale.x, maxScale.x);
-            scale.y = Mathf.Clamp(scale.y, minScale.y, maxScale.y);
-            scale.z = Mathf.Clamp(scale.z, minScale.z, maxScale.z);
+            scale.x = Mathf.Clamp(scale.x, _minScale.x, _maxScale.x);
+            scale.y = Mathf.Clamp(scale.y, _minScale.y, _maxScale.y);
+            scale.z = Mathf.Clamp(scale.z, _minScale.z, _maxScale.z);
 
             // 結果を Transform へ反映
-            targetTransform.localScale = scale;
+            _targetTransform.localScale = scale;
 
             // 制限イベント
-            SetIsReachMinX(scale.x <= minScale.x);
-            SetIsReachMaxX(scale.x >= maxScale.x);
-            SetIsReachMinY(scale.y <= minScale.y);
-            SetIsReachMaxY(scale.y >= maxScale.y);
-            SetIsReachMinZ(scale.z <= minScale.z);
-            SetIsReachMaxZ(scale.z >= maxScale.z);
+            SetIsReachMinX(scale.x <= _minScale.x);
+            SetIsReachMaxX(scale.x >= _maxScale.x);
+            SetIsReachMinY(scale.y <= _minScale.y);
+            SetIsReachMaxY(scale.y >= _maxScale.y);
+            SetIsReachMinZ(scale.z <= _minScale.z);
+            SetIsReachMaxZ(scale.z >= _maxScale.z);
         }
 
         private void SetIsReachMinX(bool value)

@@ -9,6 +9,18 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
 
+    public enum RotationLimitType
+    {
+        Rotate,
+        EulerAngles
+    }
+
+    public enum AimLimitType
+    {
+        Angle,
+        Polar
+    }
+    
     public abstract class LimitedConstraint : UdonSharpBehaviour
     {
     }

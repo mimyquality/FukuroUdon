@@ -19,27 +19,27 @@ namespace MimyLab.FukuroUdon
     public class LimitedPositionConstraint : LimitedConstraint
     {
         [SerializeField]
-        private Transform targetTransform;
+        private Transform _targetTransform;
 
         [Header("Follow Settings")]
         [SerializeField]
-        private Transform sourceTransform;
+        private Transform _sourceTransform;
 
         [SerializeField, Range(0.0f, 1.0f)]
-        private float weight = 1.0f;
+        private float _weight = 1.0f;
 
         [SerializeField]
-        private bool solveInLocalSpace = false;
+        private bool _solveInLocalSpace = false;
 
         [Header("Limit Settings")]
         [SerializeField]
-        private Vector3 minPosition = Vector3.negativeInfinity;
+        private Vector3 _minPosition = Vector3.negativeInfinity;
 
         [SerializeField]
-        private Vector3 maxPosition = Vector3.positiveInfinity;
+        private Vector3 _maxPosition = Vector3.positiveInfinity;
 
         [SerializeField]
-        private Space relativeTo = Space.Self;
+        private Space _relativeTo = Space.Self;
 
         private Transform _parent;
         private Vector3 _positionAtRest;
@@ -56,13 +56,13 @@ namespace MimyLab.FukuroUdon
         {
             if (_initialized) return;
 
-            if (!targetTransform)
+            if (!_targetTransform)
             {
-                targetTransform = transform;
+                _targetTransform = transform;
             }
 
-            _parent = targetTransform.parent;
-            _positionAtRest = targetTransform.localPosition;
+            _parent = _targetTransform.parent;
+            _positionAtRest = _targetTransform.localPosition;
 
             _eventReceivers = transform.GetComponents<UdonBehaviour>();
 
@@ -77,10 +77,10 @@ namespace MimyLab.FukuroUdon
         private void LateUpdate()
         {
             // 追従処理
-            Vector3 position = sourceTransform ? FollowPosition() : targetTransform.localPosition;
+            Vector3 position = _sourceTransform ? FollowPosition() : _targetTransform.localPosition;
 
             // 範囲制限処理
-            if (relativeTo == Space.World)
+            if (_relativeTo == Space.World)
             {
                 if (_parent)
                 {
@@ -88,38 +88,38 @@ namespace MimyLab.FukuroUdon
                 }
             }
 
-            position.x = Mathf.Clamp(position.x, minPosition.x, maxPosition.x);
-            position.y = Mathf.Clamp(position.y, minPosition.y, maxPosition.y);
-            position.z = Mathf.Clamp(position.z, minPosition.z, maxPosition.z);
+            position.x = Mathf.Clamp(position.x, _minPosition.x, _maxPosition.x);
+            position.y = Mathf.Clamp(position.y, _minPosition.y, _maxPosition.y);
+            position.z = Mathf.Clamp(position.z, _minPosition.z, _maxPosition.z);
 
             // 結果を Transform へ反映
-            if (relativeTo == Space.World)
+            if (_relativeTo == Space.World)
             {
-                targetTransform.position = position;
+                _targetTransform.position = position;
             }
             else
             {
-                targetTransform.localPosition = position;
+                _targetTransform.localPosition = position;
             }
 
             // 制限イベント
-            SetIsReachMinX(position.x <= minPosition.x);
-            SetIsReachMaxX(position.x >= maxPosition.x);
-            SetIsReachMinY(position.y <= minPosition.y);
-            SetIsReachMaxY(position.y >= maxPosition.y);
-            SetIsReachMinZ(position.z <= minPosition.z);
-            SetIsReachMaxZ(position.z >= maxPosition.z);
+            SetIsReachMinX(position.x <= _minPosition.x);
+            SetIsReachMaxX(position.x >= _maxPosition.x);
+            SetIsReachMinY(position.y <= _minPosition.y);
+            SetIsReachMaxY(position.y >= _maxPosition.y);
+            SetIsReachMinZ(position.z <= _minPosition.z);
+            SetIsReachMaxZ(position.z >= _maxPosition.z);
         }
 
         private Vector3 FollowPosition()
         {
-            Vector3 sourcePosition = solveInLocalSpace 
-                ? sourceTransform.localPosition 
+            Vector3 sourcePosition = _solveInLocalSpace 
+                ? _sourceTransform.localPosition 
                 : _parent
-                    ? _parent.InverseTransformPoint(sourceTransform.position)
-                    : sourceTransform.position;
+                    ? _parent.InverseTransformPoint(_sourceTransform.position)
+                    : _sourceTransform.position;
 
-            return Vector3.Lerp(_positionAtRest, sourcePosition, weight);
+            return Vector3.Lerp(_positionAtRest, sourcePosition, _weight);
         }
 
         private void SetIsReachMinX(bool value)

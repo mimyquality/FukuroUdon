@@ -76,8 +76,8 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        private Vector3 LocalOffset { get => _adjustmentSync && _adjustmentSync._hasSaved ? _adjustmentSync._localOffset : _localOffset; }
-        private float AvatarEyeHeight { get => _adjustmentSync && _adjustmentSync._hasSaved ? _adjustmentSync._avatarEyeHeight : _avatarEyeHeight; }
+        private Vector3 LocalOffset { get => _adjustmentSync && _adjustmentSync.n_hasSaved ? _adjustmentSync.n_localOffset : _localOffset; }
+        private float AvatarEyeHeight { get => _adjustmentSync && _adjustmentSync.n_hasSaved ? _adjustmentSync.n_avatarEyeHeight : _avatarEyeHeight; }
 
         private bool _initialized = false;
         private void Initialize()

@@ -60,7 +60,7 @@ namespace MimyLab.FukuroUdon
         public override void OnPickupUseDown()
         {
             if (!target) return;
-            if (target.IsEquiped) return;
+            if (target.IsEquipped) return;
 
             Networking.SetOwner(Networking.LocalPlayer, target.gameObject);
             HumanBodyBones mostNearBone = MostNearBone(Networking.LocalPlayer);

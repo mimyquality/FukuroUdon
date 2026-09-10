@@ -33,7 +33,7 @@ namespace MimyLab.FukuroUdon
         private VRCPlayerApi[] _players = new VRCPlayerApi[1];
         private VoiceChannelPlayerStates _localPlayerStates;
 
-        private VoiceChannelPlayerStates _LocalPlayerStates
+        private VoiceChannelPlayerStates LocalPlayerStates
         {
             get
             {
@@ -108,16 +108,16 @@ namespace MimyLab.FukuroUdon
             int channel = states.VoiceChannel;
 
             // 誰かが同じチャンネルに入ってきたか、同じチャンネルから抜けた
-            if (!changedPlayer.isLocal && _LocalPlayerStates.VoiceChannel > -1)
+            if (!changedPlayer.isLocal && LocalPlayerStates.VoiceChannel > -1)
             {
-                if (channel == _LocalPlayerStates.VoiceChannel)
+                if (channel == LocalPlayerStates.VoiceChannel)
                 {
                     if (_speaker && _channelJoinSound)
                     {
                         _speaker.PlayOneShot(_channelJoinSound);
                     }
                 }
-                else if (states.transform.parent == _LocalPlayerStates.transform.parent)
+                else if (states.transform.parent == LocalPlayerStates.transform.parent)
                 {
                     if (_speaker && _channelLeaveSound)
                     {
@@ -174,7 +174,7 @@ namespace MimyLab.FukuroUdon
                 _buttonChannelON[i].SetActive(i == channel);
             }
 
-            _LocalPlayerStates.VoiceChannel = channel;
+            LocalPlayerStates.VoiceChannel = channel;
 
             if (_speaker && _channelJoinSound)
             {
@@ -203,7 +203,7 @@ namespace MimyLab.FukuroUdon
             _buttonChannelOFF[channel].SetActive(true);
             _buttonChannelON[channel].SetActive(false);
 
-            _LocalPlayerStates.VoiceChannel = -1;
+            LocalPlayerStates.VoiceChannel = -1;
 
             if (_speaker && _channelLeaveSound)
             {

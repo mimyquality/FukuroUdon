@@ -25,9 +25,9 @@ namespace MimyLab.FukuroUdon
 
         [SerializeField] private bool _syncVolume = false;
 
-        [UdonSynced] private bool sync_isPlaying = false;
-        [UdonSynced] private double sync_latestPlayStartTime = 0.0d;
-        [UdonSynced] private float sync_volume = 0.5f;
+        [UdonSynced] private bool n_isPlaying = false;
+        [UdonSynced] private double n_latestPlayStartTime = 0.0d;
+        [UdonSynced] private float n_volume = 0.5f;
 
         private AudioSource _audioSource;
         private double _latestPlayStartTime = 0.0d;
@@ -68,22 +68,22 @@ namespace MimyLab.FukuroUdon
 
             if (!_audioSource) return;
 
-            if (sync_isPlaying && !_audioSource.isPlaying)
+            if (n_isPlaying && !_audioSource.isPlaying)
             {
                 _audioSource.Play();
             }
 
-            if (!sync_isPlaying && _audioSource.isPlaying)
+            if (!n_isPlaying && _audioSource.isPlaying)
             {
                 _audioSource.Pause();
             }
 
-            if (_latestPlayStartTime != sync_latestPlayStartTime)
+            if (_latestPlayStartTime != n_latestPlayStartTime)
             {
-                _latestPlayStartTime = sync_latestPlayStartTime;
+                _latestPlayStartTime = n_latestPlayStartTime;
 
                 float audioTime = (float)Networking.CalculateServerDeltaTime(Networking.GetServerTimeInSeconds(),
-                    sync_latestPlayStartTime);
+                    n_latestPlayStartTime);
                 float audioLength = _audioSource.clip.length;
                 if (audioTime > audioLength)
                 {
@@ -95,7 +95,7 @@ namespace MimyLab.FukuroUdon
 
             if (_syncVolume)
             {
-                _audioSource.volume = Mathf.Clamp01(sync_volume);
+                _audioSource.volume = Mathf.Clamp01(n_volume);
             }
         }
 
@@ -132,29 +132,29 @@ namespace MimyLab.FukuroUdon
             
             var result = false;
 
-            if (sync_isPlaying != _audioSource.isPlaying)
+            if (n_isPlaying != _audioSource.isPlaying)
             {
-                sync_isPlaying = _audioSource.isPlaying;
+                n_isPlaying = _audioSource.isPlaying;
                 result = true;
             }
 
-            if (sync_isPlaying)
+            if (n_isPlaying)
             {
                 double currentPlayStartTime = Networking.GetServerTimeInSeconds() - _audioSource.time;
                 double differenceTime =
-                    Networking.CalculateServerDeltaTime(currentPlayStartTime, sync_latestPlayStartTime);
+                    Networking.CalculateServerDeltaTime(currentPlayStartTime, n_latestPlayStartTime);
                 if (!(-TimeTolerance <= differenceTime && differenceTime <= TimeTolerance))
                 {
-                    sync_latestPlayStartTime = currentPlayStartTime;
+                    n_latestPlayStartTime = currentPlayStartTime;
                     result = true;
                 }
             }
 
             if (_syncVolume)
             {
-                if (sync_volume != _audioSource.volume)
+                if (!Mathf.Approximately(n_volume, _audioSource.volume))
                 {
-                    sync_volume = _audioSource.volume;
+                    n_volume = _audioSource.volume;
                     result = true;
                 }
             }

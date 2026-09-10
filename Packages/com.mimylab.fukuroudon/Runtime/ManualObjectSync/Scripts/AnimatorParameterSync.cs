@@ -31,7 +31,7 @@ namespace MimyLab.FukuroUdon
         private const float ParameterCheckTickRate = 0.1f; // 10Hz
         private const float SmoothingDuration = 1.0f;
 
-        [SerializeField] private string[] _parameterNames = new string[0];
+        [SerializeField] private string[] _parameterNames = Array.Empty<string>();
 
         [SerializeField, Tooltip("この設定は float パラメーターのみに影響します。")]
         private AnimatorParameterSyncSmoothingMode _smoothingMode = AnimatorParameterSyncSmoothingMode.None;
@@ -40,12 +40,12 @@ namespace MimyLab.FukuroUdon
 
         [NonSerialized] public float _floatElapsed;
 
-        [UdonSynced] private int[] sync_boolParameterHashes = Array.Empty<int>();
-        [UdonSynced] private bool[] sync_boolParameterValues = Array.Empty<bool>();
-        [UdonSynced] private int[] sync_intParameterHashes = Array.Empty<int>();
-        [UdonSynced] private int[] sync_intParameterValues = Array.Empty<int>();
-        [UdonSynced] private int[] sync_floatParameterHashes = Array.Empty<int>();
-        [UdonSynced] private float[] sync_floatParameterValues = Array.Empty<float>();
+        [UdonSynced] private int[] n_boolParameterHashes = Array.Empty<int>();
+        [UdonSynced] private bool[] n_boolParameterValues = Array.Empty<bool>();
+        [UdonSynced] private int[] n_intParameterHashes = Array.Empty<int>();
+        [UdonSynced] private int[] n_intParameterValues = Array.Empty<int>();
+        [UdonSynced] private int[] n_floatParameterHashes = Array.Empty<int>();
+        [UdonSynced] private float[] n_floatParameterValues = Array.Empty<float>();
 
         private Animator _animator;
         private int[] _boolParameterHashes = Array.Empty<int>();
@@ -148,40 +148,40 @@ namespace MimyLab.FukuroUdon
 
         public override void OnPreSerialization()
         {
-            if (sync_boolParameterHashes.Length != _boolParameterHashes.Length)
+            if (n_boolParameterHashes.Length != _boolParameterHashes.Length)
             {
-                sync_boolParameterHashes = new int[_boolParameterHashes.Length];
-                sync_boolParameterValues = new bool[_boolParameterValues.Length];
+                n_boolParameterHashes = new int[_boolParameterHashes.Length];
+                n_boolParameterValues = new bool[_boolParameterValues.Length];
             }
 
             if (_boolParameterHashes.Length > 0)
             {
-                _boolParameterHashes.CopyTo(sync_boolParameterHashes, 0);
-                _boolParameterValues.CopyTo(sync_boolParameterValues, 0);
+                _boolParameterHashes.CopyTo(n_boolParameterHashes, 0);
+                _boolParameterValues.CopyTo(n_boolParameterValues, 0);
             }
 
-            if (sync_intParameterHashes.Length != _intParameterHashes.Length)
+            if (n_intParameterHashes.Length != _intParameterHashes.Length)
             {
-                sync_intParameterHashes = new int[_intParameterHashes.Length];
-                sync_intParameterValues = new int[_intParameterValues.Length];
+                n_intParameterHashes = new int[_intParameterHashes.Length];
+                n_intParameterValues = new int[_intParameterValues.Length];
             }
 
             if (_intParameterHashes.Length > 0)
             {
-                _intParameterHashes.CopyTo(sync_intParameterHashes, 0);
-                _intParameterValues.CopyTo(sync_intParameterValues, 0);
+                _intParameterHashes.CopyTo(n_intParameterHashes, 0);
+                _intParameterValues.CopyTo(n_intParameterValues, 0);
             }
 
-            if (sync_floatParameterHashes.Length != _floatParameterHashes.Length)
+            if (n_floatParameterHashes.Length != _floatParameterHashes.Length)
             {
-                sync_floatParameterHashes = new int[_floatParameterHashes.Length];
-                sync_floatParameterValues = new float[_floatParameterValues.Length];
+                n_floatParameterHashes = new int[_floatParameterHashes.Length];
+                n_floatParameterValues = new float[_floatParameterValues.Length];
             }
 
             if (_floatParameterHashes.Length > 0)
             {
-                _floatParameterHashes.CopyTo(sync_floatParameterHashes, 0);
-                _floatParameterValues.CopyTo(sync_floatParameterValues, 0);
+                _floatParameterHashes.CopyTo(n_floatParameterHashes, 0);
+                _floatParameterValues.CopyTo(n_floatParameterValues, 0);
             }
         }
 
@@ -191,41 +191,41 @@ namespace MimyLab.FukuroUdon
 
             for (int i = 0; i < _boolParameterHashes.Length; i++)
             {
-                int index = Array.IndexOf(sync_boolParameterHashes, _boolParameterHashes[i]);
+                int index = Array.IndexOf(n_boolParameterHashes, _boolParameterHashes[i]);
                 if (index < 0) continue;
 
-                if (_animator.GetBool(_boolParameterHashes[i]) != sync_boolParameterValues[index])
+                if (_animator.GetBool(_boolParameterHashes[i]) != n_boolParameterValues[index])
                 {
-                    _boolParameterValues[i] = sync_boolParameterValues[index];
-                    _animator.SetBool(_boolParameterHashes[i], sync_boolParameterValues[index]);
+                    _boolParameterValues[i] = n_boolParameterValues[index];
+                    _animator.SetBool(_boolParameterHashes[i], n_boolParameterValues[index]);
                 }
             }
 
             for (int i = 0; i < _intParameterHashes.Length; i++)
             {
-                int index = Array.IndexOf(sync_intParameterHashes, _intParameterHashes[i]);
+                int index = Array.IndexOf(n_intParameterHashes, _intParameterHashes[i]);
                 if (index < 0) continue;
 
-                if (_animator.GetInteger(_intParameterHashes[i]) != sync_intParameterValues[index])
+                if (_animator.GetInteger(_intParameterHashes[i]) != n_intParameterValues[index])
                 {
-                    _intParameterValues[i] = sync_intParameterValues[index];
-                    _animator.SetInteger(_intParameterHashes[i], sync_intParameterValues[index]);
+                    _intParameterValues[i] = n_intParameterValues[index];
+                    _animator.SetInteger(_intParameterHashes[i], n_intParameterValues[index]);
                 }
             }
 
             var floatIsSync = false;
             for (int i = 0; i < _floatParameterHashes.Length; i++)
             {
-                int index = Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
+                int index = Array.IndexOf(n_floatParameterHashes, _floatParameterHashes[i]);
                 if (index < 0) continue;
 
                 float animatorFloatParameter = _animator.GetFloat(_floatParameterHashes[i]);
-                if (Mathf.Approximately(animatorFloatParameter, sync_floatParameterValues[index])) continue;
+                if (Mathf.Approximately(animatorFloatParameter, n_floatParameterValues[index])) continue;
 
                 if (_smoothingMode == AnimatorParameterSyncSmoothingMode.None)
                 {
-                    _floatParameterValues[i] = sync_floatParameterValues[index];
-                    _animator.SetFloat(_floatParameterHashes[i], sync_floatParameterValues[index]);
+                    _floatParameterValues[i] = n_floatParameterValues[index];
+                    _animator.SetFloat(_floatParameterHashes[i], n_floatParameterValues[index]);
                 }
                 else
                 {
@@ -251,10 +251,10 @@ namespace MimyLab.FukuroUdon
         {
             for (int i = 0; i < _floatParameterHashes.Length; i++)
             {
-                int index = Array.IndexOf(sync_floatParameterHashes, _floatParameterHashes[i]);
+                int index = Array.IndexOf(n_floatParameterHashes, _floatParameterHashes[i]);
                 if (index < 0) continue;
 
-                float currentFloatValue = Mathf.Lerp(_floatParameterValues[i], sync_floatParameterValues[index],
+                float currentFloatValue = Mathf.Lerp(_floatParameterValues[i], n_floatParameterValues[index],
                     _floatElapsed);
                 _animator.SetFloat(_floatParameterHashes[i], currentFloatValue);
             }

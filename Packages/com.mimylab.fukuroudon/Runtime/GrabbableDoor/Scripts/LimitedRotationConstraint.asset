@@ -49,13 +49,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: targetTransform
+      Data: _targetTransform
     - Name: $v
       Entry: 7
       Data: 2|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: targetTransform
+      Data: _targetTransform
     - Name: <UserType>k__BackingField
       Entry: 7
       Data: 3|System.RuntimeType, mscorlib
@@ -109,13 +109,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: sourceTransform
+      Data: _sourceTransform
     - Name: $v
       Entry: 7
       Data: 6|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: sourceTransform
+      Data: _sourceTransform
     - Name: <UserType>k__BackingField
       Entry: 9
       Data: 3
@@ -172,13 +172,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: weight
+      Data: _weight
     - Name: $v
       Entry: 7
       Data: 10|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: weight
+      Data: _weight
     - Name: <UserType>k__BackingField
       Entry: 7
       Data: 11|System.RuntimeType, mscorlib
@@ -244,13 +244,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: solveInLocalSpace
+      Data: _solveInLocalSpace
     - Name: $v
       Entry: 7
       Data: 15|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: solveInLocalSpace
+      Data: _solveInLocalSpace
     - Name: <UserType>k__BackingField
       Entry: 7
       Data: 16|System.RuntimeType, mscorlib
@@ -304,13 +304,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: limitType
+      Data: _limitType
     - Name: $v
       Entry: 7
       Data: 19|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: limitType
+      Data: _limitType
     - Name: <UserType>k__BackingField
       Entry: 7
       Data: 20|System.RuntimeType, mscorlib
@@ -379,13 +379,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: maxAngle
+      Data: _maxAngle
     - Name: $v
       Entry: 7
       Data: 25|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: maxAngle
+      Data: _maxAngle
     - Name: <UserType>k__BackingField
       Entry: 9
       Data: 11
@@ -445,13 +445,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: xAxisRange
+      Data: _xAxisRange
     - Name: $v
       Entry: 7
       Data: 29|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: xAxisRange
+      Data: _xAxisRange
     - Name: <UserType>k__BackingField
       Entry: 7
       Data: 30|System.RuntimeType, mscorlib
@@ -514,13 +514,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: yAxisRange
+      Data: _yAxisRange
     - Name: $v
       Entry: 7
       Data: 34|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: yAxisRange
+      Data: _yAxisRange
     - Name: <UserType>k__BackingField
       Entry: 9
       Data: 30
@@ -577,13 +577,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: zAxisRange
+      Data: _zAxisRange
     - Name: $v
       Entry: 7
       Data: 38|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: zAxisRange
+      Data: _zAxisRange
     - Name: <UserType>k__BackingField
       Entry: 9
       Data: 30
@@ -640,13 +640,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: relativeTo
+      Data: _relativeTo
     - Name: $v
       Entry: 7
       Data: 42|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: relativeTo
+      Data: _relativeTo
     - Name: <UserType>k__BackingField
       Entry: 7
       Data: 43|System.RuntimeType, mscorlib

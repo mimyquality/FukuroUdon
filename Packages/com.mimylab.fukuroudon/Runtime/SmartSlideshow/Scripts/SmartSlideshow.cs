@@ -113,8 +113,8 @@ namespace MimyLab.FukuroUdon
         }
 
         // 同期用変数
-        [UdonSynced] private int sync_selectedIndex = 0;
-        [UdonSynced] private int[] sync_selectedPage;
+        [UdonSynced] private int n_selectedIndex = 0;
+        [UdonSynced] private int[] n_selectedPage;
 
         // ローカル用変数
         private int _selectedIndex = 0;
@@ -130,7 +130,7 @@ namespace MimyLab.FukuroUdon
         private void Start()
         {
             _selectedPage = new int[literatures.Length];
-            sync_selectedPage = new int[literatures.Length];
+            n_selectedPage = new int[literatures.Length];
             _endPage = new int[literatures.Length];
             for (int i = 0; i < _endPage.Length; i++)
             {
@@ -154,10 +154,10 @@ namespace MimyLab.FukuroUdon
         ******************************/
         public override void OnPreSerialization()
         {
-            sync_selectedIndex = _selectedIndex;
+            n_selectedIndex = _selectedIndex;
             for (int i = 0; i < literatures.Length; i++)
             {
-                sync_selectedPage[i] = _selectedPage[i];
+                n_selectedPage[i] = _selectedPage[i];
             }
         }
 
@@ -165,10 +165,10 @@ namespace MimyLab.FukuroUdon
         {
             if (!IsGlobal) return;
 
-            _selectedIndex = sync_selectedIndex;
+            _selectedIndex = n_selectedIndex;
             for (int i = 0; i < literatures.Length; i++)
             {
-                _selectedPage[i] = sync_selectedPage[i];
+                _selectedPage[i] = n_selectedPage[i];
             }
 
             RefreshView();

@@ -310,13 +310,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: sync_boolParameterHashes
+      Data: n_boolParameterHashes
     - Name: $v
       Entry: 7
       Data: 21|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: sync_boolParameterHashes
+      Data: n_boolParameterHashes
     - Name: <UserType>k__BackingField
       Entry: 9
       Data: 13
@@ -364,13 +364,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: sync_boolParameterValues
+      Data: n_boolParameterValues
     - Name: $v
       Entry: 7
       Data: 24|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: sync_boolParameterValues
+      Data: n_boolParameterValues
     - Name: <UserType>k__BackingField
       Entry: 7
       Data: 25|System.RuntimeType, mscorlib
@@ -424,13 +424,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: sync_intParameterHashes
+      Data: n_intParameterHashes
     - Name: $v
       Entry: 7
       Data: 28|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: sync_intParameterHashes
+      Data: n_intParameterHashes
     - Name: <UserType>k__BackingField
       Entry: 9
       Data: 13
@@ -478,13 +478,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: sync_intParameterValues
+      Data: n_intParameterValues
     - Name: $v
       Entry: 7
       Data: 31|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: sync_intParameterValues
+      Data: n_intParameterValues
     - Name: <UserType>k__BackingField
       Entry: 9
       Data: 13
@@ -532,13 +532,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: sync_floatParameterHashes
+      Data: n_floatParameterHashes
     - Name: $v
       Entry: 7
       Data: 34|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: sync_floatParameterHashes
+      Data: n_floatParameterHashes
     - Name: <UserType>k__BackingField
       Entry: 9
       Data: 13
@@ -586,13 +586,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: sync_floatParameterValues
+      Data: n_floatParameterValues
     - Name: $v
       Entry: 7
       Data: 37|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: sync_floatParameterValues
+      Data: n_floatParameterValues
     - Name: <UserType>k__BackingField
       Entry: 7
       Data: 38|System.RuntimeType, mscorlib
