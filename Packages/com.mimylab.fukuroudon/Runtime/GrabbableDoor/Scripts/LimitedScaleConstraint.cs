@@ -21,7 +21,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private Transform _targetTransform;
 
-        [Header("Follow Settings")]
+        [Header("Constraint Settings")]
         [SerializeField]
         private Transform _sourceTransform;
 

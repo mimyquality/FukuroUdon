@@ -12,6 +12,19 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.Udon;
 
+    public enum SourceAimType
+    {
+        ObjectAim,
+        ObjectRotationAim,
+        None
+    }
+
+    public enum AimLimitType
+    {
+        Angle,
+        Polar
+    }
+
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grabbable-Door#limited-aim-constraint")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Limited Constraint/Limited Aim Constraint")]
@@ -21,7 +34,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private Transform _targetTransform;
 
-        [Header("Follow Settings")]
+        [Header("Constraint Settings")]
         [SerializeField]
         private Transform _sourceTransform;
 
@@ -31,6 +44,13 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private Vector3 _aimVector = Vector3.forward;
 
+        [SerializeField]
+        private SourceAimType _sourceAimType = SourceAimType.ObjectAim;
+        
+        [SerializeField]
+        private Vector3 _sourceAimVector = Vector3.forward;
+
+        [Space]
         [SerializeField]
         private Vector3 _upVector = Vector3.up;
 
@@ -47,11 +67,21 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private AimLimitType _limitType = AimLimitType.Angle;
 
-        [SerializeField, Range(0.0f, 180.0f)]
-        private float _maxAngle = 180.0f;
+        [SerializeField, Range(0f, 180f)]
+        private float _maxAngle = 180f;
+
+        [SerializeField, MinMaxRange(-180f, 180f)]
+        private Vector2 _yawRange = new(-180f, 180f);
+
+        [SerializeField, MinMaxRange(-180f, 180f)]
+        private Vector2 _pitchRange = new(-180f, 180f);
+
+        [SerializeField, MinMaxRange(-180f, 180f)]
+        private Vector2 _rollRange = new(-180f, 180f);
 
         private Transform _parent;
         private Quaternion _rotationAtRest;
+        private Quaternion _axisOffset;
 
         private bool _isReachMaxAngle;
 
@@ -70,6 +100,7 @@ namespace MimyLab.FukuroUdon
 
             _parent = _targetTransform.parent;
             _rotationAtRest = _targetTransform.localRotation;
+            _axisOffset = Quaternion.LookRotation(_aimVector, _upVector);
 
             _eventReceivers = transform.GetComponents<UdonBehaviour>();
 
@@ -83,22 +114,26 @@ namespace MimyLab.FukuroUdon
 
         private void LateUpdate()
         {
-            // 範囲制限しつつ追従処理(ワールド空間)
-            Quaternion rotation = _sourceTransform ? FollowRotation() : _targetTransform.rotation;
+            // 追従処理
+            Quaternion rotation = _sourceTransform ? FollowRotation() : _targetTransform.localRotation;
 
+            // 範囲制限処理(Up軸)
             Vector3 angles = Vector3.zero;
+            rotation = LimitRoll(rotation, ref angles.z);
+
+            // 範囲制限処理(Aim軸)
             switch (_limitType)
             {
                 case AimLimitType.Angle:
-                    rotation = AimAndLimitByAngle(rotation, out angles);
+                    rotation = LimitAimByAngle(rotation, ref angles.x);
                     break;
                 case AimLimitType.Polar:
-                    rotation = AimAndLimitByPolar(rotation, out angles);
+                    rotation = LimitAimByPolar(rotation, ref angles);
                     break;
             }
 
             // 結果を Transform へ反映
-            _targetTransform.rotation = rotation;
+            _targetTransform.localRotation = rotation * Quaternion.Inverse(_axisOffset);
 
             // 制限イベント
             SetIsReachMaxAngle(angles.x >= _maxAngle);
@@ -106,50 +141,87 @@ namespace MimyLab.FukuroUdon
 
         private Quaternion FollowRotation()
         {
-            Quaternion targetRotation = _parent
-                ? _parent.rotation * _rotationAtRest
-                : _rotationAtRest;
+            // ワールド空間で計算
+            Quaternion parentRotation = _parent ? _parent.rotation : Quaternion.identity;
+            Quaternion baseRotation = parentRotation * _rotationAtRest * _axisOffset;
 
-            Quaternion sourceRotation;
-            Vector3 forward = _sourceTransform.position - _targetTransform.position;
+            Vector3 forward = baseRotation * Vector3.forward;
+            switch (_sourceAimType)
+            {
+                case SourceAimType.ObjectAim:
+                    forward = _sourceTransform.position - _targetTransform.position;
+                    break;
+                case SourceAimType.ObjectRotationAim:
+                    forward = _sourceTransform.rotation * _sourceAimVector;
+                    break;
+            }
+            
+            Vector3 up = _targetTransform.TransformDirection(_upVector);
             switch (_worldUpType)
             {
                 case AimConstraint.WorldUpType.SceneUp:
-                    sourceRotation = Quaternion.LookRotation(forward, Vector3.up);
+                    up = Vector3.up;
                     break;
                 case AimConstraint.WorldUpType.ObjectUp:
-                    sourceRotation = _worldUpObject
-                        ? Quaternion.LookRotation(forward, _worldUpObject.position - _targetTransform.position)
-                        : Quaternion.LookRotation(forward);
+                    up = _worldUpObject
+                        ? _worldUpObject.position - _targetTransform.position
+                        : up;
                     break;
                 case AimConstraint.WorldUpType.ObjectRotationUp:
-                    sourceRotation = _worldUpObject
-                        ? Quaternion.LookRotation(forward, _worldUpObject.TransformDirection(_worldUpVector))
-                        : Quaternion.LookRotation(forward);
+                    up = _worldUpObject
+                        ? _worldUpObject.TransformDirection(_worldUpVector)
+                        : up;
                     break;
                 case AimConstraint.WorldUpType.Vector:
-                    sourceRotation = Quaternion.LookRotation(forward, _worldUpVector);
-                    break;
-                default:
-                    sourceRotation = Quaternion.LookRotation(forward);
+                    up = _worldUpVector;
                     break;
             }
 
-            return Quaternion.Slerp(targetRotation, sourceRotation, _weight);
+            Quaternion sourceRotation = Quaternion.LookRotation(forward, up);
+
+            // ローカル空間で返す (AxisOffset 込み)
+            return Quaternion.Inverse(parentRotation) * Quaternion.Slerp(baseRotation, sourceRotation, _weight);
         }
 
-        private Quaternion AimAndLimitByAngle(Quaternion rotation, out Vector3 angles)
+        private Quaternion LimitRoll(Quaternion rotation, ref float angle)
         {
-            
-            
-            angles = Vector3.zero;
-            return rotation;
+            if (_rollRange.y - _rollRange.x >= 360f) return rotation;
+
+            Vector3 aimVector = rotation * Vector3.forward;
+            Vector3 upVector = _rotationAtRest * _upVector;
+            Quaternion aimRotation = Quaternion.LookRotation(aimVector, upVector);
+            angle = Vector3.SignedAngle(aimRotation * Vector3.up, rotation * Vector3.up, aimVector);
+
+            if (_rollRange.x <= angle && angle <= _rollRange.y) return rotation;
+
+            angle = Mathf.Clamp(angle, _rollRange.x, _rollRange.y);
+
+            return aimRotation * Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
-        private Quaternion AimAndLimitByPolar(Quaternion rotation, out Vector3 angles)
+        private Quaternion LimitAimByAngle(Quaternion rotation, ref float angle)
         {
-            angles = Vector3.zero;
-            return rotation;
+            if (_maxAngle >= 180f) return rotation;
+
+            Vector3 baseDirection = _rotationAtRest * _aimVector;
+            Vector3 followDirection = rotation * Vector3.forward;
+            Vector3 limitDirection =
+                Vector3.RotateTowards(baseDirection, followDirection, _maxAngle * Mathf.Deg2Rad, 0f);
+
+            angle = Vector3.Angle(baseDirection, followDirection);
+
+            if (angle <= _maxAngle) return rotation;
+
+            angle = _maxAngle;
+
+            return Quaternion.FromToRotation(followDirection, limitDirection) * rotation;
+        }
+
+        private Quaternion LimitAimByPolar(Quaternion rotation, ref Vector3 angles)
+        {
+            //ToDo:Polar角度制限
+
+            return Quaternion.LookRotation(_aimVector, _upVector);
         }
 
         private void SetIsReachMaxAngle(bool value)
