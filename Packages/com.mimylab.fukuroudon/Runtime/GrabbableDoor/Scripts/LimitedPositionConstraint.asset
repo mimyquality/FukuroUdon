@@ -145,7 +145,7 @@ MonoBehaviour:
       Data: 8|UnityEngine.HeaderAttribute, UnityEngine.CoreModule
     - Name: header
       Entry: 1
-      Data: Follow Settings
+      Data: Constraint Settings
     - Name: 
       Entry: 8
       Data: 

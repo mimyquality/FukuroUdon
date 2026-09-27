@@ -21,6 +21,7 @@ namespace MimyLab.FukuroUdon
 
     public enum AimLimitType
     {
+        None,
         Angle,
         Polar
     }
@@ -46,7 +47,7 @@ namespace MimyLab.FukuroUdon
 
         [SerializeField]
         private SourceAimType _sourceAimType = SourceAimType.ObjectAim;
-        
+
         [SerializeField]
         private Vector3 _sourceAimVector = Vector3.forward;
 
@@ -65,7 +66,7 @@ namespace MimyLab.FukuroUdon
 
         [Header("Limit Settings")]
         [SerializeField]
-        private AimLimitType _limitType = AimLimitType.Angle;
+        private AimLimitType _aimLimitType = AimLimitType.Angle;
 
         [SerializeField, Range(0f, 180f)]
         private float _maxAngle = 180f;
@@ -73,12 +74,13 @@ namespace MimyLab.FukuroUdon
         [SerializeField, MinMaxRange(-180f, 180f)]
         private Vector2 _yawRange = new(-180f, 180f);
 
-        [SerializeField, MinMaxRange(-180f, 180f)]
-        private Vector2 _pitchRange = new(-180f, 180f);
+        [SerializeField, MinMaxRange(-90f, 90f)]
+        private Vector2 _pitchRange = new(-90f, 90f);
 
+        [Space]
         [SerializeField, MinMaxRange(-180f, 180f)]
         private Vector2 _rollRange = new(-180f, 180f);
-
+        
         private Transform _parent;
         private Quaternion _rotationAtRest;
         private Quaternion _axisOffset;
@@ -122,7 +124,7 @@ namespace MimyLab.FukuroUdon
             rotation = LimitRoll(rotation, ref angles.z);
 
             // 範囲制限処理(Aim軸)
-            switch (_limitType)
+            switch (_aimLimitType)
             {
                 case AimLimitType.Angle:
                     rotation = LimitAimByAngle(rotation, ref angles.x);
@@ -155,7 +157,7 @@ namespace MimyLab.FukuroUdon
                     forward = _sourceTransform.rotation * _sourceAimVector;
                     break;
             }
-            
+
             Vector3 up = _targetTransform.TransformDirection(_upVector);
             switch (_worldUpType)
             {
@@ -219,9 +221,30 @@ namespace MimyLab.FukuroUdon
 
         private Quaternion LimitAimByPolar(Quaternion rotation, ref Vector3 angles)
         {
-            //ToDo:Polar角度制限
+            Quaternion baseRotation = _rotationAtRest * _axisOffset;
+            Quaternion relativeRotation = Quaternion.Inverse(baseRotation) * rotation;
+            Vector3 relativeDirection = relativeRotation * Vector3.forward;
+            float theta = Mathf.Acos(relativeDirection.y);
+            float phi = Mathf.Atan2(relativeDirection.x, relativeDirection.z);
 
-            return Quaternion.LookRotation(_aimVector, _upVector);
+            float minPitch = (_pitchRange.x + 90f) * Mathf.Deg2Rad;
+            float maxPitch = (_pitchRange.y + 90f) * Mathf.Deg2Rad;
+            float minYaw = _yawRange.x * Mathf.Deg2Rad;
+            float maxYaw = _yawRange.y * Mathf.Deg2Rad;
+            
+            if(minPitch <= theta && theta <= maxPitch && minYaw <= phi && phi <= maxYaw) return rotation;
+
+            theta = Mathf.Clamp(theta, minPitch, maxPitch);
+            phi = Mathf.Clamp(phi, minYaw, maxYaw);
+            angles.x = theta *  Mathf.Rad2Deg - 90f;
+            angles.y = phi * Mathf.Rad2Deg;
+
+            float sineTheta = Mathf.Sin(theta);
+            relativeDirection.z = sineTheta * Mathf.Cos(phi);
+            relativeDirection.x = sineTheta * Mathf.Sin(phi);
+            relativeDirection.y = Mathf.Cos(theta);
+            
+            return Quaternion.FromToRotation(rotation * Vector3.forward, baseRotation * relativeDirection) * rotation;
         }
 
         private void SetIsReachMaxAngle(bool value)
