@@ -60,6 +60,7 @@ namespace MimyLab.FukuroUdon
 
         private Transform _parent;
         private Quaternion _rotationAtRest;
+        private Quaternion _rotationOffset;
 
         private bool _isReachMaxAngle;
         private bool _isReachMinX, _isReachMaxX;
@@ -81,6 +82,15 @@ namespace MimyLab.FukuroUdon
 
             _parent = _targetTransform.parent;
             _rotationAtRest = _targetTransform.localRotation;
+            if (_sourceTransform)
+            {
+                Quaternion sourceRotation = _solveInLocalSpace
+                    ? _sourceTransform.localRotation
+                    : _parent
+                        ? Quaternion.Inverse(_parent.rotation) * _sourceTransform.rotation
+                        : _sourceTransform.rotation;
+                _rotationOffset = Quaternion.Inverse(sourceRotation) * _rotationAtRest;
+            }
 
             _eventReceivers = transform.GetComponents<UdonBehaviour>();
 
@@ -143,6 +153,7 @@ namespace MimyLab.FukuroUdon
                 : _parent
                     ? Quaternion.Inverse(_parent.rotation) * _sourceTransform.rotation
                     : _sourceTransform.rotation;
+            sourceRotation *= _rotationOffset;
 
             return Quaternion.Slerp(_rotationAtRest, sourceRotation, _weight);
         }

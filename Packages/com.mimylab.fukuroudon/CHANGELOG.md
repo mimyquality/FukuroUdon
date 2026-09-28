@@ -6,6 +6,24 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [4.0.0-beta.1] - 2026/9/28
+
+**Added**  
+
+- Grabbable Door を追加しました。
+  - Grab Slidedoor のリニューアル版で、コンポーネントとしては Limited Constraint シリーズとなります。
+- SwivelChair2, Better AvatarPedestal のゲーム内表記に日本語を併記しました。
+- Canvas Distance Fade に非アクティブにするオプションを追加しました。
+- AdvancedWorldSettings に RealtimeReflectionProbe と ShadowmaskMode を追加しました。
+- UdonRaycast に RootTransform 追加、挙動を VRC Raycast に合わせました。
+
+**Changed**  
+
+- Grabbable Door の追加に伴い、LimitedPositionConstraint を GrabSlidedoor に、LimitedLookConstraint を GrabSwingdoor に改名しました。また、こちらは互換性のために残しつつメンテナンスモードに入ります。
+- GameObject Celler を GameObject Cellar に修正しました。
+- ContactReceiver Information の誤字を修正しました。
+- Manual ObjectSync の IsEquipped の誤字を修正しました。
+
 ## [3.19.5] - 2026/8/12
 
 **Added**  
@@ -918,6 +936,8 @@ VRCSDK 3.10.2 に沿ったいくつかの微修正を行いました。
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[4.0.0-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.1
+[3.19.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.5
 [3.19.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.4
 [3.19.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.3
 [3.19.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.2

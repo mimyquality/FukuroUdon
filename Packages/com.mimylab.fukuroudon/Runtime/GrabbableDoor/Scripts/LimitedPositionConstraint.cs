@@ -43,6 +43,7 @@ namespace MimyLab.FukuroUdon
 
         private Transform _parent;
         private Vector3 _positionAtRest;
+        private Vector3 _positionOffset;
         
         private bool _isReachMinX, _isReachMaxX;
         private bool _isReachMinY, _isReachMaxY;
@@ -63,6 +64,15 @@ namespace MimyLab.FukuroUdon
 
             _parent = _targetTransform.parent;
             _positionAtRest = _targetTransform.localPosition;
+            if (_sourceTransform)
+            {
+                Vector3 sourcePosition = _solveInLocalSpace 
+                    ? _sourceTransform.localPosition 
+                    : _parent
+                        ? _parent.InverseTransformPoint(_sourceTransform.position)
+                        : _sourceTransform.position;
+                _positionOffset = _positionAtRest - sourcePosition;
+            }
 
             _eventReceivers = transform.GetComponents<UdonBehaviour>();
 
@@ -118,6 +128,7 @@ namespace MimyLab.FukuroUdon
                 : _parent
                     ? _parent.InverseTransformPoint(_sourceTransform.position)
                     : _sourceTransform.position;
+            sourcePosition += _positionOffset;
 
             return Vector3.Lerp(_positionAtRest, sourcePosition, _weight);
         }

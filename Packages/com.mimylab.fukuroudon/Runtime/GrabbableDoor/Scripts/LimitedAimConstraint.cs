@@ -15,8 +15,7 @@ namespace MimyLab.FukuroUdon
     public enum SourceAimType
     {
         ObjectAim,
-        ObjectRotationAim,
-        None
+        ObjectRotationAim
     }
 
     public enum AimLimitType
@@ -43,7 +42,7 @@ namespace MimyLab.FukuroUdon
         private float _weight = 1.0f;
 
         [SerializeField]
-        private Vector3 _aimVector = Vector3.forward;
+        private Vector3 _aimVector = Vector3.forward;   // ToDo:オフセット処理にしてしまう
 
         [SerializeField]
         private SourceAimType _sourceAimType = SourceAimType.ObjectAim;
@@ -117,7 +116,7 @@ namespace MimyLab.FukuroUdon
         private void LateUpdate()
         {
             // 追従処理
-            Quaternion rotation = _sourceTransform ? FollowRotation() : _targetTransform.localRotation;
+            Quaternion rotation = FollowRotation();
 
             // 範囲制限処理(Up軸)
             Vector3 angles = Vector3.zero;
@@ -148,14 +147,17 @@ namespace MimyLab.FukuroUdon
             Quaternion baseRotation = parentRotation * _rotationAtRest * _axisOffset;
 
             Vector3 forward = baseRotation * Vector3.forward;
-            switch (_sourceAimType)
+            if(_sourceTransform)
             {
-                case SourceAimType.ObjectAim:
-                    forward = _sourceTransform.position - _targetTransform.position;
-                    break;
-                case SourceAimType.ObjectRotationAim:
-                    forward = _sourceTransform.rotation * _sourceAimVector;
-                    break;
+                switch (_sourceAimType)
+                {
+                    case SourceAimType.ObjectAim:
+                        forward = _sourceTransform.position - _targetTransform.position;
+                        break;
+                    case SourceAimType.ObjectRotationAim:
+                        forward = _sourceTransform.rotation * _sourceAimVector;
+                        break;
+                }
             }
 
             Vector3 up = _targetTransform.TransformDirection(_upVector);

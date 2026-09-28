@@ -14,7 +14,7 @@
   "dependencies": {},
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.worlds": "^3.10.4",
+    "com.vrchat.worlds": "^3.10.5",
     "net.narazaka.vrchat.tmp-fallback-fonts-jp": ">=1.0.0"
   },
   "legacyFolders": {
