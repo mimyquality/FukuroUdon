@@ -20,7 +20,6 @@ namespace MimyLab.FukuroUdon
 
     public enum AimLimitType
     {
-        None,
         Angle,
         Polar
     }
@@ -40,9 +39,6 @@ namespace MimyLab.FukuroUdon
 
         [SerializeField, Range(0.0f, 1.0f)]
         private float _weight = 1.0f;
-
-        [SerializeField]
-        private Vector3 _aimVector = Vector3.forward;   // ToDo:オフセット処理にしてしまう
 
         [SerializeField]
         private SourceAimType _sourceAimType = SourceAimType.ObjectAim;
@@ -65,7 +61,7 @@ namespace MimyLab.FukuroUdon
 
         [Header("Limit Settings")]
         [SerializeField]
-        private AimLimitType _aimLimitType = AimLimitType.Angle;
+        private AimLimitType _limitType = AimLimitType.Angle;
 
         [SerializeField, Range(0f, 180f)]
         private float _maxAngle = 180f;
@@ -76,15 +72,15 @@ namespace MimyLab.FukuroUdon
         [SerializeField, MinMaxRange(-90f, 90f)]
         private Vector2 _pitchRange = new(-90f, 90f);
 
-        [Space]
-        [SerializeField, MinMaxRange(-180f, 180f)]
-        private Vector2 _rollRange = new(-180f, 180f);
+        private Vector3 _aimVector = Vector3.forward;
         
         private Transform _parent;
         private Quaternion _rotationAtRest;
         private Quaternion _axisOffset;
 
         private bool _isReachMaxAngle;
+        private bool _isReachMinYaw, _isReachMaxYaw;
+        private bool _isReachMinPitch, _isReachMaxPitch;
 
         private UdonBehaviour[] _eventReceivers;
 
@@ -97,6 +93,21 @@ namespace MimyLab.FukuroUdon
             if (!_targetTransform)
             {
                 _targetTransform = transform;
+            }
+            
+            if(_sourceTransform)
+            {
+                switch (_sourceAimType)
+                {
+                    case SourceAimType.ObjectAim:
+                        _aimVector = _sourceTransform.position - _targetTransform.position;
+                        break;
+                    case SourceAimType.ObjectRotationAim:
+                        _aimVector = _sourceTransform.rotation * _sourceAimVector;
+                        break;
+                }
+                
+                _aimVector = _targetTransform.InverseTransformDirection(_aimVector.normalized);
             }
 
             _parent = _targetTransform.parent;
@@ -115,51 +126,68 @@ namespace MimyLab.FukuroUdon
 
         private void LateUpdate()
         {
-            // 追従処理
-            Quaternion rotation = FollowRotation();
-
-            // 範囲制限処理(Up軸)
-            Vector3 angles = Vector3.zero;
-            rotation = LimitRoll(rotation, ref angles.z);
-
-            // 範囲制限処理(Aim軸)
-            switch (_aimLimitType)
-            {
-                case AimLimitType.Angle:
-                    rotation = LimitAimByAngle(rotation, ref angles.x);
-                    break;
-                case AimLimitType.Polar:
-                    rotation = LimitAimByPolar(rotation, ref angles);
-                    break;
-            }
-
-            // 結果を Transform へ反映
-            _targetTransform.localRotation = rotation * Quaternion.Inverse(_axisOffset);
-
-            // 制限イベント
-            SetIsReachMaxAngle(angles.x >= _maxAngle);
-        }
-
-        private Quaternion FollowRotation()
-        {
-            // ワールド空間で計算
             Quaternion parentRotation = _parent ? _parent.rotation : Quaternion.identity;
             Quaternion baseRotation = parentRotation * _rotationAtRest * _axisOffset;
 
-            Vector3 forward = baseRotation * Vector3.forward;
-            if(_sourceTransform)
+            // 追従処理 (Aim軸)
+            Vector3 aimDirection =
+                _sourceTransform ? FollowAimDirection(baseRotation) : _targetTransform.rotation * _aimVector;
+
+            // 範囲制限処理
+            Vector2 angles = Vector2.zero;
+            switch (_limitType)
             {
-                switch (_sourceAimType)
-                {
-                    case SourceAimType.ObjectAim:
-                        forward = _sourceTransform.position - _targetTransform.position;
-                        break;
-                    case SourceAimType.ObjectRotationAim:
-                        forward = _sourceTransform.rotation * _sourceAimVector;
-                        break;
-                }
+                case AimLimitType.Angle:
+                    aimDirection = LimitAimByAngle(baseRotation, aimDirection, ref angles.x);
+                    break;
+                case AimLimitType.Polar:
+                    aimDirection = LimitAimByPolar(baseRotation, aimDirection, ref angles);
+                    break;
             }
 
+            // 追従処理 (up軸)
+            Quaternion rotation = FollowUpDirection(aimDirection);
+
+            // 結果を Transform へ反映
+            _targetTransform.rotation = rotation * Quaternion.Inverse(_axisOffset);
+
+            // 制限イベント
+            switch (_limitType)
+            {
+                case AimLimitType.Angle:
+                    SetIsReachMaxAngle(angles.x >= _maxAngle);
+                    break;
+                case AimLimitType.Polar:
+                    SetIsReachMinPitch(angles.x <= _pitchRange.x);
+                    SetIsReachMaxPitch(angles.x >= _pitchRange.y);
+                    SetIsReachMinYaw(angles.y <= _yawRange.x);
+                    SetIsReachMaxYaw(angles.y >= _yawRange.y);
+                    break;
+            }
+        }
+
+        private Vector3 FollowAimDirection(Quaternion baseRotation)
+        {
+            // ワールド空間で計算
+            Vector3 baseDirection = baseRotation * Vector3.forward;
+
+            Vector3 sourceDirection = baseDirection;
+            switch (_sourceAimType)
+            {
+                case SourceAimType.ObjectAim:
+                    sourceDirection = _sourceTransform.position - _targetTransform.position;
+                    break;
+                case SourceAimType.ObjectRotationAim:
+                    sourceDirection = _sourceTransform.rotation * _sourceAimVector;
+                    break;
+            }
+
+            return Vector3.Slerp(baseDirection, sourceDirection, _weight);
+        }
+
+        private Quaternion FollowUpDirection(Vector3 aim)
+        {
+            // ワールド空間で計算
             Vector3 up = _targetTransform.TransformDirection(_upVector);
             switch (_worldUpType)
             {
@@ -181,51 +209,24 @@ namespace MimyLab.FukuroUdon
                     break;
             }
 
-            Quaternion sourceRotation = Quaternion.LookRotation(forward, up);
-
-            // ローカル空間で返す (AxisOffset 込み)
-            return Quaternion.Inverse(parentRotation) * Quaternion.Slerp(baseRotation, sourceRotation, _weight);
+            return Quaternion.LookRotation(aim, up);
         }
 
-        private Quaternion LimitRoll(Quaternion rotation, ref float angle)
+        private Vector3 LimitAimByAngle(Quaternion baseRotation, Vector3 aimDirection, ref float angle)
         {
-            if (_rollRange.y - _rollRange.x >= 360f) return rotation;
+            if (_maxAngle >= 180f) return aimDirection;
 
-            Vector3 aimVector = rotation * Vector3.forward;
-            Vector3 upVector = _rotationAtRest * _upVector;
-            Quaternion aimRotation = Quaternion.LookRotation(aimVector, upVector);
-            angle = Vector3.SignedAngle(aimRotation * Vector3.up, rotation * Vector3.up, aimVector);
+            Vector3 baseDirection = baseRotation * Vector3.forward;
+            Vector3 limitDirection = Vector3.RotateTowards(baseDirection, aimDirection, _maxAngle * Mathf.Deg2Rad, 0f);
 
-            if (_rollRange.x <= angle && angle <= _rollRange.y) return rotation;
+            angle = Vector3.Angle(baseDirection, limitDirection);
 
-            angle = Mathf.Clamp(angle, _rollRange.x, _rollRange.y);
-
-            return aimRotation * Quaternion.AngleAxis(angle, Vector3.forward);
+            return limitDirection;
         }
 
-        private Quaternion LimitAimByAngle(Quaternion rotation, ref float angle)
+        private Vector3 LimitAimByPolar(Quaternion baseRotation, Vector3 aimDirection, ref Vector2 angles)
         {
-            if (_maxAngle >= 180f) return rotation;
-
-            Vector3 baseDirection = _rotationAtRest * _aimVector;
-            Vector3 followDirection = rotation * Vector3.forward;
-            Vector3 limitDirection =
-                Vector3.RotateTowards(baseDirection, followDirection, _maxAngle * Mathf.Deg2Rad, 0f);
-
-            angle = Vector3.Angle(baseDirection, followDirection);
-
-            if (angle <= _maxAngle) return rotation;
-
-            angle = _maxAngle;
-
-            return Quaternion.FromToRotation(followDirection, limitDirection) * rotation;
-        }
-
-        private Quaternion LimitAimByPolar(Quaternion rotation, ref Vector3 angles)
-        {
-            Quaternion baseRotation = _rotationAtRest * _axisOffset;
-            Quaternion relativeRotation = Quaternion.Inverse(baseRotation) * rotation;
-            Vector3 relativeDirection = relativeRotation * Vector3.forward;
+            Vector3 relativeDirection = Quaternion.Inverse(baseRotation) * aimDirection.normalized;
             float theta = Mathf.Acos(relativeDirection.y);
             float phi = Mathf.Atan2(relativeDirection.x, relativeDirection.z);
 
@@ -233,20 +234,20 @@ namespace MimyLab.FukuroUdon
             float maxPitch = (_pitchRange.y + 90f) * Mathf.Deg2Rad;
             float minYaw = _yawRange.x * Mathf.Deg2Rad;
             float maxYaw = _yawRange.y * Mathf.Deg2Rad;
-            
-            if(minPitch <= theta && theta <= maxPitch && minYaw <= phi && phi <= maxYaw) return rotation;
+
+            if (minPitch <= theta && theta <= maxPitch && minYaw <= phi && phi <= maxYaw) return aimDirection;
 
             theta = Mathf.Clamp(theta, minPitch, maxPitch);
             phi = Mathf.Clamp(phi, minYaw, maxYaw);
-            angles.x = theta *  Mathf.Rad2Deg - 90f;
+            angles.x = theta * Mathf.Rad2Deg - 90f;
             angles.y = phi * Mathf.Rad2Deg;
 
             float sineTheta = Mathf.Sin(theta);
             relativeDirection.z = sineTheta * Mathf.Cos(phi);
             relativeDirection.x = sineTheta * Mathf.Sin(phi);
             relativeDirection.y = Mathf.Cos(theta);
-            
-            return Quaternion.FromToRotation(rotation * Vector3.forward, baseRotation * relativeDirection) * rotation;
+
+            return baseRotation * relativeDirection;
         }
 
         private void SetIsReachMaxAngle(bool value)
@@ -256,6 +257,46 @@ namespace MimyLab.FukuroUdon
                 SendLimitEndEvent(value ? "OnReachedMaxAngle" : "OnDepartedMaxAngle");
 
                 _isReachMaxAngle = value;
+            }
+        }
+
+        private void SetIsReachMinYaw(bool value)
+        {
+            if (_isReachMinYaw != value)
+            {
+                SendLimitEndEvent(value ? "OnReachedMinYaw" : "OnDepartedMinYaw");
+
+                _isReachMinYaw = value;
+            }
+        }
+
+        private void SetIsReachMaxYaw(bool value)
+        {
+            if (_isReachMaxYaw != value)
+            {
+                SendLimitEndEvent(value ? "OnReachedMaxYaw" : "OnDepartedMaxYaw");
+
+                _isReachMaxYaw = value;
+            }
+        }
+
+        private void SetIsReachMinPitch(bool value)
+        {
+            if (_isReachMinPitch != value)
+            {
+                SendLimitEndEvent(value ? "OnReachedMinPitch" : "OnDepartedMinPitch");
+
+                _isReachMinPitch = value;
+            }
+        }
+
+        private void SetIsReachMaxPitch(bool value)
+        {
+            if (_isReachMaxPitch != value)
+            {
+                SendLimitEndEvent(value ? "OnReachedMaxPitch" : "OnDepartedMaxPitch");
+
+                _isReachMaxPitch = value;
             }
         }
 

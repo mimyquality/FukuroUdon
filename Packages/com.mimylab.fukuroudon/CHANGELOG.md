@@ -15,14 +15,23 @@
 - SwivelChair2, Better AvatarPedestal のゲーム内表記に日本語を併記しました。
 - Canvas Distance Fade に非アクティブにするオプションを追加しました。
 - AdvancedWorldSettings に RealtimeReflectionProbe と ShadowmaskMode を追加しました。
-- UdonRaycast に RootTransform 追加、挙動を VRC Raycast に合わせました。
 
 **Changed**  
 
-- Grabbable Door の追加に伴い、LimitedPositionConstraint を GrabSlidedoor に、LimitedLookConstraint を GrabSwingdoor に改名しました。また、こちらは互換性のために残しつつメンテナンスモードに入ります。
+- UdonRaycast に RootTransform 追加、挙動を VRC Raycast に合わせました。
+- Grabbable Door の追加に伴い、LimitedPositionConstraint を GrabSlidedoor に、LimitedLookConstraint を GrabSwingdoor に改名しました。
+- PickupHandle は実行時に ReturnPoint オブジェクトを動かすことは無くなり、実行時の ReturnPoint との相対位置を考慮するようになりました。
 - GameObject Celler を GameObject Cellar に修正しました。
 - ContactReceiver Information の誤字を修正しました。
 - Manual ObjectSync の IsEquipped の誤字を修正しました。
+
+**Fixed**  
+
+- Manual ObjectSync を使ったピックアップオブジェクトにて、ピックアップ中に変更したスケールが戻される問題を修正しました。 [#61](https://github.com/mimyquality/FukuroUdon/issues/61)
+
+- **Deprecated**
+  - Grab Slidedoor
+    - Grabbable Door の公開に伴い、Grab Slidedoor は致命的な不具合を除いて更新を停止します。
 
 ## [3.19.5] - 2026/8/12
 

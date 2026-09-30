@@ -49,12 +49,13 @@ namespace MimyLab.FukuroUdon
         {
             _pickup = GetComponent<VRCPickup>();
 
-            _returnPosition = transform.position;
-            _returnRotation = transform.rotation;
-            if (returnPoint)
-            {
-                returnPoint.SetPositionAndRotation(_returnPosition, _returnRotation);
-            }
+            _returnPosition = returnPoint
+                ? returnPoint.InverseTransformPoint(transform.position)
+                : transform.position;
+
+            _returnRotation = returnPoint
+                ? Quaternion.Inverse(returnPoint.rotation) * transform.rotation
+                : transform.rotation;
 
             Position = transform.position;
         }
@@ -73,7 +74,9 @@ namespace MimyLab.FukuroUdon
         {
             if (returnPoint)
             {
-                transform.SetPositionAndRotation(returnPoint.position, returnPoint.rotation);
+                transform.SetPositionAndRotation(
+                    returnPoint.TransformPoint(_returnPosition),
+                    returnPoint.rotation * _returnRotation);
             }
             else
             {

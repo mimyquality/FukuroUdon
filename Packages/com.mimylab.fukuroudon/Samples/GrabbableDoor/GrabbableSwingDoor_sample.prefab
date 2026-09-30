@@ -528,16 +528,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1205070764065930515, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 1205070764065930515, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
     - target: {fileID: 1389520603394272375, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
       propertyPath: m_Name
-      value: GrabbableSwingDoor_sample Variant
+      value: GrabbableSwingDoor_sample
       objectReference: {fileID: 0}
     - target: {fileID: 1389520603394272375, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3106132050979678246, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
-      propertyPath: _syncMethod
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4283130650806076125, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
@@ -552,22 +552,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5300369576988097347, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 5300369576988097347, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5788448466037839524, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 5788448466037839524, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
-    - target: {fileID: 6201860545918931380, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
-      propertyPath: serializationData.Prefab
-      value: 
-      objectReference: {fileID: 6201860545918931380, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
     - target: {fileID: 7826269294399663505, guid: 18cfc92a29c90154191a24106196f39f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.85
