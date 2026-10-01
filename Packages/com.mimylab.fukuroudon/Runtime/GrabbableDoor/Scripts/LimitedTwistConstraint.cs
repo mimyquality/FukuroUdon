@@ -15,7 +15,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Limited Constraint/Limited Twist Constraint")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class LimitedTwistConstraint : UdonSharpBehaviour
+    public class LimitedTwistConstraint : LimitedConstraint
     {
         [SerializeField]
         private Transform _targetTransform;

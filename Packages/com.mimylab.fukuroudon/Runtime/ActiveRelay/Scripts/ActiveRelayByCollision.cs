@@ -27,7 +27,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField]
         private ActiveRelayCollisionEvent _eventType = default;
         [SerializeField]
-        private Collider[] _reactiveColliders = new Collider[0];
+        private Collider[] _reactiveColliders = System.Array.Empty<Collider>();
 
         private void OnCollisionEnter(Collision collision)
         {

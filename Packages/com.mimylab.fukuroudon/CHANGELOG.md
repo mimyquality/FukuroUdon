@@ -12,6 +12,7 @@
 
 - Grabbable Door を追加しました。
   - Grab Slidedoor のリニューアル版で、コンポーネントとしては Limited Constraint シリーズとなります。
+- ActiveRelay by Limited Constraint を追加しました。
 - SwivelChair2, Better AvatarPedestal のゲーム内表記に日本語を併記しました。
 - Canvas Distance Fade に非アクティブにするオプションを追加しました。
 - AdvancedWorldSettings に RealtimeReflectionProbe と ShadowmaskMode を追加しました。
