@@ -4,6 +4,8 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
+using UnityEngine.Serialization;
+
 namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
@@ -49,7 +51,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField][Range(0f, 24f)] private float _voiceGain = 15f;
         [SerializeField][Range(0f, 1000000f)] private float _voiceDistanceNear = 0f;
         [SerializeField][Range(0f, 1000000f)] private float _voiceDistanceFar = 25f;
-        [Space]
+        
         [SerializeField][Range(0f, 1000f)] private float _voiceVolumetricRadius = 0f;
         [SerializeField] private bool _voiceLowpass = true;
 
@@ -59,7 +61,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField][Range(0f, 10f)] private float _avatarAudioGain = 10f;
         [SerializeField][Min(0f)] private float _avatarAudioDistanceNear = 0f;
         [SerializeField][Min(0f)] private float _avatarAudioDistanceFar = 40f;
-        [Space]
+        
         [SerializeField][Min(0f)] private float _avatarAudioVolumetricRadius = 0f;
         [SerializeField] private bool _avatarAudioForceSpatial = false;
         [HideInInspector][SerializeField] private bool _avatarAudioCustomCurve = false;
@@ -68,13 +70,13 @@ namespace MimyLab.FukuroUdon
         [SerializeField] private bool _initializeAvatarScaling = true;
         [SerializeField] private bool _allowManualAvatarScaling = true;
         [SerializeField][MinMaxRange(0.2f, 5f)] private Vector2 _manualAvatarScalingRange = new Vector2(0.2f, 5f);
-        [Space]
-        [Tooltip("チェックを入れたタイミングで、アバターの目線高さの上限と下限を設定範囲に制限します。")]
-        [SerializeField][EnumFlag] private AdvancedWorldSettingsInitializeEyeHeightTypes _initializeAvatarEyeHight = 0;
-        [SerializeField][MinMaxRange(0.1f, 100f)] private Vector2 _avatarEyeHeightLimit = new Vector2(0.1f, 100f);
-        
         [HideInInspector][SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMinimum = 0.2f;
         [HideInInspector][SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMaximum = 5f;
+        
+        [FormerlySerializedAs("_initializeAvatarEyeHight")]
+        [Tooltip("チェックを入れたタイミングで、アバターの目線高さの上限と下限を設定範囲に制限します。")]
+        [SerializeField][EnumFlag] private AdvancedWorldSettingsInitializeEyeHeightTypes _initializeAvatarEyeHeight = 0;
+        [SerializeField][MinMaxRange(0.1f, 100f)] private Vector2 _avatarEyeHeightLimit = new Vector2(0.1f, 100f);
         [HideInInspector][SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeightLowerLimit = 0.1f;
         [HideInInspector][SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeightUpperLimit = 100f;
         
@@ -100,7 +102,7 @@ namespace MimyLab.FukuroUdon
         [SerializeField] private bool _photoUseOcclusionCulling = true;
         [SerializeField] private bool _photoAllowMSAA = true;
         [SerializeField] private CameraClearFlags _photoClearFlags = CameraClearFlags.Skybox;
-        [Tooltip("Screen Clear Flags が SolidColor に設定されている時の背景色。")]
+        [Tooltip("Photo Clear Flags が SolidColor に設定されている時の背景色。")]
         [SerializeField] private Color _photoBackgroundColor = Color.black;
         [SerializeField] private bool _photoLayerCullSpherical = false;
         [Tooltip("値が0のレイヤーは Far Clip Plane と同じ値として扱われます。")]
@@ -275,7 +277,7 @@ namespace MimyLab.FukuroUdon
 
             if (_isFirstAvatarChanged)
             {
-                if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightTypes.Join) > 0)
+                if (((int)_initializeAvatarEyeHeight & (int)AdvancedWorldSettingsInitializeEyeHeightTypes.Join) > 0)
                 {
                     ClampAvatarEyeHeight();
                 }
@@ -284,7 +286,7 @@ namespace MimyLab.FukuroUdon
             }
             else
             {
-                if (((int)_initializeAvatarEyeHight & (int)AdvancedWorldSettingsInitializeEyeHeightTypes.AvatarChange) > 0)
+                if (((int)_initializeAvatarEyeHeight & (int)AdvancedWorldSettingsInitializeEyeHeightTypes.AvatarChange) > 0)
                 {
                     ClampAvatarEyeHeight();
                 }

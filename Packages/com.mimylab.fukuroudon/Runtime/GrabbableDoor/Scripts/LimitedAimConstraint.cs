@@ -54,10 +54,10 @@ namespace MimyLab.FukuroUdon
         private AimConstraint.WorldUpType _worldUpType = AimConstraint.WorldUpType.SceneUp;
 
         [SerializeField]
-        private Vector3 _worldUpVector = Vector3.up;
-
-        [SerializeField]
         private Transform _worldUpObject;
+        
+        [SerializeField]
+        private Vector3 _worldUpVector = Vector3.up;
 
         [Header("Limit Settings")]
         [SerializeField]

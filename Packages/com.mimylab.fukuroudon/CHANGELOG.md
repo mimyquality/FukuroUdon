@@ -6,6 +6,13 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [4.0.0-beta.2] - 2026/10/6
+
+**Changed**
+
+- Advanced World Settings のインスペクターの設定値は各項目ごとに畳まれるようになりました。
+- Limited Constraint ファミリーのインスペクターの一部設定値は設定内容に応じて関係無いものが畳まれるようになりました。
+
 ## [4.0.0-beta.1] - 2026/9/28
 
 **Added**  

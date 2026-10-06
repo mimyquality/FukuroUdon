@@ -14,41 +14,22 @@ namespace MimyLab.FukuroUdon
     {
         public override void OnInspectorGUI()
         {
-
             if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target)) return;
 
-            this.serializedObject.UpdateIfRequiredOrScript();
-            var iterator = this.serializedObject.GetIterator();
-            for (var enterChildren = true; iterator.NextVisible(enterChildren); enterChildren = false)
+            serializedObject.UpdateIfRequiredOrScript();
+
+            string[] excludes =
             {
-                if (iterator.propertyPath == "m_Script")
-                {
-                    continue;
-                }
-                if (iterator.propertyPath == nameof(DONTween.fixedDuration))
-                {
-                    continue;
-                }
-                if (iterator.propertyPath == nameof(DONTween.duration))
-                {
-                    continue;
-                }
-                if (iterator.propertyPath == nameof(DONTween.easeType))
-                {
-                    continue;
-                }
-                if (iterator.propertyPath == nameof(DONTween.customEase))
-                {
-                    continue;
-                }if (iterator.propertyPath == nameof(DONTween.delay))
-                {
-                    EditorGUILayout.Space();
-                }
+                "m_Script",
+                nameof(DONTween.fixedDuration),
+                nameof(DONTween.duration),
+                nameof(DONTween.easeType),
+                nameof(DONTween.customEase),
+            };
 
+            DrawPropertiesExcluding(serializedObject, excludes);
 
-                EditorGUILayout.PropertyField(iterator, true);
-            }
-            this.serializedObject.ApplyModifiedProperties();
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }
