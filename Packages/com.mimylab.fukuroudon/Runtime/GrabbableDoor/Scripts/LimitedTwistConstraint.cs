@@ -114,7 +114,6 @@ namespace MimyLab.FukuroUdon
         private Quaternion FollowRotation(Quaternion baseRotation)
         {
             // ワールド空間で計算
-
             Vector3 forward = baseRotation * Vector3.forward;
             Vector3 up = _targetTransform.TransformDirection(_upVector);
             switch (_sourceAimType)
