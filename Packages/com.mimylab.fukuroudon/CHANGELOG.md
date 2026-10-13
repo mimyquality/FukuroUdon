@@ -6,6 +6,12 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [4.0.0-beta.3] - 2026/10/13
+
+**Added**
+
+- Limited Constraint ファミリーは選択した時に制限範囲の Gizmo が表示されるようになりました。
+
 ## [4.0.0-beta.2] - 2026/10/6
 
 **Changed**
@@ -953,6 +959,8 @@ VRCSDK 3.10.2 に沿ったいくつかの微修正を行いました。
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[4.0.0-beta.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.3
+[4.0.0-beta.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.2
 [4.0.0-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.1
 [3.19.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.5
 [3.19.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.4
