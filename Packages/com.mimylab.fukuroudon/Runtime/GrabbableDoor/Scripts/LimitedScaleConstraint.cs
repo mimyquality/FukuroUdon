@@ -8,7 +8,6 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.Udon;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grabbable-Door#limited-scale-constraint")]
@@ -28,6 +27,9 @@ namespace MimyLab.FukuroUdon
         [SerializeField, Range(0.0f, 1.0f)]
         private float _weight = 1.0f;
 
+        [SerializeField, Range(0.0f, 1.0f)]
+        private float _smoothingFactor = 0.0f;
+
         [Header("Limit Settings")]
         [SerializeField, Min(0.0f)]
         private Vector3 _minScale = Vector3.zero;
@@ -36,12 +38,7 @@ namespace MimyLab.FukuroUdon
         private Vector3 _maxScale = Vector3.positiveInfinity;
 
         private Vector3 _scaleAtRest;
-
-        private bool _isReachMinX, _isReachMaxX;
-        private bool _isReachMinY, _isReachMaxY;
-        private bool _isReachMinZ, _isReachMaxZ;
-
-        private UdonBehaviour[] _eventReceivers;
+        private Vector3 _differential = Vector3.zero;
 
         private bool _initialized = false;
 
@@ -69,9 +66,7 @@ namespace MimyLab.FukuroUdon
         private void LateUpdate()
         {
             // 追従処理
-            Vector3 scale = _sourceTransform
-                ? Vector3.Lerp(_scaleAtRest, _sourceTransform.localScale, _weight)
-                : _targetTransform.localScale;
+            Vector3 scale = _sourceTransform ? FollowScale() : _targetTransform.localScale;
 
             // 範囲制限処理
             scale.x = Mathf.Clamp(scale.x, _minScale.x, _maxScale.x);
@@ -90,75 +85,23 @@ namespace MimyLab.FukuroUdon
             SetIsReachMaxZ(scale.z >= _maxScale.z);
         }
 
-        private void SetIsReachMinX(bool value)
+        private Vector3 FollowScale()
         {
-            if (_isReachMinX != value)
+            Vector3 result = Vector3.Lerp(_scaleAtRest, _sourceTransform.localScale, _weight);
+            
+            Vector3 targetScale = _targetTransform.localScale;
+
+            if (targetScale == result)
             {
-                SendLimitEndEvent(value ? "OnReachedMinX" : "OnDepartedMinX");
-
-                _isReachMinX = value;
+                return targetScale;
             }
-        }
 
-        private void SetIsReachMaxX(bool value)
-        {
-            if (_isReachMaxX != value)
+            if (_smoothingFactor > 0.0f)
             {
-                SendLimitEndEvent(value ? "OnReachedMaxX" : "OnDepartedMaxX");
-
-                _isReachMaxX = value;
+                return Vector3.SmoothDamp(targetScale, result, ref _differential, _smoothingFactor);
             }
-        }
 
-        private void SetIsReachMinY(bool value)
-        {
-            if (_isReachMinY != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMinY" : "OnDepartedMinY");
-
-                _isReachMinY = value;
-            }
-        }
-
-        private void SetIsReachMaxY(bool value)
-        {
-            if (_isReachMaxY != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMaxY" : "OnDepartedMaxY");
-
-                _isReachMaxY = value;
-            }
-        }
-
-        private void SetIsReachMinZ(bool value)
-        {
-            if (_isReachMinZ != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMinZ" : "OnDepartedMinZ");
-
-                _isReachMinZ = value;
-            }
-        }
-
-        private void SetIsReachMaxZ(bool value)
-        {
-            if (_isReachMaxZ != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMaxZ" : "OnDepartedMaxZ");
-
-                _isReachMaxZ = value;
-            }
-        }
-
-        private void SendLimitEndEvent(string eventName)
-        {
-            for (int i = 0; i < _eventReceivers.Length; i++)
-            {
-                if (!Utilities.IsValid(_eventReceivers[i])) continue;
-                if (_eventReceivers[i] == this) continue;
-
-                _eventReceivers[i].SendCustomEvent(eventName);
-            }
+            return result;
         }
     }
 }

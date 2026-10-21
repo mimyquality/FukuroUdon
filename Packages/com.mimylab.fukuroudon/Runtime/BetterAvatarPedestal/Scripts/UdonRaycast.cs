@@ -58,20 +58,9 @@ namespace MimyLab.FukuroUdon
         private float _distanceToHit = 0.0f;
         private float _ratio = 0.0f;
 
-        public bool Hit
-        {
-            get => _hit;
-        }
-
-        public float Distance
-        {
-            get => _distanceToHit;
-        }
-
-        public float Ratio
-        {
-            get => _ratio;
-        }
+        public bool Hit => _hit;
+        public float Distance => _distanceToHit;
+        public float Ratio => _ratio;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void OnDrawGizmosSelected()
@@ -106,8 +95,6 @@ namespace MimyLab.FukuroUdon
 
         private void FixedUpdate()
         {
-            if (!_resultTransform) return;
-
             Vector3 startPoint = _rootTransform.position;
             Vector3 direction = _rootTransform.rotation * _raycastDirection.normalized;
             float maxDistance = _applyTransformScale ? _rootTransform.lossyScale.z * _distance : _distance;
@@ -124,11 +111,14 @@ namespace MimyLab.FukuroUdon
 
             if (_hit)
             {
-                _resultTransform.position = _hitInfo.point;
-                if (_applyRotation)
+                if (_resultTransform)
                 {
-                    _resultTransform.rotation = Quaternion.LookRotation(_hitInfo.normal) *
-                                                Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
+                    _resultTransform.position = _hitInfo.point;
+                    if (_applyRotation)
+                    {
+                        _resultTransform.rotation = Quaternion.LookRotation(_hitInfo.normal) *
+                                                    Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
+                    }
                 }
 
                 _distanceToHit = _hitInfo.distance;
@@ -145,31 +135,37 @@ namespace MimyLab.FukuroUdon
             switch (_behaviorOnMiss)
             {
                 case UdonRaycastBehaviorOnMiss.SnapToStart:
-                    _resultTransform.position = startPoint;
-                    if (_applyRotation)
+                    if (_resultTransform)
                     {
-                        _resultTransform.rotation = Quaternion.LookRotation(-direction) *
-                                                    Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
+                        _resultTransform.position = startPoint;
+                        if (_applyRotation)
+                        {
+                            _resultTransform.rotation = Quaternion.LookRotation(-direction) *
+                                                        Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
+                        }
                     }
 
                     _distanceToHit = 0.0f;
                     _ratio = 0.0f;
                     break;
+
                 case UdonRaycastBehaviorOnMiss.SnapToEnd:
-                    _resultTransform.position = maxDistance * direction + startPoint;
-                    if (_applyRotation)
+                    if (_resultTransform)
                     {
-                        _resultTransform.rotation = Quaternion.LookRotation(-direction) *
-                                                    Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
+                        _resultTransform.position = maxDistance * direction + startPoint;
+                        if (_applyRotation)
+                        {
+                            _resultTransform.rotation = Quaternion.LookRotation(-direction) *
+                                                        Quaternion.FromToRotation(_alignmentAxis, Vector3.forward);
+                        }
                     }
 
                     _distanceToHit = maxDistance;
                     _ratio = 1.0f;
                     break;
-                case UdonRaycastBehaviorOnMiss.DoNothing:
-                default:
-                    // Do nothing
-                    break;
+
+                //case UdonRaycastBehaviorOnMiss.DoNothing:
+                // Do Nothing
             }
         }
     }

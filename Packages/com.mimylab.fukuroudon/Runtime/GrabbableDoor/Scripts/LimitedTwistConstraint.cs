@@ -8,7 +8,6 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.Udon;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grabbable-Door#limited-twist-constraint")]
@@ -26,6 +25,9 @@ namespace MimyLab.FukuroUdon
 
         [SerializeField, Range(0.0f, 1.0f)]
         private float _weight = 1.0f;
+
+        [SerializeField, Range(0.0f, 1.0f)]
+        private float _smoothingFactor = 0.0f;
 
         [SerializeField]
         private Vector3 _twistAxis = Vector3.up;
@@ -45,11 +47,7 @@ namespace MimyLab.FukuroUdon
         private Transform _parent;
         private Quaternion _rotationAtRest;
         private Quaternion _axisOffset;
-
-        private bool _isReachMinAngle;
-        private bool _isReachMaxAngle;
-
-        private UdonBehaviour[] _eventReceivers;
+        private float _differential = 0.0f;
 
         private bool _initialized = false;
 
@@ -125,10 +123,27 @@ namespace MimyLab.FukuroUdon
                     up = _sourceTransform.rotation * _sourceAimVector;
                     break;
             }
-
+            
             Quaternion sourceRotation = Quaternion.LookRotation(forward, up);
+            
+            Quaternion result = Quaternion.Slerp(baseRotation, sourceRotation, _weight);
 
-            return Quaternion.Slerp(baseRotation, sourceRotation, _weight);
+            Quaternion targetRotation = _targetTransform.rotation * _axisOffset;
+
+            if (targetRotation == result)
+            {
+                return targetRotation;
+            }
+            
+            if (_smoothingFactor > 0.0f)
+            {
+                float angle = Quaternion.Angle(targetRotation, result);
+                angle = Mathf.SmoothDampAngle(0.0f, angle, ref _differential, _smoothingFactor);
+
+                return Quaternion.RotateTowards(targetRotation, result, angle);
+            }
+
+            return result;
         }
 
         private Quaternion LimitRoll(Quaternion baseRotation, Quaternion rotation, out float angle)
@@ -145,37 +160,6 @@ namespace MimyLab.FukuroUdon
             angle = Mathf.Clamp(angle, _angleRange.x, _angleRange.y);
 
             return baseRotation * Quaternion.AngleAxis(angle, Vector3.forward);
-        }
-
-        private void SetIsReachMinAngle(bool value)
-        {
-            if (_isReachMinAngle != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMinAngle" : "OnDepartedMinAngle");
-
-                _isReachMinAngle = value;
-            }
-        }
-
-        private void SetIsReachMaxAngle(bool value)
-        {
-            if (_isReachMaxAngle != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMaxAngle" : "OnDepartedMaxAngle");
-
-                _isReachMaxAngle = value;
-            }
-        }
-
-        private void SendLimitEndEvent(string eventName)
-        {
-            for (int i = 0; i < _eventReceivers.Length; i++)
-            {
-                if (!Utilities.IsValid(_eventReceivers[i])) continue;
-                if (_eventReceivers[i] == this) continue;
-
-                _eventReceivers[i].SendCustomEvent(eventName);
-            }
         }
     }
 }

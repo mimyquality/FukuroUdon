@@ -8,7 +8,6 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.Udon;
 
     public enum RotationLimitType
@@ -32,6 +31,9 @@ namespace MimyLab.FukuroUdon
 
         [SerializeField, Range(0.0f, 1.0f)]
         private float _weight = 1.0f;
+
+        [SerializeField, Range(0.0f, 1.0f)]
+        private float _smoothingFactor = 0.0f;
 
         [SerializeField]
         private bool _solveInLocalSpace = false;
@@ -61,13 +63,8 @@ namespace MimyLab.FukuroUdon
         private Transform _parent;
         private Quaternion _rotationAtRest;
         private Quaternion _rotationOffset;
-
-        private bool _isReachMaxAngle;
-        private bool _isReachMinX, _isReachMaxX;
-        private bool _isReachMinY, _isReachMaxY;
-        private bool _isReachMaxZ, _isReachMinZ;
-
-        private UdonBehaviour[] _eventReceivers;
+        private Quaternion _startRotation;
+        private float _differential = 0.0f;
 
         private bool _initialized = false;
 
@@ -82,6 +79,7 @@ namespace MimyLab.FukuroUdon
 
             _parent = _targetTransform.parent;
             _rotationAtRest = _targetTransform.localRotation;
+            _startRotation = _targetTransform.rotation;
             if (_sourceTransform)
             {
                 Quaternion sourceRotation = _solveInLocalSpace
@@ -108,6 +106,11 @@ namespace MimyLab.FukuroUdon
             Quaternion rotation = _sourceTransform ? FollowRotation() : _targetTransform.localRotation;
 
             // 範囲制限処理
+            if (_relativeTo == Space.World && _parent)
+            {
+                rotation = _parent.rotation * rotation;
+            }
+
             Vector3 angles = Vector3.zero;
             switch (_limitType)
             {
@@ -155,25 +158,38 @@ namespace MimyLab.FukuroUdon
                     : _sourceTransform.rotation;
             sourceRotation *= _rotationOffset;
 
-            return Quaternion.Slerp(_rotationAtRest, sourceRotation, _weight);
+            Quaternion result = Quaternion.Slerp(_rotationAtRest, sourceRotation, _weight);
+            
+            Quaternion targetRotation = _targetTransform.localRotation;
+
+            if (targetRotation == result)
+            {
+                return targetRotation;
+            }
+
+            if (_smoothingFactor > 0.0f)
+            {
+                float angle = Quaternion.Angle(targetRotation, result);
+                angle = Mathf.SmoothDampAngle(0.0f, angle, ref _differential, _smoothingFactor);
+
+                return Quaternion.RotateTowards(targetRotation, result, angle);
+            }
+
+            return result;
         }
 
         private Quaternion LimitRotationByAngle(Quaternion rotation, ref float angle)
         {
             if (_maxAngle >= 180f) return rotation;
 
-            angle = Mathf.Clamp(Quaternion.Angle(_rotationAtRest, rotation), 0f, _maxAngle);
+            Quaternion rotationAtRest = _relativeTo == Space.World ? _startRotation : _rotationAtRest;
+            angle = Mathf.Clamp(Quaternion.Angle(rotationAtRest, rotation), 0f, _maxAngle);
 
-            return Quaternion.RotateTowards(_rotationAtRest, rotation, _maxAngle);
+            return Quaternion.RotateTowards(rotationAtRest, rotation, angle);
         }
 
         private Quaternion LimitRotationByAxes(Quaternion rotation, out Vector3 angles)
         {
-            if (_relativeTo == Space.World && _parent)
-            {
-                rotation = _parent.rotation * rotation;
-            }
-
             angles = rotation.eulerAngles;
 
             if (_xAxisRange.y - _xAxisRange.x < 360f)
@@ -202,87 +218,6 @@ namespace MimyLab.FukuroUdon
             angle = Mathf.Repeat(angle + offset, 360f);
 
             return Mathf.Clamp(angle, min, max) - offset;
-        }
-
-        private void SetIsReachMaxAngle(bool value)
-        {
-            if (_isReachMaxAngle != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMaxAngle" : "OnDepartedMaxAngle");
-
-                _isReachMaxAngle = value;
-            }
-        }
-
-        private void SetIsReachMinX(bool value)
-        {
-            if (_isReachMinX != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMinX" : "OnDepartedMinX");
-
-                _isReachMinX = value;
-            }
-        }
-
-        private void SetIsReachMaxX(bool value)
-        {
-            if (_isReachMaxX != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMaxX" : "OnDepartedMaxX");
-
-                _isReachMaxX = value;
-            }
-        }
-
-        private void SetIsReachMinY(bool value)
-        {
-            if (_isReachMinY != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMinY" : "OnDepartedMinY");
-
-                _isReachMinY = value;
-            }
-        }
-
-        private void SetIsReachMaxY(bool value)
-        {
-            if (_isReachMaxY != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMaxY" : "OnDepartedMaxY");
-
-                _isReachMaxY = value;
-            }
-        }
-
-        private void SetIsReachMinZ(bool value)
-        {
-            if (_isReachMinZ != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMinZ" : "OnDepartedMinZ");
-
-                _isReachMinZ = value;
-            }
-        }
-
-        private void SetIsReachMaxZ(bool value)
-        {
-            if (_isReachMaxZ != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMaxZ" : "OnDepartedMaxZ");
-
-                _isReachMaxZ = value;
-            }
-        }
-
-        private void SendLimitEndEvent(string eventName)
-        {
-            for (int i = 0; i < _eventReceivers.Length; i++)
-            {
-                if (!Utilities.IsValid(_eventReceivers[i])) continue;
-                if (_eventReceivers[i] == this) continue;
-
-                _eventReceivers[i].SendCustomEvent(eventName);
-            }
         }
     }
 }

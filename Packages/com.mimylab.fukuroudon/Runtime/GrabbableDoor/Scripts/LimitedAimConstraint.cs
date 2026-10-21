@@ -9,7 +9,6 @@ namespace MimyLab.FukuroUdon
     using UdonSharp;
     using UnityEngine;
     using UnityEngine.Animations;
-    using VRC.SDKBase;
     using VRC.Udon;
 
     public enum SourceAimType
@@ -40,6 +39,9 @@ namespace MimyLab.FukuroUdon
         [SerializeField, Range(0.0f, 1.0f)]
         private float _weight = 1.0f;
 
+        [SerializeField, Range(0.0f, 1.0f)]
+        private float _smoothingFactor = 0.0f;
+
         [SerializeField]
         private SourceAimType _sourceAimType = SourceAimType.ObjectAim;
 
@@ -55,7 +57,7 @@ namespace MimyLab.FukuroUdon
 
         [SerializeField]
         private Transform _worldUpObject;
-        
+
         [SerializeField]
         private Vector3 _worldUpVector = Vector3.up;
 
@@ -73,16 +75,11 @@ namespace MimyLab.FukuroUdon
         private Vector2 _pitchRange = new(-90f, 90f);
 
         private Vector3 _aimVector = Vector3.forward;
-        
+
         private Transform _parent;
         private Quaternion _rotationAtRest;
         private Quaternion _axisOffset;
-
-        private bool _isReachMaxAngle;
-        private bool _isReachMinYaw, _isReachMaxYaw;
-        private bool _isReachMinPitch, _isReachMaxPitch;
-
-        private UdonBehaviour[] _eventReceivers;
+        private float _differential = 0.0f;
 
         private bool _initialized = false;
 
@@ -94,8 +91,8 @@ namespace MimyLab.FukuroUdon
             {
                 _targetTransform = transform;
             }
-            
-            if(_sourceTransform)
+
+            if (_sourceTransform)
             {
                 switch (_sourceAimType)
                 {
@@ -106,8 +103,8 @@ namespace MimyLab.FukuroUdon
                         _aimVector = _sourceTransform.rotation * _sourceAimVector;
                         break;
                 }
-                
-                _aimVector = _targetTransform.InverseTransformDirection(_aimVector.normalized);
+
+                _aimVector = _targetTransform.InverseTransformDirection(_aimVector).normalized;
             }
 
             _parent = _targetTransform.parent;
@@ -182,7 +179,24 @@ namespace MimyLab.FukuroUdon
                     break;
             }
 
-            return Vector3.Slerp(baseDirection, sourceDirection, _weight);
+            Vector3 result = Vector3.Slerp(baseDirection, sourceDirection, _weight).normalized;
+            
+            Vector3 targetAim = _targetTransform.rotation * _aimVector;
+
+            if (targetAim == result)
+            {
+                return targetAim;
+            }
+
+            if (_smoothingFactor > 0.0f)
+            {
+                float angle = Vector3.Angle(targetAim, result);
+                angle = Mathf.SmoothDampAngle(0.0f, angle, ref _differential, _smoothingFactor);
+                
+                return Vector3.RotateTowards(targetAim, result, angle * Mathf.Deg2Rad, 1.0f);
+            }
+
+            return result;
         }
 
         private Quaternion FollowUpDirection(Vector3 aim)
@@ -248,67 +262,6 @@ namespace MimyLab.FukuroUdon
             relativeDirection.y = Mathf.Cos(theta);
 
             return baseRotation * relativeDirection;
-        }
-
-        private void SetIsReachMaxAngle(bool value)
-        {
-            if (_isReachMaxAngle != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMaxAngle" : "OnDepartedMaxAngle");
-
-                _isReachMaxAngle = value;
-            }
-        }
-
-        private void SetIsReachMinYaw(bool value)
-        {
-            if (_isReachMinYaw != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMinYaw" : "OnDepartedMinYaw");
-
-                _isReachMinYaw = value;
-            }
-        }
-
-        private void SetIsReachMaxYaw(bool value)
-        {
-            if (_isReachMaxYaw != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMaxYaw" : "OnDepartedMaxYaw");
-
-                _isReachMaxYaw = value;
-            }
-        }
-
-        private void SetIsReachMinPitch(bool value)
-        {
-            if (_isReachMinPitch != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMinPitch" : "OnDepartedMinPitch");
-
-                _isReachMinPitch = value;
-            }
-        }
-
-        private void SetIsReachMaxPitch(bool value)
-        {
-            if (_isReachMaxPitch != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMaxPitch" : "OnDepartedMaxPitch");
-
-                _isReachMaxPitch = value;
-            }
-        }
-
-        private void SendLimitEndEvent(string eventName)
-        {
-            for (int i = 0; i < _eventReceivers.Length; i++)
-            {
-                if (!Utilities.IsValid(_eventReceivers[i])) continue;
-                if (_eventReceivers[i] == this) continue;
-
-                _eventReceivers[i].SendCustomEvent(eventName);
-            }
         }
     }
 }

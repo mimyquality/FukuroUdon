@@ -8,7 +8,6 @@ namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
-    using VRC.SDKBase;
     using VRC.Udon;
 
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Grabbable-Door#limited-position-constraint")]
@@ -28,6 +27,9 @@ namespace MimyLab.FukuroUdon
         [SerializeField, Range(0.0f, 1.0f)]
         private float _weight = 1.0f;
 
+        [SerializeField, Range(0.0f, 1.0f)]
+        private float _smoothingFactor = 0.0f;
+
         [SerializeField]
         private bool _solveInLocalSpace = false;
 
@@ -44,12 +46,7 @@ namespace MimyLab.FukuroUdon
         private Transform _parent;
         private Vector3 _positionAtRest;
         private Vector3 _positionOffset;
-        
-        private bool _isReachMinX, _isReachMaxX;
-        private bool _isReachMinY, _isReachMaxY;
-        private bool _isReachMaxZ, _isReachMinZ;
-
-        private UdonBehaviour[] _eventReceivers;
+        private Vector3 _differential = Vector3.zero;
 
         private bool _initialized = false;
 
@@ -66,8 +63,8 @@ namespace MimyLab.FukuroUdon
             _positionAtRest = _targetTransform.localPosition;
             if (_sourceTransform)
             {
-                Vector3 sourcePosition = _solveInLocalSpace 
-                    ? _sourceTransform.localPosition 
+                Vector3 sourcePosition = _solveInLocalSpace
+                    ? _sourceTransform.localPosition
                     : _parent
                         ? _parent.InverseTransformPoint(_sourceTransform.position)
                         : _sourceTransform.position;
@@ -90,12 +87,9 @@ namespace MimyLab.FukuroUdon
             Vector3 position = _sourceTransform ? FollowPosition() : _targetTransform.localPosition;
 
             // 範囲制限処理
-            if (_relativeTo == Space.World)
+            if (_relativeTo == Space.World && _parent)
             {
-                if (_parent)
-                {
-                    position = _parent.TransformPoint(position);
-                }
+                position = _parent.TransformPoint(position);
             }
 
             position.x = Mathf.Clamp(position.x, _minPosition.x, _maxPosition.x);
@@ -123,85 +117,28 @@ namespace MimyLab.FukuroUdon
 
         private Vector3 FollowPosition()
         {
-            Vector3 sourcePosition = _solveInLocalSpace 
-                ? _sourceTransform.localPosition 
+            Vector3 sourcePosition = _solveInLocalSpace
+                ? _sourceTransform.localPosition
                 : _parent
                     ? _parent.InverseTransformPoint(_sourceTransform.position)
                     : _sourceTransform.position;
             sourcePosition += _positionOffset;
 
-            return Vector3.Lerp(_positionAtRest, sourcePosition, _weight);
-        }
+            Vector3 result = Vector3.Lerp(_positionAtRest, sourcePosition, _weight);
+            
+            Vector3 targetPosition = _targetTransform.localPosition;
 
-        private void SetIsReachMinX(bool value)
-        {
-            if (_isReachMinX != value)
+            if (targetPosition == result)
             {
-                SendLimitEndEvent(value ? "OnReachedMinX" : "OnDepartedMinX");
-
-                _isReachMinX = value;
+                return targetPosition;
             }
-        }
 
-        private void SetIsReachMaxX(bool value)
-        {
-            if (_isReachMaxX != value)
+            if (_smoothingFactor > 0.0f)
             {
-                SendLimitEndEvent(value ? "OnReachedMaxX" : "OnDepartedMaxX");
-
-                _isReachMaxX = value;
+                return Vector3.SmoothDamp(targetPosition, result, ref _differential, _smoothingFactor);
             }
-        }
 
-        private void SetIsReachMinY(bool value)
-        {
-            if (_isReachMinY != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMinY" : "OnDepartedMinY");
-
-                _isReachMinY = value;
-            }
-        }
-
-        private void SetIsReachMaxY(bool value)
-        {
-            if (_isReachMaxY != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMaxY" : "OnDepartedMaxY");
-
-                _isReachMaxY = value;
-            }
-        }
-
-        private void SetIsReachMinZ(bool value)
-        {
-            if (_isReachMinZ != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMinZ" : "OnDepartedMinZ");
-
-                _isReachMinZ = value;
-            }
-        }
-
-        private void SetIsReachMaxZ(bool value)
-        {
-            if (_isReachMaxZ != value)
-            {
-                SendLimitEndEvent(value ? "OnReachedMaxZ" : "OnDepartedMaxZ");
-
-                _isReachMaxZ = value;
-            }
-        }
-
-        private void SendLimitEndEvent(string eventName)
-        {
-            for (int i = 0; i < _eventReceivers.Length; i++)
-            {
-                if (!Utilities.IsValid(_eventReceivers[i])) continue;
-                if (_eventReceivers[i] == this) continue;
-
-                _eventReceivers[i].SendCustomEvent(eventName);
-            }
+            return result;
         }
     }
 }

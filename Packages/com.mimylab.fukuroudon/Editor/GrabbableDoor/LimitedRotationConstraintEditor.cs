@@ -61,8 +61,9 @@ namespace MimyLab.FukuroUdon
                 Vector3 center = transform.position;
                 float handleSize = HandleUtility.GetHandleSize(center) * 0.5f;
 
+                var relativeTo = (Space)serializedObject.FindProperty("_relativeTo").enumValueIndex;
                 Transform parent = transform.parent;
-                Quaternion rotation = parent ? parent.rotation : Quaternion.identity;
+                Quaternion rotation = relativeTo == Space.Self && parent ? parent.rotation : Quaternion.identity;
 
                 // X軸
                 Vector3 normal = rotation * Vector3.right;
