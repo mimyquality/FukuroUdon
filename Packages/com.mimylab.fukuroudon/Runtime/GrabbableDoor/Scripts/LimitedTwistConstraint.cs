@@ -91,15 +91,18 @@ namespace MimyLab.FukuroUdon
 
         private void LateUpdate()
         {
+            Quaternion targetRotation = _targetTransform.rotation * _axisOffset;
             Quaternion parentRotation = _parent ? _parent.rotation : Quaternion.identity;
             Quaternion baseRotation = parentRotation * _rotationAtRest * _axisOffset;
 
             // 追従処理
-            Quaternion rotation =
-                _sourceTransform ? FollowRotation(baseRotation) : _targetTransform.rotation * _axisOffset;
+            Quaternion rotation = _sourceTransform ? ConstrainRotation(baseRotation) : targetRotation;
+
+            // 遅延処理
+            rotation = FollowRotation(targetRotation, rotation);
 
             // 範囲制限処理
-            rotation = LimitRoll(baseRotation, rotation, out float angle);
+            rotation = LimitRoll(rotation, out float angle, baseRotation);
 
             // 結果を Transform へ反映
             _targetTransform.rotation = rotation * Quaternion.Inverse(_axisOffset);
@@ -109,7 +112,7 @@ namespace MimyLab.FukuroUdon
             SetIsReachMaxAngle(angle >= _angleRange.y);
         }
 
-        private Quaternion FollowRotation(Quaternion baseRotation)
+        private Quaternion ConstrainRotation(Quaternion baseRotation)
         {
             // ワールド空間で計算
             Vector3 forward = baseRotation * Vector3.forward;
@@ -123,37 +126,38 @@ namespace MimyLab.FukuroUdon
                     up = _sourceTransform.rotation * _sourceAimVector;
                     break;
             }
-            
+
             Quaternion sourceRotation = Quaternion.LookRotation(forward, up);
-            
-            Quaternion result = Quaternion.Slerp(baseRotation, sourceRotation, _weight);
 
-            Quaternion targetRotation = _targetTransform.rotation * _axisOffset;
+            return Quaternion.Slerp(baseRotation, sourceRotation, _weight);
+        }
 
-            if (targetRotation == result)
+        private Quaternion FollowRotation(Quaternion targetRotation, Quaternion goalRotation)
+        {
+            if (targetRotation == goalRotation)
             {
                 return targetRotation;
             }
-            
+
             if (_smoothingFactor > 0.0f)
             {
-                float angle = Quaternion.Angle(targetRotation, result);
+                float angle = Quaternion.Angle(targetRotation, goalRotation);
                 angle = Mathf.SmoothDampAngle(0.0f, angle, ref _differential, _smoothingFactor);
 
-                return Quaternion.RotateTowards(targetRotation, result, angle);
+                return Quaternion.RotateTowards(targetRotation, goalRotation, angle);
             }
 
-            return result;
+            return goalRotation;
         }
 
-        private Quaternion LimitRoll(Quaternion baseRotation, Quaternion rotation, out float angle)
+        private Quaternion LimitRoll(Quaternion rotation, out float angle, Quaternion baseRotation)
         {
             angle = 0f;
 
             if (_angleRange.y - _angleRange.x >= 360f) return rotation;
 
-            angle = Vector3.SignedAngle(baseRotation * Vector3.up, rotation * Vector3.up,
-                baseRotation * Vector3.forward);
+            angle =
+                Vector3.SignedAngle(baseRotation * Vector3.up, rotation * Vector3.up, baseRotation * Vector3.forward);
 
             if (_angleRange.x <= angle && angle <= _angleRange.y) return rotation;
 

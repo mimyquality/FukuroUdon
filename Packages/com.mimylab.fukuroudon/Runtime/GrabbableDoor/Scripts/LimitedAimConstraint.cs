@@ -123,13 +123,16 @@ namespace MimyLab.FukuroUdon
 
         private void LateUpdate()
         {
+            Vector3 targetAim = _targetTransform.rotation * _aimVector;
             Quaternion parentRotation = _parent ? _parent.rotation : Quaternion.identity;
             Quaternion baseRotation = parentRotation * _rotationAtRest * _axisOffset;
 
             // 追従処理 (Aim軸)
-            Vector3 aimDirection =
-                _sourceTransform ? FollowAimDirection(baseRotation) : _targetTransform.rotation * _aimVector;
+            Vector3 aimDirection = _sourceTransform ? ConstrainAimDirection(baseRotation) : targetAim;
 
+            // 遅延処理
+            aimDirection = FollowAimDirection(targetAim, aimDirection);
+            
             // 範囲制限処理
             Vector2 angles = Vector2.zero;
             switch (_limitType)
@@ -143,7 +146,7 @@ namespace MimyLab.FukuroUdon
             }
 
             // 追従処理 (up軸)
-            Quaternion rotation = FollowUpDirection(aimDirection);
+            Quaternion rotation = ConstrainUpDirection(aimDirection);
 
             // 結果を Transform へ反映
             _targetTransform.rotation = rotation * Quaternion.Inverse(_axisOffset);
@@ -163,7 +166,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        private Vector3 FollowAimDirection(Quaternion baseRotation)
+        private Vector3 ConstrainAimDirection(Quaternion baseRotation)
         {
             // ワールド空間で計算
             Vector3 baseDirection = baseRotation * Vector3.forward;
@@ -179,27 +182,10 @@ namespace MimyLab.FukuroUdon
                     break;
             }
 
-            Vector3 result = Vector3.Slerp(baseDirection, sourceDirection, _weight).normalized;
-            
-            Vector3 targetAim = _targetTransform.rotation * _aimVector;
-
-            if (targetAim == result)
-            {
-                return targetAim;
-            }
-
-            if (_smoothingFactor > 0.0f)
-            {
-                float angle = Vector3.Angle(targetAim, result);
-                angle = Mathf.SmoothDampAngle(0.0f, angle, ref _differential, _smoothingFactor);
-                
-                return Vector3.RotateTowards(targetAim, result, angle * Mathf.Deg2Rad, 1.0f);
-            }
-
-            return result;
+            return Vector3.Slerp(baseDirection, sourceDirection, _weight).normalized;
         }
 
-        private Quaternion FollowUpDirection(Vector3 aim)
+        private Quaternion ConstrainUpDirection(Vector3 aim)
         {
             // ワールド空間で計算
             Vector3 up = _targetTransform.TransformDirection(_upVector);
@@ -224,6 +210,24 @@ namespace MimyLab.FukuroUdon
             }
 
             return Quaternion.LookRotation(aim, up);
+        }
+
+        private Vector3 FollowAimDirection(Vector3 targetAim, Vector3 goalAim)
+        {
+            if (targetAim == goalAim)
+            {
+                return targetAim;
+            }
+
+            if (_smoothingFactor > 0.0f)
+            {
+                float angle = Vector3.Angle(targetAim, goalAim);
+                angle = Mathf.SmoothDampAngle(0.0f, angle, ref _differential, _smoothingFactor);
+                
+                return Vector3.RotateTowards(targetAim, goalAim, angle * Mathf.Deg2Rad, 0.0f);
+            }
+
+            return goalAim;
         }
 
         private Vector3 LimitAimByAngle(Quaternion baseRotation, Vector3 aimDirection, ref float angle)

@@ -43,7 +43,7 @@ namespace MimyLab.FukuroUdon
             serializedObject.ApplyModifiedProperties();
         }
 
-        private static readonly Color Alpha = new(1f, 1f, 1f, 0.4f);
+        private static readonly Color Alpha = new(1f, 1f, 1f, 0.2f);
 
         private void OnSceneGUI()
         {
@@ -97,6 +97,12 @@ namespace MimyLab.FukuroUdon
             if (angle < 360f)
             {
                 Handles.DrawWireDisc(center, normal, handleSize);
+                Handles.DrawLine(center, from * handleSize + center);
+                if(angle > 0f)
+                {
+                    Handles.DrawLine(center, Quaternion.AngleAxis(angle, normal) * from * handleSize + center);
+                }
+                
                 Handles.color *= Alpha;
                 Handles.DrawSolidArc(center, normal, from, angle, handleSize);
             }

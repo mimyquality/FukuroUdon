@@ -83,8 +83,13 @@ namespace MimyLab.FukuroUdon
 
         private void LateUpdate()
         {
+            Vector3 targetPosition = _targetTransform.localPosition;
+
             // 追従処理
-            Vector3 position = _sourceTransform ? FollowPosition() : _targetTransform.localPosition;
+            Vector3 position = _sourceTransform ? ConstrainPosition() : targetPosition;
+
+            // 遅延処理
+            position = FollowPosition(targetPosition, position);
 
             // 範囲制限処理
             if (_relativeTo == Space.World && _parent)
@@ -115,7 +120,7 @@ namespace MimyLab.FukuroUdon
             SetIsReachMaxZ(position.z >= _maxPosition.z);
         }
 
-        private Vector3 FollowPosition()
+        private Vector3 ConstrainPosition()
         {
             Vector3 sourcePosition = _solveInLocalSpace
                 ? _sourceTransform.localPosition
@@ -124,21 +129,22 @@ namespace MimyLab.FukuroUdon
                     : _sourceTransform.position;
             sourcePosition += _positionOffset;
 
-            Vector3 result = Vector3.Lerp(_positionAtRest, sourcePosition, _weight);
-            
-            Vector3 targetPosition = _targetTransform.localPosition;
+            return Vector3.Lerp(_positionAtRest, sourcePosition, _weight);
+        }
 
-            if (targetPosition == result)
+        private Vector3 FollowPosition(Vector3 targetPosition, Vector3 goalPosition)
+        {
+            if (targetPosition == goalPosition)
             {
                 return targetPosition;
             }
 
             if (_smoothingFactor > 0.0f)
             {
-                return Vector3.SmoothDamp(targetPosition, result, ref _differential, _smoothingFactor);
+                return Vector3.SmoothDamp(targetPosition, goalPosition, ref _differential, _smoothingFactor);
             }
 
-            return result;
+            return goalPosition;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
     using VRC.SDKBase;
     using VRCStation = VRC.SDK3.Components.VRCStation;
-
+    
     [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Swivel-Chair-2#sc2-seat-adjuster")]
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Swivel Chair 2/SC2 Seat Adjuster")]
@@ -20,23 +20,28 @@ namespace MimyLab.FukuroUdon
     {
         [Header("Position Settings")]
         public Vector3 adjustMinLimit = new Vector3(0.0f, -0.5f, -0.3f);
+
         public Vector3 adjustMaxLimit = new Vector3(0.0f, 0.5f, 0.3f);
+
         [Min(0.0f), Tooltip("meter/sec")]
         public float adjustSpeed = 0.5f;
 
         [Space]
         public bool autoAdjustWhenSitting = false;
+
         [SerializeField]
         private Transform _seatPoint = null;
 
         [Header("Rotation Settings")]
         [Min(0.0f), Tooltip("degree")]
         public float forwardSnapThrethold = 5.0f;
+
         [Min(0.0f), Tooltip("degree/sec")]
         public float rotateSpeed = 60.0f;
 
         [UdonSynced, FieldChangeCallback(nameof(Offset))]
         private Vector3 _offset;
+
         [UdonSynced, FieldChangeCallback(nameof(Direction))]
         private Quaternion _direction;
 
@@ -51,12 +56,21 @@ namespace MimyLab.FukuroUdon
         private bool _hasAvatarChangedSinceStandUp = false;
         private float _avatarEyeHeight = 0.0f;
 
+        private Vector3 LocalOffset
+        {
+            get => _adjustmentSync && _adjustmentSync.n_hasSaved ? _adjustmentSync.n_localOffset : _localOffset;
+        }
+
+        private float AvatarEyeHeight
+        {
+            get => _adjustmentSync && _adjustmentSync.n_hasSaved ? _adjustmentSync.n_avatarEyeHeight : _avatarEyeHeight;
+        }
+        
         private Vector3 Offset
         {
             get => _offset;
             set
             {
-                Initialize();
                 value = Vector3.Max(value, adjustMinLimit);
                 value = Vector3.Min(value, adjustMaxLimit);
                 _enterPoint.localPosition = value;
@@ -64,22 +78,20 @@ namespace MimyLab.FukuroUdon
                 RequestSerialization();
             }
         }
+
         private Quaternion Direction
         {
             get => _direction;
             set
             {
-                Initialize();
                 _seat.localRotation = value;
                 _direction = value;
                 RequestSerialization();
             }
         }
 
-        private Vector3 LocalOffset { get => _adjustmentSync && _adjustmentSync.n_hasSaved ? _adjustmentSync.n_localOffset : _localOffset; }
-        private float AvatarEyeHeight { get => _adjustmentSync && _adjustmentSync.n_hasSaved ? _adjustmentSync.n_avatarEyeHeight : _avatarEyeHeight; }
-
         private bool _initialized = false;
+
         private void Initialize()
         {
             if (_initialized) return;
@@ -95,6 +107,7 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
+
         private void Start()
         {
             Initialize();
@@ -135,7 +148,7 @@ namespace MimyLab.FukuroUdon
             _avatarEyeHeight = player.GetAvatarEyeHeightAsMeters();
             if (_adjustmentSync)
             {
-                _adjustmentSync.Save(_offset, _avatarEyeHeight); 
+                _adjustmentSync.Save(_offset, _avatarEyeHeight);
             }
 
             _swivelChair2.OnStandUp();
@@ -167,6 +180,8 @@ namespace MimyLab.FukuroUdon
 
         public void Revolve(float inputValue)
         {
+            Initialize();
+            
             float angle = Time.deltaTime * rotateSpeed * inputValue;
             Quaternion result = _direction * Quaternion.AngleAxis(angle, Vector3.up);
 
@@ -183,11 +198,15 @@ namespace MimyLab.FukuroUdon
 
         public void Adjust(Vector3 inputValue)
         {
+            Initialize();
+            
             Offset = _offset + (Time.deltaTime * adjustSpeed * inputValue);
         }
 
         public void AutoAdjust()
         {
+            Initialize();
+            
             if (!autoAdjustWhenSitting) return;
             if (!_seatPoint) return;
             if (!_isSitting) return;
@@ -199,7 +218,8 @@ namespace MimyLab.FukuroUdon
             Transform parent = _enterPoint.parent;
             if (parent)
             {
-                Offset = _offset + (parent.InverseTransformPoint(_seatPoint.position) - parent.InverseTransformPoint(hipsPosition));
+                Offset = _offset + (parent.InverseTransformPoint(_seatPoint.position) -
+                                    parent.InverseTransformPoint(hipsPosition));
             }
             else
             {

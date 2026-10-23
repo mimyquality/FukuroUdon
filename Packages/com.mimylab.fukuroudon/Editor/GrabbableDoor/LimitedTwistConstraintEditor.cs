@@ -38,7 +38,7 @@ namespace MimyLab.FukuroUdon
             serializedObject.ApplyModifiedProperties();
         }
 
-        private static readonly Color Alpha = new(1f, 1f, 1f, 0.4f);
+        private static readonly Color Alpha = new(1f, 1f, 1f, 0.2f);
 
         private void OnSceneGUI()
         {
@@ -52,15 +52,12 @@ namespace MimyLab.FukuroUdon
             }
 
             Vector3 center = transform.position;
-            float handleSize = HandleUtility.GetHandleSize(center) * 0.5f;
+            float handleSize = HandleUtility.GetHandleSize(center);
 
             Quaternion rotation = transform.rotation;
             Vector3 normal = rotation * serializedObject.FindProperty("_twistAxis").vector3Value;
             normal.Normalize();
-
-            Handles.color = Color.cyan;
-            Handles.DrawLine(center, HandleUtility.GetHandleSize(center) * normal + center);
-
+            
             Vector2 range = serializedObject.FindProperty("_angleRange").vector2Value;
             Vector3 from = rotation * Vector3.forward;
             var sourceTransform = serializedObject.FindProperty("_sourceTransform").objectReferenceValue as Transform;
@@ -77,10 +74,17 @@ namespace MimyLab.FukuroUdon
                         break;
                 }
             }
-            
-            from = Quaternion.AngleAxis(range.x, normal) * Quaternion.LookRotation(normal, from) * Vector3.up;
 
-            DrawAxisRange(center, normal, from, range, handleSize);
+            Vector3 aim = Quaternion.LookRotation(normal, from) * Vector3.up;
+            from = Quaternion.AngleAxis(range.x, normal) * aim;
+            
+            Handles.color = Color.yellow;
+            Handles.DrawLine(center, handleSize * normal + center);
+
+            Handles.color = Color.cyan;
+            Handles.DrawLine(center, handleSize * aim + center);
+
+            DrawAxisRange(center, normal, from, range, handleSize * 0.5f);
         }
 
         private static void DrawAxisRange(Vector3 center, Vector3 normal, Vector3 from, Vector2 range, float handleSize)
@@ -89,6 +93,12 @@ namespace MimyLab.FukuroUdon
             if (angle < 360f)
             {
                 Handles.DrawWireDisc(center, normal, handleSize);
+                Handles.DrawLine(center, from * handleSize + center);
+                if(angle > 0f)
+                {
+                    Handles.DrawLine(center, Quaternion.AngleAxis(angle, normal) * from * handleSize + center);
+                }
+
                 Handles.color *= Alpha;
                 Handles.DrawSolidArc(center, normal, from, angle, handleSize);
             }

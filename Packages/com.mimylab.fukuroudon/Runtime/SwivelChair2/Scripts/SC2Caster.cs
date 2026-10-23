@@ -19,8 +19,10 @@ namespace MimyLab.FukuroUdon
     public class SC2Caster : UdonSharpBehaviour
     {
         public bool immobile = false;
+
         [Tooltip("meter/sec (Rigidbody がある場合は[N])")]
         public float moveSpeed = 2.0f;
+
         [Tooltip("degree/sec (Rigidbody がある場合は[Nm])")]
         public float turnSpeed = 60.0f;
 
@@ -29,6 +31,7 @@ namespace MimyLab.FukuroUdon
         //private VRCObjectSync _objectSync;
 
         private bool _initialized = false;
+
         private void Initialize()
         {
             if (_initialized) return;
@@ -44,7 +47,7 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (!Networking.IsOwner(this.gameObject)) return;
+            if (!Networking.IsOwner(gameObject)) return;
             if (immobile) return;
 
             Vector3 shift = Time.deltaTime * moveSpeed * inputValue;
@@ -69,7 +72,7 @@ namespace MimyLab.FukuroUdon
         {
             Initialize();
 
-            if (!Networking.IsOwner(this.gameObject)) return;
+            if (!Networking.IsOwner(gameObject)) return;
             if (immobile) return;
 
             float angle = Time.deltaTime * turnSpeed * inputValue;

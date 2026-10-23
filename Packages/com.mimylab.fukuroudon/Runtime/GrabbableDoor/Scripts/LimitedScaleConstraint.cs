@@ -65,8 +65,14 @@ namespace MimyLab.FukuroUdon
 
         private void LateUpdate()
         {
+            
+            Vector3 targetScale = _targetTransform.localScale;
+            
             // 追従処理
-            Vector3 scale = _sourceTransform ? FollowScale() : _targetTransform.localScale;
+            Vector3 scale = _sourceTransform ? ConstrainScale() : targetScale;
+            
+            // 遅延処理
+            scale = FollowScale(targetScale, scale);
 
             // 範囲制限処理
             scale.x = Mathf.Clamp(scale.x, _minScale.x, _maxScale.x);
@@ -85,23 +91,24 @@ namespace MimyLab.FukuroUdon
             SetIsReachMaxZ(scale.z >= _maxScale.z);
         }
 
-        private Vector3 FollowScale()
+        private Vector3 ConstrainScale()
         {
-            Vector3 result = Vector3.Lerp(_scaleAtRest, _sourceTransform.localScale, _weight);
-            
-            Vector3 targetScale = _targetTransform.localScale;
+            return Vector3.Lerp(_scaleAtRest, _sourceTransform.localScale, _weight);
+        }
 
-            if (targetScale == result)
+        private Vector3 FollowScale(Vector3 targetScale, Vector3 goalScale)
+        {
+            if (targetScale == goalScale)
             {
                 return targetScale;
             }
-
+            
             if (_smoothingFactor > 0.0f)
             {
-                return Vector3.SmoothDamp(targetScale, result, ref _differential, _smoothingFactor);
+                return Vector3.SmoothDamp(targetScale, goalScale, ref _differential, _smoothingFactor);
             }
 
-            return result;
+            return goalScale;
         }
     }
 }

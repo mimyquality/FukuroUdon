@@ -65,7 +65,7 @@ namespace MimyLab.FukuroUdon
             serializedObject.ApplyModifiedProperties();
         }
 
-        private static readonly Color Alpha = new(1f, 1f, 1f, 0.4f);
+        private static readonly Color Alpha = new(1f, 1f, 1f, 0.2f);
 
         private void OnSceneGUI()
         {
@@ -79,7 +79,7 @@ namespace MimyLab.FukuroUdon
             }
 
             Vector3 center = transform.position;
-            float handleSize = HandleUtility.GetHandleSize(center) * 0.5f;
+            float handleSize = HandleUtility.GetHandleSize(center);
 
             Quaternion rotation = transform.rotation;
             Vector3 aim = rotation * Vector3.forward;
@@ -100,71 +100,91 @@ namespace MimyLab.FukuroUdon
                 aim.Normalize();
             }
 
-            Handles.color = Color.cyan;
-            Handles.DrawLine(center, HandleUtility.GetHandleSize(center) * aim + center);
-
             Vector3 up = rotation * serializedObject.FindProperty("_upVector").vector3Value;
             up.Normalize();
 
             Handles.color = Color.yellow;
-            Handles.DrawLine(center, HandleUtility.GetHandleSize(center) * up + center);
+            Handles.DrawLine(center, handleSize * up + center);
+
+            Handles.color = Color.cyan;
+            Handles.DrawLine(center, handleSize * aim + center);
 
             switch (serializedObject.FindProperty("_limitType").enumValueIndex)
             {
                 case (int)AimLimitType.Angle:
-                    float maxAngle = serializedObject.FindProperty("_maxAngle").floatValue;
-                    Vector3 angledAim = Quaternion.AngleAxis(maxAngle, Vector3.Cross(aim, up)) * aim;
-                    Handles.color = Color.cyan;
-                    Handles.color *= Alpha;
-                    Handles.DrawSolidArc(center, aim, angledAim, 360f, handleSize);
+                    DrawAngleRange(center, aim, up, handleSize * 0.5f);
                     break;
 
                 case (int)AimLimitType.Polar:
-                    DrawPolarRange(center, aim, up, handleSize);
+                    DrawPolarRange(center, aim, up, handleSize * 0.5f);
                     break;
             }
         }
 
+        private void DrawAngleRange(Vector3 center, Vector3 aim, Vector3 up, float handleSize)
+        {
+            float maxAngle = serializedObject.FindProperty("_maxAngle").floatValue;
+            float radian = maxAngle * Mathf.Deg2Rad;
+            Vector3 angledAim = Quaternion.AngleAxis(maxAngle, Vector3.Cross(aim, up)) * aim;
+
+            Handles.DrawWireDisc(center + Mathf.Cos(radian) * handleSize * aim, aim, Mathf.Sin(radian) * handleSize);
+
+            Handles.color *= Alpha;
+            Handles.DrawSolidArc(center, aim, angledAim, 360f, handleSize);
+        }
+
         private void DrawPolarRange(Vector3 center, Vector3 aim, Vector3 up, float handleSize)
         {
-            Handles.color = Color.cyan * Alpha;
-            
-            Vector3 right = Vector3.Cross(up, aim);
-            Vector3 yaw = Vector3.Cross(aim, right);
+            Vector3 pitch = Vector3.Cross(up, aim);
+            Vector3 yaw = Vector3.Cross(aim, pitch);
             Vector2 pitchRange = serializedObject.FindProperty("_pitchRange").vector2Value;
             Vector2 yawRange = serializedObject.FindProperty("_yawRange").vector2Value;
             float pitchAngle = pitchRange.y - pitchRange.x;
             float yawAngle = yawRange.y - yawRange.x;
 
-            Quaternion minPitch = Quaternion.AngleAxis(pitchRange.x, right);
-            Quaternion maxPitch = Quaternion.AngleAxis(pitchRange.y, right);
+            Quaternion minPitch = Quaternion.AngleAxis(pitchRange.x, pitch);
+            Quaternion maxPitch = Quaternion.AngleAxis(pitchRange.y, pitch);
             Quaternion minYaw = Quaternion.AngleAxis(yawRange.x, yaw);
             Quaternion maxYaw = Quaternion.AngleAxis(yawRange.y, yaw);
 
-            Vector3 corner;
-            
-            corner = minYaw * minPitch * aim;
+            Vector3 minYawMinPitchAim = minYaw * minPitch * aim;
+            Vector3 minYawMaxPitchAim = minYaw * maxPitch * aim;
+            Vector3 maxYawMinPitchAim = maxYaw * minPitch * aim;
+            //Vector3 maxYawMaxPitchAim = maxYaw * maxPitch * aim;
 
-            Handles.DrawSolidArc(center, yaw, corner, yawAngle, handleSize);
+            Color wireColor = Handles.color;
+            Color solidColor = wireColor * Alpha;
+            
+            //Handles.color = wireColor;
+            Handles.DrawWireArc(center, yaw, minYawMinPitchAim, yawAngle, handleSize);
+            
+            Handles.color = solidColor;
+            Handles.DrawSolidArc(center, yaw, minYawMinPitchAim, yawAngle, handleSize);
 
             if (0f < pitchAngle && pitchAngle < 180f)
             {
-                corner = minYaw * maxPitch * aim;
-
-                Handles.DrawSolidArc(center, yaw, corner, yawAngle, handleSize);
+                Handles.color = wireColor;
+                Handles.DrawWireArc(center, yaw, minYawMaxPitchAim, yawAngle, handleSize);
+                
+                Handles.color = solidColor;
+                Handles.DrawSolidArc(center, yaw, minYawMaxPitchAim, yawAngle, handleSize);
             }
-            
-            if(yawAngle < 360f)
-            {
-                corner = minYaw * minPitch * aim;
 
-                Handles.DrawSolidArc(center, minYaw * right, corner, pitchAngle, handleSize);
+            if (yawAngle < 360f)
+            {
+                Handles.color = wireColor;
+                Handles.DrawWireArc(center, minYaw * pitch, minYawMinPitchAim, pitchAngle, handleSize);
+                
+                Handles.color = solidColor;
+                Handles.DrawSolidArc(center, minYaw * pitch, minYawMinPitchAim, pitchAngle, handleSize);
 
                 if (0f < yawAngle)
                 {
-                    corner = maxYaw * minPitch * aim;
-
-                    Handles.DrawSolidArc(center, maxYaw * right, corner, pitchAngle, handleSize);
+                    Handles.color = wireColor;
+                    Handles.DrawWireArc(center, maxYaw * pitch, maxYawMinPitchAim, pitchAngle, handleSize);
+                    
+                    Handles.color = solidColor;
+                    Handles.DrawSolidArc(center, maxYaw * pitch, maxYawMinPitchAim, pitchAngle, handleSize);
                 }
             }
         }

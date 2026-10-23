@@ -102,8 +102,13 @@ namespace MimyLab.FukuroUdon
 
         private void LateUpdate()
         {
+            Quaternion targetRotation = _targetTransform.localRotation;
+            
             // 追従処理
-            Quaternion rotation = _sourceTransform ? FollowRotation() : _targetTransform.localRotation;
+            Quaternion rotation = _sourceTransform ? ConstrainRotation() : targetRotation;
+            
+            // 遅延処理
+            rotation = FollowRotation(targetRotation, rotation);
 
             // 範囲制限処理
             if (_relativeTo == Space.World && _parent)
@@ -149,7 +154,7 @@ namespace MimyLab.FukuroUdon
             }
         }
 
-        private Quaternion FollowRotation()
+        private Quaternion ConstrainRotation()
         {
             Quaternion sourceRotation = _solveInLocalSpace
                 ? _sourceTransform.localRotation
@@ -158,24 +163,25 @@ namespace MimyLab.FukuroUdon
                     : _sourceTransform.rotation;
             sourceRotation *= _rotationOffset;
 
-            Quaternion result = Quaternion.Slerp(_rotationAtRest, sourceRotation, _weight);
-            
-            Quaternion targetRotation = _targetTransform.localRotation;
+            return Quaternion.Slerp(_rotationAtRest, sourceRotation, _weight);
+        }
 
-            if (targetRotation == result)
+        private Quaternion FollowRotation(Quaternion targetRotation, Quaternion goalRotation)
+        {
+            if (targetRotation == goalRotation)
             {
                 return targetRotation;
             }
 
             if (_smoothingFactor > 0.0f)
             {
-                float angle = Quaternion.Angle(targetRotation, result);
+                float angle = Quaternion.Angle(targetRotation, goalRotation);
                 angle = Mathf.SmoothDampAngle(0.0f, angle, ref _differential, _smoothingFactor);
 
-                return Quaternion.RotateTowards(targetRotation, result, angle);
+                return Quaternion.RotateTowards(targetRotation, goalRotation, angle);
             }
 
-            return result;
+            return goalRotation;
         }
 
         private Quaternion LimitRotationByAngle(Quaternion rotation, ref float angle)

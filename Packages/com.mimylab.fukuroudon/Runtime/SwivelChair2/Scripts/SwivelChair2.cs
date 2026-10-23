@@ -34,8 +34,11 @@ namespace MimyLab.FukuroUdon
     public class SwivelChair2 : UdonSharpBehaviour
     {
         [Header("Additional Settings")]
-        [SerializeField] private VRCPickup _pickup;
-        [SerializeField] private SC2Caster _caster;
+        [SerializeField]
+        private VRCPickup _pickup;
+
+        [SerializeField]
+        private SC2Caster _caster;
 
         internal SC2SeatAdjuster _seatAdjuster;
         internal SC2InputManager _inputManager;
@@ -52,7 +55,7 @@ namespace MimyLab.FukuroUdon
             {
                 // 何故か includeInactive 引数が渡せない
                 _pickup = GetComponentInParent<VRCPickup>();
-            } 
+            }
 
             if (!_caster)
             {
