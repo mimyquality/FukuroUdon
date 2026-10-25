@@ -6,6 +6,21 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [4.0.0-beta.4] - 2026/10/23
+
+**Added**  
+
+- Limited Constraint シリーズに Smoothing Factor 追加
+- SwivelChair2 の SC2 Seat Adjuster に位置調整範囲の Gizmo 表記追加
+
+**Changed**  
+
+- Udon Raycast は resultTransform をセットしなくても使えるように変更
+
+**Fixed**  
+
+- Limited Constraint シリーズのバグ修正と Gizmo 表記の調整
+
 ## [4.0.0-beta.3] - 2026/10/13
 
 **Added**
@@ -959,6 +974,7 @@ VRCSDK 3.10.2 に沿ったいくつかの微修正を行いました。
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[4.0.0-beta.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.4
 [4.0.0-beta.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.3
 [4.0.0-beta.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.2
 [4.0.0-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.1
