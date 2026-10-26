@@ -4,6 +4,8 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
+using VRC.Udon.Common;
+
 namespace MimyLab.FukuroUdon
 {
     using System;
@@ -73,7 +75,13 @@ namespace MimyLab.FukuroUdon
         private readonly string _UpdateManagerPrefabGUID = "51374f5e01425074ca9cb544fa44007d";
 
         [UdonSynced]
-        private Vector3 n_position, n_rotation, n_scale = Vector3.one;
+        private Vector3 n_position;
+
+        [UdonSynced]
+        private Vector3 n_rotation;
+
+        [UdonSynced]
+        private Vector3 n_scale = Vector3.one;
 
         [UdonSynced]
         private byte n_equipBone;
@@ -128,13 +136,7 @@ namespace MimyLab.FukuroUdon
             set
             {
                 Initialize();
-
-                _useGravity = value;
-                if (_rigidbody)
-                {
-                    _rigidbody.useGravity = value;
-                }
-
+                SetUseGravity(value);
                 RequestSerialization();
             }
         }
@@ -146,13 +148,7 @@ namespace MimyLab.FukuroUdon
             set
             {
                 Initialize();
-
-                _isKinematic = value;
-                if (_rigidbody)
-                {
-                    _rigidbody.isKinematic = _isAttached || _isEquipped || !Networking.IsOwner(gameObject) || value;
-                }
-
+                SetIsKinematic(value);
                 RequestSerialization();
             }
         }
@@ -164,14 +160,7 @@ namespace MimyLab.FukuroUdon
             set
             {
                 Initialize();
-
-                _pickupable = value;
-                if (_pickup)
-                {
-                    _pickup.pickupable =
-                        (!_pickup.DisallowTheft || !_isHeld || Networking.IsOwner(gameObject)) && value;
-                }
-
+                SetPickupable(value);
                 RequestSerialization();
             }
         }
@@ -276,8 +265,8 @@ namespace MimyLab.FukuroUdon
             _pickup = GetComponent<VRCPickup>();
             _localPlayer = Networking.LocalPlayer;
 
-            _startPosition = transform.position;
-            _startRotation = transform.rotation;
+            _startPosition = GetPosition();
+            _startRotation = GetRotation();
             _startScale = transform.localScale;
 
             moveCheckTickRate = Mathf.Max(moveCheckTickRate, 2);
@@ -285,13 +274,13 @@ namespace MimyLab.FukuroUdon
 
             if (_rigidbody)
             {
-                _useGravity = _rigidbody.useGravity;
-                _isKinematic = _rigidbody.isKinematic;
+                SetUseGravity(_rigidbody.useGravity);
+                SetIsKinematic(_rigidbody.isKinematic);
             }
 
             if (_pickup)
             {
-                _pickupable = _pickup.pickupable;
+                SetPickupable(_pickup.pickupable);
             }
 
             if (_syncPosition.Equals(Vector3.zero)
@@ -304,7 +293,7 @@ namespace MimyLab.FukuroUdon
                 _syncScale = _startScale;
             }
 
-            _tweenMove = VRCTween.TweenFloat(0.0f, 1.0f, 1.0f, this, nameof(_tweenValue), nameof(_OnMoveUpdate),
+            _tweenMove = VRCTween.TweenFloat(0.0f, 1.0f, 1.0f, this, nameof(_tweenValue), nameof(_OnMoveSmoothing),
                 VRCTweenEase.Linear).Pause();
             _tweenScale = transform.TweenScale(_startScale, 1.0f, VRCTweenEase.Linear).Pause();
 
@@ -320,23 +309,77 @@ namespace MimyLab.FukuroUdon
             BeginCheckObjectMove();
         }
 
-        private void Start()
-        {
-            UseGravity = UseGravity;
-            IsKinematic = IsKinematic;
-            Pickupable = Pickupable;
-        }
-
         public void _OnPostLateUpdate()
         {
-            if (AttachToTransform()) return;
-            if (EquipBone()) return;
-            if (HoldingOther()) return;
+            if (_isHeld)
+            {
+                Holding();
+                return;
+            }
 
-            ApplySyncToLocation();
+            if (_isEquipped)
+            {
+                EquipingBone();
+                return;
+            }
 
-            _updateManager.DisablePostLateUpdate(this);
+            if (_isAttached)
+            {
+                Attaching();
+            }
         }
+        
+        // _isHeld なら VRCPickup と Rigidbody が付いている
+        private void Holding()
+        {
+            if (!_isHeld) return;
+
+            VRCPlayerApi owner = Networking.GetOwner(gameObject);
+            if (!Utilities.IsValid(owner)) return;
+
+            var pickupHandBone = owner.IsUserInVR()
+                ? _equipBone == HumanBodyBones.LeftHand
+                    ? HumanBodyBones.LeftHand
+                    : HumanBodyBones.RightHand
+                : HumanBodyBones.Head;
+            
+            Vector3 handPosition = owner.GetBonePosition(pickupHandBone);
+            Quaternion handRotation = owner.GetBoneRotation(pickupHandBone);
+            if (handPosition.Equals(Vector3.zero) && handRotation.Equals(Quaternion.identity))
+            {
+                // ボーンが無い＝ジェネリックアバター
+                handPosition = owner.GetPosition();
+                handRotation = owner.GetRotation();
+            }
+
+            _rigidbody.MovePosition(handPosition + (handRotation * _syncPosition));
+            _rigidbody.MoveRotation(handRotation * _syncRotation);
+        }
+
+        private void EquipingBone()
+        {
+            if (!_isEquipped) return;
+
+            VRCPlayerApi owner = Networking.GetOwner(gameObject);
+            if (!Utilities.IsValid(owner)) return;
+
+            Vector3 bonePosition = owner.GetBonePosition(_equipBone);
+            Quaternion boneRotation = owner.GetBoneRotation(_equipBone);
+            if (bonePosition.Equals(Vector3.zero) && boneRotation.Equals(Quaternion.identity)) return;
+
+            Vector3 equipPosition = bonePosition + (boneRotation * _syncPosition);
+            Quaternion equipRotation = boneRotation * _syncRotation;
+
+            transform.SetPositionAndRotation(equipPosition, equipRotation);
+        }
+
+        private void Attaching()
+        {
+            if (!_isAttached) return;
+
+            transform.SetPositionAndRotation(attachPoint.position, attachPoint.rotation);
+        }
+
 
         public override void OnOwnershipTransferred(VRCPlayerApi player)
         {
@@ -375,7 +418,7 @@ namespace MimyLab.FukuroUdon
             if (_isAttached) n_states += (int)ManualObjectSyncSyncStates.IsAttached;
         }
 
-        public override void OnDeserialization()
+        public override void OnDeserialization(DeserializationResult result)
         {
             Initialize();
 
@@ -392,10 +435,18 @@ namespace MimyLab.FukuroUdon
             _isEquipped = (n_states & (int)ManualObjectSyncSyncStates.IsEquipped) > 0;
             _isAttached = (n_states & (int)ManualObjectSyncSyncStates.IsAttached) > 0;
 
+            if (result.isFromStorage && _isHeld)
+            {
+                // ピックアップ中に退室していたと見做す
+                _isHeld = false;
+                _syncPosition = _startPosition;
+                _syncRotation = _startRotation;
+            }
+
             // 同期パラメーターを反映
-            UseGravity = _useGravity;
-            IsKinematic = _isKinematic;
-            Pickupable = _pickupable;
+            SetUseGravity(_useGravity);
+            SetIsKinematic(_isKinematic);
+            SetPickupable(_pickupable);
             SetIsHeld(_isHeld);
             SetIsEquipped(_isEquipped);
             SetIsAttached(_isAttached);
@@ -423,57 +474,22 @@ namespace MimyLab.FukuroUdon
 
             if (_enableSmoothing)
             {
-                if (_rigidbody)
-                {
-                    _fromPosition = _rigidbody.position;
-                    _fromRotation = _rigidbody.rotation;
-                }
-                else if (_relativeTo == Space.Self)
-                {
-                    _fromPosition = transform.localPosition;
-                    _fromRotation = transform.localRotation;
-                }
-                else
-                {
-                    _fromPosition = transform.position;
-                    _fromRotation = transform.rotation;
-                }
+                _fromPosition = GetPosition();
+                _fromRotation = GetRotation();
 
                 _tweenMove.SetDuration(_duration).Restart();
                 return;
             }
 
-            if (_rigidbody)
-            {
-                _rigidbody.Move(_syncPosition, _syncRotation);
-            }
-            else if (_relativeTo == Space.Self)
-            {
-                transform.SetLocalPositionAndRotation(_syncPosition, _syncRotation);
-            }
-            else
-            {
-                transform.SetPositionAndRotation(_syncPosition, _syncRotation);
-            }
+            SetLocation(_syncPosition, _syncRotation);
         }
 
-        public void _OnMoveUpdate()
+        public void _OnMoveSmoothing()
         {
             Vector3 position = Vector3.Lerp(_fromPosition, _syncPosition, _tweenValue);
             Quaternion rotation = Quaternion.Slerp(_fromRotation, _syncRotation, _tweenValue);
 
-            if (_rigidbody)
-            {
-                _rigidbody.Move(position, rotation);
-            }
-            else if (_relativeTo == Space.Self)
-            {
-                transform.SetLocalPositionAndRotation(position, rotation);
-            }
-            else
-            {
-                transform.SetPositionAndRotation(position, rotation);
-            }
+            SetLocation(position, rotation);
         }
 
         // VRCPickup と Rigidbody がある
@@ -483,7 +499,6 @@ namespace MimyLab.FukuroUdon
 
             SetIsHeld(true);
             SyncPickupOffset();
-
             RequestSerialization();
         }
 
@@ -492,16 +507,13 @@ namespace MimyLab.FukuroUdon
         {
             SetIsHeld(false);
             SyncLocation();
-
             RequestSerialization();
         }
 
         internal void OnEquip()
         {
             SetIsEquipped(true);
-
             RequestSerialization();
-
             SendAdditionalEvent(EventName_Equip);
         }
 
@@ -509,18 +521,14 @@ namespace MimyLab.FukuroUdon
         {
             SetIsEquipped(false);
             SyncLocation();
-
             RequestSerialization();
-
             SendAdditionalEvent(EventName_Unequip);
         }
 
         internal void OnAttach()
         {
             SetIsAttached(true);
-
             RequestSerialization();
-
             SendAdditionalEvent(EventName_Attach);
         }
 
@@ -528,15 +536,14 @@ namespace MimyLab.FukuroUdon
         {
             SetIsAttached(false);
             SyncLocation();
-
             RequestSerialization();
-
             SendAdditionalEvent(EventName_Detach);
         }
 
         /******************************
          public Method
          ******************************/
+        [NetworkCallable(1)]
         public void ManualSync()
         {
             if (!Networking.IsOwner(gameObject)) return;
@@ -546,7 +553,16 @@ namespace MimyLab.FukuroUdon
             RequestSerialization();
         }
 
-        public void Equip(HumanBodyBones targetBone)
+        [NetworkCallable(1)]
+        public void Equip(int targetBone)
+        {
+            if (0 <= targetBone && targetBone < (int)HumanBodyBones.LastBone)
+            {
+                _Equip((HumanBodyBones)targetBone);
+            }
+        }
+
+        public void _Equip(HumanBodyBones targetBone)
         {
             Initialize();
 
@@ -572,6 +588,7 @@ namespace MimyLab.FukuroUdon
             OnEquip();
         }
 
+        [NetworkCallable(1)]
         public void Unequip()
         {
             Initialize();
@@ -581,6 +598,7 @@ namespace MimyLab.FukuroUdon
             OnUnequip();
         }
 
+        [NetworkCallable(1)]
         public void Attach()
         {
             Initialize();
@@ -590,6 +608,7 @@ namespace MimyLab.FukuroUdon
             OnAttach();
         }
 
+        [NetworkCallable(1)]
         public void Detach()
         {
             Initialize();
@@ -599,9 +618,6 @@ namespace MimyLab.FukuroUdon
             OnDetach();
         }
 
-        /******************************
-         For SendCustomNetworkEvent Method
-         ******************************/
         [NetworkCallable(1)]
         public void Respawn()
         {
@@ -609,11 +625,7 @@ namespace MimyLab.FukuroUdon
 
             if (!Networking.IsOwner(gameObject)) return;
 
-            if (_pickup)
-            {
-                _pickup.Drop();
-            }
-
+            if (_pickup) _pickup.Drop();
             Unequip();
             Detach();
 
@@ -640,37 +652,9 @@ namespace MimyLab.FukuroUdon
             if (!Networking.IsOwner(gameObject)) return;
 
             transform.localScale = _startScale;
-
             _syncScale = _startScale;
 
             RequestSerialization();
-        }
-
-        [NetworkCallable(1)]
-        public void CallEquip(int targetBone)
-        {
-            if (0 <= targetBone && targetBone < (int)HumanBodyBones.LastBone)
-            {
-                Equip((HumanBodyBones)targetBone);
-            }
-        }
-
-        [NetworkCallable(1)]
-        public void CallUnequip()
-        {
-            Unequip();
-        }
-
-        [NetworkCallable(1)]
-        public void CallAttach()
-        {
-            Attach();
-        }
-
-        [NetworkCallable(1)]
-        public void CallDetach()
-        {
-            Detach();
         }
 
         /******************************
@@ -724,38 +708,15 @@ namespace MimyLab.FukuroUdon
         {
             if (!transform.hasChanged) return false;
 
-            if (_rigidbody)
-            {
-                return !(_rigidbody.position == _syncPosition && _rigidbody.rotation == _syncRotation);
-            }
-
-            if (_relativeTo == Space.Self)
-            {
-                return !(transform.localPosition == _syncPosition && transform.localRotation == _syncRotation);
-            }
-
-            return !(transform.position == _syncPosition && transform.rotation == _syncRotation);
+            return !(GetPosition() == _syncPosition && GetRotation() == _syncRotation);
         }
 
         private void SyncLocation()
         {
             transform.hasChanged = false;
 
-            if (_rigidbody)
-            {
-                _syncPosition = _rigidbody.position;
-                _syncRotation = _rigidbody.rotation;
-            }
-            else if (_relativeTo == Space.Self)
-            {
-                _syncPosition = transform.localPosition;
-                _syncRotation = transform.localRotation;
-            }
-            else
-            {
-                _syncPosition = transform.position;
-                _syncRotation = transform.rotation;
-            }
+            _syncPosition = GetPosition();
+            _syncRotation = GetRotation();
 
             RequestSerialization();
         }
@@ -786,14 +747,15 @@ namespace MimyLab.FukuroUdon
 
             Vector3 handPosition = _localPlayer.GetBonePosition(pickupHandBone);
             Quaternion handRotation = _localPlayer.GetBoneRotation(pickupHandBone);
+            if (handPosition.Equals(Vector3.zero) && handRotation.Equals(Quaternion.identity))
+            {
+                // ボーンが無い＝ジェネリックアバター
+                handPosition = _localPlayer.GetPosition();
+                handRotation = _localPlayer.GetRotation();
+            }
 
-            Vector3 offsetPosition = handPosition.Equals(Vector3.zero)
-                ? Vector3.zero
-                : Quaternion.Inverse(handRotation) * (_rigidbody.position - handPosition);
-            Quaternion offsetRotation = handRotation.Equals(Quaternion.identity)
-                ? Quaternion.identity
-                : (Quaternion.Inverse(handRotation) * _rigidbody.rotation);
-
+            Vector3 offsetPosition = Quaternion.Inverse(handRotation) * (_rigidbody.position - handPosition);
+            Quaternion offsetRotation = Quaternion.Inverse(handRotation) * _rigidbody.rotation;
             if (!(offsetPosition == _syncPosition && offsetRotation == _syncRotation))
             {
                 _syncPosition = offsetPosition;
@@ -806,64 +768,77 @@ namespace MimyLab.FukuroUdon
         /******************************
          private Method
         ******************************/
-        // _isHeld なら VRCPickup と Rigidbody が付いている
-        private bool HoldingOther()
+        private Vector3 GetPosition()
         {
-            if (!_isHeld) return false;
-
-            VRCPlayerApi owner = Networking.GetOwner(gameObject);
-            if (!Utilities.IsValid(owner)) return true;
-
-            var pickupHandBone = owner.IsUserInVR()
-                ? _equipBone == HumanBodyBones.LeftHand
-                    ? HumanBodyBones.LeftHand
-                    : HumanBodyBones.RightHand
-                : HumanBodyBones.Head;
-            Vector3 handPosition = owner.GetBonePosition(pickupHandBone);
-            Quaternion handRotation = owner.GetBoneRotation(pickupHandBone);
-
-            if (handPosition.Equals(Vector3.zero) || handRotation.Equals(Quaternion.identity))
+            if (_rigidbody)
             {
-                // ボーン情報の代わりにプレイヤー原点からの固定値
-                handPosition = new Vector3((_equipBone == HumanBodyBones.LeftHand) ? -0.2f : 0.2f, 1.0f, 0.3f);
-                _rigidbody.MovePosition(owner.GetPosition() + (owner.GetRotation() * handPosition));
-                _rigidbody.MoveRotation(owner.GetRotation());
+                return _rigidbody.position;
+            }
+
+            if (_relativeTo == Space.Self)
+            {
+                return transform.localPosition;
+            }
+
+            return transform.position;
+        }
+
+        private Quaternion GetRotation()
+        {
+            if (_rigidbody)
+            {
+                return _rigidbody.rotation;
+            }
+
+            if (_relativeTo == Space.Self)
+            {
+                return transform.localRotation;
+            }
+
+            return transform.rotation;
+        }
+
+        private void SetLocation(Vector3 position, Quaternion rotation)
+        {
+            if (_rigidbody)
+            {
+                _rigidbody.Move(position, rotation);
+            }
+            else if (_relativeTo == Space.Self)
+            {
+                transform.SetLocalPositionAndRotation(position, rotation);
             }
             else
             {
-                _rigidbody.MovePosition(handPosition + (handRotation * _syncPosition));
-                _rigidbody.MoveRotation(handRotation * _syncRotation);
+                transform.SetPositionAndRotation(position, rotation);
             }
-
-            return true;
         }
 
-        private bool EquipBone()
+        private void SetUseGravity(bool value)
         {
-            if (!_isEquipped) return false;
-
-            VRCPlayerApi owner = Networking.GetOwner(gameObject);
-            if (!Utilities.IsValid(owner)) return true;
-
-            Vector3 bonePosition = owner.GetBonePosition(_equipBone);
-            Quaternion boneRotation = owner.GetBoneRotation(_equipBone);
-            if (bonePosition.Equals(Vector3.zero) || boneRotation.Equals(Quaternion.identity)) return _isEquipped;
-
-            Vector3 equipPosition = bonePosition + (boneRotation * _syncPosition);
-            Quaternion equipRotation = boneRotation * _syncRotation;
-
-            transform.SetPositionAndRotation(equipPosition, equipRotation);
-
-            return true;
+            _useGravity = value;
+            if (_rigidbody)
+            {
+                _rigidbody.useGravity = value;
+            }
         }
 
-        private bool AttachToTransform()
+        private void SetIsKinematic(bool value)
         {
-            if (!_isAttached) return false;
+            _isKinematic = value;
+            if (_rigidbody)
+            {
+                _rigidbody.isKinematic = value || _isAttached || _isEquipped || !Networking.IsOwner(gameObject);
+            }
+        }
 
-            transform.SetPositionAndRotation(attachPoint.position, attachPoint.rotation);
-
-            return true;
+        private void SetPickupable(bool value)
+        {
+            _pickupable = value;
+            if (_pickup)
+            {
+                _pickup.pickupable = value && !(_pickup.DisallowTheft && _isHeld && !Networking.IsOwner(gameObject));
+            }
         }
 
         private void SetIsHeld(bool value)

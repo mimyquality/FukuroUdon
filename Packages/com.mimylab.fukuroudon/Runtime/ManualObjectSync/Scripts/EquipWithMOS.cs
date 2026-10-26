@@ -54,7 +54,7 @@ namespace MimyLab.FukuroUdon
         {
             if (!target) return;
 
-            target.SendCustomNetworkEvent(NetworkEventTarget.All, nameof(ManualObjectSync.CallUnequip));
+            target.SendCustomNetworkEvent(NetworkEventTarget.All, nameof(ManualObjectSync.Unequip));
         }
 
         public override void OnPickupUseDown()
@@ -66,7 +66,7 @@ namespace MimyLab.FukuroUdon
             HumanBodyBones mostNearBone = MostNearBone(Networking.LocalPlayer);
             if (mostNearBone == HumanBodyBones.LastBone) return;
 
-            target.Equip(mostNearBone);
+            target._Equip(mostNearBone);
         }
 
         private HumanBodyBones MostNearBone(VRCPlayerApi pl)
