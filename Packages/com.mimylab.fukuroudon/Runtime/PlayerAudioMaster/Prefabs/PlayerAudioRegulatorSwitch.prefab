@@ -55,12 +55,12 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 5665024793553480679}
+  othersOnly: 0
+  allowedPlayerNameList: []
   enableChannelMode: 0
   channel: 0
   channelUnmatchMode: 0
   unmatchFallback: {fileID: 0}
-  othersOnly: 0
-  allowedPlayerNameList: []
   enablePlayerVoiceOverride: 1
   voiceGain: 15
   voiceDistanceNear: 0
@@ -91,6 +91,7 @@ MonoBehaviour:
   interactText: Use
   interactTextGO: {fileID: 0}
   proximity: 2
+  OutlineRenderers: []
   SynchronizePosition: 0
   AllowCollisionOwnershipTransfer: 0
   Reliable: 0

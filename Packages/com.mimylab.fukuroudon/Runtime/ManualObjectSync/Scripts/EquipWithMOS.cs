@@ -66,7 +66,7 @@ namespace MimyLab.FukuroUdon
             HumanBodyBones mostNearBone = MostNearBone(Networking.LocalPlayer);
             if (mostNearBone == HumanBodyBones.LastBone) return;
 
-            target._Equip(mostNearBone);
+            target.Equip(mostNearBone);
         }
 
         private HumanBodyBones MostNearBone(VRCPlayerApi pl)

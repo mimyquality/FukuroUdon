@@ -53,59 +53,5 @@ namespace MimyLab.FukuroUdon
             }
         }
 #endif
-
-        public override void PostLateUpdate()
-        {
-            var pauseUpdate = true;
-            foreach (ManualObjectSync mos in _mosList)
-            {
-                if (mos)
-                {
-                    if (mos.isActiveAndEnabled)
-                    {
-                        mos._OnPostLateUpdate();
-                    }
-
-                    pauseUpdate = false;
-                }
-            }
-
-            if (pauseUpdate)
-            {
-                enabled = false;
-            }
-        }
-
-        public void EnablePostLateUpdate(ManualObjectSync mos)
-        {
-            enabled = true;
-
-            int index = Array.IndexOf(_mosList, mos);
-            if (index > -1) return;
-
-            index = Array.IndexOf(_mosList, null);
-            if (index > -1)
-            {
-                _mosList[index] = mos;
-            }
-            else
-            {
-                var tmp_mosList = new ManualObjectSync[_mosList.Length + 1];
-                tmp_mosList[0] = mos;
-                _mosList.CopyTo(tmp_mosList, 1);
-                _mosList = tmp_mosList;
-            }
-        }
-
-        public void DisablePostLateUpdate(ManualObjectSync mos)
-        {
-            if (_mosList.Length < 1) return;
-
-            int index = Array.IndexOf(_mosList, mos);
-            if (index > -1)
-            {
-                _mosList[index] = null;
-            }
-        }
     }
 }
