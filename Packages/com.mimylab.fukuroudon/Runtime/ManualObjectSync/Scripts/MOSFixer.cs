@@ -17,12 +17,15 @@ namespace MimyLab.FukuroUdon
     {
         internal ManualObjectSync mos;
         internal Rigidbody rb;
+        
         internal bool isHeld;
         internal bool isEquipped;
         internal bool isAttached;
+        
         internal Vector3 syncPosition;
         internal Quaternion syncRotation;
         internal HumanBodyBones equipBone;
+        
         internal Transform attachPoint;
 
         private void Reset()
@@ -88,8 +91,10 @@ namespace MimyLab.FukuroUdon
 
         private void Attaching()
         {
-            attachPoint = mos.attachPoint;
-            transform.SetPositionAndRotation(attachPoint.position, attachPoint.rotation);
+            if(Utilities.IsValid(attachPoint = mos.attachPoint))
+            {
+                transform.SetPositionAndRotation(attachPoint.position, attachPoint.rotation);
+            }
         }
     }
 }

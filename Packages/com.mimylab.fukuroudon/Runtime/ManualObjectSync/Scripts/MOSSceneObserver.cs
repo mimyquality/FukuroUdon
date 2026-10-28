@@ -7,17 +7,12 @@ https://opensource.org/licenses/mit-license.php
 namespace MimyLab.FukuroUdon
 {
     using UnityEngine;
-    using VRC.SDK3.Components;
-    
-#if UNITY_EDITOR
-    using UnityEditor;
-    using UnityEditor.SceneManagement;
-    using UnityEngine.SceneManagement;
-#endif
 
+    [System.Obsolete]
     [ExecuteAlways]
     public class MOSSceneObserver : MonoBehaviour
     {
+/* 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private VRCSceneDescriptor _sceneDescriptor;
         private float _respawnHeightY = -100;
@@ -56,5 +51,6 @@ namespace MimyLab.FukuroUdon
             }
         }
 #endif
+*/
     }
 }
