@@ -15,22 +15,27 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class MOSFixer : UdonSharpBehaviour
     {
-        internal ManualObjectSync mos;
-        internal Rigidbody rb;
-        
         internal bool isHeld;
         internal bool isEquipped;
         internal bool isAttached;
-        
+
         internal Vector3 syncPosition;
         internal Quaternion syncRotation;
         internal HumanBodyBones equipBone;
         
-        internal Transform attachPoint;
-
+        private ManualObjectSync _mos;
+        private Rigidbody _rigidbody;
+        private Transform _attachPoint;
+        
         private void Reset()
         {
             enabled = false;
+        }
+
+        private void Start()
+        {
+            _mos = GetComponent<ManualObjectSync>();
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
         public override void PostLateUpdate()
@@ -71,7 +76,10 @@ namespace MimyLab.FukuroUdon
                 handRotation = owner.GetRotation();
             }
 
-            rb.Move(handPosition + handRotation * syncPosition, handRotation * syncRotation);
+            Vector3 pickupPosition = handPosition + handRotation * syncPosition;
+            Quaternion pickupRotation = handRotation * syncRotation;
+
+            _rigidbody.Move(pickupPosition, pickupRotation);
         }
 
         private void EquipingBone()
@@ -83,7 +91,7 @@ namespace MimyLab.FukuroUdon
             Quaternion boneRotation = owner.GetBoneRotation(equipBone);
             if (bonePosition.Equals(Vector3.zero) && boneRotation.Equals(Quaternion.identity)) return;
 
-            Vector3 equipPosition = bonePosition + (boneRotation * syncPosition);
+            Vector3 equipPosition = bonePosition + boneRotation * syncPosition;
             Quaternion equipRotation = boneRotation * syncRotation;
 
             transform.SetPositionAndRotation(equipPosition, equipRotation);
@@ -91,9 +99,15 @@ namespace MimyLab.FukuroUdon
 
         private void Attaching()
         {
-            if(Utilities.IsValid(attachPoint = mos.attachPoint))
+            if (Utilities.IsValid(_attachPoint = _mos.attachPoint))
             {
-                transform.SetPositionAndRotation(attachPoint.position, attachPoint.rotation);
+                Vector3 attachPosition = _attachPoint.position;
+                Quaternion attachRotation = _attachPoint.rotation;
+
+                Vector3 offsetPosition = attachPosition + attachRotation * syncPosition;
+                Quaternion offsetRotation = attachRotation * syncRotation;
+
+                transform.SetPositionAndRotation(offsetPosition, offsetRotation);
             }
         }
     }

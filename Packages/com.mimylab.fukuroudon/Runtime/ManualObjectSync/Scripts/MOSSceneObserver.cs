@@ -9,7 +9,7 @@ namespace MimyLab.FukuroUdon
     using UnityEngine;
 
     [System.Obsolete]
-    [ExecuteAlways]
+    //[ExecuteAlways]
     public class MOSSceneObserver : MonoBehaviour
     {
 /* 

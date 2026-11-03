@@ -21,10 +21,11 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MOSUpdateManager : UdonSharpBehaviour
     {
+/*
         internal float _respawnHeightY = -100.0f;
         private ManualObjectSync[] _mosList = System.Array.Empty<ManualObjectSync>();
 
-/*
+
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         private void Reset()
         {

@@ -30,6 +30,7 @@ namespace MimyLab.FukuroUdon
         private bool _isOnEnterFrame = false;
 
         private bool _initialized = false;
+
         private void Initialize()
         {
             if (_initialized) return;
@@ -38,6 +39,7 @@ namespace MimyLab.FukuroUdon
 
             _initialized = true;
         }
+
         private void Start()
         {
             Initialize();
@@ -53,6 +55,7 @@ namespace MimyLab.FukuroUdon
 
             AddSender(contactInfo.contactSender);
         }
+
         public void _CloseOnEnterFrame()
         {
             _isOnEnterFrame = false;
@@ -76,7 +79,8 @@ namespace MimyLab.FukuroUdon
          ******************************/
         public bool HasStayedSender()
         {
-            Initialize();
+            if (!_receiver) return false;
+            if (!_receiver.isActiveAndEnabled) return false;
 
             var length = _last + 1;
             for (int i = 0; i < length; i++)
@@ -92,8 +96,6 @@ namespace MimyLab.FukuroUdon
 
         public float CalculateProximity()
         {
-            Initialize();
-
             var result = 0.0f;
 
             var length = _last + 1;
@@ -108,19 +110,17 @@ namespace MimyLab.FukuroUdon
 
         public float CalculateProximity(VRCContactSender contactSender)
         {
-            Initialize();
-
             if (!Utilities.IsValid(contactSender)) return 0.0f;
+            if (!_receiver) return 0.0f;
 
             return _receiver.CalculateProximity(contactSender);
         }
 
         public float CalculateProximity(ContactSenderProxy contactSender)
         {
-            Initialize();
-
             if (!Utilities.IsValid(contactSender)) return 0.0f;
             if (!contactSender.isValid) return 0.0f;
+            if (!_receiver) return 0.0f;
 
             return _receiver.CalculateProximity(contactSender);
         }
@@ -146,7 +146,10 @@ namespace MimyLab.FukuroUdon
             while ((index = System.Array.LastIndexOf(_senders, sender)) > -1)
             {
                 _senders[index] = null;
-                _last += (_last == index) ? -1 : 0;
+                if (_last == index)
+                {
+                    _last--;
+                }
             }
         }
 
@@ -157,7 +160,7 @@ namespace MimyLab.FukuroUdon
             for (int i = 0; i < _senders.Length; i++)
             {
                 if (!Utilities.IsValid(_senders[i])) continue;
-                
+
                 if (!_senders[i].isValid)
                 {
                     _senders[i] = null;
