@@ -19,8 +19,11 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
     public class EquipWithMOS : UdonSharpBehaviour
     {
-        [SerializeField] private Transform snapPoint = null;
-        [SerializeField] private ManualObjectSync target = null;
+        [SerializeField]
+        private Transform snapPoint = null;
+
+        [SerializeField]
+        private ManualObjectSync target = null;
 
 #if !COMPILER_UDONSHARP && UNITY_EDITOR
         void Reset()
@@ -63,29 +66,38 @@ namespace MimyLab.FukuroUdon
             if (target.IsEquipped) return;
 
             Networking.SetOwner(Networking.LocalPlayer, target.gameObject);
-            HumanBodyBones mostNearBone = MostNearBone(Networking.LocalPlayer);
-            if (mostNearBone == HumanBodyBones.LastBone) return;
+            HumanBodyBones nearestBone = GetNearestBone(Networking.LocalPlayer);
+            if (nearestBone == HumanBodyBones.LastBone) return;
 
-            target.Equip(mostNearBone);
+            Vector3 bonePosition = Networking.LocalPlayer.GetBonePosition(nearestBone);
+            Quaternion boneRotation = Networking.LocalPlayer.GetBoneRotation(nearestBone);
+            if (bonePosition.Equals(Vector3.zero) && boneRotation.Equals(Quaternion.identity)) return;
+
+            target.Equip
+            (
+                nearestBone, 
+                Quaternion.Inverse(boneRotation) * (target.transform.position - bonePosition),
+                Quaternion.Inverse(boneRotation) * target.transform.rotation
+            );
         }
 
-        private HumanBodyBones MostNearBone(VRCPlayerApi pl)
+        private HumanBodyBones GetNearestBone(VRCPlayerApi player)
         {
             var result = HumanBodyBones.LastBone;
 
             Vector3 snapPosition = snapPoint.position;
-            var mostNearSqrtDistance = float.PositiveInfinity;
+            var nearestSqrtDistance = float.PositiveInfinity;
             var lastBone = (int)HumanBodyBones.LastBone;
-            for (int i = 0; i < lastBone; i++)
+            for (int currentBone = 0; currentBone < lastBone; currentBone++)
             {
-                Vector3 bonePosition = pl.GetBonePosition((HumanBodyBones)i);
+                Vector3 bonePosition = player.GetBonePosition((HumanBodyBones)currentBone);
                 if (bonePosition.Equals(Vector3.zero)) continue;
 
                 float sqrtDistance = (snapPosition - bonePosition).sqrMagnitude;
-                if (sqrtDistance < mostNearSqrtDistance)
+                if (sqrtDistance < nearestSqrtDistance)
                 {
-                    mostNearSqrtDistance = sqrtDistance;
-                    result = (HumanBodyBones)i;
+                    nearestSqrtDistance = sqrtDistance;
+                    result = (HumanBodyBones)currentBone;
                 }
             }
 

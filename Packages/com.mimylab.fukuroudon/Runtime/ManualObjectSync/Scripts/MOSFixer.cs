@@ -15,18 +15,47 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class MOSFixer : UdonSharpBehaviour
     {
-        internal bool isHeld;
-        internal bool isEquipped;
-        internal bool isAttached;
+        private const float PickupSmoothingFactor = 0.02f;
 
         internal Vector3 syncPosition;
         internal Quaternion syncRotation;
         internal HumanBodyBones equipBone;
-        
+
         private ManualObjectSync _mos;
         private Rigidbody _rigidbody;
         private Transform _attachPoint;
-        
+        private bool _isHeld;
+        private bool _isEquipped;
+        private bool _isAttached;
+        private Vector3 _smoothSyncPosition;
+        private Quaternion _smoothSyncRotation;
+        private Vector3 _syncVelocity;
+        private float _angleDifferential;
+
+        public bool IsHeld
+        {
+            set
+            {
+                if (!_isHeld && value)
+                {
+                    _smoothSyncPosition = syncPosition;
+                    _smoothSyncRotation = syncRotation;
+                }
+
+                _isHeld = value;
+            }
+        }
+
+        public bool IsEquipped
+        {
+            set => _isEquipped = value;
+        }
+
+        public bool IsAttached
+        {
+            set => _isAttached = value;
+        }
+
         private void Reset()
         {
             enabled = false;
@@ -40,15 +69,15 @@ namespace MimyLab.FukuroUdon
 
         public override void PostLateUpdate()
         {
-            if (isHeld)
+            if (_isHeld)
             {
                 Holding();
             }
-            else if (isEquipped)
+            else if (_isEquipped)
             {
                 EquipingBone();
             }
-            else if (isAttached)
+            else if (_isAttached)
             {
                 Attaching();
             }
@@ -76,8 +105,21 @@ namespace MimyLab.FukuroUdon
                 handRotation = owner.GetRotation();
             }
 
-            Vector3 pickupPosition = handPosition + handRotation * syncPosition;
-            Quaternion pickupRotation = handRotation * syncRotation;
+            if (_smoothSyncPosition != syncPosition)
+            {
+                _smoothSyncPosition =
+                    Vector3.SmoothDamp(_smoothSyncPosition, syncPosition, ref _syncVelocity, PickupSmoothingFactor);
+            }
+
+            if (_smoothSyncRotation != syncRotation)
+            {
+                float angle = Quaternion.Angle(syncRotation, _smoothSyncRotation);
+                angle = Mathf.SmoothDampAngle(angle, 0.0f, ref _angleDifferential, PickupSmoothingFactor);
+                _smoothSyncRotation = Quaternion.RotateTowards(syncRotation, _smoothSyncRotation, angle);
+            }
+
+            Vector3 pickupPosition = handPosition + handRotation * _smoothSyncPosition;
+            Quaternion pickupRotation = handRotation * _smoothSyncRotation;
 
             _rigidbody.Move(pickupPosition, pickupRotation);
         }

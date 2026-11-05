@@ -4,12 +4,11 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 */
 
-using UnityEngine.Serialization;
-
 namespace MimyLab.FukuroUdon
 {
     using UdonSharp;
     using UnityEngine;
+    using UnityEngine.Serialization;
     using VRC.SDKBase;
     using VRC.SDKBase.Editor.Attributes;
     using VRC.SDK3.Rendering;
@@ -70,15 +69,11 @@ namespace MimyLab.FukuroUdon
         [SerializeField] private bool _initializeAvatarScaling = true;
         [SerializeField] private bool _allowManualAvatarScaling = true;
         [SerializeField][MinMaxRange(0.2f, 5f)] private Vector2 _manualAvatarScalingRange = new Vector2(0.2f, 5f);
-        [HideInInspector][SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMinimum = 0.2f;
-        [HideInInspector][SerializeField][Range(0.2f, 5f)] private float _avatarEyeHeightMaximum = 5f;
         
         [FormerlySerializedAs("_initializeAvatarEyeHight")]
         [Tooltip("チェックを入れたタイミングで、アバターの目線高さの上限と下限を設定範囲に制限します。")]
         [SerializeField][EnumFlag] private AdvancedWorldSettingsInitializeEyeHeightTypes _initializeAvatarEyeHeight = 0;
         [SerializeField][MinMaxRange(0.1f, 100f)] private Vector2 _avatarEyeHeightLimit = new Vector2(0.1f, 100f);
-        [HideInInspector][SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeightLowerLimit = 0.1f;
-        [HideInInspector][SerializeField][Range(0.1f, 100f)] private float _avatarEyeHeightUpperLimit = 100f;
         
         [Header("Screen Camera Settings")]
         [SerializeField] private bool _initializeScreenCameraSettings = false;
@@ -140,29 +135,6 @@ namespace MimyLab.FukuroUdon
             if (_avatarAudioVolumetricRadius > _avatarAudioDistanceFar)
             {
                 _avatarAudioVolumetricRadius = _avatarAudioDistanceFar;
-            }
-            
-            if (_avatarEyeHeightMinimum != 0.2f)
-            {
-                _manualAvatarScalingRange.x = _avatarEyeHeightMinimum;
-                _avatarEyeHeightMinimum = 0.2f;
-            }
-            if (_avatarEyeHeightMaximum != 5f)
-            {
-                _manualAvatarScalingRange.y = _avatarEyeHeightMaximum;
-                _avatarEyeHeightMaximum = 5f;
-            }
-
-            if (_avatarEyeHeightLowerLimit != 0.1f)
-            {
-                _avatarEyeHeightLimit.x = _avatarEyeHeightLowerLimit;
-                _avatarEyeHeightLowerLimit = 0.1f;
-            }
-
-            if (_avatarEyeHeightUpperLimit != 100f)
-            {
-                _avatarEyeHeightLimit.y = _avatarEyeHeightUpperLimit;
-                _avatarEyeHeightUpperLimit = 100f;
             }
             
             if ((_screenCullingMask & ForceScreenVisible) != ForceScreenVisible)

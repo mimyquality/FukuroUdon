@@ -279,12 +279,11 @@ MonoBehaviour:
   _udonSharpBackingUdonBehaviour: {fileID: 3517690481569448439}
   _autoSync: 1
   moveCheckTickRate: 30
-  _relativeTo: 1
+  _respawnHightY: -100
+  _relativeTo: 0
   _enableSmoothing: 0
   _enableScaleSync: 0
   attachPoint: {fileID: 0}
-  _updateManager: {fileID: 0}
-  _respawnHightY: -100
 --- !u!114 &2939441025711577351
 MonoBehaviour:
   m_ObjectHideFlags: 0

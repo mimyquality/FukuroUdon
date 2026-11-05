@@ -14,7 +14,7 @@ namespace MimyLab.FukuroUdon
     [Icon(ComponentIconPath.FukuroUdon)]
     [AddComponentMenu("Fukuro Udon/Manual ObjectSync/MOS Attacher")]
     [RequireComponent(typeof(Collider))]
-    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class MOSAttacher : UdonSharpBehaviour
     {
         public ManualObjectSync[] target = System.Array.Empty<ManualObjectSync>();

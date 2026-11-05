@@ -6,6 +6,24 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
+## [4.0.0-beta.5] - 2026.11.5
+
+VRCSDK - World 3.10.6 以上が必要になりました。  
+
+**Added**  
+
+- Contact Receiver Advanced Information を追加しました。
+  - VRCSDK 3.10.6 に追加された、Contact Receiver のアドバンスパラメーターの一部を再現して保持するコンポーネントです。
+- Limited Constraint シリーズに Smoothing Factor を追加しました。
+
+**Changed**  
+
+- Manual ObjectSync の内部処理を全面改修しました。
+  - MOS Update Manager は不要になり、代わりに同じオブジェクトに MOS Fixer が必須になりました。
+  - Equip() にオフセット値を指定できるメソッドが追加されました。一貫性を保つために、オフセット値を指定せずに Equip() を実行した場合はオフセット値がゼロとして扱われるようになりました(指定ボーンの原点にくっつくようになりました)。
+  - その他いくつかの設定パラメーターとメソッドが追加されました。詳細は wiki を見てください。
+- Udon Raycast は Result Transform にオブジェクトをセットしなくても動くようになりました。
+
 ## [4.0.0-beta.4] - 2026/10/23
 
 **Added**  
@@ -974,6 +992,7 @@ VRCSDK 3.10.2 に沿ったいくつかの微修正を行いました。
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
+[4.0.0-beta.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.5
 [4.0.0-beta.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.4
 [4.0.0-beta.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.3
 [4.0.0-beta.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.2
