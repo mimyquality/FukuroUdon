@@ -12,12 +12,12 @@ namespace MimyLab.FukuroUdon
     using VRC.SDKBase;
     using VRC.Udon.Common.Interfaces;
 
-    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#equip-with-mos")]
+    [HelpURL("https://github.com/mimyquality/FukuroUdon/wiki/Manual-ObjectSync#mos-equip-helper")]
     [Icon(ComponentIconPath.FukuroUdon)]
-    [AddComponentMenu("Fukuro Udon/Manual ObjectSync/Equip with MOS")]
+    [AddComponentMenu("Fukuro Udon/Manual ObjectSync/MOS Equip Helper")]
     [RequireComponent(typeof(VRCPickup))]
     [UdonBehaviourSyncMode(BehaviourSyncMode.Any)]
-    public class EquipWithMOS : UdonSharpBehaviour
+    public class MOSEquipHelper : UdonSharpBehaviour
     {
         [SerializeField]
         private Transform snapPoint = null;

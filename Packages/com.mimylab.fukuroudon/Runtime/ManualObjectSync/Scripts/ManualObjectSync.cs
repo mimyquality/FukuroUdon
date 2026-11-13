@@ -9,7 +9,6 @@ namespace MimyLab.FukuroUdon
     using System;
     using UdonSharp;
     using UnityEngine;
-    using UnityEngine.Serialization;
     using VRC.SDK3.Components;
     using VRC.SDK3.UdonNetworkCalling;
     using VRC.SDKBase;
@@ -35,12 +34,16 @@ namespace MimyLab.FukuroUdon
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class ManualObjectSync : UdonSharpBehaviour
     {
-        private const float PickupCheckTickRate = 1.0f;
-
         private const string EventName_Equip = "OnEquip";
         private const string EventName_Unequip = "OnUnequip";
         private const string EventName_Attach = "OnAttach";
         private const string EventName_Detach = "OnDetach";
+
+        private const float MaxDuration = 1.0f; // sec
+        private const float InterpolateRange = 2.0f * 2.0f; // Sqrt
+        private const float PickupCheckTickRate = 1.0f; // sec
+        private const float PickupPositionSyncThreshold = 0.001f * 0.001f; // Sqrt
+        private const float PickupRotationSyncThreshold = 1f - 0.0002f; // Dot
 
         [SerializeField]
         private bool _autoSync = true; // 周期的に同期チェックするか
@@ -49,17 +52,17 @@ namespace MimyLab.FukuroUdon
         public int moveCheckTickRate = 30; // チェック周期(fps依存)
 
         [Space]
-        [FormerlySerializedAs("moveCheckSpace")]
         [SerializeField]
-        private Space _relativeTo = Space.World; // 変動確認をする空間
-
-        public float _respawnHightY = -100.0f; // ここより落下したらリスポーンする
-        
-        [SerializeField]
-        private bool _enableSmoothing = false;
+        private Space _relativeTo = Space.World; // 同期の基準にする空間
 
         [SerializeField]
-        private bool _enableScaleSync = false; // スケールも同期するか
+        private float _respawnHeightY = -100.0f; // ここより落下したらリスポーンする
+
+        [SerializeField]
+        private bool _enableInterpolation = false; // 連続的に同期した時に補間するか
+
+        [SerializeField]
+        private bool _synchronizeScale = false; // スケールも同期するか
 
         public Transform attachPoint = null; // アタッチモード時の追従先
 
@@ -109,7 +112,7 @@ namespace MimyLab.FukuroUdon
         private int _firstMoveCheck = 1;
         private bool _isMoveCheckInterval = false;
         private VRCTweenHandle _tweenMove;
-        private float _duration = 1.0f;
+        private float _duration;
         private float _lastReceiveTime;
         private Vector3 _fromPosition;
         private Quaternion _fromRotation;
@@ -377,10 +380,10 @@ namespace MimyLab.FukuroUdon
                 _syncScale = _startScale;
             }
 
-            _tweenMove = VRCTween.TweenFloat(0.0f, 1.0f, _duration, this, nameof(_tweenValue),
-                nameof(_OnLocationSmoothing),
-                VRCTweenEase.Linear).Pause();
-            _tweenScale = transform.TweenScale(_startScale, _duration, VRCTweenEase.Linear).Pause();
+            _tweenMove = VRCTween.TweenFloat(0.0f, 1.0f, 1.0f, this, nameof(_tweenValue),
+                nameof(_OnLocationSmoothing), VRCTweenEase.Linear).Pause();
+
+            _tweenScale = transform.TweenScale(_startScale, 1.0f, VRCTweenEase.Linear).Pause();
 
             var udonBehaviours = GetComponents<UdonBehaviour>();
             var tmp_eventRecveivers = new UdonBehaviour[udonBehaviours.Length];
@@ -490,14 +493,37 @@ namespace MimyLab.FukuroUdon
             SetIsEquipped((n_states & (int)ManualObjectSyncSyncStates.IsEquipped) > 0);
             SetIsAttached((n_states & (int)ManualObjectSyncSyncStates.IsAttached) > 0);
 
-            _duration = Mathf.Clamp(result.receiveTime - _lastReceiveTime, 0.1f, 1.0f);
-            _lastReceiveTime = result.receiveTime;
-
-            ApplySyncToLocation();
-
-            if (_enableScaleSync && transform.localScale != _syncScale)
+            var feasibleInterpolate = false;
+            if (_enableInterpolation)
             {
-                if (_enableSmoothing)
+                _duration = result.receiveTime - _lastReceiveTime;
+                if (0.0f < _duration && _duration <= MaxDuration)
+                {
+                    feasibleInterpolate = true;
+                }
+
+                _lastReceiveTime = result.receiveTime;
+            }
+
+            if (!_isHeld && !_isEquipped && !_isAttached)
+            {
+                _fromPosition = GetPosition();
+                _fromRotation = GetRotation();
+
+                if (feasibleInterpolate &&
+                    (_syncPosition - _fromPosition).sqrMagnitude < InterpolateRange)
+                {
+                    _tweenMove.SetDuration(_duration).Restart();
+                }
+                else
+                {
+                    SetLocation(_syncPosition, _syncRotation);
+                }
+            }
+
+            if (_synchronizeScale && transform.localScale != _syncScale)
+            {
+                if (feasibleInterpolate)
                 {
                     _tweenScale.SetDuration(_duration).ChangeEndValue(_syncScale, true).Restart();
                 }
@@ -506,24 +532,6 @@ namespace MimyLab.FukuroUdon
                     transform.localScale = _syncScale;
                 }
             }
-        }
-
-        private void ApplySyncToLocation()
-        {
-            if (_isHeld) return;
-            if (_isEquipped) return;
-            if (_isAttached) return;
-
-            if (_enableSmoothing)
-            {
-                _fromPosition = GetPosition();
-                _fromRotation = GetRotation();
-
-                _tweenMove.SetDuration(_duration).Restart();
-                return;
-            }
-
-            SetLocation(_syncPosition, _syncRotation);
         }
 
         public void _OnLocationSmoothing()
@@ -627,7 +635,7 @@ namespace MimyLab.FukuroUdon
                 SyncLocation();
             }
 
-            if (_enableScaleSync && transform.localScale != _syncScale)
+            if (_synchronizeScale && transform.localScale != _syncScale)
             {
                 SyncScale();
             }
@@ -740,7 +748,7 @@ namespace MimyLab.FukuroUdon
 
             if (!_isHeld && !_isEquipped && !_isAttached)
             {
-                if (transform.position.y <= _respawnHightY)
+                if (transform.position.y <= _respawnHeightY)
                 {
                     Respawn();
                 }
@@ -750,7 +758,7 @@ namespace MimyLab.FukuroUdon
                 }
             }
 
-            if (_enableScaleSync && transform.localScale != _syncScale)
+            if (_synchronizeScale && transform.localScale != _syncScale)
             {
                 SyncScale();
             }
@@ -798,7 +806,8 @@ namespace MimyLab.FukuroUdon
             CheckPickupOffset();
 
             _isPickupCheckInterval = true;
-            SendCustomEventDelayedSeconds(nameof(_LoopCheckPickupOffset), PickupCheckTickRate, EventTiming.PostLateUpdate);
+            SendCustomEventDelayedSeconds(nameof(_LoopCheckPickupOffset), PickupCheckTickRate,
+                EventTiming.PostLateUpdate);
         }
 
         private void CheckPickupOffset()
@@ -828,7 +837,8 @@ namespace MimyLab.FukuroUdon
 
             Vector3 offsetPosition = Quaternion.Inverse(handRotation) * (_rigidbody.position - handPosition);
             Quaternion offsetRotation = Quaternion.Inverse(handRotation) * _rigidbody.rotation;
-            if (!(offsetPosition == _syncPosition && offsetRotation == _syncRotation))
+            if (!((offsetPosition - _syncPosition).sqrMagnitude < PickupPositionSyncThreshold &&
+                  Quaternion.Dot(_syncRotation, offsetRotation) > PickupRotationSyncThreshold))
             {
                 _syncPosition = offsetPosition;
                 _syncRotation = offsetRotation;

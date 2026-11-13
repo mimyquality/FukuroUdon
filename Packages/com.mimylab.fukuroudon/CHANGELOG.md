@@ -6,79 +6,46 @@
 
 利用手順は[こちら](https://github.com/mimyquality/FukuroUdon/wiki)からご確認ください。
 
-## [4.0.0-beta.5] - 2026.11.5
+## [4.0.0] - 2026.11.13
 
 VRCSDK - World 3.10.6 以上が必要になりました。  
 
 **Added**  
 
+- Grabbable Door を追加しました。
+  - Grab Slidedoor のリニューアル版で、引き続きスライドドアとスイングドアがあります。
+  - コンポーネントとしては Limited Constraint シリーズが追加されました。
+- ActiveRelay by Limited Constraint を追加しました。
+- SwivelChair2, Better AvatarPedestal のゲーム内表記に日本語を併記しました。
+- Canvas Distance Fade に、完全フェードアウト時に非アクティブにするオプションを追加しました。
+- AdvancedWorldSettings に RealtimeReflectionProbe と ShadowmaskMode を追加しました。
 - Contact Receiver Advanced Information を追加しました。
   - VRCSDK 3.10.6 に追加された、Contact Receiver のアドバンスパラメーターの一部を再現して保持するコンポーネントです。
-- Limited Constraint シリーズに Smoothing Factor を追加しました。
 
 **Changed**  
 
 - Manual ObjectSync の内部処理を全面改修しました。
   - MOS Update Manager は不要になり、代わりに同じオブジェクトに MOS Fixer が必須になりました。
   - Equip() にオフセット値を指定できるメソッドが追加されました。一貫性を保つために、オフセット値を指定せずに Equip() を実行した場合はオフセット値がゼロとして扱われるようになりました(指定ボーンの原点にくっつくようになりました)。
+  - Manual ObjectSync の IsEquipped の誤字を修正しました。
+  - MOS Attacher を MOS Attach Trigger に、Equipment With MOS を MOS Equip Helper に改名しました。
   - その他いくつかの設定パラメーターとメソッドが追加されました。詳細は wiki を見てください。
-- Udon Raycast は Result Transform にオブジェクトをセットしなくても動くようになりました。
-
-## [4.0.0-beta.4] - 2026/10/23
-
-**Added**  
-
-- Limited Constraint シリーズに Smoothing Factor 追加
-- SwivelChair2 の SC2 Seat Adjuster に位置調整範囲の Gizmo 表記追加
-
-**Changed**  
-
-- Udon Raycast は resultTransform をセットしなくても使えるように変更
-
-**Fixed**  
-
-- Limited Constraint シリーズのバグ修正と Gizmo 表記の調整
-
-## [4.0.0-beta.3] - 2026/10/13
-
-**Added**
-
-- Limited Constraint ファミリーは選択した時に制限範囲の Gizmo が表示されるようになりました。
-
-## [4.0.0-beta.2] - 2026/10/6
-
-**Changed**
-
-- Advanced World Settings のインスペクターの設定値は各項目ごとに畳まれるようになりました。
-- Limited Constraint ファミリーのインスペクターの一部設定値は設定内容に応じて関係無いものが畳まれるようになりました。
-
-## [4.0.0-beta.1] - 2026/9/28
-
-**Added**  
-
-- Grabbable Door を追加しました。
-  - Grab Slidedoor のリニューアル版で、コンポーネントとしては Limited Constraint シリーズとなります。
-- ActiveRelay by Limited Constraint を追加しました。
-- SwivelChair2, Better AvatarPedestal のゲーム内表記に日本語を併記しました。
-- Canvas Distance Fade に非アクティブにするオプションを追加しました。
-- AdvancedWorldSettings に RealtimeReflectionProbe と ShadowmaskMode を追加しました。
-
-**Changed**  
-
-- UdonRaycast に RootTransform 追加、挙動を VRC Raycast に合わせました。
 - Grabbable Door の追加に伴い、LimitedPositionConstraint を GrabSlidedoor に、LimitedLookConstraint を GrabSwingdoor に改名しました。
 - PickupHandle は実行時に ReturnPoint オブジェクトを動かすことは無くなり、実行時の ReturnPoint との相対位置を考慮するようになりました。
+- UdonRaycast に RootTransform 追加、挙動を VRC Raycast に合わせました。
 - GameObject Celler を GameObject Cellar に修正しました。
 - ContactReceiver Information の誤字を修正しました。
-- Manual ObjectSync の IsEquipped の誤字を修正しました。
+- Advanced World Settings のインスペクターの設定値は各項目ごとに畳まれるようになりました。
+- SwivelChair2 の SC2 Seat Adjuster に位置調整範囲の Gizmo が表記されるようになりました。
 
 **Fixed**  
 
 - Manual ObjectSync を使ったピックアップオブジェクトにて、ピックアップ中に変更したスケールが戻される問題を修正しました。 [#61](https://github.com/mimyquality/FukuroUdon/issues/61)
 
-- **Deprecated**
-  - Grab Slidedoor
-    - Grabbable Door の公開に伴い、Grab Slidedoor は致命的な不具合を除いて更新を停止します。
+**Deprecated**  
+
+- Grab Slidedoor
+  - Grabbable Door の公開に伴い、Grab Slidedoor は致命的な不具合を除いて更新を停止します。
 
 ## [3.19.5] - 2026/8/12
 
@@ -992,11 +959,7 @@ VRCSDK 3.10.2 に沿ったいくつかの微修正を行いました。
     - 0.2.7バージョンで、later-joiner視点でjoin直後が非アクティブだと同期しなかったのを修正しました。
     - 他人がピックアップした際にオブジェクトが一瞬跳ねる現象を低減しました。
 
-[4.0.0-beta.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.5
-[4.0.0-beta.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.4
-[4.0.0-beta.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.3
-[4.0.0-beta.2]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.2
-[4.0.0-beta.1]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0-beta.1
+[4.0.0]: https://github.com/mimyquality/FukuroUdon/releases/tag/4.0.0
 [3.19.5]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.5
 [3.19.4]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.4
 [3.19.3]: https://github.com/mimyquality/FukuroUdon/releases/tag/3.19.3

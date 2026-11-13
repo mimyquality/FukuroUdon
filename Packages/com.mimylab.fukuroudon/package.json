@@ -1,7 +1,7 @@
 {
   "name": "com.mimylab.fukuroudon",
   "displayName": "Fukuro Udon",
-  "version": "4.0.0-beta.5",
+  "version": "4.0.0",
   "description": "MimyLab's U# utility pack for VPM.",
   "unity": "2022.3",
   "author": {
@@ -30,7 +30,7 @@
   "samples": [
     {
       "displayName": "Active Relay",
-      "description": "オブジェクトのアクティブ切り替えをトリガーに色々するギミック",
+      "description": "オブジェクトのアクティブ切り替えをトリガーに色々するコンポーネント群",
       "path": "Samples/ActiveRelay"
     },
     {
@@ -55,7 +55,7 @@
     },
     {
       "displayName": "Swivel Chair 2",
-      "description": "UIを必要としない、座高調節とスイベル回転が可能な椅子ギミック",
+      "description": "座高調節とスイベル回転が可能な椅子ギミック",
       "path": "Samples/SwivelChair2"
     },
     {
@@ -70,7 +70,7 @@
     },
     {
       "displayName": "AmbientEffect Assistant",
-      "description": "ワールドの環境音や視覚効果を補助するギミック",
+      "description": "ワールドの環境音や視覚効果を補助するコンポーネント群",
       "path": "Samples/AmbientEffectAssistant"
     },
     {
